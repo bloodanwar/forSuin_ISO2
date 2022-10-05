@@ -28,10 +28,8 @@
 
 ## PERSONAL VICERRECTORADO
 - [ ] Evaluar propuesta de curso -> Aprobar o Rechazar
-
-- [ ] Si se aprueba -> Se podrá empezar a impartir curso en fecha propuesta
-
-- [ ] Si se rechaza -> Completar informe de subsanaciones y recomendaciones de mejora  Se manda por correo y se podrá volver a proponer
+  - Si se aprueba -> Se podrá empezar a impartir curso en fecha propuesta
+  - Si se rechaza -> Completar informe de subsanaciones y recomendaciones de mejora  Se manda por correo y se podrá volver a proponer
 
 - [ ] Cerrar sesión
 
