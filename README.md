@@ -1,9 +1,10 @@
 # CASOS DE USO [Revisar por si acaso]
 
-## MENU PRINCIPAL
-- [ ] Inicio de sesión
+## COSAS PRINCIPALES
+- [ ] Menu principal -> Inicio de sesión
+- [ ] Base de datos
 
-## DIRECTOR DE CURSO
+## DIRECTOR DE CURSO [Es un profesor]
 - [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información
 
 - [ ] Visualizar propuesta curso
@@ -37,7 +38,7 @@
 ## ESTUDIANTE
 - [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información
 
-- [ ] Realizar matricula -> Abonar matricula  Por transferencia o por tarjeta de crédito [usar sistema bancario]
+- [ ] Realizar matricula -> Abonar matricula -> Por transferencia o por tarjeta de crédito [usar sistema bancario]
 *No puede impartir un mismo curso dos veces
 
 - [ ] Cerrar sesión
@@ -45,6 +46,6 @@
 ## JEFE GABINETE VICERRECTORADO
 - [ ] Conocer ingresos globales en cada uno de los tres cursos
 
-- [ ] Realizar consulta de listado de cursos  Se puede usar filtro
+- [ ] Realizar consulta de listado de cursos -> Se puede usar filtro
 
 - [ ] Cerrar sesión
