@@ -1,5 +1,3 @@
-# forSuin_ISO2
-
 ## INICIAR SESIÓN
 
 ## DIRECTOR DE CURSO
