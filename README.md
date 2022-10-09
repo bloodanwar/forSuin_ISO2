@@ -5,7 +5,7 @@
 - [ ] Base de datos
 
 ## DIRECTOR DE CURSO [Es un profesor]
-- [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información
+- [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información (Se puede usar la misma interfaz que alumno!?)
 
 - [ ] Visualizar propuesta curso
 
@@ -34,7 +34,7 @@
 - [ ] Cerrar sesión
 
 ## ESTUDIANTE
-- [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información
+- [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información (Se puede usar la misma interfaz que profesor!?)
 
 - [ ] Realizar matricula -> Abonar matricula -> Por transferencia o por tarjeta de crédito [usar sistema bancario]
 *No puede impartir un mismo curso dos veces
