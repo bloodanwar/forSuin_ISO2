@@ -4,6 +4,8 @@ import negocio.entities.*;
 
 public class ProfesorDAO extends AbstractEntityDAO {
 
+	
+	
 	/**
 	 * 
 	 * @param profesor
