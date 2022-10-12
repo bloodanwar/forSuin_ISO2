@@ -8,11 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import negocio.controllers.GestorConsultas;
 
 public class PantallaCursosAprobados extends JFrame{
 
     private JButton button;
-    private JList list;
+    private JList cursosLista;
     
     public PantallaCursosAprobados () {
         // Propiedades basicas
@@ -22,14 +25,15 @@ public class PantallaCursosAprobados extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
-    
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
         // Lista de cursos
-        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de bd
-        list = new JList(cursos);
-        
-        JScrollPane scrollLista = new JScrollPane();
+        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de la base de datos
+        cursosLista = new JList(cursos);
+        cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane scrollLista = new JScrollPane(cursosLista);
         scrollLista.setBounds(10, 10, 220, 80);
-        scrollLista.setViewportView(list);
         add(scrollLista);
         
         // Bot�n para ver datos curso

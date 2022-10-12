@@ -38,5 +38,5 @@ public class GestorConsultas {
 		// TODO - implement GestorConsultas.listarEdicionesCursos
 		throw new UnsupportedOperationException();
 	}
-
+	
 }

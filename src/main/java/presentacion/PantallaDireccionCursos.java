@@ -14,11 +14,12 @@ public class PantallaDireccionCursos extends JFrame{
         // Propiedades basicas
         setLayout(null);
         setBounds(10, 10, 500,500);
-        setTitle("Direcci�n de cursos");
+        setTitle("Direccion de cursos");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
-        
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
         
         // Boton para visualizar cursos aprobados
         button = new JButton("Consultar cursos aprobados");
