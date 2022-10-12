@@ -13,19 +13,20 @@ public class PantallaGestionarCursos extends JFrame{
     
     private JButton button;
     private JList list;
+    String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional
+
     
     public PantallaGestionarCursos () {
         // Propiedades basicas
         setLayout(null);
         setBounds(10, 10, 800,800);
-        setTitle("Gestión de cursos propuestos");
+        setTitle("Gestion de cursos propuestos");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         
         
         // Lista de propuestas
-        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional
         list = new JList(cursos);
         
         JScrollPane scrollLista = new JScrollPane();
@@ -73,13 +74,13 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-
+            	list.remove(list.getSelectedIndex());
             }
 
         });
         
         
-        // Botón para ir atras
+        // Botï¿½n para ir atras
         button = new JButton("Atras");
         button.setBounds(10,160,200,30);
         add(button);
