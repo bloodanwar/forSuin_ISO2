@@ -24,7 +24,7 @@ public class PantallaCursosAprobados extends JFrame{
         setVisible(true);
     
         // Lista de cursos
-        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional
+        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de bd
         list = new JList(cursos);
         
         JScrollPane scrollLista = new JScrollPane();
@@ -32,7 +32,7 @@ public class PantallaCursosAprobados extends JFrame{
         scrollLista.setViewportView(list);
         add(scrollLista);
         
-        // Botón para ver datos curso
+        // Botï¿½n para ver datos curso
         button = new JButton("Ver datos");
         button.setBounds(10,110,200,30);
         add(button);
@@ -48,9 +48,9 @@ public class PantallaCursosAprobados extends JFrame{
         });
         
         
-        // Botón para ir atras
+        // Botï¿½n para ir atras
         button = new JButton("Atras");
-        button.setBounds(250,110,200,30);
+        button.setBounds(10,160,200,30);
         add(button);
     
         button.addActionListener(new ActionListener() {

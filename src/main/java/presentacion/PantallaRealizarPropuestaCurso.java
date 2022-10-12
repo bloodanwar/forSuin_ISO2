@@ -10,6 +10,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -152,24 +153,9 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
         add(label);
         
         
-        // Boton para enviar propuesta
-        button = new JButton("Enviar propuesta");
-        button.setBounds(680,430,200,30);
-        add(button);
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //new PantallaDireccionCursos();
-                //setVisible(false);
-            }
-
-        });
-
-        // Bot�n para ir atras
+        // Boton para ir atras
         button = new JButton("Atras");
-        button.setBounds(900,430,200,30);
+        button.setBounds(680,430,200,30);
         add(button);
 
         button.addActionListener(new ActionListener() {
@@ -178,6 +164,26 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 new PantallaGestionarCursos();
                 setVisible(false);
+            }
+
+        });
+        
+        // Boton para enviar propuesta
+        button = new JButton("Enviar propuesta");
+        button.setBounds(900,430,200,30);
+        add(button);
+
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	int confirm = JOptionPane.showConfirmDialog(null,"Confirmar enviar propuesta","Confirmar",JOptionPane.YES_NO_OPTION, 1);
+            	    if(confirm == 0)  {
+            	    	new PantallaGestionarCursos();
+                        setVisible(false);
+                        // Añadir a lista de cursos propuestos
+            	    }
+                
             }
 
         });

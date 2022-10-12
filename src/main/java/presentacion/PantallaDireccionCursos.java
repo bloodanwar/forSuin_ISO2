@@ -14,7 +14,7 @@ public class PantallaDireccionCursos extends JFrame{
         // Propiedades basicas
         setLayout(null);
         setBounds(10, 10, 500,500);
-        setTitle("Dirección de cursos");
+        setTitle("Direcciï¿½n de cursos");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -51,8 +51,8 @@ public class PantallaDireccionCursos extends JFrame{
 
         });
         
-        // Botón para cerrar sesion
-        button = new JButton("Cerrar sesión");
+        // Botï¿½n para cerrar sesion
+        button = new JButton("Cerrar sesion");
         button.setBounds(10,110,200,30);
         add(button);
     

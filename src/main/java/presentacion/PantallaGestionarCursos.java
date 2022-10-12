@@ -2,19 +2,21 @@ package presentacion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 public class PantallaGestionarCursos extends JFrame{
     
     private JButton button;
     private JList list;
-    String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional
-
+    private DefaultListModel model = new DefaultListModel(); 
     
     public PantallaGestionarCursos () {
         // Propiedades basicas
@@ -26,9 +28,14 @@ public class PantallaGestionarCursos extends JFrame{
         setVisible(true);
         
         
-        // Lista de propuestas
-        list = new JList(cursos);
+        // Lista de cursos propuestos -- Leer de bd  
+        model.add(0, "Curso 1");
+        model.add(1, "Curso 2");
+        model.add(2, "Curso 3");
         
+        list = new JList(model);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         JScrollPane scrollLista = new JScrollPane();
         scrollLista.setBounds(10, 10, 220, 80);
         scrollLista.setViewportView(list);
@@ -74,7 +81,7 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-            	list.remove(list.getSelectedIndex());
+            	model.remove(list.getSelectedIndex());
             }
 
         });
