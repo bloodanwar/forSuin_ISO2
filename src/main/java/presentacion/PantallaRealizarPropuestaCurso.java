@@ -118,7 +118,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
         add(scrollPanel);
         
         
-        // Requistio (Depende de categoria)
+        // Requistio -- Provisional -> Depende de categoria
         label = new JLabel("Requsito");
         label.setBounds(500,260,200,30);
         add(label);
@@ -128,7 +128,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
         add(requisitoText);
         
         
-        // ECTS (Depende de categoria)
+        // ECTS -- Provisional -> Depende de categoria
         label = new JLabel("ECTS");
         label.setBounds(500,340,200,30);
         add(label);
@@ -185,8 +185,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
         add(scrollPanel);
         
         // Profesores que la imparten
-        label = new JLabel("Profesores que imparten la materia (uno o más)");
-        label.setBounds(1300,210,300,30);
+        label = new JLabel("Profesores que imparten la materia (Usar ctl para seleccionar varios)");
+        label.setBounds(1300,210,400,30);
         add(label);
 
         profesoresMateriaLista = new JList(profesores);
