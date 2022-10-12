@@ -3,19 +3,30 @@ package persistencia;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import org.apache.derby.jdbc.EmbeddedDriver;
 
 public class GestorBD {
-	// Conexion con la base de datos
+	
+	private static GestorBD instancia = null;
 	protected static Connection mBD = null;
 
-	public GestorBD() throws Exception {
-	    crearBaseDeDatos();
-		//conectarBD();
-		desconectarBD();		
+	public GestorBD() throws SQLException {
+		conectarBD();		
+	}
+	
+	public static GestorBD getInstancia() throws SQLException {
+		if (instancia == null) {
+			instancia = new GestorBD();
+		}
+		return instancia;
 	}
 
-	public GestorBD conectarBD() throws Exception {
+	public GestorBD conectarBD() throws SQLException {
 		Driver derbyEmbeddedDriver = new EmbeddedDriver();
 		DriverManager.registerDriver(derbyEmbeddedDriver);
 		mBD = DriverManager.getConnection("" + BDConstantes.DRIVER + ":" + BDConstantes.DBNAME + ";create=false",
@@ -23,44 +34,49 @@ public class GestorBD {
 		return this;
 	}
 
-	public void desconectarBD() throws Exception {
+	public void desconectarBD() throws SQLException {
 		mBD.close();
 	}
 
-	/**
-	 * 
-	 * @param sql
-	 */
-	public void select(String sql) {
-		// TODO - implement GestorBD.select
-		throw new UnsupportedOperationException();
+	public Vector<Object> select(String sql) throws SQLException {
+		/* Metodo para realizar una busqueda o seleccion de informacion en la base de datos.
+		 * Develve un vector de vectores, donde cada uno de los vectores que contiene el vector principal representa los registros que se recuperan de la base de datos. */
+		Vector<Object> vectoradevolver = new Vector<Object>();
+		Statement stmt = mBD.createStatement();
+		ResultSet res = stmt.executeQuery(sql);
+		while (res.next()) {
+			Vector<Object> v = new Vector<Object>();
+			v.add(res.getObject(1)); // TODO - estar atento a esto
+			v.add(res.getObject(2));
+			vectoradevolver.add(v);
+		}
+		stmt.close();
+		desconectarBD();
+		return vectoradevolver;
 	}
 
-	/**
-	 * 
-	 * @param sql
-	 */
-	public int insert(String sql) {
-		// TODO - implement GestorBD.insert
-		throw new UnsupportedOperationException();
+	public int insert(String sql) throws SQLException {
+		PreparedStatement stmt = mBD.prepareStatement(sql);
+    	int res=stmt.executeUpdate();
+    	stmt.close();
+    	desconectarBD();
+		return res;   		
+}
+
+	public int update(String sql) throws SQLException {
+		PreparedStatement stmt = mBD.prepareStatement(sql);
+    	int res=stmt.executeUpdate();
+    	stmt.close();
+    	desconectarBD();
+		return res;   	
 	}
 
-	/**
-	 * 
-	 * @param sql
-	 */
-	public int update(String sql) {
-		// TODO - implement GestorBD.update
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param sql
-	 */
-	public int delete(String sql) {
-		// TODO - implement GestorBD.delete
-		throw new UnsupportedOperationException();
+	public int delete(String sql) throws SQLException {
+		PreparedStatement stmt = mBD.prepareStatement(sql);
+    	int res=stmt.executeUpdate();
+    	stmt.close();
+    	desconectarBD();
+		return res;   	
 	}
 
 	public void operation() {

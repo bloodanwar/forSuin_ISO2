@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public abstract class AbstractEntityDAO<E> {
@@ -8,40 +9,15 @@ public abstract class AbstractEntityDAO<E> {
 	private Date fechaCreacion;
 	private Date fechaActualizacion;
 
-	/**
-	 * 
-	 * @param id
-	 */
-	public E get(String id) {
-		// TODO - implement AbstractEntityDAO.get
-		throw new UnsupportedOperationException();
-	}
+	public abstract E get(String id) throws SQLException;
 
-	/**
-	 * 
-	 * @param entity
-	 */
-	public int insert(E entity) {
-		throw new UnsupportedOperationException();
-	}
+	public abstract int insert(E entity) throws SQLException;
 
-	/**
-	 * 
-	 * @param entity
-	 */
-	public E update(E entity) {
-		throw new UnsupportedOperationException();
-	}
+	public abstract E update(E entity) throws SQLException;
 
-	/**
-	 * 
-	 * @param entity
-	 */
-	public int delete(E entity) {
-		throw new UnsupportedOperationException();
-	}
+	public abstract int delete(E entity) throws SQLException;
 
-	public void operation() {
-		throw new UnsupportedOperationException();
+	public void operation() throws SQLException {
+		GestorBD.getInstancia().operation();
 	}
 }
