@@ -31,7 +31,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	// Variables generales
 	private JButton button;
-	private JLabel label;
+	private JLabel label, labelRequisito;
 	private JScrollPane scrollPanel;    
 	private JTextField tituloCurso, fechaInicio, fechaFinal, requisitoCurso, nombreMateria;
 	private JTextArea descripcionCurso;
@@ -176,9 +176,9 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 
 		// Requistio -- Provisional -> Depende de categoria
-		label = new JLabel("Requsito");
-		label.setBounds(500,260,200,30);
-		add(label);
+		labelRequisito = new JLabel("Requsito");
+		labelRequisito.setBounds(500,260,200,30);
+		add(labelRequisito);
 
 		requisitoCurso = new JTextField();
 		requisitoCurso.setBounds(500,290,200,30);
@@ -202,14 +202,17 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				int index = categoriasLista.getSelectedIndex();
-				if(index == 0 || index == 1 || index == 2) {
-					requisitoCurso.setText("Universidad");
+				if(index == 0 || index == 2) {
+					requisitoCurso.setEnabled(true);
+					labelRequisito.setText("Titulación universitaria requerida");
 
-				} else if(index == 3 || index == 4) {
-					requisitoCurso.setText("No Universidad");
+				} else if(index == 1) {
+					requisitoCurso.setEnabled(true);
+					labelRequisito.setText("Cualificación requerida");
 
 				}else {
-					requisitoCurso.setText("Indiferente");
+					labelRequisito.setText("No es necesario requisito");
+					requisitoCurso.setEnabled(false);
 
 
 				}
@@ -407,6 +410,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					categoriasLista.setBackground(new Color(255, 255, 255));
 				}
 
+				if(requisitoCurso.isEnabled() && requisitoCurso.getText().equals("")) {
+					requisitoCurso.setBackground(new Color(222, 129, 122));
+					complete = false;
+				}else {
+					requisitoCurso.setBackground(new Color(255, 255, 255));
+				}
+				
 				if(materias.isEmpty()) {
 					materiasLista.setBackground(new Color(222, 129, 122));
 					complete = false;
