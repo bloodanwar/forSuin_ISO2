@@ -1,4 +1,4 @@
-# CASOS DE USO [Revisar por si acaso]
+# CASOS DE USO [REVISAR]
 
 ## COSAS PRINCIPALES
 - [ ] Menu principal -> Inicio de sesión
@@ -12,15 +12,18 @@
 - [ ] Realizar propuesta curso
   -	Nombre de curso
   -	Descripción
-  -	Fecha propuesta para comenzar curso
-  -	Tipo de enseñanza y subcategoría
+  - Creditos
+  - Centro
+  -	Edición
+  - Matricula
+  -	Fecha inicio y fin
+  -	Tipo de enseñanza
+  - Requisitos necesarios (En caso de master y experto)
   -	Profesor como secretario
   -	Materias -> Nombre + Número de horas + Profesor responsable + Profesores que imparten
   -	Profesores -> Categoría + Si son o no doctores
-  -	Requisitos necesarios (En caso de master y experto)
   -	Fecha cuando se propone el curso
-  -	Estado (aprobada, rechazada o pendiente) (¿?)
-  -	Edición -> Si el curso ya se ha impartido (¿?)
+  -	Estado (al realizar poner en pendiente)
 
 - [ ] Editar propuesta curso
 
