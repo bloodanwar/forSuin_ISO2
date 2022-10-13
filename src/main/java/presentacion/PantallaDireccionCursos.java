@@ -11,17 +11,23 @@ public class PantallaDireccionCursos extends JFrame{
     private JButton button;
     
     public PantallaDireccionCursos () {
-        // Propiedades basicas
+    	initLayout();
+    	botonesLayout();        
+    }
+    
+	private void initLayout() {
+		// Propiedades basicas
         setLayout(null);
         setBounds(10, 10, 500,500);
         setTitle("Direccion de cursos");
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-
-        
-        // Boton para visualizar cursos aprobados
+	}
+	
+	private void botonesLayout() {
+		// Boton para visualizar cursos aprobados
         button = new JButton("Consultar cursos aprobados");
         button.setBounds(10,10,200,30);
         add(button);
@@ -66,8 +72,9 @@ public class PantallaDireccionCursos extends JFrame{
             }
 
         });
-    }
-    
+		
+	}
+
 	public void altaCurso() {
 		// TODO - implement PantallaDireccionCursos.altaCurso
 		throw new UnsupportedOperationException();

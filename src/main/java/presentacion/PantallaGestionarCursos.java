@@ -1,5 +1,6 @@
 package presentacion;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,17 +20,25 @@ public class PantallaGestionarCursos extends JFrame{
     private DefaultListModel model = new DefaultListModel(); 
     
     public PantallaGestionarCursos () {
-        // Propiedades basicas
+    	initLayout();
+    	listLayout();
+    	botonesLayout();
+    }
+
+	private void initLayout() {
+		// Propiedades basicas
         setLayout(null);
         setBounds(10, 10, 800,800);
         setTitle("Gestion de cursos propuestos");
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		
+	}
 
-        
-        // Lista de cursos propuestos -- Se lee de la base de datos
+	private void listLayout() {
+		// Lista de cursos propuestos -- Se lee de la base de datos
         model.add(0, "Curso 1");
         model.add(1, "Curso 2");
         model.add(2, "Curso 3");
@@ -40,9 +49,11 @@ public class PantallaGestionarCursos extends JFrame{
         JScrollPane scrollLista = new JScrollPane(cursosLista);
         scrollLista.setBounds(10, 10, 220, 80);
         add(scrollLista);
-        
-        
-        // Boton para realizar propuesta de curso
+		
+	}
+
+	private void botonesLayout() {
+		// Boton para realizar propuesta de curso
         button = new JButton("Realizar propuesta");
         button.setBounds(10,110,200,30);
         add(button);
@@ -66,7 +77,9 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new
+            	if(cursosLista.isSelectionEmpty()) return;
+
+            	//pantallaEditarCurso (misma que realizar pero rellenado ??)
                 //setVisible(false);
             }
 
@@ -81,6 +94,8 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if(cursosLista.isSelectionEmpty()) return;
+
             	model.remove(cursosLista.getSelectedIndex());
             }
 
@@ -101,5 +116,6 @@ public class PantallaGestionarCursos extends JFrame{
             }
 
         });
-    }
+		
+	}
 }

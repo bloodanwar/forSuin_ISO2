@@ -18,16 +18,25 @@ public class PantallaCursosAprobados extends JFrame{
     private JList cursosLista;
     
     public PantallaCursosAprobados () {
-        // Propiedades basicas
+    	initLayout();
+    	botonesLayout();
+
+    }
+
+	private void initLayout() {
+		// Propiedades basicas
         setLayout(null);
         setBounds(10, 10, 800,800);
         setTitle("Cursos aprobados");
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		
+	}
 
-        // Lista de cursos
+	private void botonesLayout() {
+		// Lista de cursos
         String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de la base de datos
         cursosLista = new JList(cursos);
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -66,5 +75,6 @@ public class PantallaCursosAprobados extends JFrame{
             }
 
         });
-    }
+		
+	}
 }
