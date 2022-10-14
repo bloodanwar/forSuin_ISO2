@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -89,6 +90,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
+		mainPanel.setPreferredSize(new Dimension(1800, 1000));
+
 	}
 
 	private void basicLayout() {
