@@ -3,6 +3,7 @@
 ## COSAS PRINCIPALES
 - [ ] Menu principal -> Inicio de sesión
 - [ ] Base de datos
+- [ ] USO DE LOGS❕(usando la dependencia de maven Log4j 2)
 
 ## DIRECTOR DE CURSO [Es un profesor]
 - [ ] Visualizar cursos aprobados -> Cada curso tiene una “página web” con toda la información (Se puede usar la misma interfaz que alumno!?)
