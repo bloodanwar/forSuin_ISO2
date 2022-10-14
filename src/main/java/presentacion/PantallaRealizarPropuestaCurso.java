@@ -1,13 +1,21 @@
 package presentacion;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Iterator;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -21,6 +29,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -32,11 +42,14 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	// Variables generales
 	private JButton button;
 	private JLabel label, labelRequisito;
+	private JPanel mainPanel, panel;
 	private JScrollPane scrollPanel;    
-	private JTextField tituloCurso, fechaInicio, fechaFinal, requisitoCurso, nombreMateria;
+	private JTextField tituloCurso, requisitoCurso, nombreMateria;
 	private JTextArea descripcionCurso;
 	private JList secretariosLista, centrosLista, categoriasLista, materiasLista, responsablesLista, profesoresMateriaLista;
-	private JComboBox edicionCurso, tasaMatricula, ectsCurso, horas;  
+	private JComboBox<Integer> edicionCurso, tasaMatricula, ectsCurso, horas;
+	private JComboBox diaInicio, mesInicio, anoInicio, diaFinal, mesFinal, anoFinal;  
+
 
 	// Listas
 	private String[] categorias = {"Másteres de Formación Permanente", "Especialistas", "Expertos", 
@@ -58,72 +71,113 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		enseñanzasLayout();
 		materiasLayout();
 		botonesLayout();
+
+		scrollPanel = new JScrollPane(mainPanel);
+		scrollPanel.setBounds(0, 0, 0,0);
+		add(scrollPanel);
+
 	}
 
 	private void initLayout() {	
-		setLayout(null);
+		setLayout(new BorderLayout());
 		setBounds(10, 10, 800,800);
 		setTitle("Realizar propuesta curso");
-        setResizable(true);
+		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+		mainPanel = new JPanel();
+		mainPanel.setLayout(null);
 	}
 
 	private void basicLayout() {
-		// Titulo
+		// Titulo		
 		label = new JLabel("Titulo de curso");
 		label.setBounds(10,10,400,30);
-		add(label);
+		mainPanel.add(label);
 
 		tituloCurso = new JTextField();
 		tituloCurso.setBounds(10,40,400,30);
-		add(tituloCurso);
+		mainPanel.add(tituloCurso);
+
 
 		// Descripción
 		label = new JLabel("Descripción de curso");
 		label.setBounds(10,90,400,30);
-		add(label);
+		mainPanel.add(label);
 
 		descripcionCurso = new JTextArea();
 		descripcionCurso.setLineWrap(true);
 		scrollPanel = new JScrollPane(descripcionCurso);
 		scrollPanel.setBounds(10,120,400,200);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 		// Profesor Secretario
 		label = new JLabel("Profesor secretario");
 		label.setBounds(10,330,400,30);
-		add(label);
+		mainPanel.add(label);
 
 		secretariosLista = new JList(profesores);
 		secretariosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(secretariosLista);
 		scrollPanel.setBounds(10, 360, 400, 100);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 		// Fecha Inicio
-		label = new JLabel("Fecha inicio (DD / MM / AAAA)");
+		label = new JLabel("Fecha inicio (DD/MM/AAAA)");
 		label.setBounds(10,480,200,30);
-		add(label);
+		mainPanel.add(label);
 
-		fechaInicio = new JTextField();
-		fechaInicio.setBounds(10,510,180,30);
-		add(fechaInicio);
+		diaInicio = new JComboBox();
+		diaInicio.setBounds(10,510,40,30);
+		mainPanel.add(diaInicio);
+
+		for (int i = 1; i<32; i++) diaInicio.addItem(i);
+
+		mesInicio = new JComboBox();
+		mesInicio.setBounds(60,510,40,30);
+		mainPanel.add(mesInicio);
+
+		for (int i = 1; i<13; i++) mesInicio.addItem(i);
+
+		anoInicio = new JComboBox();
+		anoInicio.setBounds(110,510,80,30);
+		mainPanel.add(anoInicio);
+
+		for (int i = 2022; i<2100; i++) anoInicio.addItem(i);
+
 
 		// Fecha Final
-		label = new JLabel("Fecha final (DD / MM / AAAA)");
-		label.setBounds(200,480,200,30);
-		add(label);
+		label = new JLabel("Fecha final (DD/MM/AAAA)");
+		label.setBounds(220,480,200,30);
+		mainPanel.add(label);
 
-		fechaFinal = new JTextField();
-		fechaFinal.setBounds(200,510,180,30);
-		add(fechaFinal);
+		diaFinal = new JComboBox();
+		diaFinal.setBounds(220,510,40,30);
+		mainPanel.add(diaFinal);
+
+		for (int i = 1; i<32; i++) diaFinal.addItem(i);
+
+		mesFinal = new JComboBox();
+		mesFinal.setBounds(270,510,40,30);
+		mainPanel.add(mesFinal);
+
+		for (int i = 1; i<13; i++) mesFinal.addItem(i);
+
+		anoFinal = new JComboBox();
+		anoFinal.setBounds(320,510,80,30);
+		mainPanel.add(anoFinal);
+
+		for (int i = 2022; i<2100; i++) anoFinal.addItem(i);
+
+
+
 
 		// Edicion de curso
 		label = new JLabel("Edicion de curso");
 		label.setBounds(10,560,200,30);
-		add(label);
+		mainPanel.add(label);
 
 		edicionCurso = new JComboBox();
 		edicionCurso.setBounds(10,590,180,30);
@@ -132,13 +186,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			edicionCurso.addItem(i);
 		}
 
-		add(edicionCurso);
+		mainPanel.add(edicionCurso);
 
 
 		// Tasa matricula
 		label = new JLabel("Tasa Matricula");
 		label.setBounds(200,560,200,30);
-		add(label);
+		mainPanel.add(label);
 
 		tasaMatricula = new JComboBox();
 		tasaMatricula.setBounds(200,590,180,30);
@@ -147,18 +201,18 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			tasaMatricula.addItem(i);
 		}
 
-		add(tasaMatricula);
+		mainPanel.add(tasaMatricula);
 
 		// Centro en el que se imparte
 		label = new JLabel("Centro en el que se imparte");
 		label.setBounds(10,640,400,30);
-		add(label);
+		mainPanel.add(label);
 
 		centrosLista = new JList(centros);
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(centrosLista);
 		scrollPanel.setBounds(10, 670, 400, 100);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 	}
 
@@ -166,56 +220,94 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		// Categoria 
 		label = new JLabel("Categoria");
 		label.setBounds(500,10,400,30);
-		add(label);
+		mainPanel.add(label);
 
 		categoriasLista = new JList(categorias);
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(categoriasLista);
 		scrollPanel.setBounds(500, 40, 400, 200);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 
 		// Requistio -- Provisional -> Depende de categoria
 		labelRequisito = new JLabel("Requsito");
 		labelRequisito.setBounds(500,260,200,30);
-		add(labelRequisito);
+		mainPanel.add(labelRequisito);
 
 		requisitoCurso = new JTextField();
 		requisitoCurso.setBounds(500,290,200,30);
 		requisitoCurso.setEnabled(false);
-		add(requisitoCurso);
+		mainPanel.add(requisitoCurso);
 
 
 		// ECTS -- Provisional -> Depende de categoria
 		label = new JLabel("ECTS");
 		label.setBounds(500,340,200,30);
-		add(label);
+		mainPanel.add(label);
 
-		ectsCurso = new JComboBox();
+		ectsCurso = new JComboBox<Integer>();
 		ectsCurso.setBounds(500,370,200,30);
-		add(ectsCurso);
+		ectsCurso.setEnabled(false);
+		mainPanel.add(ectsCurso);
 
 
 		categoriasLista.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
 				int index = categoriasLista.getSelectedIndex();
-				if(index == 0 || index == 2) {
+				int requisito = -1;				
+				ectsCurso.removeAllItems();
+				ectsCurso.setEnabled(true);
+
+				switch (index) {
+				case 0:
+					requisito = 0;
+
+					ectsCurso.addItem(60);
+					ectsCurso.addItem(90);
+					ectsCurso.addItem(120);
+
+					break;
+
+				case 1:
+					requisito = 1;
+					for (int i = 30; i<60; i++) ectsCurso.addItem(i);
+					break;
+				case 2:
+					requisito = 0;
+					for (int i = 15; i<30; i++) ectsCurso.addItem(i);
+					break;
+				case 3:
+					for (int i = 15; i<31; i++) ectsCurso.addItem(i);
+					break;
+				case 4:
+					for (int i = 3; i<15; i++) ectsCurso.addItem(i);
+					break;
+				case 5:
+					for (int i = 2; i<15; i++) ectsCurso.addItem(i);
+					break;
+				case 6:
+					for (int i = 1; i<3; i++) ectsCurso.addItem(i);
+					break;
+				default:
+					ectsCurso.setEnabled(false);
+					break;
+				}
+
+				if(requisito == 0) {
 					requisitoCurso.setEnabled(true);
 					labelRequisito.setText("Titulación universitaria requerida");
 
-				} else if(index == 1) {
+				} else if(requisito == 1) {
 					requisitoCurso.setEnabled(true);
 					labelRequisito.setText("Cualificación requerida");
 
 				}else {
 					labelRequisito.setText("No es necesario requisito");
 					requisitoCurso.setEnabled(false);
-
-
 				}
+
 			}
 		});
 
@@ -225,28 +317,28 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		// Materias creadas
 		label = new JLabel("Lista de materias creadas");
 		label.setBounds(1000,10,200,30);
-		add(label);
+		mainPanel.add(label);
 
 		materiasLista = new JList(materias);
 		materiasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(materiasLista);
 		scrollPanel.setBounds(1000, 40, 220, 80);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 		// Nombre de materia
 		label = new JLabel("Nombre de materia");
 		label.setBounds(1000,130,200,30);
-		add(label);
+		mainPanel.add(label);
 
 		nombreMateria = new JTextField();
 		nombreMateria.setBounds(1000,160,200,30);
-		add(nombreMateria);
+		mainPanel.add(nombreMateria);
 
 
 		// Horas de materia
 		label = new JLabel("Horas de materia");
 		label.setBounds(1300,130,200,30);
-		add(label);
+		mainPanel.add(label);
 
 		horas = new JComboBox();
 		horas.setBounds(1300,160,200,30);
@@ -255,36 +347,36 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			horas.addItem(i);
 		}
 
-		add(horas);
+		mainPanel.add(horas);
 
 
 		// Profesor responsable de materia
 		label = new JLabel("Profesor responsable de materia");
 		label.setBounds(1000,210,200,30);
-		add(label);
+		mainPanel.add(label);
 
 		responsablesLista = new JList(profesores);
 		responsablesLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(responsablesLista);
 		scrollPanel.setBounds(1000, 240, 220, 80);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 		// Profesores que la imparten
 		label = new JLabel("Profesores que imparten la materia (Usar ctl para seleccionar varios)");
 		label.setBounds(1300,210,400,30);
-		add(label);
+		mainPanel.add(label);
 
 		profesoresMateriaLista = new JList(profesores);
 		profesoresMateriaLista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPanel = new JScrollPane(profesoresMateriaLista);
 		scrollPanel.setBounds(1300, 240, 220, 80);
-		add(scrollPanel);
+		mainPanel.add(scrollPanel);
 
 
 		// Boton para añadir materia
 		button = new JButton("Añadir materia");
 		button.setBounds(1300,40,200,30);
-		add(button);
+		mainPanel.add(button);
 
 		button.addActionListener(new ActionListener() {
 
@@ -306,14 +398,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				}else {
 					responsablesLista.setBackground(new Color(255, 255, 255));
 				}
-				
-				if(centrosLista.isSelectionEmpty()) {
-					centrosLista.setBackground(new Color(222, 129, 122));
-					complete = false;
-				}else {
-					centrosLista.setBackground(new Color(255, 255, 255));
-				}
-
 
 				if(profesoresMateriaLista.isSelectionEmpty()) {
 					profesoresMateriaLista.setBackground(new Color(222, 129, 122));
@@ -326,13 +410,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					materias.add(idMateria, nombreMateria.getText()); 
 					idMateria++;
 
-					// CREAR MATERIA -- materia = new Materia();
+					// CREAR MATERIA
+					materia = new Materia();
 
+					// Limpiar selección
 					nombreMateria.setText("");
 					responsablesLista.clearSelection();
 					profesoresMateriaLista.clearSelection();
-
-
 				}
 
 			}
@@ -341,7 +425,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 		label = new JLabel("(Completar campos de abajo antes)");
 		label.setBounds(1300,70,300,30);
-		add(label);
+		mainPanel.add(label);
 
 
 	}
@@ -350,7 +434,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		// Boton para ir atras
 		button = new JButton("Atras");
 		button.setBounds(1070,430,200,30);
-		add(button);
+		mainPanel.add(button);
 
 		button.addActionListener(new ActionListener() {
 
@@ -365,7 +449,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		// Boton para enviar propuesta
 		button = new JButton("Enviar propuesta");
 		button.setBounds(1300,430,200,30);
-		add(button);
+		mainPanel.add(button);
 
 		button.addActionListener(new ActionListener() {
 
@@ -394,7 +478,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				}else {
 					secretariosLista.setBackground(new Color(255, 255, 255));
 				}
-				
+
 				if(centrosLista.isSelectionEmpty()) {
 					centrosLista.setBackground(new Color(222, 129, 122));
 					complete = false;
@@ -416,7 +500,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				}else {
 					requisitoCurso.setBackground(new Color(255, 255, 255));
 				}
-				
+
 				if(materias.isEmpty()) {
 					materiasLista.setBackground(new Color(222, 129, 122));
 					complete = false;
@@ -431,7 +515,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					new PantallaGestionarCursos();
 					setVisible(false);
 
-					// CREAR CURSO -- curso = new CursoPropio();
+					// CREAR CURSO
+					curso = new CursoPropio();
 				}
 
 			}
