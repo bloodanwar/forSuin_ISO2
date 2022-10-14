@@ -1,4 +1,4 @@
-# CASOS DE USO [REVISAR]
+# HISTORIAS DE USUARIO [REVISAR‼]
 
 ## COSAS PRINCIPALES
 - [ ] Menu principal -> Inicio de sesión
