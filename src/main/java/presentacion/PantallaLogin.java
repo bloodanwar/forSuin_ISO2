@@ -13,9 +13,9 @@ public class PantallaLogin extends JFrame {
     public PantallaLogin () {
         // Propiedades basicas
         setLayout(null);
-        setBounds(10, 10, 800,800);
+        setBounds(10, 10, 800,600);
         setTitle("Login [PROTOTIPO]");
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
