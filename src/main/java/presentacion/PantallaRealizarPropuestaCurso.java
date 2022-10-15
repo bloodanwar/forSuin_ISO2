@@ -360,9 +360,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				}
 
 				if (complete) {
-					materias.add(idMateria, nombreMateria.getText()); 
-					idMateria++;
-
+					materias.addElement(nombreMateria.getText());
 					// CREAR MATERIA
 					materia = new Materia();
 
@@ -390,6 +388,15 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		button.setBounds(450,1200,200,30);
 		mainPanel.add(button);
 
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (materiasLista.isSelectionEmpty()) return;
+				materias.remove(materiasLista.getSelectedIndex());
+				
+			}
+		});
 
 		// Nombre de materia
 		label = new JLabel("Nombre de materia");
