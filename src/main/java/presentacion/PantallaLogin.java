@@ -13,17 +13,18 @@ public class PantallaLogin extends JFrame {
     public PantallaLogin () {
         // Propiedades basicas
         setLayout(null);
-        setBounds(10, 10, 500,500);
+        setBounds(10, 10, 800,800);
         setTitle("Login [PROTOTIPO]");
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        
 
         
         // Bot�n para iniciar como profesor (prototipo)
         button = new JButton("Profesor");
-        button.setBounds(10,10,100,30);
+        button.setBounds(300,10,100,30);
         add(button);
     
         button.addActionListener(new ActionListener() {

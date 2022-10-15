@@ -30,8 +30,8 @@ public class PantallaCursosAprobados extends JFrame{
         setTitle("Cursos aprobados");
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		
 	}
 
@@ -42,12 +42,12 @@ public class PantallaCursosAprobados extends JFrame{
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollLista = new JScrollPane(cursosLista);
-        scrollLista.setBounds(10, 10, 220, 80);
+        scrollLista.setBounds(200, 10, 400, 200);
         add(scrollLista);
         
         // Bot�n para ver datos curso
         button = new JButton("Ver datos");
-        button.setBounds(10,110,200,30);
+        button.setBounds(400,260,200,30);
         add(button);
     
         button.addActionListener(new ActionListener() {
@@ -63,7 +63,7 @@ public class PantallaCursosAprobados extends JFrame{
         
         // Bot�n para ir atras
         button = new JButton("Atras");
-        button.setBounds(10,160,200,30);
+        button.setBounds(200,260,200,30);
         add(button);
     
         button.addActionListener(new ActionListener() {
