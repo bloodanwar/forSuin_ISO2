@@ -20,7 +20,7 @@ public class PantallaDireccionCursos extends JFrame{
         setLayout(null);
         setBounds(10, 10, 800,800);
         setTitle("Direccion de cursos");
-        setResizable(true);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);

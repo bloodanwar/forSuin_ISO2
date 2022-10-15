@@ -35,7 +35,7 @@ public class PantallaGestionarCursos extends JFrame{
         setLayout(null);
         setBounds(10, 10, 800,800);
         setTitle("Gestion de cursos propuestos");
-        setResizable(true);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
