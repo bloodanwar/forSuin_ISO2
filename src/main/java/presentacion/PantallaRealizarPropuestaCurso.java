@@ -81,7 +81,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	private void initLayout() {	
 		setLayout(new BorderLayout());
-		setBounds(10, 10, 800,800);
+		setBounds(10, 10, 800,600);
 		setTitle("Realizar propuesta curso");
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

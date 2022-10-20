@@ -25,7 +25,7 @@ public class PantallaCursosAprobados extends JFrame{
 
 	private void initLayout() {
 		// Propiedades basicas
-        setLayout(null);
+        getContentPane().setLayout(null);
         setBounds(10, 10, 800,600);
         setTitle("Cursos aprobados");
         setResizable(true);
@@ -42,13 +42,13 @@ public class PantallaCursosAprobados extends JFrame{
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollLista = new JScrollPane(cursosLista);
-        scrollLista.setBounds(200, 10, 400, 200);
-        add(scrollLista);
+        scrollLista.setBounds(198, 79, 400, 200);
+        getContentPane().add(scrollLista);
         
         // Bot�n para ver datos curso
         button = new JButton("Ver datos");
-        button.setBounds(400,260,200,30);
-        add(button);
+        button.setBounds(296,290,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -63,8 +63,8 @@ public class PantallaCursosAprobados extends JFrame{
         
         // Bot�n para ir atras
         button = new JButton("Atras");
-        button.setBounds(200,260,200,30);
-        add(button);
+        button.setBounds(10,520,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             

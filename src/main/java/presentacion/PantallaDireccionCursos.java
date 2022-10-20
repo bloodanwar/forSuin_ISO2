@@ -17,7 +17,7 @@ public class PantallaDireccionCursos extends JFrame{
     
 	private void initLayout() {
 		// Propiedades basicas
-        setLayout(null);
+        getContentPane().setLayout(null);
         setBounds(10, 10, 800,600);
         setTitle("Direccion de cursos");
         setResizable(true);
@@ -29,8 +29,8 @@ public class PantallaDireccionCursos extends JFrame{
 	private void botonesLayout() {
 		// Boton para visualizar cursos aprobados
         button = new JButton("Consultar cursos aprobados");
-        button.setBounds(300,10,200,30);
-        add(button);
+        button.setBounds(300,163,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -45,8 +45,8 @@ public class PantallaDireccionCursos extends JFrame{
         
         // Boton para gestionar cursos propuestos
         button = new JButton("Gestionar cursos propuestos");
-        button.setBounds(300,60,200,30);
-        add(button);
+        button.setBounds(300,213,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -60,8 +60,8 @@ public class PantallaDireccionCursos extends JFrame{
         
         // Bot�n para cerrar sesion
         button = new JButton("Cerrar sesion");
-        button.setBounds(300,110,200,30);
-        add(button);
+        button.setBounds(300,263,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             

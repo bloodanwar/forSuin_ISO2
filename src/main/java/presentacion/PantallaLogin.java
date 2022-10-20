@@ -12,7 +12,7 @@ public class PantallaLogin extends JFrame {
     
     public PantallaLogin () {
         // Propiedades basicas
-        setLayout(null);
+        getContentPane().setLayout(null);
         setBounds(10, 10, 800,600);
         setTitle("Login [PROTOTIPO]");
         setResizable(true);
@@ -24,14 +24,29 @@ public class PantallaLogin extends JFrame {
         
         // Bot�n para iniciar como profesor (prototipo)
         button = new JButton("Profesor");
-        button.setBounds(300,10,100,30);
-        add(button);
+        button.setBounds(275,157,196,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
                 new PantallaDireccionCursos();
+                setVisible(false);
+            }
+
+        });
+        
+        // Bot�n para iniciar como personal vicerrectorado (prototipo)
+        button = new JButton("Personal Vicerrectorado");
+        button.setBounds(275,198,196,30);
+        getContentPane().add(button);
+    
+        button.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PantallaEmpleadosVicerrectorado();
                 setVisible(false);
             }
 

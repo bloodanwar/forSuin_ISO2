@@ -19,10 +19,10 @@ import javax.swing.event.ListSelectionListener;
 public class PantallaGestionarCursos extends JFrame{
     
     private JButton button;
+    private JLabel estado;
     private JList cursosLista;
-    private DefaultListModel model = new DefaultListModel(); 
-    CountDownLatch latch = new CountDownLatch(2);
-
+    private DefaultListModel cursosEnviados = new DefaultListModel(); 
+ 
     
     public PantallaGestionarCursos () {
     	initLayout();
@@ -32,7 +32,7 @@ public class PantallaGestionarCursos extends JFrame{
 
 	private void initLayout() {
 		// Propiedades basicas
-        setLayout(null);
+        getContentPane().setLayout(null);
         setBounds(10, 10, 800,600);
         setTitle("Gestion de cursos propuestos");
         setResizable(true);
@@ -44,24 +44,38 @@ public class PantallaGestionarCursos extends JFrame{
 
 	private void basicLayout() {
 		// Lista de cursos propuestos -- Se lee de la base de datos
-        model.add(0, "Curso 1");
-        model.add(1, "Curso 2");
-        model.add(2, "Curso 3");
+		cursosEnviados.add(0, "Curso 1");
+		cursosEnviados.add(1, "Curso 2");
+		cursosEnviados.add(2, "Curso 3");
         
-        cursosLista = new JList(model);
+        cursosLista = new JList(cursosEnviados);
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        
         JScrollPane scrollLista = new JScrollPane(cursosLista);
-        scrollLista.setBounds(200, 10, 400, 200);
-        add(scrollLista);
+        scrollLista.setBounds(199, 113, 400, 200);
+        getContentPane().add(scrollLista);
+        
+        estado = new JLabel("");
+        estado.setBackground(new Color(128, 128, 128));
+        estado.setBounds(609,150,129,81);
+        getContentPane().add(estado);
+        
+        cursosLista.addListSelectionListener(new ListSelectionListener() { // Da error porque "colisiona" con eliminar
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				//String curso = (String) cursosEnviados.getElementAt(cursosLista.getSelectedIndex());
+				//estado.setText("Estado de " + curso + ": ACEPTADO");
+			}
+		});
 
 	}
 
 	private void botonesLayout() {
 		// Boton para realizar propuesta de curso
         button = new JButton("Realizar propuesta");
-        button.setBounds(10,260,200,30);
-        add(button);
+        button.setBounds(94,322,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -75,8 +89,8 @@ public class PantallaGestionarCursos extends JFrame{
         
         // Boton para editar propuesta de curso
         button = new JButton("Editar");
-        button.setBounds(250,260,200,30);
-        add(button);
+        button.setBounds(304,324,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -84,23 +98,23 @@ public class PantallaGestionarCursos extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	if(cursosLista.isSelectionEmpty()) return;
 
-            	//pantallaEditarCurso (misma que realizar pero rellenado ??)
-                //setVisible(false);
+            	//pantallaEditarCurso --> Re-utilizar pantalla de realizar 
+            	//setVisible(false);
             }
 
         });
         
         // Boton para eliminar propuesta de curso
         button = new JButton("Eliminar");
-        button.setBounds(490,260,200,30);
-        add(button);
+        button.setBounds(514,324,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(cursosLista.isSelectionEmpty()) return;            	
-            	model.remove(cursosLista.getSelectedIndex());
+            	if(cursosLista.isSelectionEmpty()) return;         
+            	cursosEnviados.remove(cursosLista.getSelectedIndex());
             }
 
         });
@@ -108,8 +122,8 @@ public class PantallaGestionarCursos extends JFrame{
         
         // Boton para ir atras
         button = new JButton("Atras");
-        button.setBounds(10,310,200,30);
-        add(button);
+        button.setBounds(10,520,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
