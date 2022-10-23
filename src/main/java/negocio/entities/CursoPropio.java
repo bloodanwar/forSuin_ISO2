@@ -23,8 +23,20 @@ public class CursoPropio {
 	
 	
 	public CursoPropio() {
+		cursoPropioDao = new CursoPropioDAO();
 	}
 	
+	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion) {
+		cursoPropioDao = new CursoPropioDAO();
+		this.id = id;
+		this.nombre = nombre;
+		this.ECTS = eCTS;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.tasaMatricula = tasaMatricula;
+		this.edicion = edicion;
+	}
+
 	public Collection<Matricula> getMatriculas() { return matriculas; }
 	public void setMatriculas(Collection<Matricula> matriculas) { this.matriculas = matriculas; }
 	

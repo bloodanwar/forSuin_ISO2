@@ -3,6 +3,7 @@ package persistencia;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import negocio.entities.*;
 
@@ -31,18 +32,34 @@ public class CursoPropioDAO {
 	/**
 	 * 
 	 * @param curso
+	 * @throws SQLException 
 	 */
-	public CursoPropio seleccionarCurso(CursoPropio curso) {
+	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException {
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
 		datosCurso = (Vector) datosCurso.get(0);
 
-		String id=(String) datosCurso.get(0);
-		String nombre=(String) datosCurso.get(1);
-		int ECTS= (int) datosCurso.get(2);
-		Date fechainicio=(Date) datosCurso.get(3);
-		Date fechafin=(Date) datosCurso.get(4);
-		double tasaMatricula=(double) datosCurso.get(5);
-		int edicion=(int) datosCurso.get(6);
+		String id = (String) datosCurso.get(0);
+		String nombre = (String) datosCurso.get(1);
+		int ECTS = (Integer) datosCurso.get(2);
+		Date fechainicio = (Date) datosCurso.get(3);
+		Date fechafin = (Date) datosCurso.get(4);
+		double tasaMatricula = (Double) datosCurso.get(5);
+		int edicion = (Integer) datosCurso.get(6);
+		EstadoCurso estado = EstadoCurso.valueOf((String) datosCurso.get(7));
+		TipoCurso tipo = TipoCurso.valueOf((String) datosCurso.get(8));
+		
+		
+		/**
+		 * CursoPropio(id
+		 * nombre
+		 * ECTS
+		 * fechaInicio
+		 * fechaFin
+		 * tasaMatricula
+		 * edicion
+		 * estadoCurso, tipoCurso, centro_FK, secretario_Prof_UCLM_FK, director_Prof_UCLM_FK )
+
+		 */
 
 		return new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion);
 	}
@@ -65,14 +82,11 @@ public class CursoPropioDAO {
 				+ "edicion=" + curso.getEdicion() + ", "
 				+ "estadoCurso='" + curso.getEstado().toString() + "', "
 				+ "tipoCurso='" + curso.getTipo().toString() + "', "
-				+ "centro_nombre=" + curso.isDoctor() + ", "
+				+ "centro_nombre=" + curso.getCentro().getNombre() + ", "
 				+ "secretario_Profesor_DNI='" + curso.getSecretario().getDni() + "', "
-				+ 
-				
-				//(id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estadoCurso, tipoCurso, centro_nombre, secretario_Profesor_DNI, director_Profesor_DNI, fechaCreacion, fechaActualizacion
-
+				+ "director_Profesor_DNI='" + curso.getDirector().getDni() + "', "
 				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE id='"+curso.getId());
+				+ " WHERE id='"+curso.getId()+"'");
 	}
 
 	/**

@@ -7,8 +7,12 @@ public class ProfesorUCLM extends Profesor {
 	Centro centroAdscripcion;
 	CategoriaProfesor categoria;
 	ProfesorUCLMDAO profesorUCLMDao;
-	private String nombre;
-	private String apellidos;
-	private String dni;
 
+	public ProfesorUCLM() {
+		super("", "", "", false);
+		profesorUCLMDao = new ProfesorUCLMDAO();
+	} 
+	
+	
+	
 }

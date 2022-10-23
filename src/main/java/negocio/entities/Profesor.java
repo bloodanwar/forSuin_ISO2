@@ -11,11 +11,13 @@ public class Profesor {
 	private boolean doctor;
 	
 	public Profesor(String dni, String nombre, String apellidos, boolean doctor) {
+		profesorDao = new ProfesorDAO();
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.doctor = doctor;
 	}
+	
 	public String getDni() { return dni; }
 	public void setDni(String dni) { this.dni = dni; }
 	
