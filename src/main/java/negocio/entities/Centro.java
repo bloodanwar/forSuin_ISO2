@@ -4,10 +4,26 @@ import java.util.*;
 import persistencia.*;
 
 public class Centro {
-	Collection<CursoPropio> cursoPropios;
-	Collection<ProfesorUCLM> plantilla;
-	CentroDAO centroDao;
+	public Collection<CursoPropio> cursoPropios;
+	public Collection<ProfesorUCLM> plantilla;
+	public CentroDAO centroDao;
 	private String nombre;
 	private String localizacion;
 	private int attribute;
+	
+	public Centro(){}
+	
+	public Centro(String nombre){
+		centroDao = new CentroDAO();
+		this.nombre = nombre;
+	}
+
+	public String getNombre() { return nombre; }
+	public void setNombre(String nombre) {	this.nombre = nombre; }
+
+	public String getLocalizacion() { return localizacion; }
+	public void setLocalizacion(String localizacion) { this.localizacion = localizacion; }
+
+	public int getAttribute() { return attribute; }
+	public void setAttribute(int attribute) { this.attribute = attribute; }
 }

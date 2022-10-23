@@ -26,7 +26,7 @@ public class CursoPropio {
 		cursoPropioDao = new CursoPropioDAO();
 	}
 	
-	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion) {
+	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, EstadoCurso estado, TipoCurso tipo, Centro centro, ProfesorUCLM secretario, ProfesorUCLM director) {
 		cursoPropioDao = new CursoPropioDAO();
 		this.id = id;
 		this.nombre = nombre;
@@ -35,6 +35,11 @@ public class CursoPropio {
 		this.fechaFin = fechaFin;
 		this.tasaMatricula = tasaMatricula;
 		this.edicion = edicion;
+		this.estado = estado;
+		this.tipo = tipo;
+		this.centro = centro;
+		this.secretario=secretario;
+		this.director=director;
 	}
 
 	public Collection<Matricula> getMatriculas() { return matriculas; }

@@ -47,28 +47,19 @@ public class CursoPropioDAO {
 		int edicion = (Integer) datosCurso.get(6);
 		EstadoCurso estado = EstadoCurso.valueOf((String) datosCurso.get(7));
 		TipoCurso tipo = TipoCurso.valueOf((String) datosCurso.get(8));
-		
-		
-		/**
-		 * CursoPropio(id
-		 * nombre
-		 * ECTS
-		 * fechaInicio
-		 * fechaFin
-		 * tasaMatricula
-		 * edicion
-		 * estadoCurso, tipoCurso, centro_FK, secretario_Prof_UCLM_FK, director_Prof_UCLM_FK )
+		Centro centro = new Centro((String) datosCurso.get(9));
+		ProfesorUCLM secretario = new ProfesorUCLM((String) datosCurso.get(10));
+		ProfesorUCLM director = new ProfesorUCLM((String) datosCurso.get(11));
 
-		 */
-
-		return new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion);
+		return new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
 	}
 
 	/**
 	 * 
 	 * @param curso
+	 * @throws SQLException 
 	 */
-	public int editarCurso(CursoPropio curso) {
+	public int editarCurso(CursoPropio curso) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
 
 		Date fechaActualizacion = new Date();
@@ -117,6 +108,6 @@ public class CursoPropioDAO {
 	 * @param fechaFin
 	 */
 	public void listarEdicionesCursos(Date fechaInicio, Date fechaFin) {
-		Vector listaEdicicion = listaEdicion = GestorBD.getInstancia().select("SELECT edicion FROM cursoPropio WHERE ")
+		Vector listaEdicicion = GestorBD.getInstancia().select("SELECT edicion FROM cursoPropio WHERE ")
 	}
 }
