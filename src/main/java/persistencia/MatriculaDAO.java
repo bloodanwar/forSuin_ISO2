@@ -1,18 +1,20 @@
 package persistencia;
 
+import java.util.Date;
 import java.util.List;
 
 import negocio.entities.*;
 
-public class MatriculaDAO extends AbstractEntityDAO {
+public class MatriculaDAO {
 
-	/**
-	 * 
-	 * @param matricula
-	 */
-	public int crearNuevaMatricula(Matricula matricula) {
-		// TODO - implement MatriculaDAO.crearNuevaMatricula
-		throw new UnsupportedOperationException();
+//fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni
+
+	public int crearNuevaMatricula(Matricula matricula) throws SQLException {
+		Date fechaCreacion= new Date();
+		Date fechaActualizacion = fechaCreacion;
+		
+		return GestorBD.getInstancia().insert("INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursopROPIO_id, estudiante_dni) VALUES ('"
+				+matricula.get
 	}
 
 	/**
@@ -20,7 +22,6 @@ public class MatriculaDAO extends AbstractEntityDAO {
 	 * @param matricula
 	 */
 	public Matricula seleccionarMatricula(Matricula matricula) {
-		// TODO - implement MatriculaDAO.seleccionarMatricula
 		throw new UnsupportedOperationException();
 	}
 
@@ -29,7 +30,6 @@ public class MatriculaDAO extends AbstractEntityDAO {
 	 * @param matricula
 	 */
 	public Matricula editarMatricula(Matricula matricula) {
-		// TODO - implement MatriculaDAO.editarMatricula
 		throw new UnsupportedOperationException();
 	}
 

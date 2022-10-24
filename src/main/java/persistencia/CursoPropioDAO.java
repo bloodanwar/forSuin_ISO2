@@ -80,34 +80,39 @@ public class CursoPropioDAO {
 				+ " WHERE id='"+curso.getId()+"'");
 	}
 
-	/**
-	 * 
-	 * @param estado
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) {
-		// TODO - implement CursoPropioDAO.listarCursosPorEstado
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param tipo
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
+
 	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) {
-		// TODO - implement CursoPropioDAO.listarIngresos
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
-	public void listarEdicionesCursos(Date fechaInicio, Date fechaFin) {
-		Vector listaEdicicion = GestorBD.getInstancia().select("SELECT edicion FROM cursoPropio WHERE ")
+	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {
+		Vector listaEdicicionDatos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE fechaInicio = " + fechaInicio + " AND fechaFin = " + fechaFin); //buscar fecha y eso
+		
+		List<CursoPropio> listaEdiciones = null;
+		
+		for (int i=0; i<listaEdicicionDatos.size(); i++) {
+			Vector lEdicnDatosTemp = (Vector) listaEdicicionDatos.get(i);
+			
+			String id = (String) lEdicnDatosTemp.get(0);
+			String nombre = (String) lEdicnDatosTemp.get(1);
+			int ECTS = (Integer) lEdicnDatosTemp.get(2);
+			Date fechainicio = (Date) lEdicnDatosTemp.get(3);
+			Date fechafin = (Date) lEdicnDatosTemp.get(4);
+			double tasaMatricula = (Double) lEdicnDatosTemp.get(5);
+			int edicion = (Integer) lEdicnDatosTemp.get(6);
+			EstadoCurso estado = EstadoCurso.valueOf((String) lEdicnDatosTemp.get(7));
+			TipoCurso tipo = TipoCurso.valueOf((String) lEdicnDatosTemp.get(8));
+			Centro centro = new Centro((String) lEdicnDatosTemp.get(9));
+			ProfesorUCLM secretario = new ProfesorUCLM((String) lEdicnDatosTemp.get(10));
+			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));
+					
+			listaEdiciones.add(new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director));
+		}
+		
+		return listaEdiciones;
 	}
 }

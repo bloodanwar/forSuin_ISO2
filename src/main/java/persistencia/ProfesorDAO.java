@@ -3,7 +3,7 @@ package persistencia;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Vector;
-
+import java.util.List;
 import negocio.entities.*;
 
 public class ProfesorDAO {
@@ -49,5 +49,22 @@ public class ProfesorDAO {
 	
 	public int eliminarProfesor(Profesor profesor) throws SQLException {
 		return GestorBD.getInstancia().delete("DELETE FROM profesor WHERE dni='"+profesor.getDni()+"'");
+	}
+	
+	public List<Profesor> listarProfesores() throws SQLException {
+		Vector profesoresDatos =  GestorBD.getInstancia().select("SELECT * FROM profesor");
+		
+		List<Profesor> listaProfes = null;
+		for (int i=0; i<profesoresDatos.size(); i++) {
+			Vector profDatosTemp = (Vector) profesoresDatos.get(i);
+			
+			String dni=(String) profDatosTemp.get(0);
+			String nombre=(String) profDatosTemp.get(1);
+			String apellidos= (String) profDatosTemp.get(2);
+			boolean doctor=(Boolean) profDatosTemp.get(3);
+			
+			listaProfes.add(new Profesor(dni, nombre, apellidos,doctor));
+		}
+		return listaProfes;
 	}
 }

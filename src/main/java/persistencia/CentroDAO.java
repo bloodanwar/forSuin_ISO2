@@ -2,17 +2,11 @@ package persistencia;
 
 import negocio.entities.*;
 
-public class CentroDAO extends AbstractEntityDAO {
-
-	public CentroDAO() {
-		
-	}
+public class CentroDAO {
+	
+	//
 	
 	public int crearNuevoCentro(Centro centro) {
-		
-		// TODO - leer fecha ahora 
-		
-		// TODO - implement CentroDAO.crearNuevoCentro
 		throw new UnsupportedOperationException();
 	}
 

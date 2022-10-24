@@ -2,12 +2,9 @@ package persistencia;
 
 import negocio.entities.*;
 
-public class EstudianteDAO extends AbstractEntityDAO {
+public class EstudianteDAO {
 
-	/**
-	 * 
-	 * @param estudiante
-	 */
+
 	public int crearNuevoEstudiante(Estudiante estudiante) {
 		// TODO - implement EstudianteDAO.crearNuevoEstudiante
 		throw new UnsupportedOperationException();
