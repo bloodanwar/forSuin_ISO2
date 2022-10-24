@@ -81,12 +81,12 @@ public class CursoPropioDAO {
 	}
 
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) {
-		throw new UnsupportedOperationException();
+
 	}
 
 
 	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {

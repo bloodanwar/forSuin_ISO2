@@ -26,6 +26,11 @@ public class CursoPropio {
 		cursoPropioDao = new CursoPropioDAO();
 	}
 	
+	public CursoPropio(String id) {
+		cursoPropioDao = new CursoPropioDAO();
+		this.id = id;
+	}
+	
 	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, EstadoCurso estado, TipoCurso tipo, Centro centro, ProfesorUCLM secretario, ProfesorUCLM director) {
 		cursoPropioDao = new CursoPropioDAO();
 		this.id = id;

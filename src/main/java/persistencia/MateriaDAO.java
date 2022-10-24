@@ -1,54 +1,65 @@
 package persistencia;
 
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import negocio.entities.*;
 
 public class MateriaDAO {
 
-	/**
-	 * 
-	 * @param materia
-	 */
-	public int crearNuevaMateria(Materia materia) {
-		// TODO - implement MateriaDAO.crearNuevaMateria
-		throw new UnsupportedOperationException();
+	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
+	
+	public int crearNuevaMateria(Materia materia, String cursoPropioID) throws SQLException {
+		Date fechaCreacion =  new Date();
+		Date fechaActualizacion = fechaCreacion;
+
+		return GestorBD.getInstancia().insert("INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
+				+ materia.getNombre()+"', "
+				+ materia.getHoras()+", "
+				+ materia.getFechaInicio()+", "
+				+ materia.getFechaFin()+", '"
+				+ cursoPropioID+"', '"
+				+ materia.responsable.getDni()+"', "
+				+ fechaCreacion+", "
+				+ fechaActualizacion+")");
 	}
 
-	/**
-	 * 
-	 * @param materia
-	 */
-	public Materia seleccionarMateria(Materia materia) {
-		// TODO - implement MateriaDAO.seleccionarMateria
-		throw new UnsupportedOperationException();
+	public Materia seleccionarMateria(Materia materia) throws SQLException {
+		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"'");
+		datosMateria = (Vector) datosMateria.get(0);
+		
+		String nombre = (String) datosMateria.get(0);
+		double horas = (Double) datosMateria.get(1);
+		Date fechaInicio = (Date) datosMateria.get(2);
+		Date fechaFin = (Date) datosMateria.get(3);
+		Profesor responsable = new Profesor((String) datosMateria.get(5));
+		
+		return new Materia(nombre, horas, fechaInicio, fechaFin, responsable);
 	}
 
-	/**
-	 * 
-	 * @param materia
-	 */
-	public Materia editarMateria(Materia materia) {
-		// TODO - implement MateriaDAO.editarMateria
-		throw new UnsupportedOperationException();
+	public int editarMateria(Materia materia, String cursoPropioID) throws SQLException {
+		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
+
+		Date fechaActualizacion = new Date();
+
+		return GestorBD.getInstancia().update("UPDATE materia SET "
+				+ "horas=" + materia.getHoras() + ", "
+				+ "fechaInicio=" + materia.getFechaInicio() + ", "
+				+ "fechaFin=" + materia.getFechaFin() + ", "
+				+ "cursoPropio_id='" + cursoPropioID + "', "
+				+ "responsable_Profesor_DNI='" + materia.responsable.getDni() + "', "
+				+ "fechaActualizacion=" + fechaActualizacion
+				+ " WHERE nombre='"+materia.getNombre()+"'");
 	}
 
-	/**
-	 * 
-	 * @param materia
-	 */
-	public int eliminarMateria(Materia materia) {
-		// TODO - implement MateriaDAO.eliminarMateria
-		throw new UnsupportedOperationException();
+	public int eliminarMateria(Materia materia) throws SQLException {
+		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+"'");
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 */
-	public List<Materia> listarMateriasPorCurso(CursoPropio curso) {
-		// TODO - implement MateriaDAO.listarMateriasPorCurso
-		throw new UnsupportedOperationException();
+	public List<Materia> listarMateriasPorCurso(CursoPropio curso) throws SQLException {
+		
 	}
 
 }
