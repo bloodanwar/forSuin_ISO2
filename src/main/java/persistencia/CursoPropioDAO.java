@@ -20,20 +20,15 @@ public class CursoPropioDAO {
 				+ curso.getFechaInicio()+", "
 				+ curso.getFechaFin()+", "
 				+ curso.getTasaMatricula()+", '"
-				+ curso.getEstado().toString()+"', '"
-				+ curso.getTipo().toString()+"', '"
-				+ curso.getCentro().getNombre()+"', '"
-				+ curso.getSecretario().getDni()+"', '"
-				+ curso.getDirector().getDni()+"', '"
+				+ curso.estado.toString()+"', '"
+				+ curso.tipo.toString()+"', '"
+				+ curso.centro.getNombre()+"', '"
+				+ curso.secretario.getDni()+"', '"
+				+ curso.director.getDni()+"', '"
 				+ fechaCreacion+", "
 				+ fechaActualizacion+")");
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @throws SQLException 
-	 */
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException {
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
 		datosCurso = (Vector) datosCurso.get(0);
@@ -50,15 +45,17 @@ public class CursoPropioDAO {
 		Centro centro = new Centro((String) datosCurso.get(9));
 		ProfesorUCLM secretario = new ProfesorUCLM((String) datosCurso.get(10));
 		ProfesorUCLM director = new ProfesorUCLM((String) datosCurso.get(11));
-
-		return new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+		
+		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+		
+		//falta leer las matriculas de la bbdd, comprobar que estas lineas furulen
+		List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+		cursoDevolver.matriculas = matriculasCurso;
+		
+		
+		return cursoDevolver;
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @throws SQLException 
-	 */
 	public int editarCurso(CursoPropio curso) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
 
@@ -71,22 +68,45 @@ public class CursoPropioDAO {
 				+ "fechaFin=" + curso.getFechaFin() + ", "
 				+ "tasaMatricula=" + curso.getTasaMatricula() + ", "
 				+ "edicion=" + curso.getEdicion() + ", "
-				+ "estadoCurso='" + curso.getEstado().toString() + "', "
-				+ "tipoCurso='" + curso.getTipo().toString() + "', "
-				+ "centro_nombre=" + curso.getCentro().getNombre() + ", "
-				+ "secretario_Profesor_DNI='" + curso.getSecretario().getDni() + "', "
-				+ "director_Profesor_DNI='" + curso.getDirector().getDni() + "', "
+				+ "estadoCurso='" + curso.estado.toString() + "', "
+				+ "tipoCurso='" + curso.tipo.toString() + "', "
+				+ "centro_nombre=" + curso.centro.getNombre() + ", "
+				+ "secretario_Profesor_DNI='" + curso.secretario.getDni() + "', "
+				+ "director_Profesor_DNI='" + curso.director.getDni() + "', "
 				+ "fechaActualizacion=" + fechaActualizacion
 				+ " WHERE id='"+curso.getId()+"'");
 	}
 
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) {
-		throw new UnsupportedOperationException();
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
+		//TODO - LO HACE MIRIAM
+	}
+	
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
+		//TODO - LO HACE MIRIAM
 	}
 
-
-	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) {
-		throw new UnsupportedOperationException();
+	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
+		Vector listaCursos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE tipoCurso = '"+ tipo.toString() +"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		
+		double ingresosTotales = 0;
+		
+		for (int i=0; i<listaCursos.size(); i++) {
+			Vector datosCursoTemp = (Vector) listaCursos.get(i);
+			
+			String id = (String) datosCursoTemp.get(0);
+			double tasaMatricula = (Double) datosCursoTemp.get(5);
+			
+			CursoPropio cursoTemp = new CursoPropio(id);
+			
+			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoTemp);
+			
+			for (int j = 0; j<matriculasCurso.size();j++) {
+				if (matriculasCurso.get(j).isPagado() == true)
+					ingresosTotales+=tasaMatricula;
+			}
+		}		
+		
+		return ingresosTotales;
 	}
 
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {

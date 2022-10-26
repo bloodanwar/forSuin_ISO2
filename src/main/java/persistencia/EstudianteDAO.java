@@ -1,40 +1,58 @@
 package persistencia;
 
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.Vector;
+
 import negocio.entities.*;
 
 public class EstudianteDAO {
 
-
-	public int crearNuevoEstudiante(Estudiante estudiante) {
-		// TODO - implement EstudianteDAO.crearNuevoEstudiante
-		throw new UnsupportedOperationException();
+	//dni, nombre, apellidos, titulacion, cualificacion
+	
+	public int crearNuevoEstudiante(Estudiante estudiante) throws SQLException {
+		Date fechaCreacion =  new Date();
+		Date fechaActualizacion = fechaCreacion;
+		
+		return GestorBD.getInstancia().insert("INSERT INTO estudiante (dni, nombre, apellidos, titulacion, cualificacion) VALUES ('"
+				+ estudiante.getDni()+"', '"
+				+ estudiante.getNombre()+"', '"
+				+ estudiante.getApellidos()+"', "
+				+ estudiante.getTitulacion()+"', '"
+				+ estudiante.getCualificacion()+"', "
+				+ fechaCreacion+", "
+				+ fechaActualizacion+")");
 	}
 
-	/**
-	 * 
-	 * @param estudiante
-	 */
-	public Estudiante seleccionarEstudiante(Estudiante estudiante) {
-		// TODO - implement EstudianteDAO.seleccionarEstudiante
-		throw new UnsupportedOperationException();
+	public Estudiante seleccionarEstudiante(Estudiante estudiante) throws SQLException {
+		Vector datosEstudiante = GestorBD.getInstancia().select("SELECT * FROM estudiante WHERE dni='"+estudiante.getDni()+"'");
+		datosEstudiante = (Vector) datosEstudiante.get(0);
+		
+		String dni = (String) datosEstudiante.get(0);
+		String nombre = (String) datosEstudiante.get(1);
+		String apellidos = (String) datosEstudiante.get(2);
+		String titulacion = (String) datosEstudiante.get(3);
+		String cualificacion = (String) datosEstudiante.get(4);
+		
+		//TODO - Falta obtener las matriculas de este estudiante
+		
+		return new Estudiante(dni, nombre, apellidos, titulacion, cualificacion);
 	}
 
-	/**
-	 * 
-	 * @param estudiante
-	 */
-	public Estudiante editarEstudiante(Estudiante estudiante) {
-		// TODO - implement EstudianteDAO.editarEstudiante
-		throw new UnsupportedOperationException();
+	public int editarEstudiante(Estudiante estudiante) throws SQLException {
+		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Estudiante
+		Date fechaActualizacion = new Date();
+
+		return GestorBD.getInstancia().update("UPDATE estudiante SET "
+				+ "nombre='" + estudiante.getNombre() + "', "
+				+ "apellidos='" + estudiante.getApellidos() + "', "
+				+ "titulacion='" + estudiante.getTitulacion() + "', "
+				+ "cualificacion='" + estudiante.getCualificacion() + "', "
+				+ "fechaActualizacion=" + fechaActualizacion
+				+ " WHERE dni='"+estudiante.getDni()+"'");
 	}
 
-	/**
-	 * 
-	 * @param estudiante
-	 */
-	public int eliminarEstudiante(Estudiante estudiante) {
-		// TODO - implement EstudianteDAO.eliminarEstudiante
-		throw new UnsupportedOperationException();
+	public int eliminarEstudiante(Estudiante estudiante) throws SQLException {
+		return GestorBD.getInstancia().delete("DELETE FROM estudiante WHERE dni='" + estudiante.getDni() + "'");
 	}
-
 }

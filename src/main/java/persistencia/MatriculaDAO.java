@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -17,38 +18,20 @@ public class MatriculaDAO {
 				+matricula.get
 	}
 
-	/**
-	 * 
-	 * @param matricula
-	 */
-	public Matricula seleccionarMatricula(Matricula matricula) {
-		throw new UnsupportedOperationException();
+	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException {
+
 	}
 
-	/**
-	 * 
-	 * @param matricula
-	 */
-	public Matricula editarMatricula(Matricula matricula) {
-		throw new UnsupportedOperationException();
+	public Matricula editarMatricula(Matricula matricula) throws SQLException {
+
 	}
 
-	/**
-	 * 
-	 * @param matricula
-	 */
-	public int eliminarMatricula(Matricula matricula) {
-		// TODO - implement MatriculaDAO.eliminarMatricula
-		throw new UnsupportedOperationException();
+	public int eliminarMatricula(Matricula matricula) throws SQLException {
+
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 */
-	public List<Matricula> listarMatriculasPorCurso(CursoPropio curso) {
-		// TODO - implement MatriculaDAO.listarMatriculasPorCurso
-		throw new UnsupportedOperationException();
+	public List<Matricula> listarMatriculasPorCurso(CursoPropio curso) throws SQLException {
+
 	}
 
 }

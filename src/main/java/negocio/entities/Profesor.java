@@ -4,12 +4,21 @@ import persistencia.*;
 
 public class Profesor {
 
-	ProfesorDAO profesorDao;
+	public ProfesorDAO profesorDao;
 	private String dni;
 	private String nombre;
 	private String apellidos;
 	private boolean doctor;
 	
+	public Profesor() {
+		profesorDao = new ProfesorDAO();
+	}
+	
+	public Profesor(String dni) {
+		profesorDao = new ProfesorDAO();
+		this.dni = dni;
+	}
+		
 	public Profesor(String dni, String nombre, String apellidos, boolean doctor) {
 		profesorDao = new ProfesorDAO();
 		this.dni = dni;

@@ -5,14 +5,14 @@ import persistencia.*;
 
 public class CursoPropio {
 
-	Collection<Matricula> matriculas;
-	Centro centro;
-	ProfesorUCLM director;
-	ProfesorUCLM secretario;
-	Collection<Materia> materias;
-	EstadoCurso estado;
-	TipoCurso tipo;
-	CursoPropioDAO cursoPropioDao;
+	public Collection<Matricula> matriculas;
+	public Centro centro;
+	public ProfesorUCLM director;
+	public ProfesorUCLM secretario;
+	public Collection<Materia> materias;
+	public EstadoCurso estado;
+	public TipoCurso tipo;
+	public CursoPropioDAO cursoPropioDao;
 	private String id;
 	private String nombre;
 	private int ECTS;
@@ -24,6 +24,11 @@ public class CursoPropio {
 	
 	public CursoPropio() {
 		cursoPropioDao = new CursoPropioDAO();
+	}
+	
+	public CursoPropio(String id) {
+		cursoPropioDao = new CursoPropioDAO();
+		this.id = id;
 	}
 	
 	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, EstadoCurso estado, TipoCurso tipo, Centro centro, ProfesorUCLM secretario, ProfesorUCLM director) {
@@ -41,27 +46,6 @@ public class CursoPropio {
 		this.secretario=secretario;
 		this.director=director;
 	}
-
-	public Collection<Matricula> getMatriculas() { return matriculas; }
-	public void setMatriculas(Collection<Matricula> matriculas) { this.matriculas = matriculas; }
-	
-	public Centro getCentro() { return centro; }
-	public void setCentro(Centro centro) { this.centro = centro; }
-	
-	public ProfesorUCLM getDirector() { return director; }
-	public void setDirector(ProfesorUCLM director) { this.director = director; }
-	
-	public ProfesorUCLM getSecretario() { return secretario; }
-	public void setSecretario(ProfesorUCLM secretario) { this.secretario = secretario; }
-	
-	public Collection<Materia> getMaterias() { return materias; }
-	public void setMaterias(Collection<Materia> materias) { this.materias = materias; }
-	
-	public EstadoCurso getEstado() { return estado; }
-	public void setEstado(EstadoCurso estado) { this.estado = estado; }
-	
-	public TipoCurso getTipo() { return tipo; }
-	public void setTipo(TipoCurso tipo) { this.tipo = tipo; }
 	
 	public String getId() { return id; }
 	public void setId(String id) { this.id = id; }
