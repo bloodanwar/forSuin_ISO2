@@ -2,42 +2,23 @@ package persistencia;
 
 import negocio.entities.*;
 
-public class ProfesorExternoDAO extends AbstractEntityDAO {
+public class ProfesorExternoDAO {
 
-	/**
-	 * 
-	 * @param profesor
-	 */
-	public int crearNuevoProfesorExterno(ProfesorExterno profesor) {
-		// TODO - implement ProfesorExternoDAO.crearNuevoProfesorExterno
-		throw new UnsupportedOperationException();
+	public int crearNuevoProfesorExterno(ProfesorExterno profesor) throws SQLException {
+
 	}
 
-	/**
-	 * 
-	 * @param profesor
-	 */
-	public ProfesorExterno seleccionarProfesorExterno(ProfesorExterno profesor) {
-		// TODO - implement ProfesorExternoDAO.seleccionarProfesorExterno
-		throw new UnsupportedOperationException();
+	public ProfesorExterno seleccionarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+
 	}
 
-	/**
-	 * 
-	 * @param profesor
-	 */
-	public ProfesorExterno editarProfesorExterno(ProfesorExterno profesor) {
-		// TODO - implement ProfesorExternoDAO.editarProfesorExterno
-		throw new UnsupportedOperationException();
+	public ProfesorExterno editarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+
 	}
 
-	/**
-	 * 
-	 * @param profesor
-	 */
-	public int eliminarProfesorExterno(ProfesorExterno profesor) {
-		// TODO - implement ProfesorExternoDAO.eliminarProfesorExterno
-		throw new UnsupportedOperationException();
+
+	public int eliminarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+
 	}
 
 }
