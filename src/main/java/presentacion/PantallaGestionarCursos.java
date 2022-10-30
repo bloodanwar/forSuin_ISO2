@@ -12,16 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class PantallaGestionarCursos extends JFrame{
     
     private JButton button;
-    private JLabel estado;
-    private JList cursosLista;
-    private DefaultListModel cursosEnviados = new DefaultListModel(); 
+    private JTable cursosTable;
+    private DefaultTableModel cursosEnviados = new DefaultTableModel(); 
  
     
     public PantallaGestionarCursos () {
@@ -43,38 +45,33 @@ public class PantallaGestionarCursos extends JFrame{
 	}
 
 	private void basicLayout() {
-		// Lista de cursos propuestos -- Se lee de la base de datos
-		cursosEnviados.add(0, "Curso 1");
-		cursosEnviados.add(1, "Curso 2");
-		cursosEnviados.add(2, "Curso 3");
-        
-        cursosLista = new JList(cursosEnviados);
-        cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        JScrollPane scrollLista = new JScrollPane(cursosLista);
+		// Lista de cursos propuestos -- Se lee de la base de datos -- Provisional
+		cursosEnviados.addColumn("Nombre");
+		cursosEnviados.addColumn("Estado");
+		
+		cursosEnviados.insertRow(0, new Object[] { "Curso 1", "Pendiente" });
+		cursosEnviados.insertRow(1, new Object[] { "Curso 2", "Pendiente"});
+		cursosEnviados.insertRow(2, new Object[] { "Curso 3", "Rechazado" });
+
+		cursosTable = new JTable(cursosEnviados){
+			  public boolean isCellEditable(int rowIndex, int colIndex) {
+				  return false; //Disallow the editing of any cell
+			  }
+		};
+			  
+		cursosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        		
+        JScrollPane scrollLista = new JScrollPane(cursosTable);
         scrollLista.setBounds(199, 113, 400, 200);
         getContentPane().add(scrollLista);
-        
-        estado = new JLabel("");
-        estado.setBackground(new Color(128, 128, 128));
-        estado.setBounds(609,150,129,81);
-        getContentPane().add(estado);
-        
-        cursosLista.addListSelectionListener(new ListSelectionListener() { // Da error porque "colisiona" con eliminar
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				//String curso = (String) cursosEnviados.getElementAt(cursosLista.getSelectedIndex());
-				//estado.setText("Estado de " + curso + ": ACEPTADO");
-			}
-		});
-
+   
+     
 	}
 
 	private void botonesLayout() {
 		// Boton para realizar propuesta de curso
         button = new JButton("Realizar propuesta");
-        button.setBounds(94,322,200,30);
+        button.setBounds(195,324,200,30);
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
@@ -87,16 +84,33 @@ public class PantallaGestionarCursos extends JFrame{
 
         });
         
-        // Boton para editar propuesta de curso
-        button = new JButton("Editar");
-        button.setBounds(304,324,200,30);
+        // Boton para nueva edicion de curso
+        button = new JButton("Nueva edición");
+        button.setBounds(405,324,200,30);
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(cursosLista.isSelectionEmpty()) return;
+            	if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
+
+                //pantallaNuevaEdicion --> Re-utilizar pantalla de realizar 
+                //setVisible(false);
+            }
+
+        });
+        
+        // Boton para editar propuesta de curso
+        button = new JButton("Editar");
+        button.setBounds(195,365,200,30);
+        getContentPane().add(button);
+    
+        button.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 
             	//pantallaEditarCurso --> Re-utilizar pantalla de realizar 
             	//setVisible(false);
@@ -106,15 +120,15 @@ public class PantallaGestionarCursos extends JFrame{
         
         // Boton para eliminar propuesta de curso
         button = new JButton("Eliminar");
-        button.setBounds(514,324,200,30);
+        button.setBounds(405,365,200,30);
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(cursosLista.isSelectionEmpty()) return;         
-            	cursosEnviados.remove(cursosLista.getSelectedIndex());
+            	if(cursosTable.getSelectionModel().isSelectionEmpty()) return;         
+            	cursosEnviados.removeRow(cursosTable.getSelectedRow());
             }
 
         });
