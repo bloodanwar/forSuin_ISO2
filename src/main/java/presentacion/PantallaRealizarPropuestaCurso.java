@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -34,6 +35,7 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import negocio.entities.CursoPropio;
 import negocio.entities.Materia;
@@ -47,7 +49,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private JScrollPane scrollPanel;    
 	private JTextField tituloCurso, requisitoCurso, nombreMateria;
 	private JTextArea descripcionCurso;
-	private JList secretariosLista, centrosLista, categoriasLista, materiasLista, responsablesLista, profesoresMateriaLista;
+	private JTable secretariosTable, responsablesTable;
+	private JList centrosLista, categoriasLista, materiasLista, profesoresMateriaLista;
 	private JComboBox<Integer> tasaMatricula, ectsCurso, horas;
 	private JComboBox diaInicio, mesInicio, anoInicio, diaFinal, mesFinal, anoFinal;  
 
@@ -58,15 +61,17 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			"Microcredenciales", "Actividades formativas de corta duración", "Cursos de Verano y Extensión Universitaria", "Formación de Mayores" }; 
 
 	private String[] centros = {"Centro 1", "Centro 2", "Centro 3"}; // Provisional -- Se lee de la base de datos
-	private String[] profesores= {"Profe 1", "Profe 2", "Profe 3"}; // Provisional -- Se lee de la base de datos
 	private DefaultListModel materias = new DefaultListModel(); 
 	private int idMateria = 0;
+    private DefaultTableModel profesores = new DefaultTableModel(); 
 
+	
 	// Objetos
 	private Materia materia;
 	private CursoPropio curso;
 
 	public PantallaRealizarPropuestaCurso () {
+		addProfesores();
 		initLayout();
 		basicLayout();
 		enseñanzasLayout();
@@ -77,6 +82,17 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		scrollPanel.setBounds(0, 0, 0,0);
 		getContentPane().add(scrollPanel);
 
+	}
+
+	private void addProfesores() { // Leer de base de datos
+		profesores.addColumn("Nombre");
+		profesores.addColumn("Categoria");
+
+		profesores.addColumn("Doctor");
+		
+		profesores.insertRow(0, new Object[] { "Profe 1", "Cat 1", "True" });
+		profesores.insertRow(1, new Object[] { "Profe 2", "Cat 1", "True"});
+		profesores.insertRow(2, new Object[] { "Profe 3", "Cat 2", "False" });
 	}
 
 	private void initLayout() {	
@@ -121,9 +137,9 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,330,400,30);
 		mainPanel.add(label);
 
-		secretariosLista = new JList(profesores);
-		secretariosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPanel = new JScrollPane(secretariosLista);
+		secretariosTable = new JTable(profesores);
+		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPanel = new JScrollPane(secretariosTable);
 		scrollPanel.setBounds(10, 360, 400, 100);
 		mainPanel.add(scrollPanel);
 
@@ -335,18 +351,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					nombreMateria.setBackground(new Color(255, 255, 255));
 				}
 
-				if(responsablesLista.isSelectionEmpty()) {
-					responsablesLista.setBackground(new Color(222, 129, 122));
+				if(responsablesTable.getSelectionModel().isSelectionEmpty()) {
+					responsablesTable.setBackground(new Color(222, 129, 122));
 					complete = false;
 				}else {
-					responsablesLista.setBackground(new Color(255, 255, 255));
-				}
-
-				if(profesoresMateriaLista.isSelectionEmpty()) {
-					profesoresMateriaLista.setBackground(new Color(222, 129, 122));
-					complete = false;
-				}else {
-					profesoresMateriaLista.setBackground(new Color(255, 255, 255));
+					responsablesTable.setBackground(new Color(255, 255, 255));
 				}
 
 				if (complete) {
@@ -356,8 +365,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 					// Limpiar selección
 					nombreMateria.setText("");
-					responsablesLista.clearSelection();
-					profesoresMateriaLista.clearSelection();
+					responsablesTable.clearSelection();
 				}
 
 			}
@@ -418,22 +426,12 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,1279,200,30);
 		mainPanel.add(label);
 
-		responsablesLista = new JList(profesores);
-		responsablesLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPanel = new JScrollPane(responsablesLista);
-		scrollPanel.setBounds(10, 1309, 220, 80);
+		responsablesTable = new JTable(profesores);
+		responsablesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPanel = new JScrollPane(responsablesTable);
+		scrollPanel.setBounds(10, 1309, 400, 80);
 		mainPanel.add(scrollPanel);
 
-		// Profesores que la imparten
-		label = new JLabel("Profesores que imparten la materia (Usar ctl para seleccionar varios)");
-		label.setBounds(250,1279,400,30);
-		mainPanel.add(label);
-
-		profesoresMateriaLista = new JList(profesores);
-		profesoresMateriaLista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		scrollPanel = new JScrollPane(profesoresMateriaLista);
-		scrollPanel.setBounds(250, 1309, 220, 80);
-		mainPanel.add(scrollPanel);
 
 	}
 
@@ -479,11 +477,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					descripcionCurso.setBackground(new Color(255, 255, 255));
 				}
 
-				if(secretariosLista.isSelectionEmpty()) {
-					secretariosLista.setBackground(new Color(222, 129, 122));
+				if(secretariosTable.getSelectionModel().isSelectionEmpty()) {
+					secretariosTable.setBackground(new Color(222, 129, 122));
 					complete = false;
 				}else {
-					secretariosLista.setBackground(new Color(255, 255, 255));
+					secretariosTable.setBackground(new Color(255, 255, 255));
 				}
 
 				if(centrosLista.isSelectionEmpty()) {
