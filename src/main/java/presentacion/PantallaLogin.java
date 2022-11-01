@@ -4,6 +4,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.SpringLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import negocio.entities.ProfesorUCLM;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,6 +23,7 @@ public class PantallaLogin {
 	private JFrame frame;
 	private JTextField textField;
 	private final JButton btnNewButton = new JButton("Entrar");
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -47,61 +53,54 @@ public class PantallaLogin {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 579, 444);
+		frame.setBounds(10, 10, 800, 600);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		frame.getContentPane().setLayout(springLayout);
 		
-		textField = new JTextField();
-		textField.addInputMethodListener(new InputMethodListener() {
-			public void caretPositionChanged(InputMethodEvent event) {
-			
-			}
-			public void inputMethodTextChanged(InputMethodEvent event) {
-				System.out.println("ola");
-			}
-		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton, 46, SpringLayout.SOUTH, textField);
+		textField = new JTextField("23568907X");
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton, 23, SpringLayout.SOUTH, textField);
+		springLayout.putConstraint(SpringLayout.SOUTH, textField, -270, SpringLayout.SOUTH, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, textField, -299, SpringLayout.EAST, frame.getContentPane());
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("DNI:");
-		springLayout.putConstraint(SpringLayout.NORTH, textField, -6, SpringLayout.NORTH, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.WEST, textField, 19, SpringLayout.EAST, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.EAST, textField, 179, SpringLayout.EAST, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblNewLabel, -188, SpringLayout.SOUTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, -366, SpringLayout.EAST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, -471, SpringLayout.EAST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, textField, 12, SpringLayout.EAST, lblNewLabel);
+		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 3, SpringLayout.NORTH, textField);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblbienvenido = new JLabel("¡Bienvenido!");
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton, 0, SpringLayout.WEST, lblbienvenido);
-		springLayout.putConstraint(SpringLayout.WEST, lblbienvenido, 252, SpringLayout.WEST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, lblbienvenido, -35, SpringLayout.NORTH, textField);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblbienvenido, -6, SpringLayout.NORTH, textField);
+		springLayout.putConstraint(SpringLayout.EAST, lblbienvenido, -347, SpringLayout.EAST, frame.getContentPane());
 		lblbienvenido.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frame.getContentPane().add(lblbienvenido);
+		
 		btnNewButton.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent e) {
-			
+				ProfesorUCLM director = new ProfesorUCLM(textField.getText());
+				new PantallaDireccionCursos(director);
+				frame.setVisible(false);
 			}
 		});
 		
 		frame.getContentPane().add(btnNewButton);
-	}
-
-	public void login() {
-		throw new UnsupportedOperationException();
 		
-		//pedir al usuario el dni
+		btnNewButton_1 = new JButton("Cerrar Programa");
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1, 48, SpringLayout.SOUTH, btnNewButton);
+		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, -314, SpringLayout.EAST, frame.getContentPane());
+		frame.getContentPane().add(btnNewButton_1);
 		
-		//si no existe dni de error
+		btnNewButton_1.addActionListener(new ActionListener() {
 		
-		//si existe que pase a otra ventana
-	}
-
-	public void logout() {
-		// TODO - implement PantallaLogin.logout
-		throw new UnsupportedOperationException();
+			public void actionPerformed(ActionEvent e) {
+				 System.exit(0);
+			}
+		});
 	}
 }

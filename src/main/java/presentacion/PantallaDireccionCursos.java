@@ -41,9 +41,7 @@ public class PantallaDireccionCursos extends JFrame{
                 new PantallaCursosAprobados(director);
                 setVisible(false);
             }
-
         });
-        
         
         // Boton para gestionar cursos propuestos
         button = new JButton("Gestionar cursos propuestos");
@@ -57,10 +55,9 @@ public class PantallaDireccionCursos extends JFrame{
                 new PantallaGestionarCursos(director);
                 setVisible(false);
             }
-
         });
         
-        // Bot�n para cerrar sesion
+        // Boton para cerrar sesion
         button = new JButton("Cerrar sesion");
         button.setBounds(300,263,200,30);
         getContentPane().add(button);
@@ -69,12 +66,10 @@ public class PantallaDireccionCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Login();
+                new PantallaLogin();
                 setVisible(false);
             }
-
         });
-		
 	}
 
 	public void altaCurso() {
@@ -86,5 +81,4 @@ public class PantallaDireccionCursos extends JFrame{
 		// TODO - implement PantallaDireccionCursos.edicionCurso
 		throw new UnsupportedOperationException();
 	}
-
 }

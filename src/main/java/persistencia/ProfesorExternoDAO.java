@@ -1,6 +1,7 @@
 package persistencia;
-
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -9,14 +10,16 @@ import negocio.entities.*;
 public class ProfesorExternoDAO {
 
 	public int crearNuevoProfesorExterno(ProfesorExterno profesor) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
 		return GestorBD.getInstancia().insert("INSERT INTO profesorExterno (profesor_Dni, titulacion, fechaCreacion, fechaActualizacion) VALUES ('"
-				+ profesor.getDni()+"', "
-				+ profesor.getTitulacion()+"', '"
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");
+			+ profesor.getDni()+"', "
+			+ profesor.getTitulacion()+"', '"
+			+ dateFormat.format(fechaCreacion)+"', '"
+			+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public ProfesorExterno seleccionarProfesorExterno(ProfesorExterno profesor) throws SQLException {
@@ -36,13 +39,14 @@ public class ProfesorExternoDAO {
 	}
 
 	public int editarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");		
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE profesorExterno SET "
 				+ "dni'" + profesor.getDni() + "', "
 				+ "titulacion=" + profesor.getTitulacion() + ", "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE dni='"+profesor.getDni()+"'");
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE dni='"+profesor.getDni()+"'");
 	}
 
 	public int eliminarProfesorExterno(ProfesorExterno profesor) throws SQLException {

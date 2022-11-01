@@ -1,6 +1,8 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -10,16 +12,17 @@ import negocio.entities.*;
 public class ProfesorDAO {
 
 	public int crearNuevoProfesor(Profesor profesor) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
 		return GestorBD.getInstancia().insert("INSERT INTO profesor (dni, nombre, apellidos, doctor, fechaCreacion, fechaActualizacion) VALUES ('"
-		+ profesor.getDni()+"', '"
-		+ profesor.getNombre()+"', '"
-		+ profesor.getApellidos()+"', "
-		+ profesor.isDoctor()+", "
-		+ fechaCreacion+", "
-		+ fechaActualizacion+")");
+			+ profesor.getDni()+"', '"
+			+ profesor.getNombre()+"', '"
+			+ profesor.getApellidos()+"', "
+			+ profesor.isDoctor()+", '"
+			+ dateFormat.format(fechaCreacion)+"', '"
+			+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public Profesor seleccionarProfesor(Profesor profesor) throws SQLException {
@@ -37,15 +40,15 @@ public class ProfesorDAO {
 
 	public int editarProfesor(Profesor profesor) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Profesor
-		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 		
 		return GestorBD.getInstancia().update("UPDATE profesor SET "
 				+ "nombre='" + profesor.getNombre() + "', "
 				+ "apellidos='" + profesor.getApellidos() + "', "
 				+ "doctor=" + profesor.isDoctor() + ", "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE dni='"+profesor.getDni());
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE dni='"+profesor.getDni());
 	}
 	
 	public int eliminarProfesor(Profesor profesor) throws SQLException {

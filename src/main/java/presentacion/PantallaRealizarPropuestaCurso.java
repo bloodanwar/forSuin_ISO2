@@ -1,13 +1,9 @@
 package presentacion;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -19,7 +15,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -44,13 +39,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import negocio.controllers.GestorPropuestasCursos;
-import negocio.entities.Centro;
-import negocio.entities.CursoPropio;
-import negocio.entities.EstadoCurso;
-import negocio.entities.Materia;
-import negocio.entities.Profesor;
-import negocio.entities.ProfesorUCLM;
-import negocio.entities.TipoCurso;
+import negocio.entities.*;
 
 public class PantallaRealizarPropuestaCurso extends JFrame {
 
@@ -63,7 +52,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private JComboBox<Integer> tasaMatricula, ectsCurso, horas;
 	private JComboBox diaInicio, mesInicio, anoInicio, diaFinal, mesFinal, anoFinal, diaInicioMateria, mesInicioMateria, anoInicioMateria, diaFinalMateria, mesFinalMateria, anoFinalMateria;  
 
-
 	// Listas
 	private String[] categorias = {"Másteres de Formación Permanente", "Especialistas", "Expertos", 
 			"Cursos Universitarios de Formación Avnazada", "Cursos de Formación Continua", 
@@ -74,7 +62,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			TipoCurso.MICROCREDENCIALES, TipoCurso.CORTA_DURACION, TipoCurso.VERANO, TipoCurso.MAYORES};
 	
 	private DefaultListModel materias = new DefaultListModel(); 
-
 	
 	List centrosDao = null;
 	private DefaultListModel centros = new DefaultListModel(); 
@@ -87,7 +74,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	
 	private JList centrosLista, categoriasLista, materiasLista;
 	private JTable secretariosTable, responsablesTable;
-
 
 	// Objetos
 	private Materia materia;
@@ -108,11 +94,9 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		scrollPanel = new JScrollPane(mainPanel);
 		scrollPanel.setBounds(0, 0, 0,0);
 		getContentPane().add(scrollPanel);
-
 	}
 
 	private void addProfesores() { 
-
 		Profesor profesor = new Profesor();
 
 		profesores.addColumn("Nombre");
@@ -167,11 +151,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			Centro centrostemp = ite.next();
 			centros.add(i, centrostemp.getNombre());;
 			i++;
-
-		}
-		
+		}		
 	}
-
 
 	private void initLayout() {	
 		getContentPane().setLayout(new BorderLayout());
@@ -185,7 +166,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setPreferredSize(new Dimension(700, 1600));
-
 	}
 
 	private void basicLayout() {
@@ -208,6 +188,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				return false; //Disallow the editing of any cell
 			}
 		};
+		
 		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(secretariosTable);
 		scrollPanel.setBounds(10, 126, 400, 200);
@@ -236,7 +217,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 		for (int i = 2022; i<2100; i++) anoInicio.addItem(i);
 
-
 		// Fecha Final
 		label = new JLabel("Fecha final (DD/MM/AAAA)");
 		label.setBounds(220,342,200,30);
@@ -259,7 +239,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.add(anoFinal);
 
 		for (int i = 2022; i<2100; i++) anoFinal.addItem(i);
-
 
 		// Edicion de curso
 		label = new JLabel("Edicion de curso: 1");
@@ -285,13 +264,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,413,400,30);
 		mainPanel.add(label);
 
-
 		centrosLista = new JList<>(centros);
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(centrosLista);
 		scrollPanel.setBounds(10, 440, 400, 200);
 		mainPanel.add(scrollPanel);
-
 	}
 
 	private void enseñanzasLayout() {
@@ -306,7 +283,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
 
-
 		// Requistio -- Provisional -> Depende de categoria
 		labelRequisito = new JLabel("Requsito");
 		labelRequisito.setBounds(450,681,200,30);
@@ -317,7 +293,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		requisitoCurso.setEnabled(false);
 		mainPanel.add(requisitoCurso);
 
-
 		// ECTS -- Provisional -> Depende de categoria
 		label = new JLabel("ECTS");
 		label.setBounds(450,761,200,30);
@@ -327,7 +302,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		ectsCurso.setBounds(450,791,200,30);
 		ectsCurso.setEnabled(false);
 		mainPanel.add(ectsCurso);
-
 
 		categoriasLista.addListSelectionListener(new ListSelectionListener() {
 
@@ -350,10 +324,12 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 				case 1:
 					requisito = 1;
+				
 					for (int i = 30; i<60; i++) ectsCurso.addItem(i);
 					break;
 				case 2:
 					requisito = 0;
+					
 					for (int i = 15; i<30; i++) ectsCurso.addItem(i);
 					break;
 				case 3:
@@ -386,10 +362,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					labelRequisito.setText("No es necesario requisito");
 					requisitoCurso.setEnabled(false);
 				}
-
 			}
 		});
-
 	}
 
 	private void materiasLayout() {
@@ -453,18 +427,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					// Limpiar selección
 					nombreMateria.setText("");
 					responsablesTable.clearSelection();
-
-					// Prueba
-					System.out.println("New Prueba ----");
-					Iterator ite = materiasGuardadas.iterator();
-					while(ite.hasNext()){
-						Materia materia = (Materia) ite.next();
-						System.out.println("Nombre: " + materia.getNombre() + ", Horas: " + materia.getHoras() + ", Fecha Inicio: " + materia.getFechaInicio() + "Profesor: " + materia.responsable.getNombre());
-					}
 				}
-
 			}
-
 		});
 
 		label = new JLabel("(Completar campos de abajo antes)");
@@ -488,6 +452,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				if (materiasLista.isSelectionEmpty()) return;
 
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Eliminar materia?","Eliminar materia",JOptionPane.YES_NO_OPTION, 1);
+				
 				if (confirm == 0) {
 					int index = materiasLista.getSelectedIndex();
 					materias.remove(index);
@@ -505,7 +470,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		nombreMateria.setBounds(10,1171,180,30);
 		mainPanel.add(nombreMateria);
 
-
 		// Horas de materia
 		label = new JLabel("Horas de materia");
 		label.setBounds(220,1141,180,30);
@@ -519,7 +483,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		}
 
 		mainPanel.add(horas);
-
 
 		// Fecha Inicio Materia
 		label = new JLabel("Fecha inicio (DD/MM/AAAA)");
@@ -544,7 +507,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 		for (int i = 2022; i<2100; i++) anoInicioMateria .addItem(i);
 
-
 		// Fecha Final Materia
 		label = new JLabel("Fecha final (DD/MM/AAAA)");
 		label.setBounds(220,1210,200,30);
@@ -567,8 +529,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.add(anoFinalMateria);
 
 		for (int i = 2022; i<2100; i++) anoFinalMateria.addItem(i);
-
-
+		
 		// Profesor responsable de materia
 		label = new JLabel("Profesor responsable de materia");
 		label.setBounds(10,1279,200,30);
@@ -579,12 +540,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				return false; //Disallow the editing of any cell
 			}
 		};
+		
 		responsablesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(responsablesTable);
 		scrollPanel.setBounds(10, 1309, 400, 200);
 		mainPanel.add(scrollPanel);
-
-
 	}
 
 	private void botonesLayout(final ProfesorUCLM director) {
@@ -600,7 +560,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				new PantallaGestionarCursos(director);
 				setVisible(false);
 			}
-
 		});
 
 		// Boton para enviar propuesta
@@ -636,7 +595,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					centrosLista.setBackground(new Color(255, 255, 255));
 				}
 
-
 				if(categoriasLista.isSelectionEmpty()) {
 					categoriasLista.setBackground(new Color(222, 129, 122));
 					complete = false;
@@ -659,6 +617,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				}
 
 				if (!complete) return;
+				
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
 				if(confirm == 0)  {
@@ -674,19 +633,16 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						fechaInicio = formatter.parse(diaInicio.getItemAt(diaInicio.getSelectedIndex()) + "-" + mesInicio.getItemAt(mesInicio.getSelectedIndex()) + "-" + anoInicio.getItemAt(anoInicio.getSelectedIndex()));
 						fechaFin = formatter.parse(diaFinal.getItemAt(diaFinal.getSelectedIndex()) + "-" + mesFinal.getItemAt(mesFinal.getSelectedIndex()) + "-" + anoFinal.getItemAt(anoFinal.getSelectedIndex()));   
 					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}  
-
-
+					
 					List allCursos = null;
+					
 					try {
 						allCursos = curso.cursoPropioDao.listarCursos();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
-					
+					}					
 					
 					String id = String.valueOf(allCursos.size());
 
@@ -707,19 +663,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 					curso.materias = new ArrayList<>();
 					curso.materias.addAll(materiasGuardadas);
-
-					
+	
 					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
 					gestor.realizarPropuestaCurso(curso);
 
 					System.out.println("Curso creado: " + curso.getNombre());
 				}
-
 			}
-
-
 		});
-
 	}
-
 }

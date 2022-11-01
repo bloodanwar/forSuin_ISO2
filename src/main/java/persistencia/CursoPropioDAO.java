@@ -1,6 +1,9 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -11,6 +14,7 @@ import negocio.entities.*;
 public class CursoPropioDAO {
 
 	public int crearNuevoCurso(CursoPropio curso) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -28,8 +32,8 @@ public class CursoPropioDAO {
 				+ curso.centro.getNombre()+"', '"
 				+ curso.secretario.getDni()+"', '"
 				+ curso.director.getDni()+"', '"
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");
+				+ dateFormat.format(fechaCreacion)+"', '"
+				+ dateFormat.format(fechaActualizacion)+"')");
 		
 		Materia[] materias = (Materia[]) curso.materias.toArray();
 		for (int i=0; i<materias.length; i++){
@@ -43,15 +47,16 @@ public class CursoPropioDAO {
 		}
 	}
 
-	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException {
+	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
 		datosCurso = (Vector) datosCurso.get(0);
 
 		String id = (String) datosCurso.get(0);
 		String nombre = (String) datosCurso.get(1);
 		int ECTS = (Integer) datosCurso.get(2);
-		Date fechainicio = (Date) datosCurso.get(3);
-		Date fechafin = (Date) datosCurso.get(4);
+		Date fechainicio = dateFormat.parse((String) datosCurso.get(3));
+		Date fechafin = dateFormat.parse((String) datosCurso.get(4));
 		double tasaMatricula = (Double) datosCurso.get(5);
 		int edicion = (Integer) datosCurso.get(6);
 		EstadoCurso estado = EstadoCurso.valueOf((String) datosCurso.get(7));
@@ -70,14 +75,14 @@ public class CursoPropioDAO {
 
 	public int editarCurso(CursoPropio curso) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
-
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE cursoPropio SET "
 				+ "nombre='" + curso.getNombre() + "', "
 				+ "ECTS=" + curso.getECTS() + ", "
-				+ "fechaInicio=" + curso.getFechaInicio() + ", "
-				+ "fechaFin=" + curso.getFechaFin() + ", "
+				+ "fechaInicio='" + dateFormat.format(curso.getFechaInicio()) + "', "
+				+ "fechaFin='" + dateFormat.format(curso.getFechaFin()) + "', "
 				+ "tasaMatricula=" + curso.getTasaMatricula() + ", "
 				+ "edicion=" + curso.getEdicion() + ", "
 				+ "estadoCurso='" + curso.estado.toString() + "', "
@@ -85,8 +90,8 @@ public class CursoPropioDAO {
 				+ "centro_nombre=" + curso.centro.getNombre() + ", "
 				+ "secretario_Profesor_DNI='" + curso.secretario.getDni() + "', "
 				+ "director_Profesor_DNI='" + curso.director.getDni() + "', "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE id='"+curso.getId()+"'");
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE id='"+curso.getId()+"'");
 	}
 
 	public List<CursoPropio> listarCursos() throws SQLException {
@@ -155,7 +160,7 @@ public class CursoPropioDAO {
 		return listaCursos;	
 	}
 	
-	//public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
+	//public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException, ParseException {
 	//	Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
 	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director) throws SQLException {
 		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"'");
@@ -167,8 +172,8 @@ public class CursoPropioDAO {
 			
 			String id = (String) curDatosTemp.get(0);
 			String nombre = (String) curDatosTemp.get(1);
-			int ECTS = (Integer)curDatosTemp.get(2);
-			Date fechainicio = (Date) curDatosTemp.get(3);
+			int ECTS = (Integer) curDatosTemp.get(2);
+			Date fechainicio = (Date) curDatosTemp.get(3); //bromomento
 			Date fechafin = (Date) curDatosTemp.get(4);
 			double tasaMatricula = (Double) curDatosTemp.get(5);
 			int edicion = (Integer) curDatosTemp.get(6);

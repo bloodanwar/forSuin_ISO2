@@ -2,6 +2,8 @@ package persistencia;
 
 import negocio.entities.*;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,15 +14,16 @@ public class ProfesorUCLMDAO {
 	//profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion
 
 	public int crearNuevoProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
 		return GestorBD.getInstancia().insert("INSERT INTO profesorUCLM (profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ profesor.getDni()+"', '"
 				+ profesor.categoria.toString()+"', ''"
-				+ profesor.centroAdscripcion.getNombre()+"', "
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");	
+				+ profesor.centroAdscripcion.getNombre()+"', '"
+				+ dateFormat.format(fechaCreacion)+"', '"
+				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public ProfesorUCLM seleccionarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
@@ -41,12 +44,13 @@ public class ProfesorUCLMDAO {
 	}
 
 	public int editarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion=new Date();
 		return GestorBD.getInstancia().update("UPDATE profesorUCLM SET "
 				+ "categoriaProfesor='" +profesor.categoria.toString()+"','"
 				+ "centro_nombre='"+profesor.centroAdscripcion.getNombre()+"',"
-				+ "fechaActualizacion'"+fechaActualizacion
-				+ " WHERE profesor_DNI='"+profesor.getDni()+"'");
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE profesor_DNI='"+profesor.getDni()+"'");
 	}
 
 	public int eliminarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {

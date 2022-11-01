@@ -1,6 +1,8 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,15 +15,16 @@ public class CentroDAO {
 	//Centro(nombre, localizacion, atributo)
 	
 	public int crearNuevoCentro(Centro centro) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
 		return GestorBD.getInstancia().insert("INSERT INTO centro (nombre, localizacion, atributo, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ centro.getNombre()+"', "
 				+ centro.getLocalizacion()+", "
-				+ centro.getAtributo()+", "
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");
+				+ centro.getAtributo()+", '"
+				+ dateFormat.format(fechaCreacion)+"', '"
+				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public Centro seleccionarCentro(Centro centro) throws SQLException {
@@ -40,14 +43,15 @@ public class CentroDAO {
 	}
 
 	public int editarCentro(Centro centro) throws SQLException{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE centro SET "
 				+ "nombre='" + centro.getNombre() + "', "
 				+ "localizacion=" + centro.getLocalizacion() + ", "
 				+ "atributo=" + centro.getAtributo() + ", "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE nombre='"+centro.getNombre());
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE nombre='"+centro.getNombre());
 	}
 
 	public int eliminarCentro(Centro centro) throws SQLException {

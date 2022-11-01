@@ -1,6 +1,8 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,7 @@ public class MateriaDAO {
 	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
 	
 	public int crearNuevaMateria(Materia materia, String cursoPropioID) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -23,8 +26,8 @@ public class MateriaDAO {
 				+ materia.getFechaFin()+", '"
 				+ cursoPropioID+"', '"
 				+ materia.responsable.getDni()+"', "
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");
+				+ dateFormat.format(fechaCreacion)+"', '"
+				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public Materia seleccionarMateria(Materia materia) throws SQLException {
@@ -42,17 +45,17 @@ public class MateriaDAO {
 
 	public int editarMateria(Materia materia, String cursoPropioID) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
-
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE materia SET "
 				+ "horas=" + materia.getHoras() + ", "
-				+ "fechaInicio=" + materia.getFechaInicio() + ", "
-				+ "fechaFin=" + materia.getFechaFin() + ", "
+				+ "fechaInicio='" + dateFormat.format(materia.getFechaInicio()) + "', "
+				+ "fechaFin='" + dateFormat.format(materia.getFechaFin()) + "', "
 				+ "cursoPropio_id='" + cursoPropioID + "', "
-				+ "responsable_Profesor_DNI='" + materia.responsable.getDni() + "', "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE nombre='"+materia.getNombre()+"'");
+				+ "responsable_Profesor_DNI='" + materia.responsable.getDni() + "', '"
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE nombre='"+materia.getNombre()+"'");
 	}
 
 	public int eliminarMateria(Materia materia) throws SQLException {
@@ -78,5 +81,4 @@ public class MateriaDAO {
 		
 		return listaMateria;
 	}
-
 }

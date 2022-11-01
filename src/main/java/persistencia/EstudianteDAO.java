@@ -1,6 +1,8 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -11,6 +13,7 @@ public class EstudianteDAO {
 	//dni, nombre, apellidos, titulacion, cualificacion
 	
 	public int crearNuevoEstudiante(Estudiante estudiante) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -19,9 +22,9 @@ public class EstudianteDAO {
 				+ estudiante.getNombre()+"', '"
 				+ estudiante.getApellidos()+"', "
 				+ estudiante.getTitulacion()+"', '"
-				+ estudiante.getCualificacion()+"', "
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");
+				+ estudiante.getCualificacion()+"', '"
+				+ dateFormat.format(fechaCreacion)+"', '"
+				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public Estudiante seleccionarEstudiante(Estudiante estudiante) throws SQLException {
@@ -41,6 +44,7 @@ public class EstudianteDAO {
 
 	public int editarEstudiante(Estudiante estudiante) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Estudiante
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE estudiante SET "
@@ -48,8 +52,8 @@ public class EstudianteDAO {
 				+ "apellidos='" + estudiante.getApellidos() + "', "
 				+ "titulacion='" + estudiante.getTitulacion() + "', "
 				+ "cualificacion='" + estudiante.getCualificacion() + "', "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE dni='"+estudiante.getDni()+"'");
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE dni='"+estudiante.getDni()+"'");
 	}
 
 	public int eliminarEstudiante(Estudiante estudiante) throws SQLException {

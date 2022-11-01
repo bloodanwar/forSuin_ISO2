@@ -1,6 +1,8 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +15,7 @@ public class MatriculaDAO {
 //fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni
 
 	public int crearNuevaMatricula(Matricula matricula) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaCreacion= new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -23,8 +26,8 @@ public class MatriculaDAO {
 				+ matricula.tipoPago.toString()+ ", '"
 				+ matricula.titulo.getId()+"', '"
 				+ matricula.estudiante.getDni()+"', '"
-				+ fechaCreacion+", "
-				+ fechaActualizacion+")");
+				+ dateFormat.format(fechaCreacion)+"', '"
+				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException { 
@@ -45,6 +48,7 @@ public class MatriculaDAO {
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE matricula SET "
@@ -54,8 +58,8 @@ public class MatriculaDAO {
 				+ "modopago=" + matricula.tipoPago.toString() + ", "
 				+ "id=" + matricula.titulo.getId() + ", "
 				+ "dni=" + matricula.estudiante.getDni() + ", "
-				+ "fechaActualizacion=" + fechaActualizacion
-				+ " WHERE id='"+matricula.titulo.getId()+"'");
+				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
+				+ "' WHERE id='"+matricula.titulo.getId()+"'");
 	}
 
 	public int eliminarMatricula(Matricula matricula) throws SQLException {
