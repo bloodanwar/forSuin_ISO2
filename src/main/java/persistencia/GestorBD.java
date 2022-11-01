@@ -87,13 +87,15 @@ public class GestorBD {
 		throw new UnsupportedOperationException();
 	}
 
-	// TODO BORRAR FUNCI�N
-	public void crearBaseDeDatos() throws Exception {
+	// TODO BORRAR FUNCIÓN
+	public static void crearBaseDeDatos() throws Exception {
 		try {
 		    Connection connection = DriverManager.getConnection(BDConstantes.CONNECTION_STRING, BDConstantes.DBUSER, BDConstantes.DBPASS);
 		    System.out.println("New derby database created");
+
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	}
+
 }
