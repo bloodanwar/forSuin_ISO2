@@ -1,6 +1,7 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -57,7 +58,7 @@ public class CentroDAO {
 	public List<Centro> listarCentros(Centro centroDevolver) throws SQLException {
 		Vector listaCursosDatos = GestorBD.getInstancia().select("SELECT * FROM centro");
 		
-		List<Centro> centros = null;
+		List<Centro> centros = new ArrayList<>();
 		
 		for (int i=0; i<listaCursosDatos.size(); i++) {
 			Vector lCursosDatosTemp = (Vector) listaCursosDatos.get(i);

@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import negocio.controllers.GestorConsultas;
 import negocio.entities.Centro;
+import negocio.entities.CursoPropio;
 import negocio.entities.ProfesorUCLM;
 
 public class PantallaGestionarCursos extends JFrame{
@@ -54,23 +55,24 @@ public class PantallaGestionarCursos extends JFrame{
 
 	private void basicLayout(ProfesorUCLM director) {
 		// ESPERANDO BBDD
-		//		GestorConsultas gestor = new GestorConsultas();
-		//		List cursos = null;
-		//
-		//		try {
-		//			cursos = gestor.listarCursosPorDirector(director);
-		//		} catch (ParseException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-		//
-		//		if(cursos != null) {
-		//			ListIterator<String> iterator = cursos.listIterator();
-		//
-		//			while (iterator.hasNext()) {
-		//				System.out.println(iterator.next());
-		//			}
-		//		}
+		GestorConsultas gestor = new GestorConsultas();
+		List cursos = null;
+
+		try {
+			cursos = gestor.listarCursosPorDirector(director);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if(cursos != null) {
+			ListIterator<CursoPropio> iterator = cursos.listIterator();
+
+			while (iterator.hasNext()) {
+				CursoPropio cursoTemp = iterator.next();
+				System.out.println(cursoTemp.getNombre());
+			}
+		}
 
 
 		// PROVISIONAL --

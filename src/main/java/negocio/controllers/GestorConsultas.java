@@ -48,17 +48,18 @@ public class GestorConsultas {
 		CursoPropio curso = new CursoPropio();
 		List<CursoPropio> listaCursos = null;
 		
-		// PROVISIONAL --
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
-	    Date dateInicio = formatter.parse("01-01-1990");      
-	    Date dateFin = formatter.parse("01-01-2990");      
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
+	    Date dateInicio = formatter.parse("1990-01-01");      
+	    Date dateFin = formatter.parse("2990-01-01");      
+	    //System.out.println(dateInicio);
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
+			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return listaCursos;
 	}
 	
@@ -68,9 +69,9 @@ public class GestorConsultas {
 		List<CursoPropio> listaCursos = null;
 		
 		// PROVISIONAL --
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
-	    Date dateInicio = formatter.parse("01-01-1990");      
-	    Date dateFin = formatter.parse("01-01-2990");      
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
+	    Date dateInicio = formatter.parse("1990-01-01");      
+	    Date dateFin = formatter.parse("2990-01-01");      
 	    
 		try {
 			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);

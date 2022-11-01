@@ -43,16 +43,16 @@ public class PantallaCursosAprobados extends JFrame{
 	private void botonesLayout(final ProfesorUCLM director) {
 		// ESPERANDO BBDD
 		//		GestorConsultas gestor = new GestorConsultas();
-		//		List cursos = null;
+		//		List cursosDao = null;
 		//		
 		//		try {
-		//			cursos = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
+		//			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
 		//		} catch (ParseException e) {
 		//			// TODO Auto-generated catch block
 		//			e.printStackTrace();
 		//		}
 		//
-		//		if(cursos != null) {
+		//		if(cursosDao != null) {
 		//			ListIterator<String> iterator = cursos.listIterator();
 		//
 		//			while (iterator.hasNext()) {

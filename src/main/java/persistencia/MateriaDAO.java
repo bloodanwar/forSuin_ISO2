@@ -1,6 +1,7 @@
 package persistencia;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -61,7 +62,7 @@ public class MateriaDAO {
 	public List<Materia> listarMateriasPorCurso(CursoPropio curso) throws SQLException {
 		Vector listaMateriaDatos = GestorBD.getInstancia().select("SELECT * FROM materia WHERE cursoPropio_id = '" + curso.getId() + "'");
 		
-		List<Materia> listaMateria = null;
+		List<Materia> listaMateria = new ArrayList<>();
 		
 		for (int i=0; i<listaMateriaDatos.size(); i++) {
 			Vector lMateriaDatosTemp = (Vector) listaMateriaDatos.get(i);

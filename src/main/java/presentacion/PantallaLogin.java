@@ -12,7 +12,7 @@ public class PantallaLogin extends JFrame {
 
     private JButton button;
     // PROVISIONAL --
-    private ProfesorUCLM director = new ProfesorUCLM("123456789A", getWarningString(), getName(), getFocusTraversalKeysEnabled(), null, null);
+    private ProfesorUCLM director = new ProfesorUCLM("23568907X");
     
     public PantallaLogin () {
         // Propiedades basicas

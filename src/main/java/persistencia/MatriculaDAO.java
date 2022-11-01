@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.ArrayList;
 
 import negocio.entities.*;
 
@@ -64,7 +65,7 @@ public class MatriculaDAO {
 	public List<Matricula> listarMatriculasPorCurso(CursoPropio curso) throws SQLException {
 		Vector matriculasDatos = GestorBD.getInstancia().select("SELECT * FROM matricula WHERE cursoPropio_id = '"+curso.getId()+"'");
 		
-		List <Matricula> listaMatriculas= null;
+		List <Matricula> listaMatriculas=new ArrayList<>();;
 		
 		for (int i=0; i<matriculasDatos.size(); i++){
 			Vector matDatosTemp = (Vector) matriculasDatos.get(i);
