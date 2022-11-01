@@ -38,7 +38,27 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	}
 	
 	private void basicLayout() {
-		// Lista de cursos propuestos -- Se lee de la base de datos
+		// ESPERANDO BBDD
+		//		GestorConsultas gestor = new GestorConsultas();
+		//		List cursos = null;
+		//		
+		//		try {
+		//			cursos = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
+		//		} catch (ParseException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+		//
+		//		if(cursos != null) {
+		//			ListIterator<String> iterator = cursos.listIterator();
+		//
+		//			while (iterator.hasNext()) {
+		//				System.out.println(iterator.next());
+		//			}
+		//		}
+
+				
+		// PROVISIONAL --
         model.add(0, "Propuesta 1");
         model.add(1, "Propuesta 2");
         model.add(2, "Propuesta 3");

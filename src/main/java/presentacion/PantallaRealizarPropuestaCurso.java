@@ -9,10 +9,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -37,8 +43,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import negocio.controllers.GestorPropuestasCursos;
+import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
 import negocio.entities.Materia;
+import negocio.entities.Profesor;
+import negocio.entities.ProfesorUCLM;
+import negocio.entities.TipoCurso;
 
 public class PantallaRealizarPropuestaCurso extends JFrame {
 
@@ -59,7 +71,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			"Cursos Universitarios de Formación Avnazada", "Cursos de Formación Continua", 
 			"Microcredenciales", "Actividades formativas de corta duración", "Cursos de Verano y Extensión Universitaria", "Formación de Mayores" }; 
 
-	private String[] centros = {"Centro 1", "Centro 2", "Centro 3"}; // Provisional -- Se lee de la base de datos
+	private String[] centros = {"Centro 1", "Centro 2", "Centro 3"}; // PROVISIONAL --
 	private DefaultListModel materias = new DefaultListModel(); 
 	private int idMateria = 0;
 	private DefaultTableModel profesores = new DefaultTableModel(); 
@@ -67,15 +79,16 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	// Objetos
 	private Materia materia;
+	private List<Materia> materiasGuardadas = new ArrayList();
 	private CursoPropio curso;
 
-	public PantallaRealizarPropuestaCurso () {
+	public PantallaRealizarPropuestaCurso (ProfesorUCLM director) {
 		addProfesores();
 		initLayout();
 		basicLayout();
 		enseñanzasLayout();
 		materiasLayout();
-		botonesLayout();
+		botonesLayout(director);
 
 		scrollPanel = new JScrollPane(mainPanel);
 		scrollPanel.setBounds(0, 0, 0,0);
@@ -83,10 +96,25 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	}
 
-	private void addProfesores() { // Leer de base de datos
+	private void addProfesores() { 
+
+		// ESPERANDO BBDD
+		//		Profesor profesor = new Profesor();
+		//		List profesoresLista = null;
+		//		try {
+		//			profesoresLista = profesor.profesorDao.listarProfesores();
+		//		} catch (SQLException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+		//		Iterator ite = profesoresLista.iterator();
+		//		while(ite.hasNext()) {
+		//			System.out.println(ite.next());
+		//		}
+
+		// PROVISIONAL -- 
 		profesores.addColumn("Nombre");
 		profesores.addColumn("Categoria");
-
 		profesores.addColumn("Doctor");
 
 		profesores.insertRow(0, new Object[] { "Profe 1", "Cat 1", "True" });
@@ -124,7 +152,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,96,400,30);
 		mainPanel.add(label);
 
-		secretariosTable = new JTable(profesores);
+		secretariosTable = new JTable(profesores) {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; //Disallow the editing of any cell
+			}
+		};
 		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(secretariosTable);
 		scrollPanel.setBounds(10, 126, 400, 200);
@@ -201,6 +233,10 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label = new JLabel("Centro en el que se imparte");
 		label.setBounds(10,413,400,30);
 		mainPanel.add(label);
+
+		// ESPERANDO BBDD --
+		// Centro centro = new Centro();
+		// centro.centroDao.listarCentros(centro).toArray();
 
 		centrosLista = new JList(centros);
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -286,6 +322,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					break;
 				default:
 					ectsCurso.setEnabled(false);
+					ectsCurso.addItem(0);
 					break;
 				}
 
@@ -347,12 +384,34 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 				if (complete) {
 					materias.addElement(nombreMateria.getText());
+
 					// CREAR MATERIA
-					materia = new Materia();
+					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+					Date inicioMateria = null;
+					Date finMateria = null;
+
+					try {
+						inicioMateria = formatter.parse(diaInicioMateria.getItemAt(diaInicioMateria.getSelectedIndex()) + "-" + mesInicioMateria.getItemAt(mesInicioMateria.getSelectedIndex()) + "-" + anoInicioMateria.getItemAt(anoInicioMateria.getSelectedIndex()));
+						finMateria = formatter.parse(diaFinalMateria.getItemAt(diaInicioMateria.getSelectedIndex()) + "-" + mesFinalMateria.getItemAt(mesFinalMateria.getSelectedIndex()) + "-" + anoFinalMateria.getItemAt(anoFinalMateria.getSelectedIndex()));   
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}  
+
+					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finMateria, null);
+					materiasGuardadas.add(materia);
 
 					// Limpiar selección
 					nombreMateria.setText("");
 					responsablesTable.clearSelection();
+
+					// Prueba
+					System.out.println("New Prueba ----");
+					Iterator ite = materiasGuardadas.iterator();
+					while(ite.hasNext()){
+						Materia materia = (Materia) ite.next();
+						System.out.println("Nombre: " + materia.getNombre() + ", Horas: " + materia.getHoras() + ", Fecha Inicio: " + materia.getFechaInicio());
+					}
 				}
 
 			}
@@ -378,10 +437,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (materiasLista.isSelectionEmpty()) return;
-				
-				int confirm = JOptionPane.showConfirmDialog(null,"¿Eliminar materia?","Eliminar materia",JOptionPane.YES_NO_OPTION, 1);
-				if (confirm == 0) materias.remove(materiasLista.getSelectedIndex());
 
+				int confirm = JOptionPane.showConfirmDialog(null,"¿Eliminar materia?","Eliminar materia",JOptionPane.YES_NO_OPTION, 1);
+				if (confirm == 0) {
+					int index = materiasLista.getSelectedIndex();
+					materias.remove(index);
+					materiasGuardadas.remove(index);
+				}
 			}
 		});
 
@@ -463,7 +525,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,1279,200,30);
 		mainPanel.add(label);
 
-		responsablesTable = new JTable(profesores);
+		responsablesTable = new JTable(profesores) {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; //Disallow the editing of any cell
+			}
+		};
 		responsablesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(responsablesTable);
 		scrollPanel.setBounds(10, 1309, 400, 200);
@@ -472,7 +538,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	}
 
-	private void botonesLayout() {
+	private void botonesLayout(final ProfesorUCLM director) {
 		// Boton para ir atras
 		button = new JButton("Atras");
 		button.setBounds(270,1530,200,30);
@@ -482,7 +548,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PantallaGestionarCursos();
+				new PantallaGestionarCursos(director);
 				setVisible(false);
 			}
 
@@ -547,21 +613,101 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
 				if(confirm == 0)  {
-					new PantallaGestionarCursos();
+					new PantallaGestionarCursos(director);
 					setVisible(false);
 
 					// CREAR CURSO
-					curso = new CursoPropio();
+					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+					Date fechaInicio = null;
+					Date fechaFin = null;
+
+					try {
+						fechaInicio = formatter.parse(diaInicio.getItemAt(diaInicio.getSelectedIndex()) + "-" + mesInicio.getItemAt(mesInicio.getSelectedIndex()) + "-" + anoInicio.getItemAt(anoInicio.getSelectedIndex()));
+						fechaFin = formatter.parse(diaFinal.getItemAt(diaFinal.getSelectedIndex()) + "-" + mesFinal.getItemAt(mesFinal.getSelectedIndex()) + "-" + anoFinal.getItemAt(anoFinal.getSelectedIndex()));   
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}  
+
+					
+					// int id = idMasAlto + 1; // ESPERANDO BBDD --
+					
+					curso = new CursoPropio(
+							null, // id
+							tituloCurso.getText(), 
+							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
+							fechaInicio, 
+							fechaFin, 
+							tasaMatricula.getItemAt(tasaMatricula.getSelectedIndex()), 
+							1, // Edicion
+							EstadoCurso.PROPUESTO, 
+							tipoCurso(), 
+							new Centro((String) centrosLista.getSelectedValue()), // ESPERANDO BBDD --
+							new ProfesorUCLM(), // ESPERANDO BBDD --
+							new ProfesorUCLM() // ESPERANDO BBDD --
+							);
+
+					curso.materias.addAll(materiasGuardadas);
+
+					// ESPERANDO BBDD --
+					//					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
+					//					gestor.realizarPropuestaCurso(curso);
+
+					System.out.println("Curso creado: " + curso.getNombre());
 				}
 
+			}
+
+			private TipoCurso tipoCurso() {
+				// TODO Auto-generated method stub
+				TipoCurso tipoCurso = null;
+
+				switch (categoriasLista.getSelectedIndex()) {
+				case 0:
+					tipoCurso = TipoCurso.MASTER;
+					break;
+
+				case 1:
+					tipoCurso = TipoCurso.ESPECIALISTA;
+					break;
+
+				case 2:
+					tipoCurso = TipoCurso.EXPERTO;
+					break;
+
+				case 3:
+					tipoCurso = TipoCurso.FORMACION_AVANZADA;
+					break;
+
+				case 4:
+					tipoCurso = TipoCurso.FORMACION_CONTINUA;
+					break;
+
+				case 5:
+					tipoCurso = TipoCurso.MICROCREDENCIALES;
+					break;
+
+				case 6:
+					tipoCurso = TipoCurso.CORTA_DURACION;
+					break;
+
+				case 7:
+					tipoCurso = TipoCurso.VERANO;
+					break;
+
+				case 8:
+					tipoCurso = TipoCurso.MAYORES;
+					break;
+
+				default:
+					break;
+				}
+
+				return tipoCurso;
 			}
 
 		});
 
 	}
-
-
-
-
 
 }

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.ArrayList;
 
 import negocio.entities.*;
 
@@ -78,7 +79,7 @@ public class CursoPropioDAO {
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
 		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE cursoPropio_id = '"+estado.toString()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
 		
-		List <CursoPropio> listaCursos=null;
+		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
 			Vector curDatosTemp=(Vector) cursosDatos.get(i);
@@ -107,10 +108,12 @@ public class CursoPropioDAO {
 		return listaCursos;	
 	}
 	
-	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+	//public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
+	//	Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director) throws SQLException {
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"'");
 		
-		List <CursoPropio> listaCursos=null;
+		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
 			Vector curDatosTemp=(Vector) cursosDatos.get(i);
@@ -166,7 +169,7 @@ public class CursoPropioDAO {
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {
 		Vector listaEdicicionDatos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE fechaInicio = " + fechaInicio + " AND fechaFin = " + fechaFin); //buscar fecha y eso
 		
-		List<CursoPropio> listaEdiciones = null;
+		List<CursoPropio> listaEdiciones = new ArrayList<>();
 		
 		for (int i=0; i<listaEdicicionDatos.size(); i++) {
 			Vector lEdicnDatosTemp = (Vector) listaEdicicionDatos.get(i);
