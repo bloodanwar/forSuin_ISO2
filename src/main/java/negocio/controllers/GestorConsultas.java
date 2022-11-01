@@ -63,4 +63,22 @@ public class GestorConsultas {
 	}
 	
 	
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException{
+		CursoPropio curso = new CursoPropio();
+		List<CursoPropio> listaCursos = null;
+		
+		// PROVISIONAL --
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+	    Date dateInicio = formatter.parse("01-01-1990");      
+	    Date dateFin = formatter.parse("01-01-2990");      
+	    
+		try {
+			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaCursos;
+	}
+	
 }

@@ -1,12 +1,20 @@
 package negocio.controllers;
 
+import java.sql.SQLException;
+
 import negocio.entities.*;
 
 public class GestorPropuestasCursos {
 
-	public CursoPropio realizarPropuestaCurso() {
+	public void realizarPropuestaCurso(CursoPropio cursoPropuesto) {
 		// TODO - implement GestorPropuestasCursos.realizarPropuestaCurso
-		throw new UnsupportedOperationException();
+		CursoPropio curso = new CursoPropio();
+		try {
+			curso.cursoPropioDao.crearNuevoCurso(cursoPropuesto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

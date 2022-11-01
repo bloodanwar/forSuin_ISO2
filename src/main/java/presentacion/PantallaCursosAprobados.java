@@ -2,6 +2,9 @@ package presentacion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import negocio.controllers.GestorConsultas;
+import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
 public class PantallaCursosAprobados extends JFrame{
@@ -37,8 +41,28 @@ public class PantallaCursosAprobados extends JFrame{
 	}
 
 	private void botonesLayout(final ProfesorUCLM director) {
-		// Lista de cursos
-        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de la base de datos
+		// ESPERANDO BBDD
+		//		GestorConsultas gestor = new GestorConsultas();
+		//		List cursos = null;
+		//		
+		//		try {
+		//			cursos = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
+		//		} catch (ParseException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+		//
+		//		if(cursos != null) {
+		//			ListIterator<String> iterator = cursos.listIterator();
+		//
+		//			while (iterator.hasNext()) {
+		//				System.out.println(iterator.next());
+		//			}
+		//		}
+		
+		
+		// PROVISIONAL --
+        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; 
         cursosLista = new JList(cursos);
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
