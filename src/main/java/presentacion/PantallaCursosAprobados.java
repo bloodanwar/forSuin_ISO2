@@ -18,28 +18,37 @@ public class PantallaCursosAprobados extends JFrame{
     private JList cursosLista;
     
     public PantallaCursosAprobados () {
-        // Propiedades basicas
-        setLayout(null);
-        setBounds(10, 10, 800,800);
-        setTitle("Cursos aprobados");
-        setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+    	initLayout();
+    	botonesLayout();
 
-        // Lista de cursos
+    }
+
+	private void initLayout() {
+		// Propiedades basicas
+        getContentPane().setLayout(null);
+        setBounds(10, 10, 800,600);
+        setTitle("Cursos aprobados");
+        setResizable(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+		
+	}
+
+	private void botonesLayout() {
+		// Lista de cursos
         String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de la base de datos
         cursosLista = new JList(cursos);
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollLista = new JScrollPane(cursosLista);
-        scrollLista.setBounds(10, 10, 220, 80);
-        add(scrollLista);
+        scrollLista.setBounds(198, 79, 400, 200);
+        getContentPane().add(scrollLista);
         
         // Bot�n para ver datos curso
         button = new JButton("Ver datos");
-        button.setBounds(10,110,200,30);
-        add(button);
+        button.setBounds(296,290,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -54,8 +63,8 @@ public class PantallaCursosAprobados extends JFrame{
         
         // Bot�n para ir atras
         button = new JButton("Atras");
-        button.setBounds(10,160,200,30);
-        add(button);
+        button.setBounds(10,520,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -66,5 +75,6 @@ public class PantallaCursosAprobados extends JFrame{
             }
 
         });
-    }
+		
+	}
 }
