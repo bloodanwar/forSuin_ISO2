@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public abstract class AbstractEntityDAO<E> {
-
 	private String id;
 	private Date fechaCreacion;
 	private Date fechaActualizacion;

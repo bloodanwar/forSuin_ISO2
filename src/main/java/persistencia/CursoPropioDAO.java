@@ -48,12 +48,10 @@ public class CursoPropioDAO {
 		
 		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
 		
-		//falta leer las matriculas de la bbdd, comprobar que estas lineas furulen
 		List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 		cursoDevolver.matriculas = matriculasCurso;
 		
-		
-		return cursoDevolver;
+		return curso;
 	}
 
 	public int editarCurso(CursoPropio curso) throws SQLException {
@@ -78,11 +76,67 @@ public class CursoPropioDAO {
 	}
 
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
-		//TODO - LO HACE MIRIAM
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE cursoPropio_id = '"+estado.toString()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		
+		List <CursoPropio> listaCursos=null;
+		
+		for(int i=0; i<cursosDatos.size(); i++) {
+			Vector curDatosTemp=(Vector) cursosDatos.get(i);
+			
+			String id = (String) curDatosTemp.get(0);
+			String nombre = (String) curDatosTemp.get(1);
+			int ECTS = (Integer)curDatosTemp.get(2);
+			Date fechainicio = (Date) curDatosTemp.get(3);
+			Date fechafin = (Date) curDatosTemp.get(4);
+			double tasaMatricula = (Double) curDatosTemp.get(5);
+			int edicion = (Integer) curDatosTemp.get(6);
+			EstadoCurso estadoObtenido = EstadoCurso.valueOf((String) curDatosTemp.get(7));
+			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));
+			Centro centro = new Centro((String) curDatosTemp.get(9));
+			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));
+			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));
+			
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
+			
+			List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+			cursoDevolver.matriculas = matriculasCurso;
+			
+			listaCursos.add(cursoDevolver);
+		}
+	
+		return listaCursos;	
 	}
 	
 	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
-		//TODO - LO HACE MIRIAM
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		
+		List <CursoPropio> listaCursos=null;
+		
+		for(int i=0; i<cursosDatos.size(); i++) {
+			Vector curDatosTemp=(Vector) cursosDatos.get(i);
+			
+			String id = (String) curDatosTemp.get(0);
+			String nombre = (String) curDatosTemp.get(1);
+			int ECTS = (Integer)curDatosTemp.get(2);
+			Date fechainicio = (Date) curDatosTemp.get(3);
+			Date fechafin = (Date) curDatosTemp.get(4);
+			double tasaMatricula = (Double) curDatosTemp.get(5);
+			int edicion = (Integer) curDatosTemp.get(6);
+			EstadoCurso estado = EstadoCurso.valueOf((String) curDatosTemp.get(7));
+			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));
+			Centro centro = new Centro((String) curDatosTemp.get(9));
+			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));
+			ProfesorUCLM directorObtenido = new ProfesorUCLM((String) curDatosTemp.get(11));
+			
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido);
+			
+			List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+			cursoDevolver.matriculas = matriculasCurso;
+			
+			listaCursos.add(cursoDevolver);
+		}
+
+		return listaCursos;	
 	}
 
 	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {

@@ -35,6 +35,6 @@ public class Centro {
 	public String getLocalizacion() { return localizacion; }
 	public void setLocalizacion(String localizacion) { this.localizacion = localizacion; }
 
-	public int getAttribute() { return attribute; }
+	public int getAtributo() { return attribute; }
 	public void setAttribute(int attribute) { this.attribute = attribute; }
 }
