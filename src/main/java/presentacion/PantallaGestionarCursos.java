@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -127,8 +128,9 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(cursosTable.getSelectionModel().isSelectionEmpty()) return;         
-            	cursosEnviados.removeRow(cursosTable.getSelectedRow());
+            	if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    
+            	int confirm = JOptionPane.showConfirmDialog(null,"¿Eliminar propuesta de curso?","Eliminar propuesta de curso",JOptionPane.YES_NO_OPTION, 1);
+				if (confirm == 0) cursosEnviados.removeRow(cursosTable.getSelectedRow());
             }
 
         });
