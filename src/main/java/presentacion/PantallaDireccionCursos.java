@@ -61,7 +61,7 @@ public class PantallaDireccionCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaLogin();
+                new Login();
                 setVisible(false);
             }
 
