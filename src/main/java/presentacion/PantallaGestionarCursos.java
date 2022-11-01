@@ -31,8 +31,9 @@ import negocio.entities.ProfesorUCLM;
 public class PantallaGestionarCursos extends JFrame{
 
 	private JButton button;
-	private JTable cursosTable;
+	private List cursosDao = null;
 	private DefaultTableModel cursosEnviados = new DefaultTableModel(); 
+	private JTable cursosTable;
 
 
 	public PantallaGestionarCursos (ProfesorUCLM director) {
@@ -56,32 +57,23 @@ public class PantallaGestionarCursos extends JFrame{
 	private void basicLayout(ProfesorUCLM director) {
 		// ESPERANDO BBDD
 		GestorConsultas gestor = new GestorConsultas();
-		List cursos = null;
 
 		try {
-			cursos = gestor.listarCursosPorDirector(director);
+			cursosDao = gestor.listarCursosPorDirector(director);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		if(cursos != null) {
-			ListIterator<CursoPropio> iterator = cursos.listIterator();
-
-			while (iterator.hasNext()) {
-				CursoPropio cursoTemp = iterator.next();
-				System.out.println(cursoTemp.getNombre());
-			}
-		}
-
-
-		// PROVISIONAL --
+		
 		cursosEnviados.addColumn("Nombre");
 		cursosEnviados.addColumn("Estado");
 
-		cursosEnviados.insertRow(0, new Object[] { "Curso 1", "Pendiente" });
-		cursosEnviados.insertRow(1, new Object[] { "Curso 2", "Pendiente"});
-		cursosEnviados.insertRow(2, new Object[] { "Curso 3", "Rechazado" });
+		if(cursosDao != null) {	
+			for(int i = 0; i<cursosDao.size(); i++) {
+				CursoPropio cursoTemp = (CursoPropio) cursosDao.get(i);
+				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.estado });
+			}
+		}
 
 		cursosTable = new JTable(cursosEnviados){
 			public boolean isCellEditable(int rowIndex, int colIndex) {

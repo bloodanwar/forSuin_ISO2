@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -11,16 +12,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import negocio.controllers.GestorConsultas;
+import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
 public class PantallaCursosAprobados extends JFrame{
 
     private JButton button;
-    private JList cursosLista;
+	private List cursosDao = null;
+    private List cursosNombre = new ArrayList();
+    private JList cursosLista = new JList();
+
     
     public PantallaCursosAprobados (ProfesorUCLM director) {
     	initLayout();
@@ -41,29 +47,25 @@ public class PantallaCursosAprobados extends JFrame{
 	}
 
 	private void botonesLayout(final ProfesorUCLM director) {
-		// ESPERANDO BBDD
-		//		GestorConsultas gestor = new GestorConsultas();
-		//		List cursosDao = null;
-		//		
-		//		try {
-		//			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
-		//		} catch (ParseException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-		//
-		//		if(cursosDao != null) {
-		//			ListIterator<String> iterator = cursos.listIterator();
-		//
-		//			while (iterator.hasNext()) {
-		//				System.out.println(iterator.next());
-		//			}
-		//		}
+		GestorConsultas gestor = new GestorConsultas();
+
+		try {
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		if(cursosDao != null) {
+			for(int i = 0; i<cursosDao.size(); i++) {
+				CursoPropio cursoTemp = (CursoPropio) cursosDao.get(i);
+				cursosNombre.add(cursoTemp.getNombre());
+			}
+		}
 		
 		
-		// PROVISIONAL --
-        String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; 
-        cursosLista = new JList(cursos);
+        cursosLista = new JList(cursosNombre.toArray());
         cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollLista = new JScrollPane(cursosLista);

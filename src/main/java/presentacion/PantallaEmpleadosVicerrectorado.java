@@ -3,10 +3,19 @@ package presentacion;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+
+import negocio.controllers.GestorConsultas;
+import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.DefaultListModel;
@@ -16,6 +25,8 @@ import javax.swing.JList;
 public class PantallaEmpleadosVicerrectorado extends JFrame {
 
 	private JButton button;
+	private List cursosDao = null;
+    private List cursosNombre = new ArrayList();
     private JList propuestasLista;
     private DefaultListModel model = new DefaultListModel(); 
 	
@@ -38,32 +49,24 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	}
 	
 	private void basicLayout() {
-		// ESPERANDO BBDD
-		//		GestorConsultas gestor = new GestorConsultas();
-		//		List cursos = null;
-		//		
-		//		try {
-		//			cursos = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
-		//		} catch (ParseException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-		//
-		//		if(cursos != null) {
-		//			ListIterator<String> iterator = cursos.listIterator();
-		//
-		//			while (iterator.hasNext()) {
-		//				System.out.println(iterator.next());
-		//			}
-		//		}
+		GestorConsultas gestor = new GestorConsultas();
 
-				
-		// PROVISIONAL --
-        model.add(0, "Propuesta 1");
-        model.add(1, "Propuesta 2");
-        model.add(2, "Propuesta 3");
-        
-        propuestasLista = new JList(model);
+		try {
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		if(cursosDao != null) {
+			for(int i = 0; i<cursosDao.size(); i++) {
+				CursoPropio cursoTemp = (CursoPropio) cursosDao.get(i);
+				cursosNombre.add(cursoTemp.getNombre());
+			}
+		}
+
+        propuestasLista = new JList(cursosNombre.toArray());
         propuestasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollLista = new JScrollPane(propuestasLista);

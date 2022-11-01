@@ -74,7 +74,7 @@ public class GestorConsultas {
 	    Date dateFin = formatter.parse("2990-01-01");      
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
+			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

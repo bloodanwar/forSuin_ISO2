@@ -60,8 +60,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private JPanel mainPanel, panel;
 	private JScrollPane scrollPanel;    
 	private JTextField tituloCurso, requisitoCurso, nombreMateria;
-	private JTable secretariosTable, responsablesTable;
-	private JList centrosLista, categoriasLista, materiasLista, profesoresMateriaLista;
 	private JComboBox<Integer> tasaMatricula, ectsCurso, horas;
 	private JComboBox diaInicio, mesInicio, anoInicio, diaFinal, mesFinal, anoFinal, diaInicioMateria, mesInicioMateria, anoInicioMateria, diaFinalMateria, mesFinalMateria, anoFinalMateria;  
 
@@ -71,19 +69,36 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			"Cursos Universitarios de Formación Avnazada", "Cursos de Formación Continua", 
 			"Microcredenciales", "Actividades formativas de corta duración", "Cursos de Verano y Extensión Universitaria", "Formación de Mayores" }; 
 
-	private String[] centros = {"Centro 1", "Centro 2", "Centro 3"}; // PROVISIONAL --
+	private TipoCurso[] tipos = {TipoCurso.MASTER, TipoCurso.ESPECIALISTA, TipoCurso.EXPERTO, 
+			TipoCurso.FORMACION_AVANZADA, TipoCurso.FORMACION_CONTINUA,
+			TipoCurso.MICROCREDENCIALES, TipoCurso.CORTA_DURACION, TipoCurso.VERANO, TipoCurso.MAYORES};
+	
 	private DefaultListModel materias = new DefaultListModel(); 
-	private int idMateria = 0;
+
+	
+	List centrosDao = null;
+	private DefaultListModel centros = new DefaultListModel(); 
+	
+	List profesoresDao = null;
 	private DefaultTableModel profesores = new DefaultTableModel(); 
+
+	List profesoresUCLMDao = null;
+	private DefaultTableModel profesoresUCLM = new DefaultTableModel(); 
+	
+	private JList centrosLista, categoriasLista, materiasLista;
+	private JTable secretariosTable, responsablesTable;
 
 
 	// Objetos
 	private Materia materia;
 	private List<Materia> materiasGuardadas = new ArrayList();
-	private CursoPropio curso;
+	private int idMateria = 0;
+	private CursoPropio curso = new CursoPropio();
 
 	public PantallaRealizarPropuestaCurso (ProfesorUCLM director) {
 		addProfesores();
+		addProfesoresUCLM();
+		addCentros();
 		initLayout();
 		basicLayout();
 		enseñanzasLayout();
@@ -98,29 +113,65 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	private void addProfesores() { 
 
-		// ESPERANDO BBDD
-		//		Profesor profesor = new Profesor();
-		//		List profesoresLista = null;
-		//		try {
-		//			profesoresLista = profesor.profesorDao.listarProfesores();
-		//		} catch (SQLException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-		//		Iterator ite = profesoresLista.iterator();
-		//		while(ite.hasNext()) {
-		//			System.out.println(ite.next());
-		//		}
+		Profesor profesor = new Profesor();
 
-		// PROVISIONAL -- 
 		profesores.addColumn("Nombre");
-		profesores.addColumn("Categoria");
 		profesores.addColumn("Doctor");
 
-		profesores.insertRow(0, new Object[] { "Profe 1", "Cat 1", "True" });
-		profesores.insertRow(1, new Object[] { "Profe 2", "Cat 1", "True"});
-		profesores.insertRow(2, new Object[] { "Profe 3", "Cat 2", "False" });
+		try {
+			profesoresDao = profesor.profesorDao.listarProfesores();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i<profesoresDao.size(); i++) {
+			Profesor profesortemp = (Profesor) profesoresDao.get(i);
+			profesores.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.isDoctor() });
+		}
 	}
+
+	private void addProfesoresUCLM() {
+		ProfesorUCLM profesor = new ProfesorUCLM();
+
+		profesoresUCLM.addColumn("Nombre");
+		profesoresUCLM.addColumn("Categoria");
+		profesoresUCLM.addColumn("Doctor");
+
+		try {
+			profesoresUCLMDao = profesor.profesorUCLMDao.listarProfesores();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i<profesoresUCLMDao.size(); i++) {
+			ProfesorUCLM profesortemp = (ProfesorUCLM) profesoresUCLMDao.get(i);
+			profesoresUCLM.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.categoria, profesortemp.isDoctor() });
+		}
+	}
+	
+	private void addCentros() {
+		Centro centro = new Centro();
+		int i = 0;
+
+		try {
+			centrosDao = centro.centroDao.listarCentros();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Iterator<Centro> ite = centrosDao.iterator();
+		while(ite.hasNext()) {
+			Centro centrostemp = ite.next();
+			centros.add(i, centrostemp.getNombre());;
+			i++;
+
+		}
+		
+	}
+
 
 	private void initLayout() {	
 		getContentPane().setLayout(new BorderLayout());
@@ -152,7 +203,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,96,400,30);
 		mainPanel.add(label);
 
-		secretariosTable = new JTable(profesores) {
+		secretariosTable = new JTable(profesoresUCLM) {
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -234,11 +285,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,413,400,30);
 		mainPanel.add(label);
 
-		// ESPERANDO BBDD --
-		// Centro centro = new Centro();
-		// centro.centroDao.listarCentros(centro).toArray();
 
-		centrosLista = new JList(centros);
+		centrosLista = new JList<>(centros);
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(centrosLista);
 		scrollPanel.setBounds(10, 440, 400, 200);
@@ -398,7 +446,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						e1.printStackTrace();
 					}  
 
-					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finMateria, null);
+					int index = responsablesTable.getSelectedRow();
+					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finMateria, (Profesor) profesoresDao.get(index));
 					materiasGuardadas.add(materia);
 
 					// Limpiar selección
@@ -410,7 +459,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					Iterator ite = materiasGuardadas.iterator();
 					while(ite.hasNext()){
 						Materia materia = (Materia) ite.next();
-						System.out.println("Nombre: " + materia.getNombre() + ", Horas: " + materia.getHoras() + ", Fecha Inicio: " + materia.getFechaInicio());
+						System.out.println("Nombre: " + materia.getNombre() + ", Horas: " + materia.getHoras() + ", Fecha Inicio: " + materia.getFechaInicio() + "Profesor: " + materia.responsable.getNombre());
 					}
 				}
 
@@ -629,11 +678,20 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						e1.printStackTrace();
 					}  
 
+
+					List allCursos = null;
+					try {
+						allCursos = curso.cursoPropioDao.listarCursos();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
-					// int id = idMasAlto + 1; // ESPERANDO BBDD --
 					
+					String id = String.valueOf(allCursos.size());
+
 					curso = new CursoPropio(
-							null, // id
+							id,
 							tituloCurso.getText(), 
 							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
 							fechaInicio, 
@@ -641,70 +699,24 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 							tasaMatricula.getItemAt(tasaMatricula.getSelectedIndex()), 
 							1, // Edicion
 							EstadoCurso.PROPUESTO, 
-							tipoCurso(), 
-							new Centro((String) centrosLista.getSelectedValue()), // ESPERANDO BBDD --
-							new ProfesorUCLM(), // ESPERANDO BBDD --
-							new ProfesorUCLM() // ESPERANDO BBDD --
+							tipos[categoriasLista.getSelectedIndex()], 
+							(Centro) centrosDao.get(centrosLista.getSelectedIndex()), 
+							(ProfesorUCLM) profesoresUCLMDao.get(secretariosTable.getSelectedRow()), 
+							director 
 							);
 
+					curso.materias = new ArrayList<>();
 					curso.materias.addAll(materiasGuardadas);
 
-					// ESPERANDO BBDD --
-					//					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
-					//					gestor.realizarPropuestaCurso(curso);
+					
+					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
+					gestor.realizarPropuestaCurso(curso);
 
 					System.out.println("Curso creado: " + curso.getNombre());
 				}
 
 			}
 
-			private TipoCurso tipoCurso() {
-				// TODO Auto-generated method stub
-				TipoCurso tipoCurso = null;
-
-				switch (categoriasLista.getSelectedIndex()) {
-				case 0:
-					tipoCurso = TipoCurso.MASTER;
-					break;
-
-				case 1:
-					tipoCurso = TipoCurso.ESPECIALISTA;
-					break;
-
-				case 2:
-					tipoCurso = TipoCurso.EXPERTO;
-					break;
-
-				case 3:
-					tipoCurso = TipoCurso.FORMACION_AVANZADA;
-					break;
-
-				case 4:
-					tipoCurso = TipoCurso.FORMACION_CONTINUA;
-					break;
-
-				case 5:
-					tipoCurso = TipoCurso.MICROCREDENCIALES;
-					break;
-
-				case 6:
-					tipoCurso = TipoCurso.CORTA_DURACION;
-					break;
-
-				case 7:
-					tipoCurso = TipoCurso.VERANO;
-					break;
-
-				case 8:
-					tipoCurso = TipoCurso.MAYORES;
-					break;
-
-				default:
-					break;
-				}
-
-				return tipoCurso;
-			}
 
 		});
 
