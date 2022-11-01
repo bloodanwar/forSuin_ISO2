@@ -6,9 +6,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import negocio.entities.ProfesorUCLM;
+
 public class PantallaLogin extends JFrame {
 
     private JButton button;
+    // PROVISIONAL --
+    private ProfesorUCLM director = new ProfesorUCLM("123456789A", getWarningString(), getName(), getFocusTraversalKeysEnabled(), null, null);
     
     public PantallaLogin () {
         // Propiedades basicas
@@ -31,7 +35,7 @@ public class PantallaLogin extends JFrame {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaDireccionCursos();
+                new PantallaDireccionCursos(director);
                 setVisible(false);
             }
 

@@ -6,13 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import negocio.entities.ProfesorUCLM;
+
 public class PantallaDireccionCursos extends JFrame{
 
     private JButton button;
     
-    public PantallaDireccionCursos () {
+    public PantallaDireccionCursos (ProfesorUCLM director) {
     	initLayout();
-    	botonesLayout();        
+    	botonesLayout(director);        
     }
     
 	private void initLayout() {
@@ -26,7 +28,7 @@ public class PantallaDireccionCursos extends JFrame{
         setVisible(true);
 	}
 	
-	private void botonesLayout() {
+	private void botonesLayout(final ProfesorUCLM director) {
 		// Boton para visualizar cursos aprobados
         button = new JButton("Consultar cursos aprobados");
         button.setBounds(300,163,200,30);
@@ -36,7 +38,7 @@ public class PantallaDireccionCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaCursosAprobados();
+                new PantallaCursosAprobados(director);
                 setVisible(false);
             }
 
@@ -52,7 +54,7 @@ public class PantallaDireccionCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaGestionarCursos();
+                new PantallaGestionarCursos(director);
                 setVisible(false);
             }
 

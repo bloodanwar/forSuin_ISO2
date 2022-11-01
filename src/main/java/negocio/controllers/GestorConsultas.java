@@ -1,9 +1,13 @@
 package negocio.controllers;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import negocio.entities.*;
+import persistencia.CursoPropioDAO;
 
 public class GestorConsultas {
 
@@ -38,5 +42,25 @@ public class GestorConsultas {
 		// TODO - implement GestorConsultas.listarEdicionesCursos
 		throw new UnsupportedOperationException();
 	}
+	
+	
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException{
+		CursoPropio curso = new CursoPropio();
+		List<CursoPropio> listaCursos = null;
+		
+		// PROVISIONAL --
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+	    Date dateInicio = formatter.parse("01-01-1990");      
+	    Date dateFin = formatter.parse("01-01-2990");      
+	    
+		try {
+			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaCursos;
+	}
+	
 	
 }

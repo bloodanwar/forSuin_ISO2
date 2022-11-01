@@ -3,7 +3,10 @@ package presentacion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.DefaultListModel;
@@ -20,6 +23,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import negocio.controllers.GestorConsultas;
+import negocio.entities.Centro;
+import negocio.entities.ProfesorUCLM;
+
 public class PantallaGestionarCursos extends JFrame{
     
     private JButton button;
@@ -27,10 +34,10 @@ public class PantallaGestionarCursos extends JFrame{
     private DefaultTableModel cursosEnviados = new DefaultTableModel(); 
  
     
-    public PantallaGestionarCursos () {
+    public PantallaGestionarCursos (ProfesorUCLM director) {
     	initLayout();
-    	basicLayout();
-    	botonesLayout();
+    	basicLayout(director);
+    	botonesLayout(director);
     }
 
 	private void initLayout() {
@@ -45,15 +52,35 @@ public class PantallaGestionarCursos extends JFrame{
 		
 	}
 
-	private void basicLayout() {
-		// Lista de cursos propuestos -- Se lee de la base de datos -- Provisional
+	private void basicLayout(ProfesorUCLM director) {
+		// ESPERANDO BBDD
+//		GestorConsultas gestor = new GestorConsultas();
+//		List cursos = null;
+//
+//		try {
+//			cursos = gestor.listarCursosPorDirector(director);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		if(cursos != null) {
+//			ListIterator<String> iterator = cursos.listIterator();
+//
+//			while (iterator.hasNext()) {
+//				System.out.println(iterator.next());
+//			}
+//		}
+		
+		
+		// PROVISIONAL --
 		cursosEnviados.addColumn("Nombre");
 		cursosEnviados.addColumn("Estado");
 		
 		cursosEnviados.insertRow(0, new Object[] { "Curso 1", "Pendiente" });
 		cursosEnviados.insertRow(1, new Object[] { "Curso 2", "Pendiente"});
 		cursosEnviados.insertRow(2, new Object[] { "Curso 3", "Rechazado" });
-
+		
 		cursosTable = new JTable(cursosEnviados){
 			  public boolean isCellEditable(int rowIndex, int colIndex) {
 				  return false; //Disallow the editing of any cell
@@ -69,7 +96,7 @@ public class PantallaGestionarCursos extends JFrame{
      
 	}
 
-	private void botonesLayout() {
+	private void botonesLayout(final ProfesorUCLM director) {
 		// Boton para realizar propuesta de curso
         button = new JButton("Realizar propuesta");
         button.setBounds(195,324,200,30);
@@ -79,7 +106,7 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaRealizarPropuestaCurso();
+                new PantallaRealizarPropuestaCurso(director);
                 setVisible(false);
             }
 
@@ -145,7 +172,7 @@ public class PantallaGestionarCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaDireccionCursos();
+                new PantallaDireccionCursos(director);
                 setVisible(false);
             }
 

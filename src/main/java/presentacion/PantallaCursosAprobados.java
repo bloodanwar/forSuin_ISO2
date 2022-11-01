@@ -11,15 +11,16 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import negocio.controllers.GestorConsultas;
+import negocio.entities.ProfesorUCLM;
 
 public class PantallaCursosAprobados extends JFrame{
 
     private JButton button;
     private JList cursosLista;
     
-    public PantallaCursosAprobados () {
+    public PantallaCursosAprobados (ProfesorUCLM director) {
     	initLayout();
-    	botonesLayout();
+    	botonesLayout(director);
 
     }
 
@@ -35,7 +36,7 @@ public class PantallaCursosAprobados extends JFrame{
 		
 	}
 
-	private void botonesLayout() {
+	private void botonesLayout(final ProfesorUCLM director) {
 		// Lista de cursos
         String[] cursos = {"Curso 1", "Curso 2", "Curso 3"}; // Provisional -- Leer de la base de datos
         cursosLista = new JList(cursos);
@@ -70,7 +71,7 @@ public class PantallaCursosAprobados extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaDireccionCursos();
+                new PantallaDireccionCursos(director);
                 setVisible(false);
             }
 
