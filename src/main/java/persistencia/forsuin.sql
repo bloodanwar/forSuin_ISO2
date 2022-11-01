@@ -144,11 +144,11 @@ INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('60863916B', 'Davi
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor)  VALUES ('92659487C', 'Luis', 'Garatea Hidalgo', FALSE);
 
 /*VALORES PARA PROFESORUCLM*/
-INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('12457890Y', 'Investigador', 'UCLM TAL');
-INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('09764312U', 'Asociado', 'UCLM ALB');
-INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('23568907X', 'Investigador', 'UCLM CIU');
-INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('98653214Z', 'Asociado', 'UCLM ALM');
-INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('14709633I', 'Asociado', 'UCLM GUA');
+INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('12457890Y', 'TITULAR_UNIVERSIDAD', 'UCLM TAL');
+INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('09764312U', 'ASOCIADO', 'UCLM ALB');
+INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('23568907X', 'AYUDANTE_DOCTOR', 'UCLM CIU');
+INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('98653214Z', 'CONTRATADO_DOCTOR', 'UCLM ALM');
+INSERT INTO PROFESORUCLM (profesor_DNI, categoriaProfesor, centro_nombre) VALUES ('14709633I', 'CATEDRATICO', 'UCLM GUA');
 
 /*VALORES PARA PROFESOREXTERNO*/
 INSERT INTO PROFESOREXTERNO (profesor_Dni, titulacion) VALUES ('07412588O', 'Medicina');

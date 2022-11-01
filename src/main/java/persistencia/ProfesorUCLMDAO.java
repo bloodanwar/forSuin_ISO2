@@ -2,7 +2,9 @@ package persistencia;
 
 import negocio.entities.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 public class ProfesorUCLMDAO {
@@ -22,7 +24,7 @@ public class ProfesorUCLMDAO {
 	}
 
 	public ProfesorUCLM seleccionarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
-		Vector datosProfUCLM = GestorBD.getInstancia().select("SELECT * FROM profesorUCLM AS puclm JOIN profesor AS p ON puclm.profesor_DNI = p.dni WHERE puclm.profesor_DNI='"+profesor.getDni()+"'");
+		Vector datosProfUCLM = GestorBD.getInstancia().select("SELECT * FROM profesor AS p JOIN profesorUCLM AS puclm ON puclm.profesor_DNI = p.dni WHERE puclm.profesor_DNI='"+profesor.getDni()+"'");
 		datosProfUCLM = (Vector) datosProfUCLM.get(0);
 		
 		//columnas tras el join:
@@ -49,5 +51,24 @@ public class ProfesorUCLMDAO {
 
 	public int eliminarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
 		return GestorBD.getInstancia().delete("DELETE FROM profesorUCLM WHERE profesor_DNI='"+profesor.getDni()+"'");
+	}
+	
+	public List<ProfesorUCLM> listarProfesores() throws SQLException {
+		Vector datosProfUCLM = GestorBD.getInstancia().select("SELECT * FROM profesor AS p JOIN profesorUCLM AS puclm ON puclm.profesor_DNI = p.dni");
+		
+		List<ProfesorUCLM> listaProfesUCLM = new ArrayList<>();
+		for (int i=0; i<datosProfUCLM.size(); i++) {
+			Vector profUCLMDatosTemp = (Vector) datosProfUCLM.get(i);
+			
+			String dni=(String) profUCLMDatosTemp.get(0);
+			String nombre=(String) profUCLMDatosTemp.get(1);
+			String apellidos= (String) profUCLMDatosTemp.get(2);
+			boolean doctor=(Boolean) profUCLMDatosTemp.get(3);
+			CategoriaProfesor categoria = CategoriaProfesor.valueOf((String) profUCLMDatosTemp.get(7));
+			Centro centro = new Centro((String) profUCLMDatosTemp.get(8));
+			
+			listaProfesUCLM.add(new ProfesorUCLM(dni, nombre, apellidos,doctor,categoria,centro));
+		}
+		return listaProfesUCLM;
 	}
 }

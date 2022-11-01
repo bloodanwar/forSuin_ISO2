@@ -34,9 +34,8 @@ public class CentroDAO {
 		
 		Centro centroDevolver = new Centro(nombre, localizacion, atributo);
 		
-		List centros = new Centro().centroDao.listarCentros(centroDevolver);
-		centroDevolver.centroDao=(CentroDAO) centros;
-		
+		//faltaria obtener la plantilla, y los cursos
+
 		return centroDevolver;
 	}
 
@@ -55,7 +54,7 @@ public class CentroDAO {
 		return GestorBD.getInstancia().delete("DELETE FROM centro WHERE nombre='"+centro.getNombre()+"'");
 	}
 	
-	public List<Centro> listarCentros(Centro centroDevolver) throws SQLException {
+	public List<Centro> listarCentros() throws SQLException {
 		Vector listaCursosDatos = GestorBD.getInstancia().select("SELECT * FROM centro");
 		
 		List<Centro> centros = new ArrayList<>();
