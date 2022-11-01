@@ -14,7 +14,7 @@ public class EstudianteDAO {
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
-		return GestorBD.getInstancia().insert("INSERT INTO estudiante (dni, nombre, apellidos, titulacion, cualificacion) VALUES ('"
+		return GestorBD.getInstancia().insert("INSERT INTO estudiante (dni, nombre, apellidos, titulacion, cualificacion, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ estudiante.getDni()+"', '"
 				+ estudiante.getNombre()+"', '"
 				+ estudiante.getApellidos()+"', "
