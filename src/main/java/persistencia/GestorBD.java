@@ -36,6 +36,7 @@ public class GestorBD {
 
 	public void desconectarBD() throws SQLException {
 		mBD.close();
+		instancia = null;
 	}
 
 	public Vector<Object> select(String sql) throws SQLException {
@@ -44,10 +45,12 @@ public class GestorBD {
 		Vector<Object> vectoradevolver = new Vector<Object>();
 		Statement stmt = mBD.createStatement();
 		ResultSet res = stmt.executeQuery(sql);
+		int nColumnas = res.getMetaData().getColumnCount();
+		
 		while (res.next()) {
 			Vector<Object> v = new Vector<Object>();
-			v.add(res.getObject(1)); // TODO - estar atento a esto
-			v.add(res.getObject(2));
+			for (int i=1; i<nColumnas+1; i++)
+				v.add(res.getObject(i));
 			vectoradevolver.add(v);
 		}
 		stmt.close();
@@ -84,13 +87,15 @@ public class GestorBD {
 		throw new UnsupportedOperationException();
 	}
 
-	// TODO BORRAR FUNCI�N
-	public void crearBaseDeDatos() throws Exception {
+	// TODO BORRAR FUNCIÓN
+	public static void crearBaseDeDatos() throws Exception {
 		try {
 		    Connection connection = DriverManager.getConnection(BDConstantes.CONNECTION_STRING, BDConstantes.DBUSER, BDConstantes.DBPASS);
 		    System.out.println("New derby database created");
+
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	}
+
 }

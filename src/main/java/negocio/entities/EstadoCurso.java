@@ -8,3 +8,5 @@ public enum EstadoCurso {
 	EN_IMPARTIZICION,
 	TERMINADO
 }
+
+// TODO - revisar que al hacer toString imprima bien

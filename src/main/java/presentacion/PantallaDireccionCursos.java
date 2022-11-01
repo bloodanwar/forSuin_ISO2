@@ -6,31 +6,39 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import negocio.entities.ProfesorUCLM;
+
 public class PantallaDireccionCursos extends JFrame{
 
     private JButton button;
     
-    public PantallaDireccionCursos () {
-        // Propiedades basicas
-        setLayout(null);
-        setBounds(10, 10, 500,500);
+    public PantallaDireccionCursos (ProfesorUCLM director) {
+    	initLayout();
+    	botonesLayout(director);        
+    }
+    
+	private void initLayout() {
+		// Propiedades basicas
+        getContentPane().setLayout(null);
+        setBounds(10, 10, 800,600);
         setTitle("Direccion de cursos");
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-
-        
-        // Boton para visualizar cursos aprobados
+	}
+	
+	private void botonesLayout(final ProfesorUCLM director) {
+		// Boton para visualizar cursos aprobados
         button = new JButton("Consultar cursos aprobados");
-        button.setBounds(10,10,200,30);
-        add(button);
+        button.setBounds(300,163,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaCursosAprobados();
+                new PantallaCursosAprobados(director);
                 setVisible(false);
             }
 
@@ -39,14 +47,14 @@ public class PantallaDireccionCursos extends JFrame{
         
         // Boton para gestionar cursos propuestos
         button = new JButton("Gestionar cursos propuestos");
-        button.setBounds(10,60,200,30);
-        add(button);
+        button.setBounds(300,213,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaGestionarCursos();
+                new PantallaGestionarCursos(director);
                 setVisible(false);
             }
 
@@ -54,8 +62,8 @@ public class PantallaDireccionCursos extends JFrame{
         
         // Bot�n para cerrar sesion
         button = new JButton("Cerrar sesion");
-        button.setBounds(10,110,200,30);
-        add(button);
+        button.setBounds(300,263,200,30);
+        getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
             
@@ -66,8 +74,9 @@ public class PantallaDireccionCursos extends JFrame{
             }
 
         });
-    }
-    
+		
+	}
+
 	public void altaCurso() {
 		// TODO - implement PantallaDireccionCursos.altaCurso
 		throw new UnsupportedOperationException();
