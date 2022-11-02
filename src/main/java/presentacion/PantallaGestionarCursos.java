@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import negocio.controllers.GestorConsultas;
 import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
 public class PantallaGestionarCursos extends JFrame{
@@ -55,7 +56,6 @@ public class PantallaGestionarCursos extends JFrame{
 	}
 
 	private void basicLayout(ProfesorUCLM director) {
-		// ESPERANDO BBDD
 		GestorConsultas gestor = new GestorConsultas();
 
 		try {
@@ -117,9 +117,9 @@ public class PantallaGestionarCursos extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 
-				//pantallaNuevaEdicion --> Re-utilizar pantalla de realizar 
-				//setVisible(false);
+				
 			}
+
 
 		});
 
@@ -133,9 +133,12 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
-
-				//pantallaEditarCurso --> Re-utilizar pantalla de realizar 
-				//setVisible(false);
+				CursoPropio curso = (CursoPropio) cursosDao.get(cursosTable.getSelectedRow());
+				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
+					new PantallaEditarCurso(director, curso);
+					setVisible(false);
+				}
+				
 			}
 
 		});

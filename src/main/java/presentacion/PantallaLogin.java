@@ -22,8 +22,8 @@ public class PantallaLogin {
 
 	private JFrame frame;
 	private JTextField textField;
-	private final JButton btnNewButton = new JButton("Entrar");
-	private JButton btnNewButton_1;
+	private final JButton entrar = new JButton("Entrar");
+	private JButton cerrar;
 
 	/**
 	 * Launch the application.
@@ -56,31 +56,26 @@ public class PantallaLogin {
 		frame.setBounds(10, 10, 800, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		SpringLayout springLayout = new SpringLayout();
-		frame.getContentPane().setLayout(springLayout);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		
 		textField = new JTextField("23568907X");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton, 23, SpringLayout.SOUTH, textField);
-		springLayout.putConstraint(SpringLayout.SOUTH, textField, -270, SpringLayout.SOUTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, textField, -299, SpringLayout.EAST, frame.getContentPane());
+		textField.setBounds(326, 90, 160, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("DNI:");
-		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, -471, SpringLayout.EAST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, textField, 12, SpringLayout.EAST, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 3, SpringLayout.NORTH, textField);
+		lblNewLabel.setBounds(292, 93, 22, 14);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblbienvenido = new JLabel("¡Bienvenido!");
-		springLayout.putConstraint(SpringLayout.WEST, btnNewButton, 0, SpringLayout.WEST, lblbienvenido);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblbienvenido, -6, SpringLayout.NORTH, textField);
-		springLayout.putConstraint(SpringLayout.EAST, lblbienvenido, -347, SpringLayout.EAST, frame.getContentPane());
+		lblbienvenido.setBounds(378, 70, 60, 14);
 		lblbienvenido.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frame.getContentPane().add(lblbienvenido);
+		entrar.setBounds(326, 131, 160, 23);
 		
-		btnNewButton.addActionListener(new ActionListener() {
+		entrar.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM(textField.getText());
@@ -89,14 +84,40 @@ public class PantallaLogin {
 			}
 		});
 		
-		frame.getContentPane().add(btnNewButton);
+		frame.getContentPane().add(entrar);
 		
-		btnNewButton_1 = new JButton("Cerrar Programa");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1, 48, SpringLayout.SOUTH, btnNewButton);
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, -314, SpringLayout.EAST, frame.getContentPane());
-		frame.getContentPane().add(btnNewButton_1);
+		cerrar = new JButton("Cerrar Programa");
+		cerrar.setBounds(326, 165, 160, 23);
+		frame.getContentPane().add(cerrar);
 		
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton profesor = new JButton("Profesor");
+		profesor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProfesorUCLM director = new ProfesorUCLM("23568907X");
+				new PantallaDireccionCursos(director);
+				frame.setVisible(false);
+			}
+		});
+		
+		profesor.setBounds(326, 304, 160, 23);
+		frame.getContentPane().add(profesor);
+		
+		JButton pesonal = new JButton("Empleados Vicerrectorado");
+		pesonal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PantallaEmpleadosVicerrectorado();
+				frame.setVisible(false);
+			}
+		});
+		pesonal.setBounds(326, 338, 160, 23);
+		frame.getContentPane().add(pesonal);
+		
+		JLabel lblBotonesPrototipo = new JLabel("Botones Prototipo");
+		lblBotonesPrototipo.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblBotonesPrototipo.setBounds(326, 279, 144, 14);
+		frame.getContentPane().add(lblBotonesPrototipo);
+		
+		cerrar.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent e) {
 				 System.exit(0);
