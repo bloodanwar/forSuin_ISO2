@@ -48,8 +48,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private JLabel label, labelRequisito;
 	private JPanel mainPanel, panel;
 	private JScrollPane scrollPanel;    
-	private JTextField tituloCurso, requisitoCurso, nombreMateria;
-	private JComboBox<Integer> tasaMatricula, ectsCurso, horas;
+	private JTextField tituloCurso, requisitoCurso, nombreMateria, tasaMatricula;
+	private JComboBox<Integer> ectsCurso, horas;
 	private JComboBox diaInicio, mesInicio, anoInicio, diaFinal, mesFinal, anoFinal, diaInicioMateria, mesInicioMateria, anoInicioMateria, diaFinalMateria, mesFinalMateria, anoFinalMateria;  
 
 	// Listas
@@ -250,13 +250,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(450,90,200,30);
 		mainPanel.add(label);
 
-		tasaMatricula = new JComboBox();
+		tasaMatricula = new JTextField();
 		tasaMatricula.setBounds(450,131,180,30);
-
-		for (int i = 1; i <= 100; i++) {
-			tasaMatricula.addItem(i);
-		}
-
 		mainPanel.add(tasaMatricula);
 
 		// Centro en el que se imparte
@@ -581,6 +576,25 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					tituloCurso.setBackground(new Color(255, 255, 255));
 				}
 
+				if (tasaMatricula.getText().equals("")) {
+					tasaMatricula.setBackground(new Color(222, 129, 122));
+					complete = false;
+				} else {
+					boolean isNumber = true;
+					try {
+				        double d = Double.parseDouble(tasaMatricula.getText());
+				    } catch (NumberFormatException nfe) {
+				    	tasaMatricula.setBackground(new Color(222, 129, 122));
+				    	isNumber = false;
+				    }
+					
+					if(isNumber) {
+						tasaMatricula.setBackground(new Color(255, 255, 255));
+					} else {
+						complete = false;
+					}
+				}
+				
 				if(secretariosTable.getSelectionModel().isSelectionEmpty()) {
 					secretariosTable.setBackground(new Color(222, 129, 122));
 					complete = false;
@@ -652,7 +666,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
 							fechaInicio, 
 							fechaFin, 
-							tasaMatricula.getItemAt(tasaMatricula.getSelectedIndex()), 
+							Double.parseDouble(tasaMatricula.getText()),
 							1, // Edicion
 							EstadoCurso.PROPUESTO, 
 							tipos[categoriasLista.getSelectedIndex()], 

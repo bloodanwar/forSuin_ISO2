@@ -21,9 +21,15 @@ public class GestorPropuestasCursos {
 	 * 
 	 * @param curso
 	 */
-	public void editarPropuestaCurso(CursoPropio curso) {
+	public void editarPropuestaCurso(CursoPropio cursoEditado) {
 		// TODO - implement GestorPropuestasCursos.editarPropuestaCurso
-		throw new UnsupportedOperationException();
+		CursoPropio curso = new CursoPropio();
+		try {
+			curso.cursoPropioDao.editarCurso(cursoEditado);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
