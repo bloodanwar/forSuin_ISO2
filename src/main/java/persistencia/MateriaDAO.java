@@ -21,9 +21,9 @@ public class MateriaDAO {
 
 		return GestorBD.getInstancia().insert("INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ materia.getNombre()+"', "
-				+ materia.getHoras()+", "
-				+ materia.getFechaInicio()+", "
-				+ materia.getFechaFin()+", '"
+				+ materia.getHoras()+", '"
+				+ dateFormat.format(materia.getFechaInicio())+"', '"
+				+ dateFormat.format(materia.getFechaFin())+"', '"
 				+ cursoPropioID+"', '"
 				+ materia.responsable.getDni()+"', "
 				+ dateFormat.format(fechaCreacion)+"', '"

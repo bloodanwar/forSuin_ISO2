@@ -20,10 +20,10 @@ public class MatriculaDAO {
 		Date fechaActualizacion = fechaCreacion;
 		
 		return GestorBD.getInstancia().insert("INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('"
-				+ matricula.getFecha()+"', '"
-				+ matricula.isPagado()+"', '"
+				+ dateFormat.format(matricula.getFecha())+"', "
+				+ matricula.isPagado()+", "
 				+ matricula.getAttribute()+", '"
-				+ matricula.tipoPago.toString()+ ", '"
+				+ matricula.tipoPago.toString()+ "', '"
 				+ matricula.titulo.getId()+"', '"
 				+ matricula.estudiante.getDni()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
