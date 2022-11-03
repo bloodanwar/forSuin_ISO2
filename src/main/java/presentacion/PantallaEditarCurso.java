@@ -87,7 +87,7 @@ public class PantallaEditarCurso extends JFrame {
 			addCentros(cursoEditando);
 			initLayout();
 			basicLayout(cursoEditando);
-			enseñanzasLayout(cursoEditando);
+			ensenanzasLayout(cursoEditando);
 			materiasLayout(cursoEditando);
 			botonesLayout(director, cursoEditando);
 
@@ -269,7 +269,7 @@ public class PantallaEditarCurso extends JFrame {
 			mainPanel.add(scrollPanel);
 		}
 
-		private void enseñanzasLayout(CursoPropio cursoEditando) {
+		private void ensenanzasLayout(CursoPropio cursoEditando) {
 			
 			for(int i=0;i<tipos.length;i++) if(cursoEditando.tipo.equals(tipos[i])) categoriaEditado=i;
 
@@ -380,8 +380,8 @@ public class PantallaEditarCurso extends JFrame {
 			scrollPanel.setBounds(10, 931, 400, 200);
 			mainPanel.add(scrollPanel);
 
-			// Boton para añadir materia
-			button = new JButton("Añadir materia");
+			// Boton para anadir materia
+			button = new JButton("Anadir materia");
 			button.setBounds(450,931,200,30);
 			mainPanel.add(button);
 
