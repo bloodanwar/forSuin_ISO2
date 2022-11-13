@@ -38,7 +38,7 @@ public class PantallaDireccionCursos extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaCursosAprobados(director);
+                new PantallaCursosAprobados(1, director);
                 setVisible(false);
             }
         });

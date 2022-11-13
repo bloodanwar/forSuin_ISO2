@@ -28,9 +28,9 @@ public class PantallaCursosAprobados extends JFrame{
     private JList cursosLista = new JList();
 
     
-    public PantallaCursosAprobados (ProfesorUCLM director) {
+    public PantallaCursosAprobados (int type, ProfesorUCLM director) {
     	initLayout();
-    	botonesLayout(director);
+    	botonesLayout(type, director);
 
     }
 
@@ -46,7 +46,7 @@ public class PantallaCursosAprobados extends JFrame{
 		
 	}
 
-	private void botonesLayout(final ProfesorUCLM director) {
+	private void botonesLayout(final int type, final ProfesorUCLM director) {
 		GestorConsultas gestor = new GestorConsultas();
 
 		try {
@@ -81,8 +81,9 @@ public class PantallaCursosAprobados extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new
-                //setVisible(false);
+            	if(cursosLista.isSelectionEmpty()) return;
+                new PantallaDatosCurso(type, director);
+                setVisible(false);
             }
 
         });
@@ -97,7 +98,8 @@ public class PantallaCursosAprobados extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaDireccionCursos(director);
+            	if (type == 0) new PantallaAlumno();
+            	else if (type == 1) new PantallaDireccionCursos(director);
                 setVisible(false);
             }
 
