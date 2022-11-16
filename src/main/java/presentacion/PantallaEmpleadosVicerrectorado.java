@@ -84,14 +84,14 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	if(propuestasLista.isSelectionEmpty()) return;
-	            	new PantallaDatosCurso(2, null);
+	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));
 	                setVisible(false);
 	            }
 
 	     });
 		 
 		 button = new JButton("Cerrar Sesión");
-	     button.setBounds(10,520,200,30);
+	     button.setBounds(300,321,200,30);
 		 getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
