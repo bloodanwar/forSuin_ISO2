@@ -8,9 +8,8 @@ public class GestorPropuestasCursos {
 
 	public void realizarPropuestaCurso(CursoPropio cursoPropuesto) {
 		// TODO - implement GestorPropuestasCursos.realizarPropuestaCurso
-		CursoPropio curso = new CursoPropio();
 		try {
-			curso.cursoPropioDao.crearNuevoCurso(cursoPropuesto);
+			cursoPropuesto.cursoPropioDao.crearNuevoCurso(cursoPropuesto);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -23,9 +22,8 @@ public class GestorPropuestasCursos {
 	 */
 	public void editarPropuestaCurso(CursoPropio cursoEditado) {
 		// TODO - implement GestorPropuestasCursos.editarPropuestaCurso
-		CursoPropio curso = new CursoPropio();
 		try {
-			curso.cursoPropioDao.editarCurso(cursoEditado);
+			cursoEditado.cursoPropioDao.editarCurso(cursoEditado);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

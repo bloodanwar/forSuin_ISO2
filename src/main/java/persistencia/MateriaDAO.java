@@ -15,7 +15,7 @@ public class MateriaDAO {
 	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
 	
 	public int crearNuevaMateria(Materia materia, String cursoPropioID) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -45,7 +45,7 @@ public class MateriaDAO {
 
 	public int editarMateria(Materia materia, String cursoPropioID) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE materia SET "

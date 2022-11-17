@@ -14,7 +14,7 @@ import negocio.entities.*;
 public class CursoPropioDAO {
 
 	public int crearNuevoCurso(CursoPropio curso) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -26,7 +26,8 @@ public class CursoPropioDAO {
 				+ curso.getECTS()+", '"
 				+ dateFormat.format(curso.getFechaInicio())+"', '"
 				+ dateFormat.format(curso.getFechaFin())+"', "
-				+ curso.getTasaMatricula()+", '"
+				+ curso.getTasaMatricula()+", "
+				+ curso.getEdicion()+", '"
 				+ curso.estado.toString()+"', '"
 				+ curso.tipo.toString()+"', '"
 				+ curso.centro.getNombre()+"', '"
@@ -35,7 +36,8 @@ public class CursoPropioDAO {
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
 		
-		Materia[] materias = (Materia[]) curso.materias.toArray();
+		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
+
 		for (int i=0; i<materias.length; i++){
 			contador += materias[i].materiaDao.crearNuevaMateria(materias[i], curso.getId());
 		}
@@ -48,7 +50,7 @@ public class CursoPropioDAO {
 	}
 
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
 		datosCurso = (Vector) datosCurso.get(0);
 
@@ -75,12 +77,12 @@ public class CursoPropioDAO {
 
 	public int editarCurso(CursoPropio curso) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
 		
-		Materia[] materias = (Materia[]) curso.materias.toArray();
+		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
 		for (int i=0; i<materias.length; i++){
 			contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
 		}
@@ -110,7 +112,7 @@ public class CursoPropioDAO {
 	public int eliminarCursoPropio(CursoPropio curso) throws SQLException {
 		int contador = 0;
 		
-		Materia[] materias = (Materia[]) curso.materias.toArray();
+		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
 		for (int i=0; i<materias.length; i++){
 			contador += materias[i].materiaDao.eliminarMateria(materias[i],curso.getId());
 		}
