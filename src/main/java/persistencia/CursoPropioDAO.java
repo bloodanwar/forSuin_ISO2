@@ -67,7 +67,7 @@ public class CursoPropioDAO {
 		
 		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
 		
-		List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+		List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 		cursoDevolver.matriculas = matriculasCurso;
 		
 		return curso;
@@ -78,7 +78,14 @@ public class CursoPropioDAO {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
-		return GestorBD.getInstancia().update("UPDATE cursoPropio SET "
+		int contador = 0;
+		
+		Materia[] materias = (Materia[]) curso.materias.toArray();
+		for (int i=0; i<materias.length; i++){
+			contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
+		}
+		
+		contador+= GestorBD.getInstancia().update("UPDATE cursoPropio SET "
 				+ "nombre='" + curso.getNombre() + "', "
 				+ "ECTS=" + curso.getECTS() + ", "
 				+ "fechaInicio='" + dateFormat.format(curso.getFechaInicio()) + "', "
@@ -92,6 +99,28 @@ public class CursoPropioDAO {
 				+ "director_Profesor_DNI='" + curso.director.getDni() + "', "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
 				+ "' WHERE id='"+curso.getId()+"'");
+		
+		if (contador == curso.materias.size() + 1){
+			return 1;	
+		} else {
+			return 0;
+		}
+	}
+	
+	public int eliminarCursoPropio(CursoPropio curso) throws SQLException {
+		int contador = 0;
+		
+		Materia[] materias = (Materia[]) curso.materias.toArray();
+		for (int i=0; i<materias.length; i++){
+			contador += materias[i].materiaDao.eliminarMateria(materias[i],curso.getId());
+		}
+		
+		contador+= GestorBD.getInstancia().delete("DELETE FROM cursoPropio WHERE id='"+curso.getId()+"'");
+		if (contador == curso.materias.size() + 1){
+			return 1;	
+		} else {
+			return 0;
+		}
 	}
 
 	public List<CursoPropio> listarCursos() throws SQLException {
@@ -116,7 +145,7 @@ public class CursoPropioDAO {
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
 			
-			List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
 			listaCursos.add(cursoDevolver);
@@ -151,7 +180,7 @@ public class CursoPropioDAO {
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
 			
-			List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
 			listaCursos.add(cursoDevolver);
@@ -185,7 +214,7 @@ public class CursoPropioDAO {
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido);
 			
-			List matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
 			listaCursos.add(cursoDevolver);
@@ -238,8 +267,13 @@ public class CursoPropioDAO {
 			Centro centro = new Centro((String) lEdicnDatosTemp.get(9));
 			ProfesorUCLM secretario = new ProfesorUCLM((String) lEdicnDatosTemp.get(10));
 			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));
+			
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+			
+			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
+			cursoDevolver.matriculas = matriculasCurso;
 					
-			listaEdiciones.add(new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director));
+			listaEdiciones.add(cursoDevolver);
 		}
 		
 		return listaEdiciones;

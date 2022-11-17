@@ -30,8 +30,8 @@ public class MateriaDAO {
 				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
-	public Materia seleccionarMateria(Materia materia) throws SQLException {
-		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"'");
+	public Materia seleccionarMateria(Materia materia, String cursoPropioID) throws SQLException {
+		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
 		datosMateria = (Vector) datosMateria.get(0);
 		
 		String nombre = (String) datosMateria.get(0);
@@ -52,14 +52,13 @@ public class MateriaDAO {
 				+ "horas=" + materia.getHoras() + ", "
 				+ "fechaInicio='" + dateFormat.format(materia.getFechaInicio()) + "', "
 				+ "fechaFin='" + dateFormat.format(materia.getFechaFin()) + "', "
-				+ "cursoPropio_id='" + cursoPropioID + "', "
 				+ "responsable_Profesor_DNI='" + materia.responsable.getDni() + "', '"
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE nombre='"+materia.getNombre()+"'");
+				+ "' WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
 	}
 
-	public int eliminarMateria(Materia materia) throws SQLException {
-		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+	"'");
+	public int eliminarMateria(Materia materia, String cursoPropioID) throws SQLException {
+		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
 	}
 
 	public List<Materia> listarMateriasPorCurso(CursoPropio curso) throws SQLException {
