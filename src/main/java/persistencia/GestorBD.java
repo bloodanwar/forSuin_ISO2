@@ -59,12 +59,13 @@ public class GestorBD {
 	}
 
 	public int insert(String sql) throws SQLException {
+
 		PreparedStatement stmt = mBD.prepareStatement(sql);
-    	int res=stmt.executeUpdate();
-    	stmt.close();
-    	desconectarBD();
-		return res;   		
-}
+		int res=stmt.executeUpdate();
+		stmt.close();
+		desconectarBD();
+		return res;		
+	}
 
 	public int update(String sql) throws SQLException {
 		PreparedStatement stmt = mBD.prepareStatement(sql);

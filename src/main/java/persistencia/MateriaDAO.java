@@ -18,14 +18,14 @@ public class MateriaDAO {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
-
+		
 		return GestorBD.getInstancia().insert("INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ materia.getNombre()+"', "
 				+ materia.getHoras()+", '"
 				+ dateFormat.format(materia.getFechaInicio())+"', '"
 				+ dateFormat.format(materia.getFechaFin())+"', '"
 				+ cursoPropioID+"', '"
-				+ materia.responsable.getDni()+"', "
+				+ materia.responsable.getDni()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
 	}
