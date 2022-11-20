@@ -5,21 +5,34 @@ import javax.swing.JFrame;
 import negocio.entities.CursoPropio;
 import negocio.entities.ProfesorUCLM;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
 
 public class PantallaDatosCurso extends JFrame {
 	private DefaultTableModel materiasCurso = new DefaultTableModel(); 
-	
+
+	JTextArea descripcion;
+	JRadioButton aceptarPropuesta, rechazarPropuesta;
+
+
 	public PantallaDatosCurso (int type, ProfesorUCLM director, CursoPropio curso) {
 		initLayout();
 		basicLayout(type, director, curso);
 		tablaMaterias(curso);
+
+		// if (type == 0)	matricularCurso();
+		if (type == 2)	evaluarCurso();
+
 		botonesLayout(type, director, curso);
 	}
 
@@ -35,55 +48,90 @@ public class PantallaDatosCurso extends JFrame {
 	private void basicLayout(final int type, final ProfesorUCLM director, final CursoPropio curso) {
 		// Propiedades basicas
 		getContentPane().setLayout(null);
-		
+
 		JLabel tasaMatricula = new JLabel("Centro: " + curso.centro.getNombre());
-		tasaMatricula.setBounds(42, 143, 200, 14);
+		tasaMatricula.setBounds(43, 75, 200, 14);
 		getContentPane().add(tasaMatricula);
-		
+
 		JLabel tituloCurso = new JLabel("Titulo: " + curso.getNombre());
-		tituloCurso.setBounds(42, 95, 250, 14);
+		tituloCurso.setBounds(43, 27, 250, 14);
 		getContentPane().add(tituloCurso);
-		
+
 		JLabel precio = new JLabel("Precio: " + curso.getTasaMatricula());
-		precio.setBounds(42, 243, 200, 14);
+		precio.setBounds(43, 175, 200, 14);
 		getContentPane().add(precio);
-		
+
 		JLabel creditos = new JLabel("Creditos: " + curso.getECTS());
-		creditos.setBounds(42, 193, 200, 14);
+		creditos.setBounds(43, 125, 200, 14);
 		getContentPane().add(creditos);
-		
+
 		JLabel directorLabel = new JLabel("Profesor Director: " + curso.director.getNombre());
-		directorLabel.setBounds(42, 168, 200, 14);
+		directorLabel.setBounds(43, 100, 200, 14);
 		getContentPane().add(directorLabel);
-		
+
 		JLabel fechaInicio = new JLabel("Fecha Inicio: " + curso.getFechaInicio());
-		fechaInicio.setBounds(42, 268, 200, 14);
+		fechaInicio.setBounds(43, 200, 200, 14);
 		getContentPane().add(fechaInicio);
-		
+
 		JLabel edicion = new JLabel("Edicion: " + curso.getEdicion());
-		edicion.setBounds(42, 120, 200, 14);
+		edicion.setBounds(43, 52, 200, 14);
 		getContentPane().add(edicion);
-		
+
 		JLabel categoria = new JLabel("Categoria: " + curso.tipo);
-		categoria.setBounds(42, 218, 200, 14);
+		categoria.setBounds(43, 150, 200, 14);
 		getContentPane().add(categoria);
-		
+
 		JLabel fechaFin = new JLabel("Fecha Fin: " + curso.getFechaFin());
-		fechaFin.setBounds(42, 293, 200, 14);
+		fechaFin.setBounds(43, 225, 200, 14);
 		getContentPane().add(fechaFin);
 
 		JLabel materiasLabel = new JLabel("Materias");
-		materiasLabel.setBounds(472, 95, 53, 14);
+		materiasLabel.setBounds(473, 27, 53, 14);
 		getContentPane().add(materiasLabel);
 	}
-	
+
+	private void evaluarCurso(){
+		descripcion = new JTextArea();
+		descripcion.setBounds(306, 300, 400, 163);
+		getContentPane().add(descripcion);
+
+		aceptarPropuesta = new JRadioButton("Aceptar propuesta");
+		aceptarPropuesta.setBounds(125, 301, 157, 23);
+		getContentPane().add(aceptarPropuesta);
+
+		rechazarPropuesta = new JRadioButton("Rechazar Propuesta");
+		rechazarPropuesta.setBounds(125, 334, 157, 23);
+		getContentPane().add(rechazarPropuesta);
+
+		ButtonGroup group = new ButtonGroup();
+		group.add(aceptarPropuesta);
+		group.add(rechazarPropuesta);
+
+		aceptarPropuesta.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				descripcion.setEnabled(false);
+				descripcion.setText("");
+				descripcion.setBackground(Color.gray);
+			}
+		});
+
+		rechazarPropuesta.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				descripcion.setEnabled(true);
+				descripcion.setBackground(Color.white);
+			}
+		});
+	}
+
 	private void tablaMaterias(CursoPropio curso) {
 		materiasCurso.addColumn("Nombre");
 		materiasCurso.addColumn("Responsable");
 		materiasCurso.addColumn("Horas");
 		materiasCurso.addColumn("Fecha Inicio");
 		materiasCurso.addColumn("Fecha Fin");
-		
+
 		JTable materiasTable = new JTable(materiasCurso){
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
@@ -93,34 +141,70 @@ public class PantallaDatosCurso extends JFrame {
 		materiasTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JScrollPane scrollLista = new JScrollPane(materiasTable);
-		scrollLista.setBounds(305, 119, 400, 213);
+		scrollLista.setBounds(306, 51, 400, 188);
 		getContentPane().add(scrollLista);
 	}
-	
+
 	private void botonesLayout(final int type, final ProfesorUCLM director, CursoPropio curso) {
 		JButton btnNewButton = new JButton("Atras");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (type == 0 || type == 1) new PantallaCursosAprobados(type, director);
-				if (type == 2) new PantallaEmpleadosVicerrectorado();
+				else new PantallaEmpleadosVicerrectorado();
 				setVisible(false);
 			}
 		});
 		btnNewButton.setBounds(10, 513, 200,30);
 		getContentPane().add(btnNewButton);
-		
+
 		JButton btnMatricular = new JButton("Matricular");
 		btnMatricular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// type 0 --> Matricular como estudiante
-				// type 2 --> Evaluar como empleado
+				
+				if (!evaluarPropuestaCorrecto(type)) return;
+				
+				int confirm = 1;
+
+				if (type == 0) { // matricular
+					confirm = JOptionPane.showConfirmDialog(null,"¿Matricular?","Matricular en curso",JOptionPane.YES_NO_OPTION, 1);
+				} else { // evaluar
+					confirm = JOptionPane.showConfirmDialog(null,"¿Evaluar propuesta?","Evaluar propuesta",JOptionPane.YES_NO_OPTION, 1);
+				}
+
+				if(confirm == 0)  {
+					if (type == 0) new PantallaCursosAprobados(type, director);
+					else new PantallaEmpleadosVicerrectorado();
+				}
 			}
 		});
 		btnMatricular.setBounds(574, 513, 200,30);
 		getContentPane().add(btnMatricular);
-		
+
 		// CAMBIOS DE BOTONES
 		if (type == 1) btnMatricular.setVisible(false);
 		else if (type == 2) btnMatricular.setText("Evaluar");		
+	}
+	
+	public boolean evaluarPropuestaCorrecto(final int type) {
+		boolean result = true;
+		if (!aceptarPropuesta.isSelected() && !rechazarPropuesta.isSelected()) {
+			aceptarPropuesta.setBackground(new Color(222, 129, 122));
+			rechazarPropuesta.setBackground(new Color(222, 129, 122));
+			result = false;
+		}else {
+			aceptarPropuesta.setBackground(getBackground());
+			rechazarPropuesta.setBackground(getBackground());
+		}
+		
+		if (type == 2 && rechazarPropuesta.isSelected()) {
+			if (descripcion.getText().equals("")) {
+				descripcion.setBackground(new Color(222, 129, 122));
+				result = false;
+			} else {
+				descripcion.setBackground(new Color(255, 255, 255));
+			}
+		}
+		
+		return result;
 	}
 }
