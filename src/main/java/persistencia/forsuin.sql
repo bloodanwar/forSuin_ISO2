@@ -123,16 +123,16 @@ CREATE TABLE MATERIA (
 );
 
 /*VALORES PARA VICERRECTORADO*/
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('20937167Z', 'Paco', 'Jerme Duro', TRUE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('20937167H', 'Paco', 'Jerme Duro', TRUE);
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('36631551A', 'Aitor', 'Tilla Ruiz', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('86017372V', 'Dolores', 'Delano Severo', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('29643769N', 'Elba', 'Surero Lleno', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('72709753Z', 'Armando', 'Bronca Matamoros', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('14821461P', 'Ema', 'Amado Bustos', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('80998895W', 'Luz', 'Cuesta Mogollón', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('76837339C', 'Lola', 'Mento Mucho', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('63934392G', 'Elena', 'Nito García', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe)  VALUES ('89217655B', 'Rubén', 'Fermizo de Santos', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('86017372Y', 'Dolores', 'Delano Severo', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('29643769P', 'Elba', 'Surero Lleno', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('72709753U', 'Armando', 'Bronca Matamoros', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('14821461T', 'Ema', 'Amado Bustos', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('80998895I', 'Luz', 'Cuesta Mogollón', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('76837339T', 'Lola', 'Mento Mucho', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('63934392A', 'Elena', 'Nito García', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe)  VALUES ('89217655S', 'Rubén', 'Fermizo de Santos', FALSE);
 
 /*VALORES PARA CENTRO*/
 INSERT INTO CENTRO (nombre, localizacion, atributo) VALUES ('UCLM CUE', 'Cuenca', 6);
