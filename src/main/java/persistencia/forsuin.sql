@@ -128,7 +128,7 @@ INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('36631551A', '
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('86017372V', 'Dolores', 'Delano Severo', FALSE);
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('29643769N', 'Elba', 'Surero Lleno', FALSE);
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('72709753Z', 'Armando', 'Bronca Matamoros', FALSE);
-INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('14821461P', 'Ema', 'Amamado Bustos', FALSE);
+INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('14821461P', 'Ema', 'Amado Bustos', FALSE);
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('80998895W', 'Luz', 'Cuesta Mogollón', FALSE);
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('76837339C', 'Lola', 'Mento Mucho', FALSE);
 INSERT INTO VICERRECTORADO (dni, nombre, apellidos, jefe) VALUES ('63934392G', 'Elena', 'Nito García', FALSE);
