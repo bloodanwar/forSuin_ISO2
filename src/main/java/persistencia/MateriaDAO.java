@@ -15,23 +15,23 @@ public class MateriaDAO {
 	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
 	
 	public int crearNuevaMateria(Materia materia, String cursoPropioID) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
-
+		
 		return GestorBD.getInstancia().insert("INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ materia.getNombre()+"', "
 				+ materia.getHoras()+", '"
 				+ dateFormat.format(materia.getFechaInicio())+"', '"
 				+ dateFormat.format(materia.getFechaFin())+"', '"
 				+ cursoPropioID+"', '"
-				+ materia.responsable.getDni()+"', "
+				+ materia.responsable.getDni()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
-	public Materia seleccionarMateria(Materia materia) throws SQLException {
-		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"'");
+	public Materia seleccionarMateria(Materia materia, String cursoPropioID) throws SQLException {
+		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
 		datosMateria = (Vector) datosMateria.get(0);
 		
 		String nombre = (String) datosMateria.get(0);
@@ -45,21 +45,20 @@ public class MateriaDAO {
 
 	public int editarMateria(Materia materia, String cursoPropioID) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE materia SET "
 				+ "horas=" + materia.getHoras() + ", "
 				+ "fechaInicio='" + dateFormat.format(materia.getFechaInicio()) + "', "
 				+ "fechaFin='" + dateFormat.format(materia.getFechaFin()) + "', "
-				+ "cursoPropio_id='" + cursoPropioID + "', "
 				+ "responsable_Profesor_DNI='" + materia.responsable.getDni() + "', '"
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE nombre='"+materia.getNombre()+"'");
+				+ "' WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
 	}
 
-	public int eliminarMateria(Materia materia) throws SQLException {
-		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+	"'");
+	public int eliminarMateria(Materia materia, String cursoPropioID) throws SQLException {
+		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
 	}
 
 	public List<Materia> listarMateriasPorCurso(CursoPropio curso) throws SQLException {

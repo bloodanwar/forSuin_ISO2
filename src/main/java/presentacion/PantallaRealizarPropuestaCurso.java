@@ -662,7 +662,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						e1.printStackTrace();
 					}					
 					
-					String id = String.valueOf(allCursos.size());
+					String id = String.valueOf(allCursos.size()+1);
 
 					curso = new CursoPropio(
 							id,
