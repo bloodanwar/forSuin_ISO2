@@ -14,7 +14,7 @@ public class ProfesorUCLMDAO {
 	//profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion
 
 	public int crearNuevoProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -44,7 +44,7 @@ public class ProfesorUCLMDAO {
 	}
 
 	public int editarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion=new Date();
 		return GestorBD.getInstancia().update("UPDATE profesorUCLM SET "
 				+ "categoriaProfesor='" +profesor.categoria.toString()+"','"

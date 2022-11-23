@@ -47,6 +47,31 @@ public class CursoPropio {
 		this.director=director;
 	}
 	
+	public String toString() {
+		/**String strMaterias = "";
+		Materia[] arrayMaterias = (Materia[]) materias.toArray();
+		for (int i=0; i<materias.size();i++) {
+			strMaterias+=arrayMaterias[i].toString();
+		}
+		**/
+		return "Curso:"
+				+"\n\tId: "+id
+				+"\n\tNombre: "+nombre
+				+"\n\tECTS: "+ECTS
+				+"\n\tfechaInicio: "+fechaInicio.toString()
+				+"\n\tfechaFin: "+fechaFin.toString()
+				+"\n\ttasaMatricula: "+tasaMatricula
+				+"\n\tEdición: "+edicion
+				+"\n\tEstado:"+estado.toString()
+				+"\n\tTipo: "+tipo.toString()
+				+"\n\tCentro: "+centro.getNombre()
+				+"\n\tSecretario: "+secretario.getDni()
+				+"\n\tDirector: "+director.getDni()
+				//+"\n\tMaterias: "+strMaterias
+				;
+		
+	}
+	
 	public String getId() { return id; }
 	public void setId(String id) { this.id = id; }
 	

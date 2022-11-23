@@ -36,5 +36,14 @@ public class Materia {
 	public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }
 
 	public Date getFechaFin() { return fechaFin; }
-	public void setFechaFin(Date fechaFin) { this.fechaFin = fechaFin; }	
+	public void setFechaFin(Date fechaFin) { this.fechaFin = fechaFin; }
+	
+	public String toString() {
+		return "Materia:"+
+				"\n\tNombre: "+nombre+
+				"\n\tHoras: "+horas+
+				"\n\tFecha inicio: "+fechaInicio+
+				"\n\tFecha fin: "+fechaFin+
+				"\n\tResponsable: "+responsable.getDni();
+	}
 }

@@ -1,13 +1,15 @@
 package pruebas;
 
-import negocio.entities.ProfesorUCLM;
-import persistencia.GestorBD;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Principal {
 
 	public static void main(String[] args) throws Exception {
-		ProfesorUCLM profe = new ProfesorUCLM("12457890Y");
-		profe  = profe.profesorUCLMDao.seleccionarProfesorUCLM(profe);
-		System.out.println(profe.isDoctor());
+		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
+		Date fechaCreacion =  new Date();
+		Date fechaActualizacion = fechaCreacion;
+		System.out.println(dateFormat.format(fechaCreacion));
 	}
 }
