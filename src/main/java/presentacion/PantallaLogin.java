@@ -99,7 +99,7 @@ public class PantallaLogin {
 			}
 		});
 		
-		profesor.setBounds(326, 304, 160, 23);
+		profesor.setBounds(231, 338, 160, 23);
 		frame.getContentPane().add(profesor);
 		
 		JButton pesonal = new JButton("Empleados Vicerrectorado");
@@ -109,13 +109,27 @@ public class PantallaLogin {
 				frame.setVisible(false);
 			}
 		});
-		pesonal.setBounds(326, 338, 160, 23);
+		pesonal.setBounds(418, 304, 160, 23);
 		frame.getContentPane().add(pesonal);
 		
 		JLabel lblBotonesPrototipo = new JLabel("Botones Prototipo");
 		lblBotonesPrototipo.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblBotonesPrototipo.setBounds(326, 279, 144, 14);
+		lblBotonesPrototipo.setBounds(356, 279, 91, 14);
 		frame.getContentPane().add(lblBotonesPrototipo);
+		
+		JButton alumno = new JButton("Alumno");
+		alumno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PantallaAlumno();
+				frame.setVisible(false);
+			}
+		});
+		alumno.setBounds(231, 304, 160, 23);
+		frame.getContentPane().add(alumno);
+		
+		JButton jefeGabinete = new JButton("Jefe Gabinete");
+		jefeGabinete.setBounds(418, 338, 160, 23);
+		frame.getContentPane().add(jefeGabinete);
 		
 		cerrar.addActionListener(new ActionListener() {
 		

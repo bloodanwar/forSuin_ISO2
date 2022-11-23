@@ -75,7 +75,7 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	}
 
 	private void botonesLayout() {
-		 button = new JButton("Evaluar Propuesta");
+		 button = new JButton("Ver datos");
 	     button.setBounds(300,280,200,30);
 	     getContentPane().add(button);
 
@@ -84,15 +84,14 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	if(propuestasLista.isSelectionEmpty()) return;
-
-	            	//pantallaEvaluarCurso --> Re-utilizar pantalla de realizar --> Añadir cuadro de opinion al rechazar
-	                //setVisible(false);
+	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));
+	                setVisible(false);
 	            }
 
 	     });
 		 
 		 button = new JButton("Cerrar Sesión");
-	     button.setBounds(10,520,200,30);
+	     button.setBounds(300,321,200,30);
 		 getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
