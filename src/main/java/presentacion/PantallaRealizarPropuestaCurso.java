@@ -708,7 +708,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 					curso.materias.addAll(materiasGuardadas);
 	
 					GestorPropuestasCursos gestorPropuestas = new GestorPropuestasCursos();
-					gestorPropuestas.realizarPropuestaCurso(curso);
+					try {
+						gestorPropuestas.realizarPropuestaCurso(curso);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

@@ -686,7 +686,12 @@ public class PantallaEditarCurso extends JFrame {
 						curso.materias.addAll(materiasGuardadas);
 		
 						GestorPropuestasCursos gestor = new GestorPropuestasCursos();
-						gestor.editarPropuestaCurso(cursoEditando);
+						try {
+							gestor.editarPropuestaCurso(cursoEditando);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
 						System.out.println("Curso editado: " + curso.getNombre());
 					}

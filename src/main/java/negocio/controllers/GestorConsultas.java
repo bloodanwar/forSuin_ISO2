@@ -47,10 +47,16 @@ public class GestorConsultas {
 	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException{
 		CursoPropio curso = new CursoPropio();
 		List<CursoPropio> listaCursos = null;
+		
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
+	    Date dateInicio = formatter.parse("1990-01-01");      
+	    Date dateFin = formatter.parse("2990-01-01");      
+	    //System.out.println(dateInicio);
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor);
+			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -60,11 +66,17 @@ public class GestorConsultas {
 	
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException{
 		CursoPropio curso = new CursoPropio();
-		List<CursoPropio> listaCursos = null;   
+		List<CursoPropio> listaCursos = null;
+		
+		// PROVISIONAL --
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
+	    Date dateInicio = formatter.parse("1990-01-01");      
+	    Date dateFin = formatter.parse("2990-01-01");      
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado);
+			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listaCursos;
