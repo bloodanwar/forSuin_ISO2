@@ -22,10 +22,9 @@ import negocio.entities.ProfesorUCLM;
 
 public class PantallaCursosAprobados extends JFrame{
 
-    private JButton button;
-	private List cursosDao = null;
-    private List cursosNombre = new ArrayList();
-    private JList cursosLista = new JList();
+	private List<CursoPropio> cursosDao = null;
+    private List<String> cursosNombre = new ArrayList<>();
+    private JList<String> cursosLista = new JList<>();
 
     
     public PantallaCursosAprobados (int type, ProfesorUCLM director) {
@@ -48,18 +47,17 @@ public class PantallaCursosAprobados extends JFrame{
 	
 	private void listLayout() {
 		GestorConsultas gestor = new GestorConsultas();
-
+		
 		try {
 			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		
 		if(cursosDao != null) {
 			for(int i = 0; i<cursosDao.size(); i++) {
-				CursoPropio cursoTemp = (CursoPropio) cursosDao.get(i);
+				CursoPropio cursoTemp = cursosDao.get(i);
 				cursosNombre.add(cursoTemp.getNombre());
 			}
 		}
@@ -74,8 +72,8 @@ public class PantallaCursosAprobados extends JFrame{
 	}
 
 	private void botonesLayout(final int type, final ProfesorUCLM director) {
-        // Bot�n para ver datos curso
-        button = new JButton("Ver datos");
+        // Boton para ver datos curso
+        JButton button = new JButton("Ver datos");
         button.setBounds(296,290,200,30);
         getContentPane().add(button);
     
@@ -83,15 +81,15 @@ public class PantallaCursosAprobados extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(cursosLista.isSelectionEmpty()) return;
-                new PantallaDatosCurso(type, director, (CursoPropio) cursosDao.get(cursosLista.getSelectedIndex()));
-                setVisible(false);
+            	if(!cursosLista.isSelectionEmpty()) {
+            		 new PantallaDatosCurso(type, director, cursosDao.get(cursosLista.getSelectedIndex()));
+                     setVisible(false);
+            	}  
             }
-
         });
         
         
-        // Bot�n para ir atras
+        // Boton para ir atras
         button = new JButton("Atras");
         button.setBounds(10,520,200,30);
         getContentPane().add(button);

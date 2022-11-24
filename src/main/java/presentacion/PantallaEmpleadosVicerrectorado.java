@@ -24,11 +24,9 @@ import javax.swing.JList;
 
 public class PantallaEmpleadosVicerrectorado extends JFrame {
 
-	private JButton button;
-	private List cursosDao = null;
-    private List cursosNombre = new ArrayList();
-    private JList propuestasLista;
-    private DefaultListModel model = new DefaultListModel(); 
+	private List<CursoPropio> cursosDao = null;
+    private List<String> cursosNombre = new ArrayList<>();
+    private JList<String> propuestasLista = new JList<>();
 	
     public PantallaEmpleadosVicerrectorado () {
     	initLayout();
@@ -54,14 +52,13 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 		try {
 			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		
 		if(cursosDao != null) {
 			for(int i = 0; i<cursosDao.size(); i++) {
-				CursoPropio cursoTemp = (CursoPropio) cursosDao.get(i);
+				CursoPropio cursoTemp = cursosDao.get(i);
 				cursosNombre.add(cursoTemp.getNombre());
 			}
 		}
@@ -75,7 +72,7 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	}
 
 	private void botonesLayout() {
-		 button = new JButton("Ver datos");
+		 JButton button = new JButton("Ver datos");
 	     button.setBounds(300,280,200,30);
 	     getContentPane().add(button);
 

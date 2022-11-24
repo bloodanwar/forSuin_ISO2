@@ -684,8 +684,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	
 					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
 					gestor.realizarPropuestaCurso(curso);
-
-					System.out.println("Curso creado: " + curso.getNombre());
 				}
 			}
 		});

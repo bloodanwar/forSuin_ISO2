@@ -29,6 +29,20 @@ public class GestorPropuestasCursos {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param curso
+	 */
+	public void eliminarPropuestaCurso(CursoPropio cursoEditado) {
+		// TODO - implement GestorPropuestasCursos.editarPropuestaCurso
+		try {
+			cursoEditado.cursoPropioDao.eliminarCursoPropio(cursoEditado);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 

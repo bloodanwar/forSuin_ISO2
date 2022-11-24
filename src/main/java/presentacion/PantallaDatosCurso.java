@@ -3,6 +3,7 @@ package presentacion;
 import javax.swing.JFrame;
 
 import negocio.entities.CursoPropio;
+import negocio.entities.Materia;
 import negocio.entities.ProfesorUCLM;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,16 +14,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import java.util.Iterator;
 
 public class PantallaDatosCurso extends JFrame {
 	private DefaultTableModel materiasCurso = new DefaultTableModel(); 
 
 	JTextArea descripcion;
-	JRadioButton aceptarPropuesta, rechazarPropuesta;
+	JRadioButton aceptarPropuesta;
+	JRadioButton rechazarPropuesta;
 
 
 	public PantallaDatosCurso (int type, ProfesorUCLM director, CursoPropio curso) {
@@ -131,8 +135,19 @@ public class PantallaDatosCurso extends JFrame {
 		materiasCurso.addColumn("Horas");
 		materiasCurso.addColumn("Fecha Inicio");
 		materiasCurso.addColumn("Fecha Fin");
+		
+		Collection<Materia> materias = curso.materias;
+		if (materias!=null) {
+			Iterator<Materia> ite = materias.iterator();
+			while(ite.hasNext()){
+				Materia temp = ite.next();
+				materiasCurso.addRow(new Object[] { temp.getNombre(), temp.responsable, temp.getHoras(), temp.getFechaInicio() ,temp.getFechaFin() });
+			}
+		}
+
 
 		JTable materiasTable = new JTable(materiasCurso){
+			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
