@@ -28,10 +28,10 @@ public class PantallaCursosAprobados extends JFrame{
     private JList cursosLista = new JList();
 
     
-    public PantallaCursosAprobados (ProfesorUCLM director) {
+    public PantallaCursosAprobados (int type, ProfesorUCLM director) {
     	initLayout();
-    	botonesLayout(director);
-
+    	listLayout();
+    	botonesLayout(type, director);
     }
 
 	private void initLayout() {
@@ -45,8 +45,8 @@ public class PantallaCursosAprobados extends JFrame{
         setVisible(true);
 		
 	}
-
-	private void botonesLayout(final ProfesorUCLM director) {
+	
+	private void listLayout() {
 		GestorConsultas gestor = new GestorConsultas();
 
 		try {
@@ -71,7 +71,9 @@ public class PantallaCursosAprobados extends JFrame{
         JScrollPane scrollLista = new JScrollPane(cursosLista);
         scrollLista.setBounds(198, 79, 400, 200);
         getContentPane().add(scrollLista);
-        
+	}
+
+	private void botonesLayout(final int type, final ProfesorUCLM director) {
         // Bot�n para ver datos curso
         button = new JButton("Ver datos");
         button.setBounds(296,290,200,30);
@@ -81,8 +83,9 @@ public class PantallaCursosAprobados extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new
-                //setVisible(false);
+            	if(cursosLista.isSelectionEmpty()) return;
+                new PantallaDatosCurso(type, director, (CursoPropio) cursosDao.get(cursosLista.getSelectedIndex()));
+                setVisible(false);
             }
 
         });
@@ -97,7 +100,8 @@ public class PantallaCursosAprobados extends JFrame{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PantallaDireccionCursos(director);
+            	if (type == 0) new PantallaAlumno();
+            	else if (type == 1) new PantallaDireccionCursos(director);
                 setVisible(false);
             }
 

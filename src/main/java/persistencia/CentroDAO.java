@@ -15,7 +15,7 @@ public class CentroDAO {
 	//Centro(nombre, localizacion, atributo)
 	
 	public int crearNuevoCentro(Centro centro) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -43,7 +43,7 @@ public class CentroDAO {
 	}
 
 	public int editarCentro(Centro centro) throws SQLException{
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE centro SET "

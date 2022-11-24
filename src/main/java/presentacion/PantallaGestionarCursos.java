@@ -39,7 +39,7 @@ public class PantallaGestionarCursos extends JFrame{
 
 	public PantallaGestionarCursos (ProfesorUCLM director) {
 		initLayout();
-		basicLayout(director);
+		listLayout(director);
 		botonesLayout(director);
 	}
 
@@ -55,7 +55,7 @@ public class PantallaGestionarCursos extends JFrame{
 
 	}
 
-	private void basicLayout(ProfesorUCLM director) {
+	private void listLayout(ProfesorUCLM director) {
 		GestorConsultas gestor = new GestorConsultas();
 
 		try {
@@ -86,8 +86,6 @@ public class PantallaGestionarCursos extends JFrame{
 		JScrollPane scrollLista = new JScrollPane(cursosTable);
 		scrollLista.setBounds(199, 113, 400, 200);
 		getContentPane().add(scrollLista);
-
-
 	}
 
 	private void botonesLayout(final ProfesorUCLM director) {

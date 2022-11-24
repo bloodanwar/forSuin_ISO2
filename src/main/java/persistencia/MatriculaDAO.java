@@ -15,15 +15,15 @@ public class MatriculaDAO {
 //fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni
 
 	public int crearNuevaMatricula(Matricula matricula) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion= new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
 		return GestorBD.getInstancia().insert("INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('"
-				+ matricula.getFecha()+"', '"
-				+ matricula.isPagado()+"', '"
+				+ dateFormat.format(matricula.getFecha())+"', "
+				+ matricula.isPagado()+", "
 				+ matricula.getAttribute()+", '"
-				+ matricula.tipoPago.toString()+ ", '"
+				+ matricula.tipoPago.toString()+ "', '"
 				+ matricula.titulo.getId()+"', '"
 				+ matricula.estudiante.getDni()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
@@ -48,7 +48,7 @@ public class MatriculaDAO {
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE matricula SET "

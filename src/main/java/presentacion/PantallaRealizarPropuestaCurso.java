@@ -82,15 +82,19 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private CursoPropio curso = new CursoPropio();
 
 	public PantallaRealizarPropuestaCurso (ProfesorUCLM director) {
+		// DAOS
 		addProfesores();
 		addProfesoresUCLM();
 		addCentros();
+		
+		// LAYOUTS
 		initLayout();
 		basicLayout();
 		enseñanzasLayout();
 		materiasLayout();
 		botonesLayout(director);
 
+		// MAIN
 		scrollPanel = new JScrollPane(mainPanel);
 		scrollPanel.setBounds(0, 0, 0,0);
 		getContentPane().add(scrollPanel);
@@ -658,7 +662,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						e1.printStackTrace();
 					}					
 					
-					String id = String.valueOf(allCursos.size());
+					String id = String.valueOf(allCursos.size()+1);
 
 					curso = new CursoPropio(
 							id,
