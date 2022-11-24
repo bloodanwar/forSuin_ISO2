@@ -6,28 +6,14 @@ import negocio.entities.*;
 
 public class GestorPropuestasCursos {
 
-	public void realizarPropuestaCurso(CursoPropio cursoPropuesto) {
-		// TODO - implement GestorPropuestasCursos.realizarPropuestaCurso
-		try {
-			cursoPropuesto.cursoPropioDao.crearNuevoCurso(cursoPropuesto);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
+	
+	public void realizarPropuestaCurso(CursoPropio cursoPropuesto) throws SQLException {
+		cursoPropuesto.cursoPropioDao.crearNuevoCurso(cursoPropuesto);
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 */
-	public void editarPropuestaCurso(CursoPropio cursoEditado) {
-		// TODO - implement GestorPropuestasCursos.editarPropuestaCurso
-		try {
-			cursoEditado.cursoPropioDao.editarCurso(cursoEditado);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException {
+		cursoEditado.cursoPropioDao.editarCurso(cursoEditado);
 	}
 	
 	/**
@@ -44,20 +30,13 @@ public class GestorPropuestasCursos {
 		}
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 */
 	public EstadoCurso evaluarPropuesta(CursoPropio curso) {
 		// TODO - implement GestorPropuestasCursos.evaluarPropuesta
 		throw new UnsupportedOperationException();
 	}
-
-	/**
-	 * 
-	 * @param curso
-	 */
+	
 	public void altaCursoAprobado(CursoPropio curso) {
+		// TODO - es lo mismo que validar la propuesta??? Es decir, cambiar de PROPUESTA a VALIDADO
 		// TODO - implement GestorPropuestasCursos.altaCursoAprobado
 		throw new UnsupportedOperationException();
 	}

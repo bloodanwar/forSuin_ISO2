@@ -157,11 +157,8 @@ public class CursoPropioDAO {
 
 	}
 
-	//public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
-		//Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE cursoPropio_id = '"+estado.toString()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
-	
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE estadoCurso = '"+estado.toString()+"'");
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE estadoCurso = '"+estado.toString()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
@@ -191,11 +188,8 @@ public class CursoPropioDAO {
 		return listaCursos;	
 	}
 	
-	//public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException, ParseException {
-	//	Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
-	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"'");
-		
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException, ParseException {
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
@@ -204,7 +198,7 @@ public class CursoPropioDAO {
 			String id = (String) curDatosTemp.get(0);
 			String nombre = (String) curDatosTemp.get(1);
 			int ECTS = (Integer) curDatosTemp.get(2);
-			Date fechainicio = (Date) curDatosTemp.get(3); //bromomento
+			Date fechainicio = (Date) curDatosTemp.get(3);
 			Date fechafin = (Date) curDatosTemp.get(4);
 			double tasaMatricula = (Double) curDatosTemp.get(5);
 			int edicion = (Integer) curDatosTemp.get(6);

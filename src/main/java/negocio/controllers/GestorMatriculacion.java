@@ -1,47 +1,39 @@
 package negocio.controllers;
 
+import java.sql.SQLException;
+import java.util.Date;
+
 import negocio.entities.*;
 
 public class GestorMatriculacion {
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarMatriculacion
-		throw new UnsupportedOperationException();
+	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
+	
+	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException {
+		Date fecha = new Date();
+		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);
+		matricula.matriculaDAO.crearNuevaMatricula(matricula);
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarPagoMatricula
-		throw new UnsupportedOperationException();
+	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException {
+		Matricula matricula = new Matricula(estudiante, curso);
+		matricula.matriculaDAO.seleccionarMatricula(matricula);
+		matricula.setPagado(true);
+		matricula.matriculaDAO.editarMatricula(matricula);
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarPagoTarjeta
-		throw new UnsupportedOperationException();
+	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException {
+		Matricula matricula = new Matricula(estudiante, curso);
+		matricula.matriculaDAO.seleccionarMatricula(matricula);
+		matricula.tipoPago = ModoPago.TARJETA_CREDITO;
+		matricula.matriculaDAO.editarMatricula(matricula);
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarPagoTransferencia
-		throw new UnsupportedOperationException();
+	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException {
+		Matricula matricula = new Matricula(estudiante, curso);
+		matricula.matriculaDAO.seleccionarMatricula(matricula);
+		matricula.tipoPago = ModoPago.TRANSFERENCIA;
+		matricula.matriculaDAO.editarMatricula(matricula);
 	}
 
 	private void operation() {
