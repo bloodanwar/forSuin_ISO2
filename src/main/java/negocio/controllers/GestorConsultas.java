@@ -72,6 +72,7 @@ public class GestorConsultas {
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
 	    Date dateInicio = formatter.parse("1990-01-01");      
 	    Date dateFin = formatter.parse("2990-01-01");      
+	    System.out.println(dateInicio);
 	    
 		try {
 			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);

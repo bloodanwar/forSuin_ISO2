@@ -157,7 +157,7 @@ public class CursoPropioDAO {
 	}
 
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE estadoCurso = '"+estado.toString()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE estadoCurso = '"+estado.toString()+"' AND fechaInicio >= '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
@@ -188,7 +188,7 @@ public class CursoPropioDAO {
 	}
 	
 	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
@@ -219,7 +219,7 @@ public class CursoPropioDAO {
 	}
 
 	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector listaCursos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE tipoCurso = '"+ tipo.toString() +"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		Vector listaCursos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE tipoCurso = '"+ tipo.toString() +"' AND fechaInicio >= '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		
 		double ingresosTotales = 0;
 		
@@ -243,7 +243,7 @@ public class CursoPropioDAO {
 	}
 
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector listaEdicicionDatos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE fechaInicio = " + fechaInicio + " AND fechaFin = " + fechaFin); //buscar fecha y eso
+		Vector listaEdicicionDatos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE fechaInicio = '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		
 		List<CursoPropio> listaEdiciones = new ArrayList<>();
 		
