@@ -114,7 +114,7 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
-				
+				// TODO -- nueva edición curso
 				
 			}
 
@@ -135,6 +135,8 @@ public class PantallaGestionarCursos extends JFrame{
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
 				
 				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
+					// TODO -- editar curso
+
 					new PantallaEditarCurso(director, curso);
 					setVisible(false);
 				}

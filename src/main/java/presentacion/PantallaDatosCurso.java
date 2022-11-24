@@ -34,7 +34,7 @@ public class PantallaDatosCurso extends JFrame {
 		basicLayout(type, director, curso);
 		tablaMaterias(curso);
 
-		// if (type == 0)	matricularCurso();
+		// if (type == 0)	matricularCurso(); // TODO - matricular alumno en la misma pantalla
 		if (type == 2)	evaluarCurso();
 
 		botonesLayout(type, director, curso);
@@ -180,9 +180,9 @@ public class PantallaDatosCurso extends JFrame {
 				
 				int confirm = 1;
 
-				if (type == 0) { // matricular
+				if (type == 0) { // TODO -- matricular
 					confirm = JOptionPane.showConfirmDialog(null,"¿Matricular?","Matricular en curso",JOptionPane.YES_NO_OPTION, 1);
-				} else { // evaluar
+				} else { // TODO -- evaluar
 					confirm = JOptionPane.showConfirmDialog(null,"¿Evaluar propuesta?","Evaluar propuesta",JOptionPane.YES_NO_OPTION, 1);
 				}
 

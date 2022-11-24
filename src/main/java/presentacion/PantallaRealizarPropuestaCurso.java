@@ -38,6 +38,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import negocio.controllers.GestorConsultas;
 import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.*;
 
@@ -45,14 +46,32 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 	// Variables generales
 	private JButton button;
-	private JLabel label, labelRequisito;
-	private JPanel mainPanel, panel;
+	private JLabel label;
+	private JLabel labelRequisito;
+	private JPanel mainPanel;
 	private JScrollPane scrollPanel;    
-	private JTextField tituloCurso, requisitoCurso, nombreMateria, tasaMatricula;
-	private JComboBox<Integer> ectsCurso, horas;
-	private JComboBox diaInicio, mesInicio, anoInicio, diaFinal, mesFinal, anoFinal, diaInicioMateria, mesInicioMateria, anoInicioMateria, diaFinalMateria, mesFinalMateria, anoFinalMateria;  
+	private JTextField tituloCurso;
+	private JTextField requisitoCurso;
+	private JTextField nombreMateria;
+	private JTextField tasaMatricula;
+	private JComboBox<Integer> ectsCurso;
+	private JComboBox<Integer> horas;
+	
+	// TODO -- usar widget de calendario
+	private JComboBox<Integer> diaInicio;
+	private JComboBox<Integer> mesInicio;
+	private JComboBox<Integer> anoInicio;
+	private JComboBox<Integer> diaFinal;
+	private JComboBox<Integer> mesFinal;
+	private JComboBox<Integer> anoFinal;
+	private JComboBox<Integer> diaInicioMateria;
+	private JComboBox<Integer> mesInicioMateria;
+	private JComboBox<Integer> anoInicioMateria;
+	private JComboBox<Integer> diaFinalMateria;
+	private JComboBox<Integer> mesFinalMateria;
+	private JComboBox<Integer> anoFinalMateria;  
 
-	// Listas
+	// Listas y tablas
 	private String[] categorias = {"Másteres de Formación Permanente", "Especialistas", "Expertos", 
 			"Cursos Universitarios de Formación Avnazada", "Cursos de Formación Continua", 
 			"Microcredenciales", "Actividades formativas de corta duración", "Cursos de Verano y Extensión Universitaria", "Formación de Mayores" }; 
@@ -61,28 +80,30 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			TipoCurso.FORMACION_AVANZADA, TipoCurso.FORMACION_CONTINUA,
 			TipoCurso.MICROCREDENCIALES, TipoCurso.CORTA_DURACION, TipoCurso.VERANO, TipoCurso.MAYORES};
 	
-	private DefaultListModel materias = new DefaultListModel(); 
+	private DefaultListModel<String> materias = new DefaultListModel<>(); 
 	
-	List centrosDao = null;
-	private DefaultListModel centros = new DefaultListModel(); 
+	List<Centro> centrosDao = null;
+	private DefaultListModel<String> centros = new DefaultListModel<>(); 
 	
-	List profesoresDao = null;
+	List<Profesor> profesoresDao = null;
 	private DefaultTableModel profesores = new DefaultTableModel(); 
 
-	List profesoresUCLMDao = null;
+	List<ProfesorUCLM> profesoresUCLMDao = null;
 	private DefaultTableModel profesoresUCLM = new DefaultTableModel(); 
 	
-	private JList centrosLista, categoriasLista, materiasLista;
-	private JTable secretariosTable, responsablesTable;
+	private JList<String> centrosLista;
+	private JList<String> categoriasLista;
+	private JList<String> materiasLista;
+	private JTable secretariosTable;
+	private JTable responsablesTable;
 
 	// Objetos
 	private Materia materia;
-	private List<Materia> materiasGuardadas = new ArrayList();
-	private int idMateria = 0;
+	private List<Materia> materiasGuardadas = new ArrayList<>();
 	private CursoPropio curso = new CursoPropio();
 
 	public PantallaRealizarPropuestaCurso (ProfesorUCLM director) {
-		// DAOS
+		// DAOS -- TODO usar gestor para recibir los objetos
 		addProfesores();
 		addProfesoresUCLM();
 		addCentros();
@@ -109,12 +130,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		try {
 			profesoresDao = profesor.profesorDao.listarProfesores();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		for (int i = 0; i<profesoresDao.size(); i++) {
-			Profesor profesortemp = (Profesor) profesoresDao.get(i);
+			Profesor profesortemp = profesoresDao.get(i);
 			profesores.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.isDoctor() });
 		}
 	}
@@ -129,12 +149,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		try {
 			profesoresUCLMDao = profesor.profesorUCLMDao.listarProfesores();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		for (int i = 0; i<profesoresUCLMDao.size(); i++) {
-			ProfesorUCLM profesortemp = (ProfesorUCLM) profesoresUCLMDao.get(i);
+			ProfesorUCLM profesortemp = profesoresUCLMDao.get(i);
 			profesoresUCLM.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.categoria, profesortemp.isDoctor() });
 		}
 	}
@@ -146,7 +165,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		try {
 			centrosDao = centro.centroDao.listarCentros();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -188,6 +206,12 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		secretariosTable = new JTable(profesoresUCLM) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -276,13 +300,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,651,400,30);
 		mainPanel.add(label);
 
-		categoriasLista = new JList(categorias);
+		categoriasLista = new JList<String>(categorias);
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(categoriasLista);
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
 
-		// Requistio -- Provisional -> Depende de categoria
+		// Requistio // TODO -- guardar en bbdd 
 		labelRequisito = new JLabel("Requsito");
 		labelRequisito.setBounds(450,681,200,30);
 		mainPanel.add(labelRequisito);
@@ -292,12 +316,12 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		requisitoCurso.setEnabled(false);
 		mainPanel.add(requisitoCurso);
 
-		// ECTS -- Provisional -> Depende de categoria
+		// ECTS
 		label = new JLabel("ECTS");
 		label.setBounds(450,761,200,30);
 		mainPanel.add(label);
 
-		ectsCurso = new JComboBox<Integer>();
+		ectsCurso = new JComboBox<>();
 		ectsCurso.setBounds(450,791,200,30);
 		ectsCurso.setEnabled(false);
 		mainPanel.add(ectsCurso);
@@ -371,7 +395,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,901,200,30);
 		mainPanel.add(label);
 
-		materiasLista = new JList(materias);
+		materiasLista = new JList<String>(materias);
 		materiasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(materiasLista);
 		scrollPanel.setBounds(10, 931, 400, 200);
@@ -415,7 +439,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						inicioMateria = formatter.parse(diaInicioMateria.getItemAt(diaInicioMateria.getSelectedIndex()) + "-" + mesInicioMateria.getItemAt(mesInicioMateria.getSelectedIndex()) + "-" + anoInicioMateria.getItemAt(anoInicioMateria.getSelectedIndex()));
 						finMateria = formatter.parse(diaFinalMateria.getItemAt(diaInicioMateria.getSelectedIndex()) + "-" + mesFinalMateria.getItemAt(mesFinalMateria.getSelectedIndex()) + "-" + anoFinalMateria.getItemAt(anoFinalMateria.getSelectedIndex()));   
 					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}  
 
@@ -434,7 +457,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(450,961,300,30);
 		mainPanel.add(label);
 
-		// Boton para editar materia
+		// Boton para editar materia // TODO -- Editar materia
 		button = new JButton("Editar materia");
 		button.setBounds(450,1021,200,30);
 		mainPanel.add(button);
@@ -474,7 +497,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(220,1141,180,30);
 		mainPanel.add(label);
 
-		horas = new JComboBox();
+		horas = new JComboBox<>();
 		horas.setBounds(220,1171,180,30);
 
 		for (int i = 1; i <= 100; i++) {
@@ -488,19 +511,19 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(10,1210,200,30);
 		mainPanel.add(label);
 
-		diaInicioMateria = new JComboBox();
+		diaInicioMateria = new JComboBox<>();
 		diaInicioMateria .setBounds(10,1240,40,30);
 		mainPanel.add(diaInicioMateria );
 
 		for (int i = 1; i<32; i++) diaInicioMateria .addItem(i);
 
-		mesInicioMateria  = new JComboBox();
+		mesInicioMateria  = new JComboBox<>();
 		mesInicioMateria .setBounds(60,1240,40,30);
 		mainPanel.add(mesInicioMateria );
 
 		for (int i = 1; i<13; i++) mesInicioMateria .addItem(i);
 
-		anoInicioMateria  = new JComboBox();
+		anoInicioMateria  = new JComboBox<>();
 		anoInicioMateria .setBounds(110,1240,80,30);
 		mainPanel.add(anoInicioMateria );
 
@@ -511,19 +534,19 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(220,1210,200,30);
 		mainPanel.add(label);
 
-		diaFinalMateria = new JComboBox();
+		diaFinalMateria = new JComboBox<>();
 		diaFinalMateria.setBounds(220,1240,40,30);
 		mainPanel.add(diaFinalMateria);
 
 		for (int i = 1; i<32; i++) diaFinalMateria.addItem(i);
 
-		mesFinalMateria = new JComboBox();
+		mesFinalMateria = new JComboBox<>();
 		mesFinalMateria.setBounds(270,1240,40,30);
 		mainPanel.add(mesFinalMateria);
 
 		for (int i = 1; i<13; i++) mesFinalMateria.addItem(i);
 
-		anoFinalMateria = new JComboBox();
+		anoFinalMateria = new JComboBox<>();
 		anoFinalMateria.setBounds(320,1240,80,30);
 		mainPanel.add(anoFinalMateria);
 
@@ -535,6 +558,12 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		responsablesTable = new JTable(profesores) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -586,7 +615,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				} else {
 					boolean isNumber = true;
 					try {
-				        double d = Double.parseDouble(tasaMatricula.getText());
+						Double.parseDouble(tasaMatricula.getText());
 				    } catch (NumberFormatException nfe) {
 				    	tasaMatricula.setBackground(new Color(222, 129, 122));
 				    	isNumber = false;
@@ -654,15 +683,11 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 						e1.printStackTrace();
 					}  
 					
-					List allCursos = null;
+					GestorConsultas gestorConsultas = new GestorConsultas();
+					List<CursoPropio> allCursos = gestorConsultas.listarTodosCursos();					
 					
-					try {
-						allCursos = curso.cursoPropioDao.listarCursos();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}					
-					
-					String id = String.valueOf(allCursos.size()+1);
+					String id = "0";
+					if (allCursos != null) id = String.valueOf(allCursos.size()+1);
 
 					curso = new CursoPropio(
 							id,
@@ -674,16 +699,16 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 							1, // Edicion
 							EstadoCurso.PROPUESTO, 
 							tipos[categoriasLista.getSelectedIndex()], 
-							(Centro) centrosDao.get(centrosLista.getSelectedIndex()), 
-							(ProfesorUCLM) profesoresUCLMDao.get(secretariosTable.getSelectedRow()), 
+							centrosDao.get(centrosLista.getSelectedIndex()), 
+							profesoresUCLMDao.get(secretariosTable.getSelectedRow()), 
 							director 
 							);
 
 					curso.materias = new ArrayList<>();
 					curso.materias.addAll(materiasGuardadas);
 	
-					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
-					gestor.realizarPropuestaCurso(curso);
+					GestorPropuestasCursos gestorPropuestas = new GestorPropuestasCursos();
+					gestorPropuestas.realizarPropuestaCurso(curso);
 				}
 			}
 		});
