@@ -9,8 +9,6 @@ import javax.swing.JFrame;
 import negocio.entities.ProfesorUCLM;
 
 public class PantallaDireccionCursos extends JFrame{
-
-    private JButton button;
     
     public PantallaDireccionCursos (ProfesorUCLM director) {
     	initLayout();
@@ -30,7 +28,7 @@ public class PantallaDireccionCursos extends JFrame{
 	
 	private void botonesLayout(final ProfesorUCLM director) {
 		// Boton para visualizar cursos aprobados
-        button = new JButton("Consultar cursos aprobados");
+        JButton button = new JButton("Consultar cursos aprobados");
         button.setBounds(300,163,200,30);
         getContentPane().add(button);
     
@@ -73,12 +71,10 @@ public class PantallaDireccionCursos extends JFrame{
 	}
 
 	public void altaCurso() {
-		// TODO - implement PantallaDireccionCursos.altaCurso
 		throw new UnsupportedOperationException();
 	}
 
 	public void edicionCurso() {
-		// TODO - implement PantallaDireccionCursos.edicionCurso
 		throw new UnsupportedOperationException();
 	}
 }

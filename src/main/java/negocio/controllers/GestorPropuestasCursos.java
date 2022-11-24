@@ -15,6 +15,20 @@ public class GestorPropuestasCursos {
 	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException {
 		cursoEditado.cursoPropioDao.editarCurso(cursoEditado);
 	}
+	
+	/**
+	 * 
+	 * @param curso
+	 */
+	public void eliminarPropuestaCurso(CursoPropio cursoEditado) {
+		// TODO - implement GestorPropuestasCursos.editarPropuestaCurso
+		try {
+			cursoEditado.cursoPropioDao.eliminarCursoPropio(cursoEditado);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public EstadoCurso evaluarPropuesta(CursoPropio curso) {
 		// TODO - implement GestorPropuestasCursos.evaluarPropuesta
