@@ -14,8 +14,9 @@ public class MatriculaDAO {
 
 //fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni
 
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevaMatricula(Matricula matricula) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion= new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -48,7 +49,6 @@ public class MatriculaDAO {
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE matricula SET "

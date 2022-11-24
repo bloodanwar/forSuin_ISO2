@@ -13,8 +13,9 @@ import negocio.entities.*;
 
 public class CursoPropioDAO {
 
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevoCurso(CursoPropio curso) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -50,7 +51,6 @@ public class CursoPropioDAO {
 	}
 
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
 		datosCurso = (Vector) datosCurso.get(0);
 
@@ -77,7 +77,6 @@ public class CursoPropioDAO {
 
 	public int editarCurso(CursoPropio curso) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
@@ -188,7 +187,7 @@ public class CursoPropioDAO {
 		return listaCursos;	
 	}
 	
-	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException, ParseException {
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
 		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
@@ -235,7 +234,7 @@ public class CursoPropioDAO {
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoTemp);
 			
 			for (int j = 0; j<matriculasCurso.size();j++) {
-				if (matriculasCurso.get(j).isPagado() == true)
+				if (matriculasCurso.get(j).isPagado())
 					ingresosTotales+=tasaMatricula;
 			}
 		}		

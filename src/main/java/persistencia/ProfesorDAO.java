@@ -11,8 +11,9 @@ import negocio.entities.*;
 
 public class ProfesorDAO {
 
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevoProfesor(Profesor profesor) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -40,7 +41,6 @@ public class ProfesorDAO {
 
 	public int editarProfesor(Profesor profesor) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Profesor
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 		
 		return GestorBD.getInstancia().update("UPDATE profesor SET "

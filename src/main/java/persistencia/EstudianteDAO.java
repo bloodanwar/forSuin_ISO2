@@ -12,8 +12,9 @@ public class EstudianteDAO {
 
 	//dni, nombre, apellidos, titulacion, cualificacion
 	
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevoEstudiante(Estudiante estudiante) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -44,7 +45,6 @@ public class EstudianteDAO {
 
 	public int editarEstudiante(Estudiante estudiante) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Estudiante
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE estudiante SET "

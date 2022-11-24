@@ -34,7 +34,7 @@ public class GestorBD {
 		return this;
 	}
 
-	public void desconectarBD() throws SQLException {
+	public static void desconectarBD() throws SQLException {
 		mBD.close();
 		instancia = null;
 	}
@@ -59,28 +59,23 @@ public class GestorBD {
 	}
 
 	public int insert(String sql) throws SQLException {
-
-		PreparedStatement stmt = mBD.prepareStatement(sql);
-		int res=stmt.executeUpdate();
-		stmt.close();
-		desconectarBD();
-		return res;		
+		return executeInsertUpdateDelete(sql);
 	}
 
 	public int update(String sql) throws SQLException {
-		PreparedStatement stmt = mBD.prepareStatement(sql);
-    	int res=stmt.executeUpdate();
-    	stmt.close();
-    	desconectarBD();
-		return res;   	
+		return executeInsertUpdateDelete(sql);	
 	}
 
 	public int delete(String sql) throws SQLException {
+		return executeInsertUpdateDelete(sql);
+	}
+	
+	public int executeInsertUpdateDelete(String sql) throws SQLException {
 		PreparedStatement stmt = mBD.prepareStatement(sql);
     	int res=stmt.executeUpdate();
     	stmt.close();
     	desconectarBD();
-		return res;   	
+		return res;  
 	}
 
 	public void operation() {

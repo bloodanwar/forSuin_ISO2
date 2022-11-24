@@ -8,9 +8,10 @@ import java.util.Vector;
 import negocio.entities.*;
 
 public class ProfesorExternoDAO {
-
+	
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevoProfesorExterno(ProfesorExterno profesor) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
@@ -39,7 +40,6 @@ public class ProfesorExternoDAO {
 	}
 
 	public int editarProfesorExterno(ProfesorExterno profesor) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");		
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE profesorExterno SET "
