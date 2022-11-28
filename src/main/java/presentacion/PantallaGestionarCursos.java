@@ -98,7 +98,8 @@ public class PantallaGestionarCursos extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PantallaRealizarPropuestaCurso(director);
+				CursoPropio curso = new CursoPropio(""); 
+				new PantallaRealizarPropuestaCurso(director, curso, 0);
 				setVisible(false);
 			}
 
@@ -114,7 +115,13 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
-				// TODO -- nueva edición curso
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
+				if(curso.estado == EstadoCurso.TERMINADO) {
+					// TODO -- nueva edicion curso 
+					curso.setEdicion(curso.getEdicion() + 1);
+					new PantallaRealizarPropuestaCurso(director, curso, 3);
+					setVisible(false);
+				}
 				
 			}
 
@@ -131,13 +138,11 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
-				
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
 				
 				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
 					// TODO -- editar curso
-
-					new PantallaEditarCurso(director, curso);
+					new PantallaRealizarPropuestaCurso(director, curso, 2);
 					setVisible(false);
 				}
 				

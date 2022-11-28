@@ -2,7 +2,9 @@ package presentacion;
 
 import javax.swing.JFrame;
 
+import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
 import negocio.entities.Materia;
 import negocio.entities.ProfesorUCLM;
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -160,7 +163,7 @@ public class PantallaDatosCurso extends JFrame {
 		getContentPane().add(scrollLista);
 	}
 
-	private void botonesLayout(final int type, final ProfesorUCLM director, CursoPropio curso) {
+	private void botonesLayout(final int type, final ProfesorUCLM director, final CursoPropio curso) {
 		JButton btnNewButton = new JButton("Atras");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -172,32 +175,46 @@ public class PantallaDatosCurso extends JFrame {
 		btnNewButton.setBounds(10, 513, 200,30);
 		getContentPane().add(btnNewButton);
 
-		JButton btnMatricular = new JButton("Matricular");
-		btnMatricular.addActionListener(new ActionListener() {
+		JButton btnMatricularEvaluar = new JButton("Matricular");
+		btnMatricularEvaluar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (!evaluarPropuestaCorrecto(type)) return;
 				
 				int confirm = 1;
 
-				if (type == 0) { // TODO -- matricular
+				if (type == 0) { 
 					confirm = JOptionPane.showConfirmDialog(null,"¿Matricular?","Matricular en curso",JOptionPane.YES_NO_OPTION, 1);
-				} else { // TODO -- evaluar
+				} else { 
 					confirm = JOptionPane.showConfirmDialog(null,"¿Evaluar propuesta?","Evaluar propuesta",JOptionPane.YES_NO_OPTION, 1);
 				}
 
 				if(confirm == 0)  {
-					if (type == 0) new PantallaCursosAprobados(type, director);
-					else new PantallaEmpleadosVicerrectorado();
+					if (type == 0) { // TODO -- matricular
+						new PantallaCursosAprobados(type, director);
+					}
+					else { 
+						GestorPropuestasCursos gestor = new GestorPropuestasCursos();
+						if (aceptarPropuesta.isSelected()) curso.estado = EstadoCurso.PROPUESTA_RECHAZADA;
+						else curso.estado = EstadoCurso.VALIDADO;
+						
+						try {
+							gestor.editarPropuestaCurso(curso);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						
+						new PantallaEmpleadosVicerrectorado();
+					}
 				}
 			}
 		});
-		btnMatricular.setBounds(574, 513, 200,30);
-		getContentPane().add(btnMatricular);
+		btnMatricularEvaluar.setBounds(574, 513, 200,30);
+		getContentPane().add(btnMatricularEvaluar);
 
 		// CAMBIOS DE BOTONES
-		if (type == 1) btnMatricular.setVisible(false);
-		else if (type == 2) btnMatricular.setText("Evaluar");		
+		if (type == 1) btnMatricularEvaluar.setVisible(false);
+		else if (type == 2) btnMatricularEvaluar.setText("Evaluar");		
 	}
 	
 	public boolean evaluarPropuestaCorrecto(final int type) {

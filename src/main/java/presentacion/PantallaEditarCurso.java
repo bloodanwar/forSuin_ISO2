@@ -81,7 +81,7 @@ public class PantallaEditarCurso extends JFrame {
 		// Edicion
 		private int secretarioEditado, centroEditado, categoriaEditado;
 
-		public PantallaEditarCurso (ProfesorUCLM director, CursoPropio cursoEditando) {
+		public PantallaEditarCurso (ProfesorUCLM director, CursoPropio cursoEditando, int action) {
 			addProfesores();
 			addProfesoresUCLM(cursoEditando);
 			addCentros(cursoEditando);

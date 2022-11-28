@@ -91,19 +91,25 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private Materia materia;
 	private List<Materia> materiasGuardadas = new ArrayList<>();
 	private CursoPropio curso = new CursoPropio();
+	
+	// Edicion
+	private int secretarioEditado = 0;
+	private int centroEditado = 0;
+	private int categoriaEditado = 0;
 
-	public PantallaRealizarPropuestaCurso (ProfesorUCLM director) {
+
+	public PantallaRealizarPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) {
 		// DAOS -- TODO usar gestor para recibir los objetos
 		addProfesores();
-		addProfesoresUCLM();
-		addCentros();
+		addProfesoresUCLM(cursoEditado, action);
+		addCentros(cursoEditado, action);
 		
 		// LAYOUTS
 		initLayout();
-		basicLayout();
-		enseñanzasLayout();
-		materiasLayout();
-		botonesLayout(director);
+		basicLayout(cursoEditado);
+		enseñanzasLayout(cursoEditado);
+		materiasLayout(cursoEditado);
+		botonesLayout(director, cursoEditado, action);
 
 		// MAIN
 		scrollPanel = new JScrollPane(mainPanel);
@@ -129,7 +135,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		}
 	}
 
-	private void addProfesoresUCLM() {
+	private void addProfesoresUCLM(CursoPropio cursoEditado, int action) {
 		ProfesorUCLM profesor = new ProfesorUCLM();
 
 		profesoresUCLM.addColumn("Nombre");
@@ -145,12 +151,12 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		for (int i = 0; i<profesoresUCLMDao.size(); i++) {
 			ProfesorUCLM profesortemp = profesoresUCLMDao.get(i);
 			profesoresUCLM.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.categoria, profesortemp.isDoctor() });
+			if(action != 0 && profesortemp.getDni().equals(cursoEditado.secretario.getDni())) secretarioEditado=i;
 		}
 	}
 	
-	private void addCentros() {
+	private void addCentros(CursoPropio cursoEditado, int action) {
 		Centro centro = new Centro();
-		int i = 0;
 
 		try {
 			centrosDao = centro.centroDao.listarCentros();
@@ -158,11 +164,10 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 			e.printStackTrace();
 		}
 
-		Iterator<Centro> ite = centrosDao.iterator();
-		while(ite.hasNext()) {
-			Centro centrostemp = ite.next();
-			centros.add(i, centrostemp.getNombre());;
-			i++;
+		for (int i = 0; i<centrosDao.size(); i++) {
+			Centro centrostemp = centrosDao.get(i);
+			centros.add(i, centrostemp.getNombre());
+			if(action != 0 && centrostemp.getNombre().equals(cursoEditado.centro.getNombre())) centroEditado=i;
 		}		
 	}
 
@@ -180,13 +185,13 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.setPreferredSize(new Dimension(700, 1600));
 	}
 
-	private void basicLayout() {
+	private void basicLayout(CursoPropio cursoEditado) {
 		// Titulo		
 		label = new JLabel("Titulo de curso");
 		label.setBounds(10,10,400,30);
 		mainPanel.add(label);
 
-		tituloCurso = new JTextField();
+		tituloCurso = new JTextField(cursoEditado.getNombre());
 		tituloCurso.setBounds(10,40,400,30);
 		mainPanel.add(tituloCurso);
 
@@ -208,6 +213,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		};
 		
 		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		secretariosTable.setRowSelectionInterval(secretarioEditado, secretarioEditado);
 		scrollPanel = new JScrollPane(secretariosTable);
 		scrollPanel.setBounds(10, 126, 400, 200);
 		mainPanel.add(scrollPanel);
@@ -259,7 +265,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		for (int i = 2022; i<2100; i++) anoFinal.addItem(i);
 
 		// Edicion de curso
-		label = new JLabel("Edicion de curso: 1");
+		label = new JLabel("Edicion de curso: " + cursoEditado.getEdicion());
 		label.setBounds(450,40,200,30);
 		mainPanel.add(label);
 
@@ -268,7 +274,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		label.setBounds(450,90,200,30);
 		mainPanel.add(label);
 
-		tasaMatricula = new JTextField();
+		tasaMatricula = new JTextField("" + cursoEditado.getTasaMatricula());
 		tasaMatricula.setBounds(450,131,180,30);
 		mainPanel.add(tasaMatricula);
 
@@ -279,19 +285,23 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 
 		centrosLista = new JList<>(centros);
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		centrosLista.setSelectedIndex(centroEditado); 
 		scrollPanel = new JScrollPane(centrosLista);
 		scrollPanel.setBounds(10, 440, 400, 200);
 		mainPanel.add(scrollPanel);
 	}
 
-	private void enseñanzasLayout() {
+	private void enseñanzasLayout(CursoPropio cursoEditado) {
 		// Categoria 
 		label = new JLabel("Categoria");
 		label.setBounds(10,651,400,30);
 		mainPanel.add(label);
 
+		//for(int i=0;i<tipos.length;i++) if(cursoEditado.tipo.equals(tipos[i])) categoriaEditado=i;
+		
 		categoriasLista = new JList<String>(categorias);
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		categoriasLista.setSelectedIndex(categoriaEditado);
 		scrollPanel = new JScrollPane(categoriasLista);
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
@@ -379,7 +389,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		});
 	}
 
-	private void materiasLayout() {
+	private void materiasLayout(CursoPropio cursoEditado) {
 		// Materias creadas
 		label = new JLabel("Lista de materias creadas");
 		label.setBounds(10,901,200,30);
@@ -565,7 +575,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.add(scrollPanel);
 	}
 
-	private void botonesLayout(final ProfesorUCLM director) {
+	private void botonesLayout(final ProfesorUCLM director, CursoPropio cursoEditado, int action) {
 		// Boton para ir atras
 		button = new JButton("Atras");
 		button.setBounds(270,1530,200,30);
