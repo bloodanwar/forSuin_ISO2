@@ -99,7 +99,7 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CursoPropio curso = new CursoPropio(""); 
-				new PantallaRealizarPropuestaCurso(director, curso, 0);
+				new PantallaGestionarPropuestaCurso(director, curso, 0);
 				setVisible(false);
 			}
 
@@ -119,7 +119,7 @@ public class PantallaGestionarCursos extends JFrame{
 				if(curso.estado == EstadoCurso.TERMINADO) {
 					// TODO -- nueva edicion curso 
 					curso.setEdicion(curso.getEdicion() + 1);
-					new PantallaRealizarPropuestaCurso(director, curso, 3);
+					new PantallaGestionarPropuestaCurso(director, curso, 3);
 					setVisible(false);
 				}
 				
@@ -142,7 +142,7 @@ public class PantallaGestionarCursos extends JFrame{
 				
 				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
 					// TODO -- editar curso
-					new PantallaRealizarPropuestaCurso(director, curso, 2);
+					new PantallaGestionarPropuestaCurso(director, curso, 2);
 					setVisible(false);
 				}
 				

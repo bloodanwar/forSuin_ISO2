@@ -32,7 +32,7 @@ import negocio.controllers.GestorConsultas;
 import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.*;
 
-public class PantallaRealizarPropuestaCurso extends JFrame {
+public class PantallaGestionarPropuestaCurso extends JFrame {
 
 	// Variables generales
 	private JButton button;
@@ -98,7 +98,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 	private int categoriaEditado = 0;
 
 
-	public PantallaRealizarPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) {
+	public PantallaGestionarPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) {
 		// DAOS -- TODO usar gestor para recibir los objetos
 		addProfesores();
 		addProfesoresUCLM(cursoEditado, action);
@@ -107,7 +107,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		// LAYOUTS
 		initLayout();
 		basicLayout(cursoEditado);
-		enseñanzasLayout(cursoEditado);
+		enseñanzasLayout(cursoEditado, action);
 		materiasLayout(cursoEditado);
 		botonesLayout(director, cursoEditado, action);
 
@@ -291,7 +291,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		mainPanel.add(scrollPanel);
 	}
 
-	private void enseñanzasLayout(CursoPropio cursoEditado) {
+	private void enseñanzasLayout(CursoPropio cursoEditado, int action) {
 		// Categoria 
 		label = new JLabel("Categoria");
 		label.setBounds(10,651,400,30);
@@ -301,7 +301,6 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		
 		categoriasLista = new JList<String>(categorias);
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		categoriasLista.setSelectedIndex(categoriaEditado);
 		scrollPanel = new JScrollPane(categoriasLista);
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
@@ -325,7 +324,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		ectsCurso.setBounds(450,791,200,30);
 		ectsCurso.setEnabled(false);
 		mainPanel.add(ectsCurso);
-
+		
 		categoriasLista.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -387,6 +386,14 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 				}
 			}
 		});
+		
+		// Categoria + ECTS editado
+		categoriasLista.setSelectedIndex(categoriaEditado);
+		if (action != 0) {
+			for (int i = 0; i < ectsCurso.getItemCount(); i++) {
+				if (cursoEditado.getECTS() == ectsCurso.getItemAt(i)) ectsCurso.setSelectedIndex(i); break;
+			}
+		}
 	}
 
 	private void materiasLayout(CursoPropio cursoEditado) {
@@ -400,6 +407,7 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		scrollPanel = new JScrollPane(materiasLista);
 		scrollPanel.setBounds(10, 931, 400, 200);
 		mainPanel.add(scrollPanel);
+		
 
 		// Boton para añadir materia
 		button = new JButton("Añadir materia");
@@ -573,6 +581,8 @@ public class PantallaRealizarPropuestaCurso extends JFrame {
 		scrollPanel = new JScrollPane(responsablesTable);
 		scrollPanel.setBounds(10, 1309, 400, 200);
 		mainPanel.add(scrollPanel);
+	
+		
 	}
 
 	private void botonesLayout(final ProfesorUCLM director, CursoPropio cursoEditado, int action) {
