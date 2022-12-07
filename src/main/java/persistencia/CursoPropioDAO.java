@@ -69,7 +69,7 @@ public class CursoPropioDAO {
 		
 		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
 		
-		List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(curso);
+		List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 		cursoDevolver.materias = materiasCurso;
 		
 		List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
@@ -161,6 +161,9 @@ public class CursoPropioDAO {
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
+			
 			listaCursos.add(cursoDevolver);
 		}
 		
@@ -189,6 +192,9 @@ public class CursoPropioDAO {
 			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
+			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
@@ -220,6 +226,9 @@ public class CursoPropioDAO {
 			ProfesorUCLM directorObtenido = new ProfesorUCLM((String) curDatosTemp.get(11));
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido);
+			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
@@ -276,6 +285,9 @@ public class CursoPropioDAO {
 			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
