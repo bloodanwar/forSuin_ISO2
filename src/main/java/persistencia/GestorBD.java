@@ -73,6 +73,7 @@ public class GestorBD {
 	}
 	
 	public int executeInsertUpdateDelete(String sql) throws SQLException {
+		System.out.println(sql);
 		PreparedStatement stmt = mBD.prepareStatement(sql);
     	int res=stmt.executeUpdate();
     	stmt.close();

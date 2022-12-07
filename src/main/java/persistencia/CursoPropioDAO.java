@@ -69,10 +69,13 @@ public class CursoPropioDAO {
 		
 		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
 		
+		List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(curso);
+		cursoDevolver.materias = materiasCurso;
+		
 		List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 		cursoDevolver.matriculas = matriculasCurso;
 		
-		return curso;
+		return cursoDevolver;
 	}
 
 	public int editarCurso(CursoPropio curso) throws SQLException {
@@ -80,11 +83,18 @@ public class CursoPropioDAO {
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
+		int tamanoMaterias = 0;
 		
-		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
-		for (int i=0; i<materias.length; i++){
-			contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
-		}
+		Materia[] materias = null;
+		
+		
+		if (curso.materias != null) {
+			tamanoMaterias = curso.materias.size();
+			materias = curso.materias.toArray(new Materia[curso.materias.size()]);
+			for (int i=0; i<materias.length; i++){
+				contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
+			}
+		}		
 		
 		contador+= GestorBD.getInstancia().update("UPDATE cursoPropio SET "
 				+ "nombre='" + curso.getNombre() + "', "
@@ -95,13 +105,15 @@ public class CursoPropioDAO {
 				+ "edicion=" + curso.getEdicion() + ", "
 				+ "estadoCurso='" + curso.estado.toString() + "', "
 				+ "tipoCurso='" + curso.tipo.toString() + "', "
-				+ "centro_nombre=" + curso.centro.getNombre() + ", "
+				+ "centro_nombre='" + curso.centro.getNombre() + "', "
 				+ "secretario_Profesor_DNI='" + curso.secretario.getDni() + "', "
 				+ "director_Profesor_DNI='" + curso.director.getDni() + "', "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
 				+ "' WHERE id='"+curso.getId()+"'");
 		
-		if (contador == curso.materias.size() + 1){
+		
+		
+		if (contador == tamanoMaterias + 1){
 			return 1;	
 		} else {
 			return 0;
