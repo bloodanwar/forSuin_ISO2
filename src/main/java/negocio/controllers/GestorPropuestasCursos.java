@@ -19,15 +19,12 @@ public class GestorPropuestasCursos {
 	/**
 	 * 
 	 * @param curso
+	 * @throws SQLException 
 	 */
-	public void eliminarPropuestaCurso(CursoPropio cursoEditado) {
+	public void eliminarPropuestaCurso(CursoPropio cursoEditado) throws SQLException {
 		// TODO - implement GestorPropuestasCursos.editarPropuestaCurso
-		try {
-			cursoEditado.cursoPropioDao.eliminarCursoPropio(cursoEditado);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		cursoEditado.cursoPropioDao.eliminarCursoPropio(cursoEditado);
+
 	}
 
 	public EstadoCurso evaluarPropuesta(CursoPropio curso) {

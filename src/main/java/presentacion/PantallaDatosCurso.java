@@ -193,10 +193,10 @@ public class PantallaDatosCurso extends JFrame {
 					if (type == 0) { // TODO -- matricular
 						new PantallaCursosAprobados(type, director);
 					}
-					else { 
+					else {  // Evaluar
 						GestorPropuestasCursos gestor = new GestorPropuestasCursos();
-						if (aceptarPropuesta.isSelected()) curso.estado = EstadoCurso.PROPUESTA_RECHAZADA;
-						else curso.estado = EstadoCurso.VALIDADO;
+						if (aceptarPropuesta.isSelected()) curso.estado = EstadoCurso.VALIDADO;
+						else curso.estado = EstadoCurso.PROPUESTA_RECHAZADA;
 						
 						try {
 							gestor.editarPropuestaCurso(curso);

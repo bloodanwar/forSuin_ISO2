@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CursoPropio curso = new CursoPropio(""); 
-				new PantallaGestionarPropuestaCurso(director, curso, 0);
+				new PantallaPropuestaCurso(director, curso, 0);
 				setVisible(false);
 			}
 
@@ -119,7 +120,7 @@ public class PantallaGestionarCursos extends JFrame{
 				if(curso.estado == EstadoCurso.TERMINADO) {
 					// TODO -- nueva edicion curso 
 					curso.setEdicion(curso.getEdicion() + 1);
-					new PantallaGestionarPropuestaCurso(director, curso, 3);
+					new PantallaPropuestaCurso(director, curso, 3);
 					setVisible(false);
 				}
 				
@@ -142,7 +143,7 @@ public class PantallaGestionarCursos extends JFrame{
 				
 				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
 					// TODO -- editar curso
-					new PantallaGestionarPropuestaCurso(director, curso, 2);
+					new PantallaPropuestaCurso(director, curso, 2);
 					setVisible(false);
 				}
 				
@@ -165,7 +166,12 @@ public class PantallaGestionarCursos extends JFrame{
 				
 				if (confirm == 0) {
 					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
-					gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));
+					try {
+						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					cursosEnviados.removeRow(cursosTable.getSelectedRow());
 				}
 			}

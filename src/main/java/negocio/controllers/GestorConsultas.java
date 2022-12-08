@@ -83,15 +83,23 @@ public class GestorConsultas {
 		return listaCursos;
 	}
 	
-	public List<CursoPropio> listarTodosCursos(){
+	public List<CursoPropio> listarTodosCursos() throws SQLException{
 		CursoPropio curso = new CursoPropio();	
-		List<CursoPropio> cursos = null;
-		
-		try {
-			cursos = curso.cursoPropioDao.listarCursos();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cursos;
+		return curso.cursoPropioDao.listarCursos();
+	}
+	
+	public List<Profesor> listarProfesores() throws SQLException{
+		Profesor profesor = new Profesor();	
+		return profesor.profesorDao.listarProfesores();
+	}
+	
+	public List<ProfesorUCLM> listarProfesoresUCLM() throws SQLException{
+		ProfesorUCLM profesor = new ProfesorUCLM();	
+		return profesor.profesorUCLMDao.listarProfesores();
+	}
+	
+	public List<Centro> listarCentros() throws SQLException{
+		Centro centro = new Centro();	
+		return centro.centroDao.listarCentros();
 	}
 }
