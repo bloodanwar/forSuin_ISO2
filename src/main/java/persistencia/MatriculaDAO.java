@@ -41,7 +41,7 @@ public class MatriculaDAO {
 		int attribute = (Integer) datosMatricula.get(2);
 		ModoPago tipoPago = ModoPago.valueOf((String) datosMatricula.get(3));
 		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4));
-		Estudiante estudiante = new Estudiante((String) datosMatricula.get(5));
+		Estudiante estudiante = new Estudiante((String) datosMatricula.get(6));
 		
 		Matricula matriculaDevolver = new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);
 		
@@ -79,7 +79,7 @@ public class MatriculaDAO {
 			int attribute = (Integer) matDatosTemp.get(2);
 			ModoPago tipoPago = ModoPago.valueOf((String) matDatosTemp.get(3));
 			CursoPropio cursoPropio = new CursoPropio((String) matDatosTemp.get(4));
-			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(5));
+			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(6));
 			
 			listaMatriculas.add(new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante));
 		}
