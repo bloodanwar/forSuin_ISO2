@@ -14,8 +14,9 @@ public class MatriculaDAO {
 
 //fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni
 
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevaMatricula(Matricula matricula) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion= new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -40,7 +41,7 @@ public class MatriculaDAO {
 		int attribute = (Integer) datosMatricula.get(2);
 		ModoPago tipoPago = ModoPago.valueOf((String) datosMatricula.get(3));
 		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4));
-		Estudiante estudiante = new Estudiante((String) datosMatricula.get(5));
+		Estudiante estudiante = new Estudiante((String) datosMatricula.get(6));
 		
 		Matricula matriculaDevolver = new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);
 		
@@ -48,7 +49,6 @@ public class MatriculaDAO {
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE matricula SET "
@@ -79,7 +79,7 @@ public class MatriculaDAO {
 			int attribute = (Integer) matDatosTemp.get(2);
 			ModoPago tipoPago = ModoPago.valueOf((String) matDatosTemp.get(3));
 			CursoPropio cursoPropio = new CursoPropio((String) matDatosTemp.get(4));
-			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(5));
+			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(6));
 			
 			listaMatriculas.add(new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante));
 		}

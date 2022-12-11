@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import negocio.controllers.GestorConsultas;
+import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
@@ -31,10 +33,9 @@ import negocio.entities.ProfesorUCLM;
 
 public class PantallaGestionarCursos extends JFrame{
 
-	private JButton button;
-	private List cursosDao = null;
+	private List<CursoPropio> cursosDao = null;
 	private DefaultTableModel cursosEnviados = new DefaultTableModel(); 
-	private JTable cursosTable;
+	private JTable cursosTable = new JTable();
 
 
 	public PantallaGestionarCursos (ProfesorUCLM director) {
@@ -61,7 +62,6 @@ public class PantallaGestionarCursos extends JFrame{
 		try {
 			cursosDao = gestor.listarCursosPorDirector(director);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -70,12 +70,13 @@ public class PantallaGestionarCursos extends JFrame{
 
 		if(cursosDao != null) {	
 			for(int i = 0; i<cursosDao.size(); i++) {
-				CursoPropio cursoTemp = (CursoPropio) cursosDao.get(i);
+				CursoPropio cursoTemp = cursosDao.get(i);
 				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.estado });
 			}
 		}
 
 		cursosTable = new JTable(cursosEnviados){
+			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -90,7 +91,7 @@ public class PantallaGestionarCursos extends JFrame{
 
 	private void botonesLayout(final ProfesorUCLM director) {
 		// Boton para realizar propuesta de curso
-		button = new JButton("Realizar propuesta");
+		JButton button = new JButton("Realizar propuesta");
 		button.setBounds(195,324,200,30);
 		getContentPane().add(button);
 
@@ -98,7 +99,8 @@ public class PantallaGestionarCursos extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PantallaRealizarPropuestaCurso(director);
+				CursoPropio curso = new CursoPropio(""); 
+				new PantallaPropuestaCurso(director, curso, 0);
 				setVisible(false);
 			}
 
@@ -114,7 +116,13 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
-
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
+				if(curso.estado == EstadoCurso.TERMINADO) {
+					// TODO -- nueva edicion curso 
+					curso.setEdicion(curso.getEdicion() + 1);
+					new PantallaPropuestaCurso(director, curso, 3);
+					setVisible(false);
+				}
 				
 			}
 
@@ -131,9 +139,11 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
-				CursoPropio curso = (CursoPropio) cursosDao.get(cursosTable.getSelectedRow());
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
+				
 				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
-					new PantallaEditarCurso(director, curso);
+					// TODO -- editar curso
+					new PantallaPropuestaCurso(director, curso, 2);
 					setVisible(false);
 				}
 				
@@ -151,8 +161,19 @@ public class PantallaGestionarCursos extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    
+				
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Eliminar propuesta de curso?","Eliminar propuesta de curso",JOptionPane.YES_NO_OPTION, 1);
-				if (confirm == 0) cursosEnviados.removeRow(cursosTable.getSelectedRow());
+				
+				if (confirm == 0) {
+					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
+					try {
+						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					cursosEnviados.removeRow(cursosTable.getSelectedRow());
+				}
 			}
 
 		});

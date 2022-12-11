@@ -34,7 +34,7 @@ public class GestorBD {
 		return this;
 	}
 
-	public void desconectarBD() throws SQLException {
+	public static void desconectarBD() throws SQLException {
 		mBD.close();
 		instancia = null;
 	}
@@ -42,6 +42,8 @@ public class GestorBD {
 	public Vector<Object> select(String sql) throws SQLException {
 		/* Metodo para realizar una busqueda o seleccion de informacion en la base de datos.
 		 * Develve un vector de vectores, donde cada uno de los vectores que contiene el vector principal representa los registros que se recuperan de la base de datos. */
+		System.out.println(sql);
+
 		Vector<Object> vectoradevolver = new Vector<Object>();
 		Statement stmt = mBD.createStatement();
 		ResultSet res = stmt.executeQuery(sql);
@@ -59,28 +61,24 @@ public class GestorBD {
 	}
 
 	public int insert(String sql) throws SQLException {
-
-		PreparedStatement stmt = mBD.prepareStatement(sql);
-		int res=stmt.executeUpdate();
-		stmt.close();
-		desconectarBD();
-		return res;		
+		return executeInsertUpdateDelete(sql);
 	}
 
 	public int update(String sql) throws SQLException {
-		PreparedStatement stmt = mBD.prepareStatement(sql);
-    	int res=stmt.executeUpdate();
-    	stmt.close();
-    	desconectarBD();
-		return res;   	
+		return executeInsertUpdateDelete(sql);	
 	}
 
 	public int delete(String sql) throws SQLException {
+		return executeInsertUpdateDelete(sql);
+	}
+	
+	public int executeInsertUpdateDelete(String sql) throws SQLException {
+		System.out.println(sql);
 		PreparedStatement stmt = mBD.prepareStatement(sql);
     	int res=stmt.executeUpdate();
     	stmt.close();
     	desconectarBD();
-		return res;   	
+		return res;  
 	}
 
 	public void operation() {

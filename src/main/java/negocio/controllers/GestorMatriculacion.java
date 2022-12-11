@@ -1,47 +1,48 @@
 package negocio.controllers;
 
+import java.sql.SQLException;
+import java.util.Date;
+
+import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
 public class GestorMatriculacion {
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarMatriculacion
-		throw new UnsupportedOperationException();
+	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
+	
+	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException {
+		Date fecha = new Date();
+		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);
+		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 0) {
+			throw new MatriculaNoCreadaException("Matrícula no creada");
+		}
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarPagoMatricula
-		throw new UnsupportedOperationException();
+	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+		Matricula matricula = new Matricula(estudiante, curso);
+		matricula.matriculaDAO.seleccionarMatricula(matricula);
+		matricula.setPagado(true);
+		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
+			throw new MatriculaNoEditadaException("No se ha podido actualizar el estado del pago");
+		}
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarPagoTarjeta
-		throw new UnsupportedOperationException();
+	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+		Matricula matricula = new Matricula(estudiante, curso);
+		matricula.matriculaDAO.seleccionarMatricula(matricula);
+		matricula.tipoPago = ModoPago.TARJETA_CREDITO;
+		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
+			throw new MatriculaNoEditadaException("No se ha podido actualizar el modo de pago");
+		}
 	}
 
-	/**
-	 * 
-	 * @param curso
-	 * @param estudiante
-	 */
-	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) {
-		// TODO - implement GestorMatriculacion.realizarPagoTransferencia
-		throw new UnsupportedOperationException();
+	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+		Matricula matricula = new Matricula(estudiante, curso);
+		matricula.matriculaDAO.seleccionarMatricula(matricula);
+		matricula.tipoPago = ModoPago.TRANSFERENCIA;
+		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
+			throw new MatriculaNoEditadaException("No se ha podido actualizar el modo de pago");
+		}
 	}
 
 	private void operation() {

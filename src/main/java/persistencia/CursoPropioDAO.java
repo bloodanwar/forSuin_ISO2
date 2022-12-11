@@ -13,8 +13,9 @@ import negocio.entities.*;
 
 public class CursoPropioDAO {
 
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevoCurso(CursoPropio curso) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 
@@ -50,7 +51,6 @@ public class CursoPropioDAO {
 	}
 
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
 		datosCurso = (Vector) datosCurso.get(0);
 
@@ -69,23 +69,32 @@ public class CursoPropioDAO {
 		
 		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
 		
+		List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+		cursoDevolver.materias = materiasCurso;
+		
 		List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 		cursoDevolver.matriculas = matriculasCurso;
 		
-		return curso;
+		return cursoDevolver;
 	}
 
 	public int editarCurso(CursoPropio curso) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
+		int tamanoMaterias = 0;
 		
-		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
-		for (int i=0; i<materias.length; i++){
-			contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
-		}
+		Materia[] materias = null;
+		
+		
+		if (curso.materias != null) {
+			tamanoMaterias = curso.materias.size();
+			materias = curso.materias.toArray(new Materia[curso.materias.size()]);
+			for (int i=0; i<materias.length; i++){
+				contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
+			}
+		}		
 		
 		contador+= GestorBD.getInstancia().update("UPDATE cursoPropio SET "
 				+ "nombre='" + curso.getNombre() + "', "
@@ -96,13 +105,15 @@ public class CursoPropioDAO {
 				+ "edicion=" + curso.getEdicion() + ", "
 				+ "estadoCurso='" + curso.estado.toString() + "', "
 				+ "tipoCurso='" + curso.tipo.toString() + "', "
-				+ "centro_nombre=" + curso.centro.getNombre() + ", "
+				+ "centro_nombre='" + curso.centro.getNombre() + "', "
 				+ "secretario_Profesor_DNI='" + curso.secretario.getDni() + "', "
 				+ "director_Profesor_DNI='" + curso.director.getDni() + "', "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
 				+ "' WHERE id='"+curso.getId()+"'");
 		
-		if (contador == curso.materias.size() + 1){
+		
+		
+		if (contador == tamanoMaterias + 1){
 			return 1;	
 		} else {
 			return 0;
@@ -150,6 +161,9 @@ public class CursoPropioDAO {
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
+			
 			listaCursos.add(cursoDevolver);
 		}
 		
@@ -157,11 +171,8 @@ public class CursoPropioDAO {
 
 	}
 
-	//public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
-		//Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE cursoPropio_id = '"+estado.toString()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
-	
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE estadoCurso = '"+estado.toString()+"'");
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE estadoCurso = '"+estado.toString()+"' AND fechaInicio >= '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
@@ -182,6 +193,9 @@ public class CursoPropioDAO {
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
 			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
+			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
@@ -191,11 +205,8 @@ public class CursoPropioDAO {
 		return listaCursos;	
 	}
 	
-	//public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException, ParseException {
-	//	Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
-	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director) throws SQLException {
-		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"'");
-		
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
+		Vector cursosDatos=  GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '"+director.getDni()+"' AND fechaInicio >= '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		List <CursoPropio> listaCursos=new ArrayList<>();
 		
 		for(int i=0; i<cursosDatos.size(); i++) {
@@ -204,7 +215,7 @@ public class CursoPropioDAO {
 			String id = (String) curDatosTemp.get(0);
 			String nombre = (String) curDatosTemp.get(1);
 			int ECTS = (Integer) curDatosTemp.get(2);
-			Date fechainicio = (Date) curDatosTemp.get(3); //bromomento
+			Date fechainicio = (Date) curDatosTemp.get(3);
 			Date fechafin = (Date) curDatosTemp.get(4);
 			double tasaMatricula = (Double) curDatosTemp.get(5);
 			int edicion = (Integer) curDatosTemp.get(6);
@@ -216,6 +227,9 @@ public class CursoPropioDAO {
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido);
 			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
+			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
 			
@@ -226,7 +240,7 @@ public class CursoPropioDAO {
 	}
 
 	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector listaCursos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE tipoCurso = '"+ tipo.toString() +"' AND fechaInicio >= " + fechaInicio + " AND fechaFin <= " + fechaFin);
+		Vector listaCursos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE tipoCurso = '"+ tipo.toString() +"' AND fechaInicio >= '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		
 		double ingresosTotales = 0;
 		
@@ -241,7 +255,7 @@ public class CursoPropioDAO {
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoTemp);
 			
 			for (int j = 0; j<matriculasCurso.size();j++) {
-				if (matriculasCurso.get(j).isPagado() == true)
+				if (matriculasCurso.get(j).isPagado())
 					ingresosTotales+=tasaMatricula;
 			}
 		}		
@@ -250,7 +264,7 @@ public class CursoPropioDAO {
 	}
 
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {
-		Vector listaEdicicionDatos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE fechaInicio = " + fechaInicio + " AND fechaFin = " + fechaFin); //buscar fecha y eso
+		Vector listaEdicicionDatos = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE fechaInicio = '" + dateFormat.format(fechaInicio) + "' AND fechaFin <= '" + dateFormat.format(fechaFin) + "'");
 		
 		List<CursoPropio> listaEdiciones = new ArrayList<>();
 		
@@ -271,6 +285,9 @@ public class CursoPropioDAO {
 			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));
 			
 			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+			
+			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
+			cursoDevolver.materias = materiasCurso;
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;

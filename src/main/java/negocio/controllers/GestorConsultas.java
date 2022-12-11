@@ -11,33 +11,16 @@ import persistencia.CursoPropioDAO;
 
 public class GestorConsultas {
 
-	/**
-	 * 
-	 * @param tipo
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
-	public List<CursoPropio> consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) {
-		// TODO - implement GestorConsultas.consultarIngresos
-		throw new UnsupportedOperationException();
+	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
+		CursoPropio curso = new CursoPropio();
+		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);
 	}
 
-	/**
-	 * 
-	 * @param estadoCurso
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
-	public List<CursoPropio> consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) {
-		// TODO - implement GestorConsultas.consultarEstadoCursos
-		throw new UnsupportedOperationException();
+	public List<CursoPropio> consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) throws SQLException {
+		CursoPropio curso = new CursoPropio();
+		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);
 	}
 
-	/**
-	 * 
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) {
 		// TODO - implement GestorConsultas.listarEdicionesCursos
 		throw new UnsupportedOperationException();
@@ -54,7 +37,7 @@ public class GestorConsultas {
 	    //System.out.println(dateInicio);
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor);
+			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,9 +55,10 @@ public class GestorConsultas {
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
 	    Date dateInicio = formatter.parse("1990-01-01");      
 	    Date dateFin = formatter.parse("2990-01-01");      
+	    System.out.println(dateInicio);
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado);
+			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,4 +66,23 @@ public class GestorConsultas {
 		return listaCursos;
 	}
 	
+	public List<CursoPropio> listarTodosCursos() throws SQLException{
+		CursoPropio curso = new CursoPropio();	
+		return curso.cursoPropioDao.listarCursos();
+	}
+	
+	public List<Profesor> listarProfesores() throws SQLException{
+		Profesor profesor = new Profesor();	
+		return profesor.profesorDao.listarProfesores();
+	}
+	
+	public List<ProfesorUCLM> listarProfesoresUCLM() throws SQLException{
+		ProfesorUCLM profesor = new ProfesorUCLM();	
+		return profesor.profesorUCLMDao.listarProfesores();
+	}
+	
+	public List<Centro> listarCentros() throws SQLException{
+		Centro centro = new Centro();	
+		return centro.centroDao.listarCentros();
+	}
 }

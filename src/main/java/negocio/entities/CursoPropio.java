@@ -67,7 +67,7 @@ public class CursoPropio {
 				+"\n\tCentro: "+centro.getNombre()
 				+"\n\tSecretario: "+secretario.getDni()
 				+"\n\tDirector: "+director.getDni()
-				//+"\n\tMaterias: "+strMaterias
+				+"\n\tMaterias: "+materias.size()
 				;
 		
 	}

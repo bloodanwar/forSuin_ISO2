@@ -14,8 +14,9 @@ public class MateriaDAO {
 
 	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
 	
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	
 	public int crearNuevaMateria(Materia materia, String cursoPropioID) throws SQLException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
@@ -38,14 +39,13 @@ public class MateriaDAO {
 		double horas = (Double) datosMateria.get(1);
 		Date fechaInicio = (Date) datosMateria.get(2);
 		Date fechaFin = (Date) datosMateria.get(3);
-		Profesor responsable = new Profesor((String) datosMateria.get(5));
+		Profesor responsable = new Profesor((String) datosMateria.get(6));
 		
 		return new Materia(nombre, horas, fechaInicio, fechaFin, responsable);
 	}
 
 	public int editarMateria(Materia materia, String cursoPropioID) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE materia SET "
@@ -73,7 +73,7 @@ public class MateriaDAO {
 			double horas = (Double) lMateriaDatosTemp.get(1);
 			Date fechaInicio = (Date) lMateriaDatosTemp.get(2);
 			Date fechaFin = (Date) lMateriaDatosTemp.get(3);
-			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(5));
+			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(6));
 			
 			listaMateria.add(new Materia(nombre, horas, fechaInicio, fechaFin, responsable));
 		}
