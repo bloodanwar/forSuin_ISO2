@@ -37,7 +37,7 @@ public class PantallaDatosCurso extends JFrame {
 		basicLayout(type, director, curso);
 		tablaMaterias(curso);
 
-		// if (type == 0)	matricularCurso(); // TODO - matricular alumno en la misma pantalla
+		//if (type == 0)	matricularCurso(); // TODO - matricular alumno en la misma pantalla
 		if (type == 2)	evaluarCurso();
 
 		botonesLayout(type, director, curso);
@@ -179,8 +179,6 @@ public class PantallaDatosCurso extends JFrame {
 		btnMatricularEvaluar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!evaluarPropuestaCorrecto(type)) return;
-				
 				int confirm = 1;
 
 				if (type == 0) { 
@@ -188,12 +186,16 @@ public class PantallaDatosCurso extends JFrame {
 				} else { 
 					confirm = JOptionPane.showConfirmDialog(null,"¿Evaluar propuesta?","Evaluar propuesta",JOptionPane.YES_NO_OPTION, 1);
 				}
-
+				int tipo=0;
 				if(confirm == 0)  {
-					if (type == 0) { // TODO -- matricular
-						new PantallaCursosAprobados(type, director);
-					}
+					if (tipo == 0) { // TODO -- matricular
+						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno
+		                setVisible(false);
+					}	
 					else {  // Evaluar
+						
+						if (!evaluarPropuestaCorrecto(type)) return;
+						
 						GestorPropuestasCursos gestor = new GestorPropuestasCursos();
 						if (aceptarPropuesta.isSelected()) curso.estado = EstadoCurso.VALIDADO;
 						else curso.estado = EstadoCurso.PROPUESTA_RECHAZADA;
@@ -205,8 +207,14 @@ public class PantallaDatosCurso extends JFrame {
 						}
 						
 						new PantallaEmpleadosVicerrectorado();
+						setVisible(false);
 					}
+					
 				}
+				
+
+				
+				
 			}
 		});
 		btnMatricularEvaluar.setBounds(574, 513, 200,30);

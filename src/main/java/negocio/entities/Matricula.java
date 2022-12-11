@@ -43,4 +43,7 @@ public class Matricula {
 	
 	public int getAttribute() { return attribute; }
 	public void setAttribute(int attribute) { this.attribute = attribute; }	
+	
+	public ModoPago getTipoPago(){return tipoPago;}
+	public void setTipoPago(ModoPago tipoPago) {this.tipoPago = tipoPago;}
 }
