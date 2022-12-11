@@ -11,33 +11,16 @@ import persistencia.CursoPropioDAO;
 
 public class GestorConsultas {
 
-	/**
-	 * 
-	 * @param tipo
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
-	public List<CursoPropio> consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) {
-		// TODO - implement GestorConsultas.consultarIngresos
-		throw new UnsupportedOperationException();
+	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
+		CursoPropio curso = new CursoPropio();
+		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);
 	}
 
-	/**
-	 * 
-	 * @param estadoCurso
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
-	public List<CursoPropio> consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) {
-		// TODO - implement GestorConsultas.consultarEstadoCursos
-		throw new UnsupportedOperationException();
+	public List<CursoPropio> consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) throws SQLException {
+		CursoPropio curso = new CursoPropio();
+		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);
 	}
 
-	/**
-	 * 
-	 * @param fechaInicio
-	 * @param fechaFin
-	 */
 	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) {
 		// TODO - implement GestorConsultas.listarEdicionesCursos
 		throw new UnsupportedOperationException();

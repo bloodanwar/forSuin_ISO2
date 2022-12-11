@@ -39,7 +39,7 @@ public class MateriaDAO {
 		double horas = (Double) datosMateria.get(1);
 		Date fechaInicio = (Date) datosMateria.get(2);
 		Date fechaFin = (Date) datosMateria.get(3);
-		Profesor responsable = new Profesor((String) datosMateria.get(5));
+		Profesor responsable = new Profesor((String) datosMateria.get(6));
 		
 		return new Materia(nombre, horas, fechaInicio, fechaFin, responsable);
 	}
@@ -73,7 +73,7 @@ public class MateriaDAO {
 			double horas = (Double) lMateriaDatosTemp.get(1);
 			Date fechaInicio = (Date) lMateriaDatosTemp.get(2);
 			Date fechaFin = (Date) lMateriaDatosTemp.get(3);
-			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(5));
+			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(6));
 			
 			listaMateria.add(new Materia(nombre, horas, fechaInicio, fechaFin, responsable));
 		}

@@ -3,37 +3,46 @@ package negocio.controllers;
 import java.sql.SQLException;
 import java.util.Date;
 
+import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
 public class GestorMatriculacion {
 
 	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
-	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException {
+	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException {
 		Date fecha = new Date();
 		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);
-		matricula.matriculaDAO.crearNuevaMatricula(matricula);
+		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 0) {
+			throw new MatriculaNoCreadaException("Matrícula no creada");
+		}
 	}
 
-	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException {
+	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.setPagado(true);
-		matricula.matriculaDAO.editarMatricula(matricula);
+		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
+			throw new MatriculaNoEditadaException("No se ha podido actualizar el estado del pago");
+		}
 	}
 
-	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException {
+	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TARJETA_CREDITO;
-		matricula.matriculaDAO.editarMatricula(matricula);
+		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
+			throw new MatriculaNoEditadaException("No se ha podido actualizar el modo de pago");
+		}
 	}
 
-	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException {
+	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TRANSFERENCIA;
-		matricula.matriculaDAO.editarMatricula(matricula);
+		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
+			throw new MatriculaNoEditadaException("No se ha podido actualizar el modo de pago");
+		}
 	}
 
 	private void operation() {
