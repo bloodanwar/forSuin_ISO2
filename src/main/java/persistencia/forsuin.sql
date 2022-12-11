@@ -72,24 +72,24 @@ CREATE TABLE PROFESOREXTERNO (
 
 /*CREACION DE TABLA CURSOPROPIO*/
 CREATE TABLE CURSOPROPIO (
-	ID VARCHAR(45) NOT NULL PRIMARY KEY,
+	ID VARCHAR(45) NOT NULL,
 	NOMBRE VARCHAR(45),
 	ECTS INT,
 	FECHAINICIO DATE,
 	FECHAFIN DATE,
 	TASAMATRICULA DOUBLE,
-	EDICION INT,
+	EDICION INT NOT NULL,
 	ESTADOCURSO VARCHAR(45),
 	TIPOCURSO VARCHAR(45),  
 	CENTRO_NOMBRE VARCHAR(45) NOT NULL,
-	FOREIGN KEY (CENTRO_NOMBRE) REFERENCES CENTRO(NOMBRE),
 	FOREIGN KEY (CENTRO_NOMBRE) REFERENCES CENTRO(NOMBRE),
     SECRETARIO_PROFESOR_DNI VARCHAR(45) NOT NULL,
     FOREIGN KEY (SECRETARIO_PROFESOR_DNI) REFERENCES PROFESORUCLM(PROFESOR_DNI),
     DIRECTOR_PROFESOR_DNI VARCHAR(45) NOT NULL,
     FOREIGN KEY (DIRECTOR_PROFESOR_DNI) REFERENCES PROFESORUCLM(PROFESOR_DNI),
     FECHACREACION DATE,
-	FECHAACTUALIZACION DATE
+	FECHAACTUALIZACION DATE,
+	PRIMARY KEY(ID, EDICION)
 );
 
 /*CREACION DE TABLA MATRICULA*/
@@ -99,12 +99,13 @@ CREATE TABLE MATRICULA (
 	ATRIBUTO INT, 
 	MODOPAGO VARCHAR(45), 
 	CURSOPROPIO_ID VARCHAR(45) NOT NULL,
-	FOREIGN KEY (CURSOPROPIO_ID) REFERENCES CURSOPROPIO(ID), 
+	CURSOPROPIO_EDICION INT NOT NULL,
+	FOREIGN KEY (CURSOPROPIO_ID, CURSOPROPIO_EDICION) REFERENCES CURSOPROPIO(ID, EDICION), 
 	ESTUDIANTE_DNI VARCHAR(45) NOT NULL,
 	FOREIGN KEY (ESTUDIANTE_DNI) REFERENCES ESTUDIANTE (DNI), 
 	FECHACREACION DATE, 
 	FECHAACTUALIZACION DATE,
-	PRIMARY KEY(CURSOPROPIO_ID, ESTUDIANTE_DNI)
+	PRIMARY KEY(CURSOPROPIO_ID, CURSOPROPIO_EDICION, ESTUDIANTE_DNI)
 );
 
 /*CREACION DE TABLA MATERIA*/
@@ -114,12 +115,13 @@ CREATE TABLE MATERIA (
 	FECHAINICIO DATE,
 	FECHAFIN DATE,
 	CURSOPROPIO_ID VARCHAR(45) NOT NULL,
-	FOREIGN KEY (CURSOPROPIO_ID) REFERENCES CURSOPROPIO(ID),
+	CURSOPROPIO_EDICION INT NOT NULL,
+	FOREIGN KEY (CURSOPROPIO_ID, CURSOPROPIO_EDICION) REFERENCES CURSOPROPIO(ID, EDICION), 
 	RESPONSABLE_PROFESOR_DNI VARCHAR(45) NOT NULL,
 	FOREIGN KEY (RESPONSABLE_PROFESOR_DNI) REFERENCES PROFESOR(DNI),
 	FECHACREACION DATE, 
 	FECHAACTUALIZACION DATE,
-	PRIMARY KEY(NOMBRE, CURSOPROPIO_ID)
+	PRIMARY KEY(NOMBRE, CURSOPROPIO_ID, CURSOPROPIO_EDICION)
 );
 
 /*VALORES PARA VICERRECTORADO*/
@@ -194,25 +196,25 @@ INSERT INTO CURSOPROPIO (id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula,
 INSERT INTO CURSOPROPIO (id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estadoCurso, tipoCurso, centro_nombre, secretario_Profesor_DNI, director_Profesor_DNI) VALUES ('10', 'Pedagogia infantil', 6, '2022-11-15 00:00:00', '2022-11-18 00:00:00', 19.95, 134, 'VALIDADO', 'CORTA_DURACION', 'UCLM GUA', '14709633I', '23568907X');
 
 /*VALORES PARA MATRICULA*/
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2020-07-20 00:00:00', TRUE, 4, 'TARJETA_CREDITO', '07', '12457330W');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2022-07-22 00:00:00', FALSE, 6, 'TRANSFERENCIA', '01', '09764672L');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2022-07-25 00:00:00', TRUE, 3, 'TARJETA_CREDITO', '02', '23568237K');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2021-07-29 00:00:00', TRUE, 8, 'TRANSFERENCIA', '10', '98653134I');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2021-08-04 00:00:00', FALSE, 9, 'TARJETA_CREDITO', '09', '14709343B');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2021-08-10 00:00:00', TRUE, 34, 'TRANSFERENCIA', '08', '07412568V');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2021-08-17 00:00:00', FALSE, 2, 'TARJETA_CREDITO', '04', '25885896X');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2022-08-25 00:00:00', TRUE, 24, 'TARJETA_CREDITO', '03', '12563009A');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2022-09-04 00:00:00', FALSE, 1, 'TARJETA_CREDITO', '06', '12457330W');
-INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni) VALUES ('2022-09-14 00:00:00', TRUE, 90, 'TRANSFERENCIA', '05', '12457220T');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2020-07-20 00:00:00', TRUE, 4, 'TARJETA_CREDITO', '07', 5, '12457330W');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2022-07-22 00:00:00', FALSE, 6, 'TRANSFERENCIA', '01', 1, '09764672L');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2022-07-25 00:00:00', TRUE, 3, 'TARJETA_CREDITO', '02', 7, '23568237K');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2021-07-29 00:00:00', TRUE, 8, 'TRANSFERENCIA', '10', 134, '98653134I');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2021-08-04 00:00:00', FALSE, 9, 'TARJETA_CREDITO', '09', 21, '14709343B');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2021-08-10 00:00:00', TRUE, 34, 'TRANSFERENCIA', '08', 73, '07412568V');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2021-08-17 00:00:00', FALSE, 2, 'TARJETA_CREDITO', '04', 98, '25885896X');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2022-08-25 00:00:00', TRUE, 24, 'TARJETA_CREDITO', '03', 12, '12563009A');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2022-09-04 00:00:00', FALSE, 1, 'TARJETA_CREDITO', '06', 23, '12457330W');
+INSERT INTO MATRICULA (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni) VALUES ('2022-09-14 00:00:00', TRUE, 90, 'TRANSFERENCIA', '05', 56, '12457220T');
 
 /*VALORES PARA MATERIA*/
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Sistemas Distribuidos', 1, '2022-09-12 00:00:00', '2022-12-22 00:00:00', '03', '12457890Y');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Algebra y matematica discreta', 762, '2021-02-20 00:00:00', '2021-07-08 00:00:00', '07', '23568907X');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Estructura de computadores', 875, '2020-02-01 00:00:00', '2021-05-30 00:00:00', '04', '14709633I');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Organizacion de computadores', 234, '2022-09-21 00:00:00', '2022-12-22 00:00:00', '01', '98653214Z');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Tecnologia de computadores', 123, '2021-09-12 00:00:00', '2022-07-09 00:00:00', '02', '09764312U');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Estadistica', 198, '2021-02-01 00:00:00', '2021-06-06 00:00:00', '05', '98653214Z');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Ingenieria del software', 100, '2021-09-12 00:00:00', '2022-12-22 00:00:00', '10', '14709633I');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Logica', 999, '2021-09-12 00:00:00', '2021-12-21 00:00:00', '09', '12457890Y');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Bases de datos', 200, '2021-02-01 00:00:00', '2021-07-09 00:00:00', '06', '12457890Y');
-INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI) VALUES ('Arquitectura de computadores', 0, '2023-09-12 00:00:00', '2023-12-22 00:00:00', '08', '14709633I');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Sistemas Distribuidos', 1, '2022-09-12 00:00:00', '2022-12-22 00:00:00', '03', 12, '12457890Y');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Algebra y matematica discreta', 762, '2021-02-20 00:00:00', '2021-07-08 00:00:00', '07', 5, '23568907X');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Estructura de computadores', 875, '2020-02-01 00:00:00', '2021-05-30 00:00:00', '04', 98, '14709633I');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Organizacion de computadores', 234, '2022-09-21 00:00:00', '2022-12-22 00:00:00', '01', 1, '98653214Z');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Tecnologia de computadores', 123, '2021-09-12 00:00:00', '2022-07-09 00:00:00', '02', 7, '09764312U');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Estadistica', 198, '2021-02-01 00:00:00', '2021-06-06 00:00:00', '05', 56, '98653214Z');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Ingenieria del software', 100, '2021-09-12 00:00:00', '2022-12-22 00:00:00', '10', 134, '14709633I');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Logica', 999, '2021-09-12 00:00:00', '2021-12-21 00:00:00', '09', 21, '12457890Y');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Bases de datos', 200, '2021-02-01 00:00:00', '2021-07-09 00:00:00', '06', 23, '12457890Y');
+INSERT INTO MATERIA (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI) VALUES ('Arquitectura de computadores', 0, '2023-09-12 00:00:00', '2023-12-22 00:00:00', '08', 73, '14709633I');
