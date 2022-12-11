@@ -1,6 +1,7 @@
 package negocio.controllers;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import negocio.controllers.CursoException.*;
 import negocio.entities.*;
@@ -15,7 +16,7 @@ public class GestorPropuestasCursos {
 		}
 	}
 
-	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException {
+	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, ParseException {
 		if (cursoEditado.cursoPropioDao.editarCurso(cursoEditado) == 0) {
 			throw new CursoNoEditadoException("No se ha realizado la edición de la propuesta del curso");
 		}
@@ -31,7 +32,7 @@ public class GestorPropuestasCursos {
 		return curso.estado;
 	}
 	
-	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException {
+	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException {
 		curso.estado = EstadoCurso.VALIDADO;
 		if (curso.cursoPropioDao.editarCurso(curso) == 0) {
 			throw new CursoNoEditadoException("No se ha dado de alta el curso");

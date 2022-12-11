@@ -681,14 +681,14 @@ public class PantallaPropuestaCurso extends JFrame {
 					if (action == 0) {
 						try {
 							gestorPropuestas.realizarPropuestaCurso(curso);
-						} catch (SQLException e1) {
+						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					} else {
 						try {
 							gestorPropuestas.editarPropuestaCurso(curso);
-						} catch (SQLException e1) {
+						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}

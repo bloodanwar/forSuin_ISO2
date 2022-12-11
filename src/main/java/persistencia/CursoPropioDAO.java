@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class CursoPropioDAO {
 
 		int contador = 0;
 		
-		contador += GestorBD.getInstancia().insert("INSERT INTO cursoPropio (id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estadoCurso, tipoCurso, centro_nombre, secretario_Profesor_DNI, director_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
+		contador += GestorBD.getInstancia().insert("INSERT INTO cursoPropio (id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estadoCurso, tipoCurso, centro_nombre, secretario_Profesor_DNI, director_Profesor_DNI, requisitos, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ curso.getId()+"', '"
 				+ curso.getNombre()+"', "
 				+ curso.getECTS()+", '"
@@ -34,13 +35,14 @@ public class CursoPropioDAO {
 				+ curso.centro.getNombre()+"', '"
 				+ curso.secretario.getDni()+"', '"
 				+ curso.director.getDni()+"', '"
+				+ curso.requisitos+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
 		
 		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
 
 		for (int i=0; i<materias.length; i++){
-			contador += materias[i].materiaDao.crearNuevaMateria(materias[i], curso.getId());
+			contador += materias[i].materiaDao.crearNuevaMateria(materias[i], curso.getId(), curso.getEdicion());
 		}
 		
 		if (contador == curso.materias.size() + 1){
@@ -51,7 +53,7 @@ public class CursoPropioDAO {
 	}
 
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
-		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"'");
+		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"' AND edicion="+curso.getEdicion());
 		datosCurso = (Vector) datosCurso.get(0);
 
 		String id = (String) datosCurso.get(0);
@@ -66,8 +68,9 @@ public class CursoPropioDAO {
 		Centro centro = new Centro((String) datosCurso.get(9));
 		ProfesorUCLM secretario = new ProfesorUCLM((String) datosCurso.get(10));
 		ProfesorUCLM director = new ProfesorUCLM((String) datosCurso.get(11));
+		String requisitos = (String) datosCurso.get(12);
 		
-		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
 		
 		List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 		cursoDevolver.materias = materiasCurso;
@@ -78,23 +81,59 @@ public class CursoPropioDAO {
 		return cursoDevolver;
 	}
 
-	public int editarCurso(CursoPropio curso) throws SQLException {
+	public int editarCurso(CursoPropio curso) throws SQLException, ParseException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
-		int tamanoMaterias = 0;
+		int materiasAModificar = 0;
 		
-		Materia[] materias = null;
+		CursoPropio cursoEnBBDD = curso.cursoPropioDao.seleccionarCurso(curso);
 		
+		//curso.materias y cursoEnBBDD.materias
 		
-		if (curso.materias != null) {
-			tamanoMaterias = curso.materias.size();
-			materias = curso.materias.toArray(new Materia[curso.materias.size()]);
-			for (int i=0; i<materias.length; i++){
-				contador += materias[i].materiaDao.editarMateria(materias[i], curso.getId());
+		//comprobar los nuevos a añadir
+		Iterator<Materia> recorrerMateriaCurso = curso.materias.iterator();
+		while(recorrerMateriaCurso.hasNext()) {
+			boolean materiaYaEnBBDD = false;
+			Materia materiaCurso = recorrerMateriaCurso.next();
+			
+			Iterator<Materia> recorrerMateriaCursoEnBBDD = cursoEnBBDD.materias.iterator();
+			while(recorrerMateriaCursoEnBBDD.hasNext()) {
+				Materia materiaCursoEnBBDD = recorrerMateriaCursoEnBBDD.next();
+				if (materiaCurso.getNombre().equals(materiaCursoEnBBDD.getNombre())) {
+					materiaYaEnBBDD = true;
+					break;
+				}
 			}
-		}		
+			
+			if (!materiaYaEnBBDD) {
+				materiasAModificar++;
+				contador += materiaCurso.materiaDao.crearNuevaMateria(materiaCurso, curso.getId(), curso.getEdicion());
+			}
+		}
+		
+		
+		//comprobar los antiguos a borrar	
+		Iterator<Materia> recorrerMateriaCursoEnBBDD = cursoEnBBDD.materias.iterator();
+		while(recorrerMateriaCursoEnBBDD.hasNext()) {
+			boolean materiaSeMantiene = false;
+			Materia materiaCursoEnBBDD = recorrerMateriaCursoEnBBDD.next();
+			
+			Iterator<Materia> recorrerMateriaCurso2 = curso.materias.iterator();
+			while(recorrerMateriaCurso2.hasNext()) {
+				Materia materiaCurso = recorrerMateriaCurso2.next();
+				if (materiaCursoEnBBDD.getNombre().equals(materiaCurso.getNombre())) {
+					materiaSeMantiene = true;
+					break;
+				}
+			}
+			
+			if (!materiaSeMantiene) {
+				materiasAModificar++;
+				contador += materiaCursoEnBBDD.materiaDao.eliminarMateria(materiaCursoEnBBDD, curso.getId(), curso.getEdicion());
+			}
+		}
 		
 		contador+= GestorBD.getInstancia().update("UPDATE cursoPropio SET "
 				+ "nombre='" + curso.getNombre() + "', "
@@ -102,18 +141,16 @@ public class CursoPropioDAO {
 				+ "fechaInicio='" + dateFormat.format(curso.getFechaInicio()) + "', "
 				+ "fechaFin='" + dateFormat.format(curso.getFechaFin()) + "', "
 				+ "tasaMatricula=" + curso.getTasaMatricula() + ", "
-				+ "edicion=" + curso.getEdicion() + ", "
 				+ "estadoCurso='" + curso.estado.toString() + "', "
 				+ "tipoCurso='" + curso.tipo.toString() + "', "
 				+ "centro_nombre='" + curso.centro.getNombre() + "', "
 				+ "secretario_Profesor_DNI='" + curso.secretario.getDni() + "', "
 				+ "director_Profesor_DNI='" + curso.director.getDni() + "', "
+				+ "requisitos='" + curso.requisitos + "', "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE id='"+curso.getId()+"'");
+				+ "' WHERE id='"+curso.getId()+"' AND edicion="+curso.getEdicion());
 		
-		
-		
-		if (contador == tamanoMaterias + 1){
+		if (contador == materiasAModificar + 1){
 			return 1;	
 		} else {
 			return 0;
@@ -125,10 +162,10 @@ public class CursoPropioDAO {
 		
 		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
 		for (int i=0; i<materias.length; i++){
-			contador += materias[i].materiaDao.eliminarMateria(materias[i],curso.getId());
+			contador += materias[i].materiaDao.eliminarMateria(materias[i], curso.getId(), curso.getEdicion());
 		}
 		
-		contador+= GestorBD.getInstancia().delete("DELETE FROM cursoPropio WHERE id='"+curso.getId()+"'");
+		contador+= GestorBD.getInstancia().delete("DELETE FROM cursoPropio WHERE id='"+curso.getId()+"' AND edicion="+curso.getEdicion());
 		if (contador == curso.materias.size() + 1){
 			return 1;	
 		} else {
@@ -155,8 +192,9 @@ public class CursoPropioDAO {
 			Centro centro = new Centro((String) curDatosTemp.get(9));
 			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));
 			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));
+			String requisitos = (String) curDatosTemp.get(12);			
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
@@ -190,8 +228,9 @@ public class CursoPropioDAO {
 			Centro centro = new Centro((String) curDatosTemp.get(9));
 			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));
 			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));
+			String requisitos = (String) curDatosTemp.get(12);
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);
 			
 			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 			cursoDevolver.materias = materiasCurso;
@@ -224,8 +263,9 @@ public class CursoPropioDAO {
 			Centro centro = new Centro((String) curDatosTemp.get(9));
 			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));
 			ProfesorUCLM directorObtenido = new ProfesorUCLM((String) curDatosTemp.get(11));
+			String requisitos = (String) curDatosTemp.get(12);
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido, requisitos);
 			
 			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 			cursoDevolver.materias = materiasCurso;
@@ -248,9 +288,10 @@ public class CursoPropioDAO {
 			Vector datosCursoTemp = (Vector) listaCursos.get(i);
 			
 			String id = (String) datosCursoTemp.get(0);
+			int edicion = (Integer) datosCursoTemp.get(6);
 			double tasaMatricula = (Double) datosCursoTemp.get(5);
 			
-			CursoPropio cursoTemp = new CursoPropio(id);
+			CursoPropio cursoTemp = new CursoPropio(id, edicion);
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoTemp);
 			
@@ -283,8 +324,9 @@ public class CursoPropioDAO {
 			Centro centro = new Centro((String) lEdicnDatosTemp.get(9));
 			ProfesorUCLM secretario = new ProfesorUCLM((String) lEdicnDatosTemp.get(10));
 			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));
+			String requisitos = (String) lEdicnDatosTemp.get(12);
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
 			
 			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 			cursoDevolver.materias = materiasCurso;
