@@ -99,7 +99,7 @@ public class PantallaGestionarCursos extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CursoPropio curso = new CursoPropio(""); 
+				CursoPropio curso = new CursoPropio(); 
 				new PantallaPropuestaCurso(director, curso, 0);
 				setVisible(false);
 			}
@@ -168,7 +168,7 @@ public class PantallaGestionarCursos extends JFrame{
 					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
 					try {
 						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));
-					} catch (SQLException e1) {
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

@@ -32,8 +32,8 @@ public class GestorConsultas {
 		List<CursoPropio> listaCursos = null;
 		
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
-	    Date dateInicio = formatter.parse("1990-01-01");      
-	    Date dateFin = formatter.parse("2990-01-01");      
+	    Date dateInicio = formatter.parse("1000-01-01");      
+	    Date dateFin = formatter.parse("3000-01-01");      
 	    //System.out.println(dateInicio);
 	    
 		try {
@@ -53,8 +53,8 @@ public class GestorConsultas {
 		
 		// PROVISIONAL --
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
-	    Date dateInicio = formatter.parse("1990-01-01");      
-	    Date dateFin = formatter.parse("2990-01-01");      
+	    Date dateInicio = formatter.parse("1000-01-01");      
+	    Date dateFin = formatter.parse("3000-01-01");      
 	    System.out.println(dateInicio);
 	    
 		try {

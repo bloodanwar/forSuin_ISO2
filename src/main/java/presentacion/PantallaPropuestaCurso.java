@@ -72,7 +72,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	// Listas y tablas
 	private String[] categorias = {"Másteres de Formación Permanente", "Especialistas", "Expertos", 
-			"Cursos Universitarios de Formación Avnazada", "Cursos de Formación Continua", 
+			"Cursos Universitarios de Formación Avanazada", "Cursos de Formación Continua", 
 			"Microcredenciales", "Actividades formativas de corta duración", "Cursos de Verano y Extensión Universitaria", "Formación de Mayores" }; 
 
 	private TipoCurso[] tipos = {TipoCurso.MASTER, TipoCurso.ESPECIALISTA, TipoCurso.EXPERTO, 
@@ -139,6 +139,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			profesoresDao = gestorConsultas.listarProfesores();
 		} catch (SQLException e) {
+			errorPopup(e);
 			e.printStackTrace();
 		}
 
@@ -158,6 +159,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			profesoresUCLMDao = gestorConsultas.listarProfesoresUCLM();
 		} catch (SQLException e) {
+			errorPopup(e);
 			e.printStackTrace();
 		}
 
@@ -245,7 +247,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			dateMask = new MaskFormatter("##-##-####");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			errorPopup(e);
 			e.printStackTrace();
 		}
 		
@@ -262,7 +264,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	    try {
 			dateMask = new MaskFormatter("##-##-####");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			errorPopup(e);
 			e.printStackTrace();
 		}
 	    
@@ -534,7 +536,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			dateMask = new MaskFormatter("##-##-####");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			errorPopup(e);
 			e.printStackTrace();
 		}
 		
@@ -624,7 +626,7 @@ public class PantallaPropuestaCurso extends JFrame {
 				boolean complete = true;
 
 				// COMPROBACION DE DATOS CURSO
-				if (!testTexts(tituloCurso) & !testTexts(fechaFinCurso) & !testTexts(fechaFinCurso)) {
+				if (!testTexts(tituloCurso) & !testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso) & !testTexts(requisitoCurso)) {
 					complete = false;
 				}
 				
@@ -657,7 +659,7 @@ public class PantallaPropuestaCurso extends JFrame {
 					} catch (ParseException e1) {
 						e1.printStackTrace();
 					}  		
-
+					
 					curso = new CursoPropio(
 							GestorMD5.getMd5(tituloCurso.getText()+fechaInicio.toString()+fechaFin.toString()),
 							tituloCurso.getText(), 
@@ -670,7 +672,8 @@ public class PantallaPropuestaCurso extends JFrame {
 							tipos[categoriasLista.getSelectedIndex()], 
 							centrosDao.get(centrosLista.getSelectedIndex()), 
 							profesoresUCLMDao.get(secretariosTable.getSelectedRow()), 
-							director 
+							director,
+							requisitoCurso.getText()
 							);
 
 					curso.materias = new ArrayList<>();
@@ -678,18 +681,18 @@ public class PantallaPropuestaCurso extends JFrame {
 					newMaterias.addAll(materiasGuardadas);
 					curso.materias = newMaterias;
 
-					if (action == 0) {
+					if (action != 1) { // Crear + Nueva edicion
 						try {
 							gestorPropuestas.realizarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
+							errorPopup(e1);
 							e1.printStackTrace();
 						}
-					} else {
+					} else { // Editar
 						try {
 							gestorPropuestas.editarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
+							errorPopup(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -729,6 +732,11 @@ public class PantallaPropuestaCurso extends JFrame {
 		text.setBackground(new Color(255, 255, 255));
 		
 		return result;
+	}
+	
+	public void errorPopup(Exception e1) {
+		JFrame jFrame = new JFrame();
+        JOptionPane.showMessageDialog(jFrame, e1.toString());
 	}
 
 }

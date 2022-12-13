@@ -119,7 +119,7 @@ public class PantallaDatosCurso extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				descripcion.setEnabled(false);
 				descripcion.setText("");
-				descripcion.setBackground(Color.gray);
+				descripcion.setBackground(Color.lightGray);
 			}
 		});
 
@@ -202,7 +202,7 @@ public class PantallaDatosCurso extends JFrame {
 						
 						try {
 							gestor.editarPropuestaCurso(curso);
-						} catch (SQLException e1) {
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 						
