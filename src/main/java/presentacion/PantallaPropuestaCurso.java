@@ -120,7 +120,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		// LAYOUTS
 		initLayout();
 		basicLayout(cursoEditado);
-		enseñanzasLayout(cursoEditado, action);
+		ensenanzasLayout(cursoEditado, action);
 		materiasLayout(cursoEditado);
 		botonesLayout(director, cursoEditado, action);
 
@@ -131,8 +131,6 @@ public class PantallaPropuestaCurso extends JFrame {
 	}
 
 	private void addProfesores() { 
-		Profesor profesor = new Profesor();
-
 		profesores.addColumn("Nombre");
 		profesores.addColumn("Doctor");
 
@@ -150,8 +148,6 @@ public class PantallaPropuestaCurso extends JFrame {
 	}
 
 	private void addProfesoresUCLM(CursoPropio cursoEditado, int action) {
-		ProfesorUCLM profesor = new ProfesorUCLM();
-
 		profesoresUCLM.addColumn("Nombre");
 		profesoresUCLM.addColumn("Categoria");
 		profesoresUCLM.addColumn("Doctor");
@@ -171,8 +167,6 @@ public class PantallaPropuestaCurso extends JFrame {
 	}
 
 	private void addCentros(CursoPropio cursoEditado, int action) {
-		Centro centro = new Centro();
-
 		try {
 			centrosDao = gestorConsultas.listarCentros();
 		} catch (SQLException e) {
@@ -313,13 +307,11 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(scrollPanel);
 	}
 
-	private void enseñanzasLayout(CursoPropio cursoEditado, int action) {
+	private void ensenanzasLayout(CursoPropio cursoEditado, int action) {
 		// Categoria 
 		label = new JLabel("Categoria");
 		label.setBounds(10,651,400,30);
 		mainPanel.add(label);
-
-		//for(int i=0;i<tipos.length;i++) if(cursoEditado.tipo.equals(tipos[i])) categoriaEditado=i;
 
 		categoriasLista = new JList<String>(categorias);
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -327,7 +319,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
 
-		// Requistio // TODO -- guardar en bbdd 
+		// Requistio 
 		labelRequisito = new JLabel("Requsito");
 		labelRequisito.setBounds(450,681,200,30);
 		mainPanel.add(labelRequisito);
@@ -427,7 +419,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setBounds(10,901,200,30);
 		mainPanel.add(label);
 
-		materiasLista = new JList<String>(materias);
+		materiasLista = new JList<>(materias);
 		materiasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(materiasLista);
 		scrollPanel.setBounds(10, 931, 400, 200);
@@ -474,7 +466,7 @@ public class PantallaPropuestaCurso extends JFrame {
 					}  
 
 					int index = responsablesTable.getSelectedRow();
-					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finMateria, (Profesor) profesoresDao.get(index));
+					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finMateria, profesoresDao.get(index));
 					materiasGuardadas.add(materia);
 
 					// Limpiar selección
@@ -644,22 +636,23 @@ public class PantallaPropuestaCurso extends JFrame {
 					materiasLista.setBackground(new Color(255, 255, 255));
 				}
 
+				Date fechaInicio = null;
+				Date fechaFin = null;
+
+				try {
+					fechaInicio = format.parse(fechaInicioCurso.getText());
+					fechaFin = format.parse(fechaFinCurso.getText());
+				} catch (ParseException e1) {
+					complete = false;
+					e1.printStackTrace();
+				}  		
+				
 				if (!complete) return;
 
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
 				if(confirm == 0)  {
 					// CREAR CURSO
-					Date fechaInicio = null;
-					Date fechaFin = null;
-
-					try {
-						fechaInicio = format.parse(fechaInicioCurso.getText());
-						fechaFin = format.parse(fechaFinCurso.getText());
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}  		
-					
 					curso = new CursoPropio(
 							GestorMD5.getMd5(tituloCurso.getText()+fechaInicio.toString()+fechaFin.toString()),
 							tituloCurso.getText(), 

@@ -47,15 +47,9 @@ public class GestorConsultas {
 	}
 	
 	
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException{
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date dateInicio, Date dateFin) throws ParseException{
 		CursoPropio curso = new CursoPropio();
 		List<CursoPropio> listaCursos = null;
-		
-		// PROVISIONAL --
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
-	    Date dateInicio = formatter.parse("1000-01-01");      
-	    Date dateFin = formatter.parse("3000-01-01");      
-	    System.out.println(dateInicio);
 	    
 		try {
 			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);

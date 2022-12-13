@@ -3,7 +3,9 @@ package presentacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -47,9 +49,19 @@ public class PantallaCursosAprobados extends JFrame{
 	
 	private void listLayout() {
 		GestorConsultas gestor = new GestorConsultas();
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
+	    Date dateInicio = new Date(); 
+	    Date dateFin = null;
+		try {
+			dateInicio = formatter.parse("1000-01-01"); // TODO Quitar para que la fecha inicio sea la actual
+			dateFin = formatter.parse("3000-01-01");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}      
 		
 		try {
-			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO, dateInicio, dateFin);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
