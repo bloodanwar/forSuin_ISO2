@@ -583,7 +583,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	}
 
-	private void botonesLayout(final ProfesorUCLM director, CursoPropio cursoEditado, final int action) {
+	private void botonesLayout(final ProfesorUCLM director, final CursoPropio cursoEditado, final int action) {
 		// Boton para ir atras
 		button = new JButton("Atras");
 		button.setBounds(270,1530,200,30);
@@ -602,8 +602,8 @@ public class PantallaPropuestaCurso extends JFrame {
 		String cadenaBoton = "";
 
 		if(action == 0) cadenaBoton = "Enviar propuesta";
-		else if (action == 2) cadenaBoton = "Editar propuesta";
-		else cadenaBoton = "Nueva edición";
+		else if (action == 1) cadenaBoton = "Editar propuesta";
+		else if(action == 2) cadenaBoton = "Nueva edición";
 
 
 		button = new JButton(cadenaBoton);
@@ -651,9 +651,13 @@ public class PantallaPropuestaCurso extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
 				if(confirm == 0)  {
+					String id;
+					if(action == 0) id = GestorMD5.getMd5(tituloCurso.getText() + fechaInicio.toString() + fechaFin.toString());
+					else id = cursoEditado.getId();
+					
 					// CREAR CURSO
 					curso = new CursoPropio(
-							GestorMD5.getMd5(tituloCurso.getText()+fechaInicio.toString()+fechaFin.toString()),
+							id,
 							tituloCurso.getText(), 
 							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
 							fechaInicio, 
@@ -673,16 +677,16 @@ public class PantallaPropuestaCurso extends JFrame {
 					newMaterias.addAll(materiasGuardadas);
 					curso.materias = newMaterias;
 
-					if (action != 1) { // Crear + Nueva edicion
+					if (action == 1) { // Crear + Nueva edicion
 						try {
-							gestorPropuestas.realizarPropuestaCurso(curso);
+							gestorPropuestas.editarPropuestaCurso(curso);
 						} catch (Exception e1) {
 							errorPopup(e1);
 							e1.printStackTrace();
 						}
 					} else { // Editar
 						try {
-							gestorPropuestas.editarPropuestaCurso(curso);
+							gestorPropuestas.realizarPropuestaCurso(curso);
 						} catch (Exception e1) {
 							errorPopup(e1);
 							e1.printStackTrace();

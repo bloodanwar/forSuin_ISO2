@@ -141,7 +141,7 @@ public class PantallaGestionarCursos extends JFrame{
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
 				
 				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
-					new PantallaPropuestaCurso(director, curso, 2);
+					new PantallaPropuestaCurso(director, curso, 1);
 					setVisible(false);
 				}
 				

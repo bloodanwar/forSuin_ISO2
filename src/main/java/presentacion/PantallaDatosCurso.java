@@ -186,9 +186,9 @@ public class PantallaDatosCurso extends JFrame {
 				} else { 
 					confirm = JOptionPane.showConfirmDialog(null,"¿Evaluar propuesta?","Evaluar propuesta",JOptionPane.YES_NO_OPTION, 1);
 				}
-				int tipo=0;
+				
 				if(confirm == 0)  {
-					if (tipo == 0) { // TODO -- matricular
+					if (type == 0) { // TODO -- matricular
 						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno
 		                setVisible(false);
 					}	
@@ -204,6 +204,7 @@ public class PantallaDatosCurso extends JFrame {
 							gestor.editarPropuestaCurso(curso);
 						} catch (Exception e1) {
 							e1.printStackTrace();
+							
 						}
 						
 						new PantallaEmpleadosVicerrectorado();
@@ -211,10 +212,6 @@ public class PantallaDatosCurso extends JFrame {
 					}
 					
 				}
-				
-
-				
-				
 			}
 		});
 		btnMatricularEvaluar.setBounds(574, 513, 200,30);
