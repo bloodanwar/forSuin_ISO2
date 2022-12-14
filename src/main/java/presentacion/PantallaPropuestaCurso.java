@@ -324,7 +324,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		labelRequisito.setBounds(450,681,200,30);
 		mainPanel.add(labelRequisito);
 
-		requisitoCurso = new JTextField();
+		requisitoCurso = new JTextField(cursoEditado.requisitos);
 		requisitoCurso.setBounds(450,711,200,30);
 		requisitoCurso.setEnabled(false);
 		mainPanel.add(requisitoCurso);
@@ -546,7 +546,6 @@ public class PantallaPropuestaCurso extends JFrame {
 	    try {
 			dateMask = new MaskFormatter("##-##-####");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    

@@ -4,7 +4,9 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -49,9 +51,21 @@ public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 	
 	private void basicLayout() {
 		GestorConsultas gestor = new GestorConsultas();
+		
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
+	    Date dateInicio = null; 
+	    Date dateFin = null;
+	    
+		try {
+			dateInicio = formatter.parse("1000-01-01"); 
+			dateFin = formatter.parse("3000-01-01");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
-			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO, dateInicio, dateFin);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
