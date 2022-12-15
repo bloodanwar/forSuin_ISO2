@@ -55,7 +55,7 @@ public class CursoPropioDAO {
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getNombre()+"' AND edicion="+curso.getEdicion());
 		datosCurso = (Vector) datosCurso.get(0);
-
+		
 		String id = (String) datosCurso.get(0);
 		String nombre = (String) datosCurso.get(1);
 		int ECTS = (Integer) datosCurso.get(2);
