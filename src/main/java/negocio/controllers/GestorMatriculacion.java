@@ -44,6 +44,24 @@ public class GestorMatriculacion {
 			throw new MatriculaNoEditadaException("No se ha podido actualizar el modo de pago");
 		}
 	}
+	
+	private void comprobarSiTieneTituloEstudiante(Matricula matricula) throws MatriculaErroneaException {
+		boolean tituloMatriculaError = false;
+		boolean estudianteMatriculaError = false;
+		
+		if (matricula.titulo==null || matricula.titulo.getId().equals("") || matricula.titulo.getId() == null || matricula.titulo.getEdicion()<=0) {
+			tituloMatriculaError = true;
+		}
+		if (matricula.estudiante == null || matricula.estudiante.getDni().equals("") || matricula.estudiante.getDni()==null) {
+			estudianteMatriculaError = true;
+		}
+		
+		if(!tituloMatriculaError && !estudianteMatriculaError) {
+			return;
+		} else if (tituloMatriculaError && estudianteMatriculaError) {
+			throw new MatriculaErroneaException("");
+		}
+	}
 
 	private void operation() {
 		// TODO - implement GestorMatriculacion.operation

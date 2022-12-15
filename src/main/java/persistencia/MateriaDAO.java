@@ -12,27 +12,28 @@ import negocio.entities.*;
 
 public class MateriaDAO {
 
-	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
+	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
 	
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
-	public int crearNuevaMateria(Materia materia, String cursoPropioID) throws SQLException {
+	public int crearNuevaMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
-		return GestorBD.getInstancia().insert("INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
+		return GestorBD.getInstancia().insert("INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ materia.getNombre()+"', "
 				+ materia.getHoras()+", '"
 				+ dateFormat.format(materia.getFechaInicio())+"', '"
 				+ dateFormat.format(materia.getFechaFin())+"', '"
-				+ cursoPropioID+"', '"
+				+ cursoPropioID+"', "
+				+ cursoPropioEdicion+", '"
 				+ materia.responsable.getDni()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
-	public Materia seleccionarMateria(Materia materia, String cursoPropioID) throws SQLException {
-		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
+	public Materia seleccionarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
+		Vector datosMateria = GestorBD.getInstancia().select("SELECT * FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"' AND cursoPropioEdicion="+cursoPropioEdicion);
 		datosMateria = (Vector) datosMateria.get(0);
 		
 		String nombre = (String) datosMateria.get(0);
@@ -44,7 +45,7 @@ public class MateriaDAO {
 		return new Materia(nombre, horas, fechaInicio, fechaFin, responsable);
 	}
 
-	public int editarMateria(Materia materia, String cursoPropioID) throws SQLException {
+	public int editarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
 		Date fechaActualizacion = new Date();
 
@@ -54,15 +55,15 @@ public class MateriaDAO {
 				+ "fechaFin='" + dateFormat.format(materia.getFechaFin()) + "', "
 				+ "responsable_Profesor_DNI='" + materia.responsable.getDni() + "', '"
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
+				+ "' WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"' AND cursoPropio_edicion="+cursoPropioEdicion);
 	}
 
-	public int eliminarMateria(Materia materia, String cursoPropioID) throws SQLException {
-		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"'");
+	public int eliminarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
+		return GestorBD.getInstancia().delete("DELETE FROM materia WHERE nombre='"+materia.getNombre()+"' AND cursoPropio_id='"+cursoPropioID+"' AND cursoPropio_edicion="+cursoPropioEdicion);
 	}
 
 	public List<Materia> listarMateriasPorCurso(CursoPropio curso) throws SQLException {
-		Vector listaMateriaDatos = GestorBD.getInstancia().select("SELECT * FROM materia WHERE cursoPropio_id = '" + curso.getId() + "'");
+		Vector listaMateriaDatos = GestorBD.getInstancia().select("SELECT * FROM materia WHERE cursoPropio_id = '" + curso.getId() + "' AND cursoPropio_edicion="+curso.getEdicion());
 		
 		List<Materia> listaMateria = new ArrayList<>();
 		

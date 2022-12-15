@@ -20,18 +20,20 @@ public class CursoPropio {
 	private Date fechaFin;
 	private double tasaMatricula;
 	private int edicion;
+	public String requisitos;
 	
 	
 	public CursoPropio() {
 		cursoPropioDao = new CursoPropioDAO();
 	}
 	
-	public CursoPropio(String id) {
+	public CursoPropio(String id, int edicion) {
 		cursoPropioDao = new CursoPropioDAO();
 		this.id = id;
+		this.edicion = edicion;
 	}
 	
-	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, EstadoCurso estado, TipoCurso tipo, Centro centro, ProfesorUCLM secretario, ProfesorUCLM director) {
+	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, EstadoCurso estado, TipoCurso tipo, Centro centro, ProfesorUCLM secretario, ProfesorUCLM director, String requisitos) {
 		cursoPropioDao = new CursoPropioDAO();
 		this.id = id;
 		this.nombre = nombre;
@@ -45,6 +47,7 @@ public class CursoPropio {
 		this.centro = centro;
 		this.secretario=secretario;
 		this.director=director;
+		this.requisitos=requisitos;
 	}
 	
 	public String toString() {

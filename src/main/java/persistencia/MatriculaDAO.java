@@ -20,12 +20,13 @@ public class MatriculaDAO {
 		Date fechaCreacion= new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
-		return GestorBD.getInstancia().insert("INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('"
+		return GestorBD.getInstancia().insert("INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ dateFormat.format(matricula.getFecha())+"', "
 				+ matricula.isPagado()+", "
 				+ matricula.getAttribute()+", '"
 				+ matricula.tipoPago.toString()+ "', '"
-				+ matricula.titulo.getId()+"', '"
+				+ matricula.titulo.getId()+"', "
+				+ matricula.titulo.getEdicion()+", '"
 				+ matricula.estudiante.getDni()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
@@ -33,14 +34,14 @@ public class MatriculaDAO {
 
 	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException { 
 		
-		Vector datosMatricula = GestorBD.getInstancia().select("SELECT * FROM matricula WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND estudiante_dni='"+matricula.estudiante.getDni()+"'");
+		Vector datosMatricula = GestorBD.getInstancia().select("SELECT * FROM matricula WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND cursoPropio_edicion="+matricula.titulo.getEdicion()+" AND estudiante_dni='"+matricula.estudiante.getDni()+"'");
 		datosMatricula = (Vector) datosMatricula.get(0);
 
 		Date fecha= (Date) datosMatricula.get(0);
 		Boolean pagado = (Boolean) datosMatricula.get(1);
 		int attribute = (Integer) datosMatricula.get(2);
 		ModoPago tipoPago = ModoPago.valueOf((String) datosMatricula.get(3));
-		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4));
+		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4), (int) datosMatricula.get(5));
 		Estudiante estudiante = new Estudiante((String) datosMatricula.get(6));
 		
 		Matricula matriculaDevolver = new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);
@@ -55,21 +56,20 @@ public class MatriculaDAO {
 				+ "fecha='" + matricula.getFecha() + "', "
 				+ "pagado=" + matricula.isPagado() + ", "
 				+ "attribute=" + matricula.getAttribute() + ", "
-				+ "modopago=" + matricula.tipoPago.toString() + ", "
-				+ "id=" + matricula.titulo.getId() + ", "
-				+ "dni=" + matricula.estudiante.getDni() + ", "
+				+ "modopago='" + matricula.tipoPago.toString() + "', "
+				+ "dni='" + matricula.estudiante.getDni() + "', "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE id='"+matricula.titulo.getId()+"'");
+				+ "' WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND cursoPropio_edicion="+matricula.titulo.getEdicion());
 	}
 
 	public int eliminarMatricula(Matricula matricula) throws SQLException {
-		return GestorBD.getInstancia().delete("DELETE FROM matricula WHERE id='"+matricula.titulo.getId()+"'");
+		return GestorBD.getInstancia().delete("DELETE FROM matricula WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND cursoPropio_edicion="+matricula.titulo.getEdicion());
 	}
 
 	public List<Matricula> listarMatriculasPorCurso(CursoPropio curso) throws SQLException {
 		Vector matriculasDatos = GestorBD.getInstancia().select("SELECT * FROM matricula WHERE cursoPropio_id = '"+curso.getId()+"'");
 		
-		List <Matricula> listaMatriculas=new ArrayList<>();;
+		List <Matricula> listaMatriculas=new ArrayList<>();
 		
 		for (int i=0; i<matriculasDatos.size(); i++){
 			Vector matDatosTemp = (Vector) matriculasDatos.get(i);
@@ -78,7 +78,7 @@ public class MatriculaDAO {
 			Boolean pagado = (Boolean) matDatosTemp.get(1);
 			int attribute = (Integer) matDatosTemp.get(2);
 			ModoPago tipoPago = ModoPago.valueOf((String) matDatosTemp.get(3));
-			CursoPropio cursoPropio = new CursoPropio((String) matDatosTemp.get(4));
+			CursoPropio cursoPropio = new CursoPropio((String) matDatosTemp.get(4), (int) matDatosTemp.get(5));
 			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(6));
 			
 			listaMatriculas.add(new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante));
