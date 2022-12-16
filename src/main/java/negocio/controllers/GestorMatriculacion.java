@@ -10,9 +10,10 @@ public class GestorMatriculacion {
 
 	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
-	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException {
+	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException, MatriculaErroneaException {
 		Date fecha = new Date();
 		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);
+		comprobarSiTieneTituloEstudiante(matricula);
 		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 0) {
 			throw new MatriculaNoCreadaException("Matrícula no creada");
 		}
