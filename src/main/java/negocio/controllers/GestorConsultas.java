@@ -31,9 +31,9 @@ public class GestorConsultas {
 		CursoPropio curso = new CursoPropio();
 		List<CursoPropio> listaCursos = null;
 		
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
-	    Date dateInicio = formatter.parse("1000-01-01");      
-	    Date dateFin = formatter.parse("3000-01-01");      
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+	    Date dateInicio = formatter.parse("01-01-1000");      
+	    Date dateFin = formatter.parse("01-01-3000");      
 	    //System.out.println(dateInicio);
 	    
 		try {
@@ -47,9 +47,20 @@ public class GestorConsultas {
 	}
 	
 	
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado, Date dateInicio, Date dateFin) throws ParseException{
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException{
 		CursoPropio curso = new CursoPropio();
 		List<CursoPropio> listaCursos = null;
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+	    Date dateInicio = new Date(); 
+	    Date dateFin = null;
+		try {
+			dateInicio = formatter.parse("01-01-1000");
+			dateFin = formatter.parse("01-01-3000");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}      
 	    
 		try {
 			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
