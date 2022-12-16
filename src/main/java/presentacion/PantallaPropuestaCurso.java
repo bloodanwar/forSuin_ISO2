@@ -65,15 +65,14 @@ public class PantallaPropuestaCurso extends JFrame {
 	private JComboBox<Integer> horas;
 
 	// Fechas
-	private Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	private DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
-	private MaskFormatter dateMask = null;
-	
-	private JFormattedTextField fechaInicioMateria;
-	private JFormattedTextField fechaFinMateria;
+
 	
 	private Properties p = new Properties();
-	private JDatePickerImpl fechaInicioCurso, fechaFinCurso;
+	private JDatePickerImpl fechaInicioCurso;
+	private JDatePickerImpl fechaFinalCurso;
+	private JDatePickerImpl fechaInicioMateria;
+	private JDatePickerImpl fechaFinalMateria;
 
 	// Listas y tablas
 	private String[] categorias = {"Másteres de Formación Permanente", "Especialistas", "Expertos", 
@@ -142,7 +141,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			profesoresDao = gestorConsultas.listarProfesores();
 		} catch (SQLException e) {
-			errorPopup(e);
+			errorPopup();
 			e.printStackTrace();
 		}
 
@@ -160,7 +159,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			profesoresUCLMDao = gestorConsultas.listarProfesoresUCLM();
 		} catch (SQLException e) {
-			errorPopup(e);
+			errorPopup();
 			e.printStackTrace();
 		}
 
@@ -175,6 +174,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			centrosDao = gestorConsultas.listarCentros();
 		} catch (SQLException e) {
+			errorPopup();
 			e.printStackTrace();
 		}
 
@@ -250,9 +250,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		label = new JLabel("Fecha inicio (DD/MM/AAAA)");
 		label.setBounds(10,342,200,30);
 		mainPanel.add(label);
-		
-		DateLabelFormatter date = new DateLabelFormatter();
-		
+				
 		fechaInicioCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
 		fechaInicioCurso.setBounds(10,372,200,30);
 		mainPanel.add(fechaInicioCurso);
@@ -262,15 +260,14 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setBounds(220,342,200,30);
 		mainPanel.add(label);
 		
-		fechaFinCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
-		fechaFinCurso.setBounds(220,372,200,30);
-		mainPanel.add(fechaFinCurso);
+		fechaFinalCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaFinalCurso.setBounds(220,372,200,30);
+		mainPanel.add(fechaFinalCurso);
 
 		// Fechas editadas
 	    if (cursoEditado.getFechaInicio() != null) {
-	    	cal.setTime(cursoEditado.getFechaInicio());
-		    fechaInicioCurso.getJFormattedTextField().setText("10-10-2020");
-			fechaFinCurso.getJFormattedTextField().setText("10-10-2020");
+		    fechaInicioCurso.getJFormattedTextField().setText(cursoEditado.getFechaInicio().toString());
+		    fechaFinalCurso.getJFormattedTextField().setText(cursoEditado.getFechaFin().toString());
 	    }
 	    
 		// Edicion de curso
@@ -431,7 +428,7 @@ public class PantallaPropuestaCurso extends JFrame {
 				boolean complete = true;
 
 				// COMPROBACION DE DATOS MATERIA
-				if (!testTexts(nombreMateria) & !testTexts(fechaInicioMateria) & !testTexts(fechaFinMateria)) {
+				if (!testTexts(nombreMateria)) {
 					complete = false;
 				}
 
@@ -442,24 +439,33 @@ public class PantallaPropuestaCurso extends JFrame {
 					responsablesTable.setBackground(new Color(255, 255, 255));
 				}
 
+				Date inicioMateria = null;
+				Date finalMateria = null;
 
+				try {
+					inicioMateria = format.parse(fechaInicioMateria.getJFormattedTextField().getText());
+					fechaInicioMateria.getJFormattedTextField().setBackground(new Color(255, 255, 255));
+
+				} catch (ParseException e1) {
+					complete = false;
+					fechaInicioMateria.getJFormattedTextField().setBackground(new Color(222, 129, 122));
+				}  
+
+				
+				try {
+					finalMateria = format.parse(fechaInicioMateria.getJFormattedTextField().getText());
+					fechaFinalMateria.getJFormattedTextField().setBackground(new Color(255, 255, 255));
+				} catch (ParseException e1) {
+					complete = false;
+					fechaFinalMateria.getJFormattedTextField().setBackground(new Color(222, 129, 122));
+				}  
+				
 				if (complete) {
 					materias.addElement(nombreMateria.getText());
 
 					// CREAR MATERIA
-					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
-					Date inicioMateria = null;
-					Date finMateria = null;
-
-					try {
-						inicioMateria = formatter.parse(fechaInicioMateria.getText());
-						finMateria = formatter.parse(fechaFinMateria.getText());
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}  
-
 					int index = responsablesTable.getSelectedRow();
-					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finMateria, profesoresDao.get(index));
+					materia = new Materia(nombreMateria.getText(), horas.getItemAt(horas.getSelectedIndex()), inicioMateria, finalMateria, profesoresDao.get(index));
 					materiasGuardadas.add(materia);
 
 					// Limpiar selección
@@ -518,38 +524,23 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(horas);
 
 		// Fecha Inicio Materia
-		try {
-			dateMask = new MaskFormatter("##-##-####");
-		} catch (ParseException e) {
-			errorPopup(e);
-			e.printStackTrace();
-		}
-		
 		Date fecha = curso.getFechaInicio();			
 		label = new JLabel("Fecha inicio (DD/MM/AAAA)");
 		label.setBounds(10,1210,200,30);
 		mainPanel.add(label);
-
-		fechaInicioMateria = new JFormattedTextField(format);
-		fechaInicioMateria.setBounds(10,1240,100,30);
+		
+		fechaInicioMateria = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaInicioMateria.setBounds(10,1240,200,30);
 		mainPanel.add(fechaInicioMateria);
-	    dateMask.install(fechaInicioMateria);
 		
 		// Fecha Final Materia
-	    try {
-			dateMask = new MaskFormatter("##-##-####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	    
 		label = new JLabel("Fecha final (DD/MM/AAAA)");
 		label.setBounds(220,1210,200,30);
 		mainPanel.add(label);
 
-		fechaFinMateria = new JFormattedTextField(format);
-		fechaFinMateria.setBounds(220,1240,100,30);
-		mainPanel.add(fechaFinMateria);
-	    dateMask.install(fechaFinMateria);
+		fechaFinalMateria = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaFinalMateria.setBounds(220,1240,200,30);
+		mainPanel.add(fechaFinalMateria);
 
 		// Profesor responsable de materia
 		label = new JLabel("Profesor responsable de materia");
@@ -609,16 +600,15 @@ public class PantallaPropuestaCurso extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean complete = true;
 
+
 				// COMPROBACION DE DATOS CURSO
 				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) { //!testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso)
 					complete = false;
-					System.out.println("tituloCurso " + complete);
 				}
 				
 				if(requisitoCurso.isEnabled() && requisitoCurso.getText().equals("")) {
 					requisitoCurso.setBackground(new Color(222, 129, 122));
 					complete = false;
-					System.out.println("requisitoCurso " + complete);
 				}else {
 					requisitoCurso.setBackground(new Color(255, 255, 255));
 				}
@@ -626,23 +616,30 @@ public class PantallaPropuestaCurso extends JFrame {
 				if(materias.isEmpty()) {
 					materiasLista.setBackground(new Color(222, 129, 122));
 					complete = false;
-					System.out.println("materias: " + complete);
 				}else {
 					materiasLista.setBackground(new Color(255, 255, 255));
 				}
 
-				Date fechaInicio = null;
-				Date fechaFin = null;
 
+				Date fechaInicio = null;
+				Date fechaFinal = null;
+				
 				try {
 					fechaInicio = format.parse(fechaInicioCurso.getJFormattedTextField().getText());
-					fechaFin = format.parse(fechaFinCurso.getJFormattedTextField().getText());
+					fechaInicioCurso.getJFormattedTextField().setBackground(new Color(255, 255, 255));
 				} catch (ParseException e1) {
-					e1.printStackTrace();
+					fechaInicioCurso.getJFormattedTextField().setBackground(new Color(222, 129, 122));
+					complete = false;
+				}  	
+				
+				try {
+					fechaFinal = format.parse(fechaFinalCurso.getJFormattedTextField().getText());
+					fechaFinalCurso.getJFormattedTextField().setBackground(new Color(255, 255, 255));
+				} catch (ParseException e1) {
+					fechaFinalCurso.getJFormattedTextField().setBackground(new Color(222, 129, 122));
+					complete = false;
 				}  		
 				
-				System.out.println("Pulso el boton: " + complete);
-
 				if (!complete) return;
 				
 
@@ -650,7 +647,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 				if(confirm == 0)  {
 					String id;
-					if(action == 0) id = GestorMD5.getMd5(tituloCurso.getText() + fechaInicio.toString() + fechaFin.toString());
+					if(action == 0) id = GestorMD5.getMd5(tituloCurso.getText() + fechaInicio.toString() + fechaFinal.toString());
 					else id = cursoEditado.getId();
 					
 					// CREAR CURSO
@@ -659,7 +656,7 @@ public class PantallaPropuestaCurso extends JFrame {
 							tituloCurso.getText(), 
 							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
 							fechaInicio, 
-							fechaFin, 
+							fechaFinal, 
 							Double.parseDouble(tasaMatricula.getText()),
 							1, // Edicion
 							EstadoCurso.PROPUESTO, 
@@ -678,14 +675,14 @@ public class PantallaPropuestaCurso extends JFrame {
 						try {
 							gestorPropuestas.editarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							errorPopup(e1);
+							errorPopup();
 							e1.printStackTrace();
 						}
 					} else { // Editar
 						try {
 							gestorPropuestas.realizarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							errorPopup(e1);
+							errorPopup();
 							e1.printStackTrace();
 						}
 					}
@@ -710,26 +707,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		return result;
 	}
 	
-	public boolean testTexts(JFormattedTextField text) {
-		boolean result = false;
-		
-		for (int i = 0; i<text.getText().length(); i++) {
-			System.out.print(text.getText().charAt(i) );
-			if(text.getText().charAt(i) == ' ') {	
-				text.setBackground(new Color(222, 129, 122));
-				return result;
-			}
-		}
-
-		result = true;
-		text.setBackground(new Color(255, 255, 255));
-		
-		return result;
-	}
-	
-	public void errorPopup(Exception e1) {
+	public void errorPopup() {
 		JFrame jFrame = new JFrame();
-        JOptionPane.showMessageDialog(jFrame, e1.toString());
+        JOptionPane.showMessageDialog(jFrame, "Se ha producido un error");
 	}
 
 }
