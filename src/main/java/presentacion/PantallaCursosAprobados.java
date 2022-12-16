@@ -49,19 +49,10 @@ public class PantallaCursosAprobados extends JFrame{
 	
 	private void listLayout() {
 		GestorConsultas gestor = new GestorConsultas();
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
-	    Date dateInicio = new Date(); 
-	    Date dateFin = null;
-		try {
-			dateInicio = formatter.parse("1000-01-01"); // TODO Quitar para que la fecha inicio sea la actual
-			dateFin = formatter.parse("3000-01-01");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}      
+	    
 		
 		try {
-			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO, dateInicio, dateFin);
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

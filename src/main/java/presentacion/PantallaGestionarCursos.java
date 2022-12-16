@@ -66,12 +66,13 @@ public class PantallaGestionarCursos extends JFrame{
 		}
 		
 		cursosEnviados.addColumn("Nombre");
+		cursosEnviados.addColumn("Edicion");
 		cursosEnviados.addColumn("Estado");
 
 		if(cursosDao != null) {	
 			for(int i = 0; i<cursosDao.size(); i++) {
 				CursoPropio cursoTemp = cursosDao.get(i);
-				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.estado });
+				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.getEdicion(), cursoTemp.estado });
 			}
 		}
 
@@ -118,7 +119,6 @@ public class PantallaGestionarCursos extends JFrame{
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
 				if(curso.estado == EstadoCurso.TERMINADO) {
-					curso.setEdicion(curso.getEdicion() + 1);
 					new PantallaPropuestaCurso(director, curso, 2);
 					setVisible(false);
 				}

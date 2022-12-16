@@ -51,21 +51,9 @@ public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 	
 	private void basicLayout() {
 		GestorConsultas gestor = new GestorConsultas();
-		
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");      
-	    Date dateInicio = null; 
-	    Date dateFin = null;
-	    
-		try {
-			dateInicio = formatter.parse("1000-01-01"); 
-			dateFin = formatter.parse("3000-01-01");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
 		try {
-			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO, dateInicio, dateFin);
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
