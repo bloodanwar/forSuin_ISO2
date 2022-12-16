@@ -8,3 +8,5 @@
 - `mvn build`
 - Verificar sonar: `mvn verify sonar:sonar`
 - Generar informes (surefire): `mvn site:site` (se generan en target/site/index.html)
+
+[maven](./target/site/index.html)
