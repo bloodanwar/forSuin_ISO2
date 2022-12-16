@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
@@ -38,6 +39,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import negocio.controllers.GestorConsultas;
 import negocio.controllers.GestorMD5;
@@ -64,11 +69,11 @@ public class PantallaPropuestaCurso extends JFrame {
 	private DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
 	private MaskFormatter dateMask = null;
 	
-	private JFormattedTextField fechaInicioCurso;
-	private JFormattedTextField fechaFinCurso;
 	private JFormattedTextField fechaInicioMateria;
 	private JFormattedTextField fechaFinMateria;
-
+	
+	private Properties p = new Properties();
+	private JDatePickerImpl fechaInicioCurso, fechaFinCurso;
 
 	// Listas y tablas
 	private String[] categorias = {"Másteres de Formación Permanente", "Especialistas", "Expertos", 
@@ -186,7 +191,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		while(ite.hasNext()){
 			Materia temp = ite.next();
 			materias.addElement(temp.getNombre());
-			materiasGuardadas.add(materia);
+			materiasGuardadas.add(temp);
 		}
 	}
 
@@ -202,6 +207,10 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setPreferredSize(new Dimension(700, 1600));
+		
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
 	}
 
 	private void basicLayout(CursoPropio cursoEditado) {
@@ -237,47 +246,31 @@ public class PantallaPropuestaCurso extends JFrame {
 		scrollPanel.setBounds(10, 126, 400, 200);
 		mainPanel.add(scrollPanel);
 
-		// Fecha Inicio		
-		try {
-			dateMask = new MaskFormatter("##-##-####");
-		} catch (ParseException e) {
-			errorPopup(e);
-			e.printStackTrace();
-		}
-		
+		// Fecha Inicio
 		label = new JLabel("Fecha inicio (DD/MM/AAAA)");
 		label.setBounds(10,342,200,30);
 		mainPanel.add(label);
 		
-		fechaInicioCurso = new JFormattedTextField(format);
-		fechaInicioCurso.setBounds(10,372,100,30);
+		DateLabelFormatter date = new DateLabelFormatter();
+		
+		fechaInicioCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaInicioCurso.setBounds(10,372,200,30);
 		mainPanel.add(fechaInicioCurso);
-	    dateMask.install(fechaInicioCurso);
-	    
+		
 		// Fecha Final
-	    try {
-			dateMask = new MaskFormatter("##-##-####");
-		} catch (ParseException e) {
-			errorPopup(e);
-			e.printStackTrace();
-		}
-	    
-		if (cursoEditado.getFechaInicio() != null) cal.setTime(cursoEditado.getFechaFin());
-
 		label = new JLabel("Fecha final (DD/MM/AAAA)");
 		label.setBounds(220,342,200,30);
 		mainPanel.add(label);
-
-		fechaFinCurso = new JFormattedTextField(format);
-		fechaFinCurso.setBounds(220,372,100,30);
+		
+		fechaFinCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaFinCurso.setBounds(220,372,200,30);
 		mainPanel.add(fechaFinCurso);
-		dateMask.install(fechaFinCurso);
 
 		// Fechas editadas
 	    if (cursoEditado.getFechaInicio() != null) {
 	    	cal.setTime(cursoEditado.getFechaInicio());
-		    fechaInicioCurso.setText(format.format(cal.getTime()));
-			fechaFinCurso.setText(format.format(cal.getTime()));
+		    fechaInicioCurso.getJFormattedTextField().setText("10-10-2020");
+			fechaFinCurso.getJFormattedTextField().setText("10-10-2020");
 	    }
 	    
 		// Edicion de curso
@@ -617,13 +610,15 @@ public class PantallaPropuestaCurso extends JFrame {
 				boolean complete = true;
 
 				// COMPROBACION DE DATOS CURSO
-				if (!testTexts(tituloCurso) & !testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso) & !testTexts(requisitoCurso)) {
+				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) { //!testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso)
 					complete = false;
+					System.out.println("tituloCurso " + complete);
 				}
 				
 				if(requisitoCurso.isEnabled() && requisitoCurso.getText().equals("")) {
 					requisitoCurso.setBackground(new Color(222, 129, 122));
 					complete = false;
+					System.out.println("requisitoCurso " + complete);
 				}else {
 					requisitoCurso.setBackground(new Color(255, 255, 255));
 				}
@@ -631,6 +626,7 @@ public class PantallaPropuestaCurso extends JFrame {
 				if(materias.isEmpty()) {
 					materiasLista.setBackground(new Color(222, 129, 122));
 					complete = false;
+					System.out.println("materias: " + complete);
 				}else {
 					materiasLista.setBackground(new Color(255, 255, 255));
 				}
@@ -639,14 +635,16 @@ public class PantallaPropuestaCurso extends JFrame {
 				Date fechaFin = null;
 
 				try {
-					fechaInicio = format.parse(fechaInicioCurso.getText());
-					fechaFin = format.parse(fechaFinCurso.getText());
+					fechaInicio = format.parse(fechaInicioCurso.getJFormattedTextField().getText());
+					fechaFin = format.parse(fechaFinCurso.getJFormattedTextField().getText());
 				} catch (ParseException e1) {
-					complete = false;
 					e1.printStackTrace();
 				}  		
 				
+				System.out.println("Pulso el boton: " + complete);
+
 				if (!complete) return;
+				
 
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
@@ -672,10 +670,9 @@ public class PantallaPropuestaCurso extends JFrame {
 							requisitoCurso.getText()
 							);
 
-					curso.materias = new ArrayList<>();
-					Collection<Materia> newMaterias = new ArrayList<Materia>();
-					newMaterias.addAll(materiasGuardadas);
-					curso.materias = newMaterias;
+					curso.materias = new ArrayList<Materia>();
+					curso.materias = materiasGuardadas;
+					System.out.println(materiasGuardadas);
 
 					if (action == 1) { // Crear + Nueva edicion
 						try {
@@ -701,7 +698,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	}
 	
 	public boolean testTexts(JTextField text) {
-		boolean result = false;
+		boolean result = true;
 		
 		if (text.getText().equals("")) {
 			text.setBackground(new Color(222, 129, 122));

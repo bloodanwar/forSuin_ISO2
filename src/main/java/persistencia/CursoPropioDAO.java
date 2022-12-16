@@ -59,8 +59,8 @@ public class CursoPropioDAO {
 		String id = (String) datosCurso.get(0);
 		String nombre = (String) datosCurso.get(1);
 		int ECTS = (Integer) datosCurso.get(2);
-		Date fechainicio = dateFormat.parse((String) datosCurso.get(3));
-		Date fechafin = dateFormat.parse((String) datosCurso.get(4));
+		Date fechainicio = (Date) datosCurso.get(3);
+		Date fechafin = (Date) datosCurso.get(4);
 		double tasaMatricula = (Double) datosCurso.get(5);
 		int edicion = (Integer) datosCurso.get(6);
 		EstadoCurso estado = EstadoCurso.valueOf((String) datosCurso.get(7));
@@ -93,6 +93,8 @@ public class CursoPropioDAO {
 		//curso.materias y cursoEnBBDD.materias
 		
 		//comprobar los nuevos a añadir
+		System.out.println(curso.materias);
+		
 		Iterator<Materia> recorrerMateriaCurso = curso.materias.iterator();
 		while(recorrerMateriaCurso.hasNext()) {
 			boolean materiaYaEnBBDD = false;
