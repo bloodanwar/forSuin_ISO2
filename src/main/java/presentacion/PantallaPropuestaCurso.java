@@ -47,7 +47,6 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
 	private HashMap componentMap;
-	private JButton button;
 	private JLabel label;
 	private JLabel labelRequisito;
 	private JPanel mainPanel;
@@ -59,6 +58,12 @@ public class PantallaPropuestaCurso extends JFrame {
 	private JComboBox<Integer> ectsCurso;
 	private JComboBox<Integer> horas;
 	private int edicion;
+	
+	// Botones
+	private JButton atrasBto;
+	private JButton sendBto;
+	private JButton addMateriaBto;
+	private JButton deleteMateriaBto;
 
 	// Fechas
 	private DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
@@ -441,12 +446,12 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 		// Boton para añadir materia
-		button = new JButton("Añadir materia");
-		button.setName("añadirMateriaBto");
-		button.setBounds(450,931,200,30);
-		mainPanel.add(button);
+		addMateriaBto = new JButton("Añadir materia");
+		addMateriaBto.setName("añadirMateriaBto");
+		addMateriaBto.setBounds(450,931,200,30);
+		mainPanel.add(addMateriaBto);
 
-		button.addActionListener(new ActionListener() {
+		addMateriaBto.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) { 
@@ -506,12 +511,12 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		// Boton para eliminar materia
-		button = new JButton("Eliminar materia");
-		button.setName("eliminarMateriaBto");
-		button.setBounds(450,1021,200,30);
-		mainPanel.add(button);
+		deleteMateriaBto = new JButton("Eliminar materia");
+		deleteMateriaBto.setName("eliminarMateriaBto");
+		deleteMateriaBto.setBounds(450,1021,200,30);
+		mainPanel.add(deleteMateriaBto);
 
-		button.addActionListener(new ActionListener() {
+		deleteMateriaBto.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -606,12 +611,12 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	private void botonesLayout(final ProfesorUCLM director, final CursoPropio cursoEditado, final int action) {
 		// Boton para ir atras
-		button = new JButton("Atras");
-		button.setName("atrasBto");
-		button.setBounds(270,1530,200,30);
-		mainPanel.add(button);
+		atrasBto = new JButton("Atras");
+		atrasBto.setName("atrasBto");
+		atrasBto.setBounds(270,1530,200,30);
+		mainPanel.add(atrasBto);
 
-		button.addActionListener(new ActionListener() {
+		atrasBto.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -628,12 +633,12 @@ public class PantallaPropuestaCurso extends JFrame {
 		else if(action == 2) cadenaBoton = "Nueva edición";
 
 
-		button = new JButton(cadenaBoton);
-		button.setName("enviarBto");
-		button.setBounds(500,1530,200,30);
-		mainPanel.add(button);
+		sendBto = new JButton(cadenaBoton);
+		sendBto.setName("enviarBto");
+		sendBto.setBounds(500,1530,200,30);
+		mainPanel.add(sendBto);
 
-		button.addActionListener(new ActionListener() {
+		sendBto.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -764,5 +769,22 @@ public class PantallaPropuestaCurso extends JFrame {
 			return (Component) componentMap.get(name);
 		}
 		else return null;
+	}
+
+	public JButton getAtrasBto() {
+		return atrasBto;
+	}
+
+	public JButton getSendBto() {
+		return sendBto;
+	}
+
+
+	public JButton getAddMateriaBto() {
+		return addMateriaBto;
+	}
+
+	public JButton getDeleteMateriaBto() {
+		return deleteMateriaBto;
 	}
 }
