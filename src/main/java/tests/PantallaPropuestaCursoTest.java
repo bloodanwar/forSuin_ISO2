@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import negocio.entities.CursoPropio;
 import negocio.entities.ProfesorUCLM;
+import presentacion.PantallaGestionarCursos;
 import presentacion.PantallaPropuestaCurso;
 
 public class PantallaPropuestaCursoTest {
@@ -28,9 +29,16 @@ public class PantallaPropuestaCursoTest {
 		pantalla = new PantallaPropuestaCurso(director, curso, action);
 	}
 	
+	
 	@Test
-	public void PantantallaPropuestaCursoTest() {
-		pantalla.getButton().doClick();
+	public void AtrasBtoTest() {
+		pantalla.getAtrasBto().doClick();
+		assertFalse(pantalla.isVisible());
+	}
+	
+	@Test
+	public void SendBtoTest() {
+		pantalla.getSendBto().doClick();
 	}
 	
 	@Test
