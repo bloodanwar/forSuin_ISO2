@@ -29,7 +29,7 @@ public class PantallaPropuestaCursoTest {
 	}
 	
 	@Test
-	public void PantaTest() {
+	public void PantantallaPropuestaCursoTest() {
 		pantalla.getButton().doClick();
 	}
 	
