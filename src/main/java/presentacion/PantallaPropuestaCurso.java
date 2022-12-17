@@ -765,4 +765,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		}
 		else return null;
 	}
+
+	public JButton getButton() {
+		return button;
+	}
+
 }
