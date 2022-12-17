@@ -11,6 +11,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import negocio.entities.CursoPropio;
 import negocio.entities.ProfesorUCLM;
 
 import javax.swing.JTextField;

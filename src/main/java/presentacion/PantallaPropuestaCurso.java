@@ -2,30 +2,25 @@ package presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -38,7 +33,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -52,6 +46,7 @@ import negocio.entities.*;
 public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
+	private HashMap componentMap;
 	private JButton button;
 	private JLabel label;
 	private JLabel labelRequisito;
@@ -125,11 +120,13 @@ public class PantallaPropuestaCurso extends JFrame {
 		ensenanzasLayout(cursoEditado, action);
 		materiasLayout(cursoEditado);
 		botonesLayout(director, cursoEditado, action);
-
+		
 		// MAIN
 		scrollPanel = new JScrollPane(mainPanel);
 		scrollPanel.setBounds(0, 0, 0,0);
 		getContentPane().add(scrollPanel);
+		
+	    createComponentMap();
 	}
 
 	private void addProfesores() { 
@@ -143,6 +140,7 @@ public class PantallaPropuestaCurso extends JFrame {
 			e.printStackTrace();
 		}
 
+		if(profesoresDao == null) return;
 		for (int i = 0; i<profesoresDao.size(); i++) {
 			Profesor profesortemp = profesoresDao.get(i);
 			profesores.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.isDoctor() });
@@ -161,6 +159,7 @@ public class PantallaPropuestaCurso extends JFrame {
 			e.printStackTrace();
 		}
 
+		if(profesoresUCLMDao == null) return;
 		for (int i = 0; i<profesoresUCLMDao.size(); i++) {
 			ProfesorUCLM profesortemp = profesoresUCLMDao.get(i);
 			profesoresUCLM.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.categoria, profesortemp.isDoctor() });
@@ -176,6 +175,7 @@ public class PantallaPropuestaCurso extends JFrame {
 			e.printStackTrace();
 		}
 
+		if(centrosDao == null) return;
 		for (int i = 0; i<centrosDao.size(); i++) {
 			Centro centrostemp = centrosDao.get(i);
 			centros.add(i, centrostemp.getNombre());
@@ -185,6 +185,8 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	private void addMaterias(CursoPropio cursoEditado) {
 		Collection<Materia> materiasEditadas = cursoEditado.materias;
+
+		if(materiasEditadas == null) return;
 		Iterator<Materia> ite = materiasEditadas.iterator();
 		while(ite.hasNext()){
 			Materia temp = ite.next();
@@ -205,7 +207,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setPreferredSize(new Dimension(700, 1600));
-		
+
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
@@ -214,15 +216,18 @@ public class PantallaPropuestaCurso extends JFrame {
 	private void basicLayout(CursoPropio cursoEditado, int action) {
 		// Titulo		
 		label = new JLabel("Titulo de curso");
+		label.setName("tituloLbl");
 		label.setBounds(10,10,400,30);
 		mainPanel.add(label);
 
 		tituloCurso = new JTextField(cursoEditado.getNombre());
+		tituloCurso.setName("tituloBox");
 		tituloCurso.setBounds(10,40,400,30);
 		mainPanel.add(tituloCurso);
 
 		// Profesor Secretario
 		label = new JLabel("Profesor secretario");
+		label.setName("secretarioLbl");
 		label.setBounds(10,96,400,30);
 		mainPanel.add(label);
 
@@ -238,6 +243,7 @@ public class PantallaPropuestaCurso extends JFrame {
 			}
 		};
 
+		secretariosTable.setName("secretariosTable");
 		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		secretariosTable.setRowSelectionInterval(secretarioEditado, secretarioEditado);
 		scrollPanel = new JScrollPane(secretariosTable);
@@ -246,51 +252,60 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		// Fecha Inicio
 		label = new JLabel("Fecha inicio");
+		label.setName("fechaInicioLbl");
 		label.setBounds(10,342,200,30);
 		mainPanel.add(label);
-				
+
 		fechaInicioCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaInicioCurso.setName("fechaInicioCursoBox");
 		fechaInicioCurso.setBounds(10,372,200,30);
 		mainPanel.add(fechaInicioCurso);
-		
+
 		// Fecha Final
 		label = new JLabel("Fecha final");
+		label.setName("fechaInicioLbl");
 		label.setBounds(220,342,200,30);
 		mainPanel.add(label);
-		
+
 		fechaFinalCurso = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaFinalCurso.setName("fechaFinalCursoBox");
 		fechaFinalCurso.setBounds(220,372,200,30);
 		mainPanel.add(fechaFinalCurso);
 
 		// Fechas editadas
-	    if (cursoEditado.getFechaInicio() != null) {
-		    fechaInicioCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaInicio()));
-		    fechaFinalCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaFin()));
-	    }
-	    
+		if (cursoEditado.getFechaInicio() != null) {
+			fechaInicioCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaInicio()));
+			fechaFinalCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaFin()));
+		}
+
 		// Edicion de curso
-	    if (action == 0) edicion = 1;
-	    else if(action == 1) edicion = cursoEditado.getEdicion();
-	    else edicion = cursoEditado.getEdicion() + 1;
+		if (action == 0) edicion = 1;
+		else if(action == 1) edicion = cursoEditado.getEdicion();
+		else edicion = cursoEditado.getEdicion() + 1;
 		label = new JLabel("Edicion de curso: " + edicion);
+		label.setName("edicionLbl");
 		label.setBounds(450,40,200,30);
 		mainPanel.add(label);
 
 		// Tasa matricula
 		label = new JLabel("Tasa Matricula");
+		label.setName("tasaLbl");
 		label.setBounds(450,90,200,30);
 		mainPanel.add(label);
 
 		tasaMatricula = new JTextField("" + cursoEditado.getTasaMatricula());
+		tasaMatricula.setName("tasaBox");
 		tasaMatricula.setBounds(450,131,180,30);
 		mainPanel.add(tasaMatricula);
 
 		// Centro en el que se imparte
 		label = new JLabel("Centro en el que se imparte");
+		label.setName("centrosLbl");
 		label.setBounds(10,413,400,30);
 		mainPanel.add(label);
 
 		centrosLista = new JList<>(centros);
+		centrosLista.setName("centrosListaTable");
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		centrosLista.setSelectedIndex(centroEditado); 
 		scrollPanel = new JScrollPane(centrosLista);
@@ -301,10 +316,12 @@ public class PantallaPropuestaCurso extends JFrame {
 	private void ensenanzasLayout(CursoPropio cursoEditado, int action) {
 		// Categoria 
 		label = new JLabel("Categoria");
+		label.setName("categoriaLbl");
 		label.setBounds(10,651,400,30);
 		mainPanel.add(label);
 
 		categoriasLista = new JList<String>(categorias);
+		categoriasLista.setName("categoriasListaTable");
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(categoriasLista);
 		scrollPanel.setBounds(10, 681, 400, 200);
@@ -312,20 +329,24 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		// Requistio 
 		labelRequisito = new JLabel("Requsito");
+		label.setName("requisitoLbl");
 		labelRequisito.setBounds(450,681,200,30);
 		mainPanel.add(labelRequisito);
 
 		requisitoCurso = new JTextField(cursoEditado.requisitos);
+		requisitoCurso.setName("requisitoCursoBox");
 		requisitoCurso.setBounds(450,711,200,30);
 		requisitoCurso.setEnabled(false);
 		mainPanel.add(requisitoCurso);
 
 		// ECTS
 		label = new JLabel("ECTS");
+		label.setName("requisitoLbl");
 		label.setBounds(450,761,200,30);
 		mainPanel.add(label);
 
 		ectsCurso = new JComboBox<>();
+		ectsCurso.setName("ectsCursoBox");
 		ectsCurso.setBounds(450,791,200,30);
 		ectsCurso.setEnabled(false);
 		mainPanel.add(ectsCurso);
@@ -407,10 +428,12 @@ public class PantallaPropuestaCurso extends JFrame {
 	private void materiasLayout(CursoPropio cursoEditado) {
 		// Materias creadas
 		label = new JLabel("Lista de materias creadas");
+		label.setName("materiasLbl");
 		label.setBounds(10,901,200,30);
 		mainPanel.add(label);
 
 		materiasLista = new JList<>(materias);
+		materiasLista.setName("materiasLista");
 		materiasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(materiasLista);
 		scrollPanel.setBounds(10, 931, 400, 200);
@@ -419,6 +442,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		// Boton para añadir materia
 		button = new JButton("Añadir materia");
+		button.setName("añadirMateriaBto");
 		button.setBounds(450,931,200,30);
 		mainPanel.add(button);
 
@@ -452,7 +476,7 @@ public class PantallaPropuestaCurso extends JFrame {
 					fechaInicioMateria.getJFormattedTextField().setBackground(new Color(222, 129, 122));
 				}  
 
-				
+
 				try {
 					finalMateria = format.parse(fechaInicioMateria.getJFormattedTextField().getText());
 					fechaFinalMateria.getJFormattedTextField().setBackground(new Color(255, 255, 255));
@@ -460,7 +484,7 @@ public class PantallaPropuestaCurso extends JFrame {
 					complete = false;
 					fechaFinalMateria.getJFormattedTextField().setBackground(new Color(222, 129, 122));
 				}  
-				
+
 				if (complete) {
 					materias.addElement(nombreMateria.getText());
 
@@ -477,11 +501,13 @@ public class PantallaPropuestaCurso extends JFrame {
 		});
 
 		label = new JLabel("(Completar campos de abajo antes)");
+		label.setName("completarCamposLbl");
 		label.setBounds(450,961,300,30);
 		mainPanel.add(label);
 
 		// Boton para eliminar materia
 		button = new JButton("Eliminar materia");
+		button.setName("eliminarMateriaBto");
 		button.setBounds(450,1021,200,30);
 		mainPanel.add(button);
 
@@ -503,19 +529,23 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		// Nombre de materia
 		label = new JLabel("Nombre de materia");
+		label.setName("nombreMateriaLbl");
 		label.setBounds(10,1141,180,30);
 		mainPanel.add(label);
 
 		nombreMateria = new JTextField();
+		nombreMateria.setName("nombreMateriaBox");
 		nombreMateria.setBounds(10,1171,180,30);
 		mainPanel.add(nombreMateria);
 
 		// Horas de materia
 		label = new JLabel("Horas de materia");
+		label.setName("horasMateriaLbl");
 		label.setBounds(220,1141,180,30);
 		mainPanel.add(label);
 
 		horas = new JComboBox<>();
+		label.setName("horasMateriaBox");
 		horas.setBounds(220,1171,180,30);
 
 		for (int i = 1; i <= 100; i++) {
@@ -529,11 +559,11 @@ public class PantallaPropuestaCurso extends JFrame {
 		label = new JLabel("Fecha inicio");
 		label.setBounds(10,1210,200,30);
 		mainPanel.add(label);
-		
+
 		fechaInicioMateria = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
 		fechaInicioMateria.setBounds(10,1240,200,30);
 		mainPanel.add(fechaInicioMateria);
-		
+
 		// Fecha Final Materia
 		label = new JLabel("Fecha final");
 		label.setBounds(220,1210,200,30);
@@ -606,7 +636,7 @@ public class PantallaPropuestaCurso extends JFrame {
 				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) { //!testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso)
 					complete = false;
 				}
-				
+
 				if(requisitoCurso.isEnabled() && requisitoCurso.getText().equals("")) {
 					requisitoCurso.setBackground(new Color(222, 129, 122));
 					complete = false;
@@ -624,7 +654,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 				Date fechaInicio = null;
 				Date fechaFinal = null;
-				
+
 				try {
 					fechaInicio = format.parse(fechaInicioCurso.getJFormattedTextField().getText());
 					fechaInicioCurso.getJFormattedTextField().setBackground(new Color(255, 255, 255));
@@ -632,7 +662,7 @@ public class PantallaPropuestaCurso extends JFrame {
 					fechaInicioCurso.getJFormattedTextField().setBackground(new Color(222, 129, 122));
 					complete = false;
 				}  	
-				
+
 				try {
 					fechaFinal = format.parse(fechaFinalCurso.getJFormattedTextField().getText());
 					fechaFinalCurso.getJFormattedTextField().setBackground(new Color(255, 255, 255));
@@ -640,9 +670,9 @@ public class PantallaPropuestaCurso extends JFrame {
 					fechaFinalCurso.getJFormattedTextField().setBackground(new Color(222, 129, 122));
 					complete = false;
 				}  		
-				
+
 				if (!complete) return;
-				
+
 
 				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
@@ -650,7 +680,7 @@ public class PantallaPropuestaCurso extends JFrame {
 					String id;
 					if(action == 1) id = cursoEditado.getId();
 					else id = GestorMD5.getMd5(tituloCurso.getText() + fechaInicio.toString() + fechaFinal.toString());
-					
+
 					// CREAR CURSO
 					curso = new CursoPropio(
 							id,
@@ -687,30 +717,45 @@ public class PantallaPropuestaCurso extends JFrame {
 							e1.printStackTrace();
 						}
 					}
-					
+
 					new PantallaGestionarCursos(director);
 					setVisible(false);
 				}
 			}
 		});
 	}
-	
+
 	public boolean testTexts(JTextField text) {
 		boolean result = true;
-		
+
 		if (text.getText().equals("")) {
 			text.setBackground(new Color(222, 129, 122));
 			result = false;
 		} else {
 			text.setBackground(new Color(255, 255, 255));
 		}
-		
+
 		return result;
 	}
-	
+
 	public void errorPopup() {
 		JFrame jFrame = new JFrame();
-        JOptionPane.showMessageDialog(jFrame, "Se ha producido un error");
+		JOptionPane.showMessageDialog(jFrame, "Se ha producido un error");
 	}
-
+	
+	private void createComponentMap() {
+		componentMap = new HashMap<String,Component>();
+		Component[] components = mainPanel.getComponents();
+		for (int i=0; i < components.length; i++) {
+			componentMap.put(components[i].getName(), components[i]);
+			System.out.println(components[i]);
+		}
+	}
+	
+	public Component getComponentByName(String name) {
+		if (componentMap.containsKey(name)) {
+			return (Component) componentMap.get(name);
+		}
+		else return null;
+	}
 }
