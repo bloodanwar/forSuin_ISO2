@@ -37,7 +37,7 @@ public class GestorConsultas {
 	    //System.out.println(dateInicio);
 	    
 		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
+			listaCursos = curso.cursoPropioDaoestado listarCursosPorDirector(profesor, dateInicio, dateFin);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
