@@ -1,4 +1,4 @@
-package tests;
+package negocio.controllers;
 
 import static org.junit.Assert.assertEquals;
 
