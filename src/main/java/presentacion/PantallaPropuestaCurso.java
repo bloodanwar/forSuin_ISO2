@@ -109,7 +109,6 @@ public class PantallaPropuestaCurso extends JFrame {
 	// Edicion
 	private int secretarioEditado = 0;
 	private int centroEditado = 0;
-	private int categoriaEditado = 0;
 
 
 	public PantallaPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) { // 0 = Realizar // 1 = Editar // 2 = Edicion
@@ -117,7 +116,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		addProfesores();
 		addProfesoresUCLM(cursoEditado, action);
 		addCentros(cursoEditado, action);
-		if (action != 0) addMaterias(cursoEditado);
+		if (action > 0) addMaterias(cursoEditado);
 
 		// LAYOUTS
 		initLayout();
@@ -168,7 +167,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		for (int i = 0; i<profesoresUCLMDao.size(); i++) {
 			ProfesorUCLM profesortemp = profesoresUCLMDao.get(i);
 			profesoresUCLM.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.categoria, profesortemp.isDoctor() });
-			if(action != 0 && profesortemp.getDni().equals(cursoEditado.secretario.getDni())) secretarioEditado=i;
+			if(action > 0 && profesortemp.getDni().equals(cursoEditado.secretario.getDni())) secretarioEditado=i;
 		}
 	}
 
@@ -184,7 +183,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		for (int i = 0; i<centrosDao.size(); i++) {
 			Centro centrostemp = centrosDao.get(i);
 			centros.add(i, centrostemp.getNombre());
-			if(action != 0 && centrostemp.getNombre().equals(cursoEditado.centro.getNombre())) centroEditado=i;
+			if(action > 0 && centrostemp.getNombre().equals(cursoEditado.centro.getNombre())) centroEditado=i;
 		}		
 	}
 
@@ -284,9 +283,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		}
 
 		// Edicion de curso
-		if (action == 0) edicion = 1;
-		else if(action == 1) edicion = cursoEditado.getEdicion();
-		else edicion = cursoEditado.getEdicion() + 1;
+		if (action <= 0) edicion = 1;
+		else if (action == 1) edicion = cursoEditado.getEdicion();
+		else if (action >= 1) edicion = cursoEditado.getEdicion() + 1;
 		label = new JLabel("Edicion de curso: " + edicion);
 		label.setName("edicionLbl");
 		label.setBounds(450,40,200,30);
@@ -419,14 +418,22 @@ public class PantallaPropuestaCurso extends JFrame {
 		});
 
 		// Categoria + ECTS editado
-		categoriasLista.setSelectedIndex(categoriaEditado);
-		if (action != 0) {
+		if (action > 0) {
+			for (int i = 0; i< tipos.length; i++) {
+				if(tipos[i] == cursoEditado.tipo) {
+					categoriasLista.setSelectedIndex(i);
+					break;
+				}
+			}
+
 			for (int i = 0; i < ectsCurso.getItemCount(); i++) {
 				if (cursoEditado.getECTS() == ectsCurso.getItemAt(i)) {
 					ectsCurso.setSelectedIndex(i); 
 					break;
 				}
 			}
+		} else {
+			categoriasLista.setSelectedIndex(0);
 		}
 	}
 
@@ -560,7 +567,6 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(horas);
 
 		// Fecha Inicio Materia
-		Date fecha = curso.getFechaInicio();			
 		label = new JLabel("Fecha inicio");
 		label.setName("fechaInicioMateriaLbl");
 		label.setBounds(10,1210,200,30);
@@ -628,9 +634,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		// Boton para enviar propuesta
 		String cadenaBoton = "";
 
-		if(action == 0) cadenaBoton = "Enviar propuesta";
+		if(action <= 0) cadenaBoton = "Enviar propuesta";
 		else if (action == 1) cadenaBoton = "Editar propuesta";
-		else if(action == 2) cadenaBoton = "Nueva edición";
+		else if(action >= 2) cadenaBoton = "Nueva edición";
 
 
 		sendBto = new JButton(cadenaBoton);

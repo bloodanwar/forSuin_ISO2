@@ -6,14 +6,20 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JTextField;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+import negocio.entities.Materia;
 import negocio.entities.ProfesorUCLM;
+import negocio.entities.TipoCurso;
 import presentacion.PantallaGestionarCursos;
 import presentacion.PantallaPropuestaCurso;
 
@@ -21,14 +27,37 @@ public class PantallaPropuestaCursoTest {
 	
 	private static PantallaPropuestaCurso pantalla = null;
 	
-	@BeforeClass
-	public static void init() {
-		ProfesorUCLM director = new ProfesorUCLM();
-		CursoPropio curso = new CursoPropio();
-		int action = 0;
+	@Test
+	public void PantallaPropuestaCursoTest1() {
+		int action = 2;
+		ProfesorUCLM director = new ProfesorUCLM("23568907X");
+		
+		String id = "id";
+		String nombre = "nombre";
+		int ECTS = 20;
+		Date fechaInicio = new Date();
+		Date fechaFin = new Date();
+		int tasaMatricula = 10;
+		int edicion = 0;
+		EstadoCurso estado = EstadoCurso.EN_IMPARTIZICION;
+		TipoCurso tipo = TipoCurso.CORTA_DURACION;
+		Centro centro = new Centro("UCLM TAE");
+		ProfesorUCLM secretario = new ProfesorUCLM("23568907X");
+		ProfesorUCLM director1 = new ProfesorUCLM("23568907X");
+		String requisitos = "requisito";
+		
+		CursoPropio curso = new CursoPropio(id, nombre,ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estado, tipo, centro, secretario, director1, requisitos);
+		curso.materias = new ArrayList<Materia>();
+		curso.materias.add(new Materia("materia", 20, new Date(), new Date(), new ProfesorUCLM()));
+		
 		pantalla = new PantallaPropuestaCurso(director, curso, action);
+		
+		JTextField titulo = (JTextField) pantalla.getComponentByName("tituloBox");
+		assertEquals(nombre, titulo.getText());
+		
+		pantalla.getSendBto().doClick();
+
 	}
-	
 	
 	@Test
 	public void AtrasBtoTest() {
@@ -36,10 +65,6 @@ public class PantallaPropuestaCursoTest {
 		assertFalse(pantalla.isVisible());
 	}
 	
-	@Test
-	public void SendBtoTest() {
-		pantalla.getSendBto().doClick();
-	}
 	
 	@Test
 	public void testTexts1() {

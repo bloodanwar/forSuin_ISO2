@@ -11,7 +11,7 @@ public class GestorConsultasTest {
 	
 	@Test
 	public void testConsultarIngresos() {
-		g.consultarIngresos();
+		//g.consultarIngresos();
 		throw new RuntimeException("not yet implemented");
 	} 
 
