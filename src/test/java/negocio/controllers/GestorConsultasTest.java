@@ -1,13 +1,19 @@
 package negocio.controllers;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class GestorConsultasTest {
-
+	@Before
+	public void setUp() throws Exception{
+		GestorConsultas g= new GestorConsultas();
+	}
+	
 	@Test
 	public void testConsultarIngresos() {
+		g.consultarIngresos();
 		throw new RuntimeException("not yet implemented");
-	}
+	} 
 
 	@Test
 	public void testConsultarEstadoCursos() {
