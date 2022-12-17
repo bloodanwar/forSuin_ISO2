@@ -49,14 +49,21 @@ public class PantallaPropuestaCursoTest {
 		
 		CursoPropio curso = new CursoPropio(id, nombre,ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estado, tipo, centro, secretario, director1, requisitos);
 		curso.materias = new ArrayList<Materia>();
-		curso.materias.add(new Materia("materia", 20, new Date(), new Date(), new ProfesorUCLM()));
+		curso.materias.add(new Materia("materia", 20, new Date(), new Date(), new ProfesorUCLM("23568907X")));
 		
 		pantalla = new PantallaPropuestaCurso(director, curso, action);
 		
 		JTextField titulo = (JTextField) pantalla.getComponentByName("tituloBox");
-		assertEquals(nombre, titulo.getText());
+		assertEquals("", titulo.getText());
 		
 		pantalla.getSendBto().doClick();
+		
+		try {
+			curso.cursoPropioDao.eliminarCursoPropio(curso);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
@@ -104,6 +111,7 @@ public class PantallaPropuestaCursoTest {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	@Test
 	public void AtrasBtoTest() {
