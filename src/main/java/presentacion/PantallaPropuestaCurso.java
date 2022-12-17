@@ -329,7 +329,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		// Requistio 
 		labelRequisito = new JLabel("Requsito");
-		label.setName("requisitoLbl");
+		labelRequisito.setName("requisitoLbl");
 		labelRequisito.setBounds(450,681,200,30);
 		mainPanel.add(labelRequisito);
 
@@ -545,7 +545,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		horas = new JComboBox<>();
-		label.setName("horasMateriaBox");
+		horas.setName("horasMateriaBox");
 		horas.setBounds(220,1171,180,30);
 
 		for (int i = 1; i <= 100; i++) {
@@ -557,24 +557,29 @@ public class PantallaPropuestaCurso extends JFrame {
 		// Fecha Inicio Materia
 		Date fecha = curso.getFechaInicio();			
 		label = new JLabel("Fecha inicio");
+		label.setName("fechaInicioMateriaLbl");
 		label.setBounds(10,1210,200,30);
 		mainPanel.add(label);
 
 		fechaInicioMateria = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaInicioMateria.setName("fechaInicioMateriaBox");
 		fechaInicioMateria.setBounds(10,1240,200,30);
 		mainPanel.add(fechaInicioMateria);
 
 		// Fecha Final Materia
 		label = new JLabel("Fecha final");
+		label.setName("fechaFinalMateriaLbl");
 		label.setBounds(220,1210,200,30);
 		mainPanel.add(label);
 
 		fechaFinalMateria = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), p), new DateLabelFormatter());
+		fechaFinalMateria.setName("fechaFinalMateriaBox");
 		fechaFinalMateria.setBounds(220,1240,200,30);
 		mainPanel.add(fechaFinalMateria);
 
 		// Profesor responsable de materia
 		label = new JLabel("Profesor responsable de materia");
+		label.setName("responsableLbl");
 		label.setBounds(10,1279,200,30);
 		mainPanel.add(label);
 
@@ -591,6 +596,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		};
 
 		responsablesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		responsablesTable.setName("responsablesTable");
 		scrollPanel = new JScrollPane(responsablesTable);
 		scrollPanel.setBounds(10, 1309, 400, 200);
 		mainPanel.add(scrollPanel);
@@ -601,6 +607,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	private void botonesLayout(final ProfesorUCLM director, final CursoPropio cursoEditado, final int action) {
 		// Boton para ir atras
 		button = new JButton("Atras");
+		button.setName("atrasBto");
 		button.setBounds(270,1530,200,30);
 		mainPanel.add(button);
 
@@ -622,6 +629,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 		button = new JButton(cadenaBoton);
+		button.setName("enviarBto");
 		button.setBounds(500,1530,200,30);
 		mainPanel.add(button);
 
@@ -748,7 +756,6 @@ public class PantallaPropuestaCurso extends JFrame {
 		Component[] components = mainPanel.getComponents();
 		for (int i=0; i < components.length; i++) {
 			componentMap.put(components[i].getName(), components[i]);
-			System.out.println(components[i]);
 		}
 	}
 	
