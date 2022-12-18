@@ -22,3 +22,4 @@
 - Verificar sonar: `mvn verify sonar:sonar`
 - Generar informes (surefire): `mvn site:site` (se generan en target/site/index.html)
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=forSuin-ISOII_forSuin_ISO2)](https://sonarcloud.io/summary/new_code?id=forSuin-ISOII_forSuin_ISO2)
