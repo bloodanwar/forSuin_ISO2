@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import java.text.SimpleDateFormat;
 
 import negocio.entities.TipoCurso;
+import negocio.entities.CategoriaProfesor;
 import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
@@ -44,8 +45,8 @@ public class GestorConsultasTest {
 		List<CursoPropio> resultadoCursosPorEstado=null;
 		List<CursoPropio> resultadoListarTodosCursos=null;
 		List<Profesor> resultadoListarProfesores=null;
-		List<ProfesorUCLM> resultadoListarProfesoresUCLM;
-		List<Centro> resultadoListarCentros;
+		List<ProfesorUCLM> resultadoListarProfesoresUCLM=null;
+		List<Centro> resultadoListarCentros = null;
 		
 		try{
 			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
@@ -270,6 +271,81 @@ public class GestorConsultasTest {
 				"Luis",
 				"Garatea Hidalgo",
 				false);
+				
+		ProfesorUCLM profUCLM01 = new ProfesorUCLM(
+				"12457890Y",
+				"Jose",
+				"Perez Esteban",
+				true,
+				CategoriaProfesor.TITULAR_UNIVERSIDAD,
+				new Centro("UCLM TAL"));
+				
+		ProfesorUCLM profUCLM02 = new ProfesorUCLM(
+				"09764312U",
+				"Antonio",
+				"Santos Ruiz",
+				false,
+				CategoriaProfesor.ASOCIADO,
+				new Centro("UCLM ALB"));
+		
+		ProfesorUCLM profUCLM03 = new ProfesorUCLM(
+				"23568907X",
+				"Marcos",
+				"Fernandez Toledano",
+				false,
+				CategoriaProfesor.AYUDANTE_DOCTOR,
+				new Centro("UCLM CIU"));
+				
+		ProfesorUCLM profUCLM04 = new ProfesorUCLM(
+				"98653214Z",
+				"Miguel",
+				"Romeo Orozco",
+				true,
+				CategoriaProfesor.CONTRATADO_DOCTOR,
+				new Centro("UCLM ALM"));
+				
+		ProfesorUCLM profUCLM05 = new ProfesorUCLM(
+				"14709633I",
+				"Laura",
+				"Mendo Palomeque",
+				true,
+				CategoriaProfesor.CATEDRATICO,
+				new Centro("UCLM GUA"));
+				
+		Centro centro01 = new Centro(
+				"UCLM CUE",
+				"Cuenca",
+				6);
+		
+		Centro centro02 = new Centro(
+				"UCLM TAL",
+				"Talavera de la Reina",
+				34);
+		
+		Centro centro03 = new Centro(
+				"UCLM ALM",
+				"Almaden",
+				67);
+		
+		Centro centro04 = new Centro(
+				"UCLM CIU",
+				"Ciudad real",
+				12);
+				
+		Centro centro05 = new Centro(
+				"UCLM ALB",
+				"Albacete",
+				0);
+		
+		Centro centro06 = new Centro(
+				"UCLM GUA",
+				"Guadalajara",
+				3);
+		
+		Centro centro07 = new Centro(
+				"UCLM TOL",
+				"Toledo",
+				65);
 		
 		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
 		List<CursoPropio> esperadoListarCursosPorDirector=new ArrayList<>();
@@ -305,16 +381,30 @@ public class GestorConsultasTest {
 		esperadoListarProfesores.add(profesor09);
 		esperadoListarProfesores.add(profesor10);
 		
+		List<Profesor> esperadoListarProfesoresUCLM=new ArrayList<>();
+		esperadoListarProfesoresUCLM.add(profUCLM01);
+		esperadoListarProfesoresUCLM.add(profUCLM02);
+		esperadoListarProfesoresUCLM.add(profUCLM03);
+		esperadoListarProfesoresUCLM.add(profUCLM04);
+		esperadoListarProfesoresUCLM.add(profUCLM05);
+		
+		List<Centro> esperadoListarCentros = new ArrayList<>();
+		esperadoListarCentros.add(centro01);
+		esperadoListarCentros.add(centro02);
+		esperadoListarCentros.add(centro03);
+		esperadoListarCentros.add(centro04);
+		esperadoListarCentros.add(centro05);
+		esperadoListarCentros.add(centro06);
+		esperadoListarCentros.add(centro07);
+		
 		assertTrue(resultadoConsultarIngresos==0.0);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorDirector, resultadoListarCursosPorDirector);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);
 		assertEquals(esperadoListarTodosCursos, resultadoListarTodosCursos);
 		assertEquals(esperadoListarProfesores, resultadoListarProfesores);
-		/**
-		assertTrue(resultadoListarProfesoresUCLM==);
-		assertTrue(resultadoListarCentros==);
-		**/
+		assertEquals(esperadoListarProfesoresUCLM, resultadoListarProfesoresUCLM);
+		assertEquals(esperadoListarCentros, resultadoListarCentros);
 	}
 	
 	@Test

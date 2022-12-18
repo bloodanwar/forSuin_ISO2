@@ -40,7 +40,6 @@ public class Profesor {
 	public boolean equals(Object obj){
 		if (getClass() != obj.getClass()) return false;
 		Profesor profObj = (Profesor) obj; 
-		
 		if (!(this.getDni().equals(profObj.getDni()))) return false; 	
 		if (this.getNombre() == null){
 			if (profObj.getNombre()!=null) return false;
@@ -52,7 +51,7 @@ public class Profesor {
 		} else {
 			if (!(this.getApellidos().equals(profObj.getApellidos()))) return false;
 		}	
-		if (!(this.isDoctor() !=(profObj.isDoctor()))) return false;
+		if (this.isDoctor() != profObj.isDoctor()) return false;
 		return true;
 	}
 	

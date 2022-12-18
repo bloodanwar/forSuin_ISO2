@@ -15,14 +15,14 @@ public class Prueba {
 	
 	public static void main (String args[]){
 		TipoCurso tipo = TipoCurso.MASTER;
-		List<Profesor> resultadoConsultarEstadoCursos=null;
+		List<Centro> resultadoConsultarEstadoCursos=null;
 		EstadoCurso estadoCurso= EstadoCurso.PROPUESTO;
 		ProfesorUCLM profesor=new ProfesorUCLM("12457890Y");
 		
 		try{
 			Date fechaInicio = dateFormat.parse("01-01-2000"); 
 			Date fechaFin= dateFormat.parse("12-09-2001");
-			resultadoConsultarEstadoCursos = g.listarProfesores();
+			resultadoConsultarEstadoCursos = g.listarCentros();
 
 		} catch (Exception e){
 			e.printStackTrace();
