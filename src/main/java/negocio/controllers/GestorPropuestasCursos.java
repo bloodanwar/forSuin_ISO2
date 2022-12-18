@@ -1,7 +1,9 @@
 package negocio.controllers;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import negocio.controllers.CursoException.*;
 import negocio.entities.*;
@@ -17,7 +19,7 @@ public class GestorPropuestasCursos {
 		}
 	}
 
-	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException {
+	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
 		comprobarSiTieneIdEdicion(cursoEditado);
 		if (cursoEditado.cursoPropioDao.editarCurso(cursoEditado) == 0) {
 			throw new CursoNoEditadoException("No se ha realizado la edición de la propuesta del curso");
@@ -31,13 +33,13 @@ public class GestorPropuestasCursos {
 		}
 	}
 
-	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, ParseException, CursoErroneoException {
+	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, ParseException, CursoErroneoException, CursoNoExisteException {
 		comprobarSiTieneIdEdicion(curso);
 		CursoPropio cursoTemp = curso.cursoPropioDao.seleccionarCurso(curso);
 		return cursoTemp.estado;
 	}
 	
-	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException {
+	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
 		comprobarSiTieneIdEdicion(curso);
 		curso.estado = EstadoCurso.VALIDADO;
 		if (curso.cursoPropioDao.editarCurso(curso) == 0) {

@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
-
 import negocio.entities.*;
+import negocio.controllers.CursoException.*;
 
 public class CursoPropioDAO {
 
@@ -52,10 +52,14 @@ public class CursoPropioDAO {
 		}
 	}
 
-	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException {
+	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getId()+"' AND edicion="+curso.getEdicion());
-		datosCurso = (Vector) datosCurso.get(0);
 		
+		if (datosCurso.size()==0)
+			throw new CursoNoExisteException("No existe el curso seleccionado en la base de datos");
+		
+		datosCurso = (Vector) datosCurso.get(0);
+
 		String id = (String) datosCurso.get(0);
 		String nombre = (String) datosCurso.get(1);
 		int ECTS = (Integer) datosCurso.get(2);
@@ -81,7 +85,7 @@ public class CursoPropioDAO {
 		return cursoDevolver;
 	}
 
-	public int editarCurso(CursoPropio curso) throws SQLException, ParseException {
+	public int editarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
 		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
 		Date fechaActualizacion = new Date();
 
@@ -161,7 +165,8 @@ public class CursoPropioDAO {
 	
 	public int eliminarCursoPropio(CursoPropio curso) throws SQLException {
 		int contador = 0;
-		
+		if (curso.materias == null)
+			return 0;
 		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);
 		for (int i=0; i<materias.length; i++){
 			contador += materias[i].materiaDao.eliminarMateria(materias[i], curso.getId(), curso.getEdicion());

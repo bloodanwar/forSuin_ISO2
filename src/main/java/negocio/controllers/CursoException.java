@@ -24,4 +24,10 @@ public class CursoException extends Exception{
 	        super(errorMessage);
 	    }
 	}
+	
+	public static class CursoNoExisteException extends Exception {
+		public CursoNoExisteException(String errorMessage) {
+	        super(errorMessage);
+		}
+	}
 }
