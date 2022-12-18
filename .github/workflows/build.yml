@@ -4,6 +4,7 @@ on:
     branches:
       - Desarrollo
       - Interfaces
+      - Testing
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
