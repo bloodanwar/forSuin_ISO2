@@ -66,7 +66,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	private JButton deleteMateriaBto;
 
 	// Fechas
-	private DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+	private DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	private Properties p = new Properties();
 	private JDatePickerImpl fechaInicioCurso;
 	private JDatePickerImpl fechaFinalCurso;
@@ -113,9 +113,9 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	public PantallaPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) { // 0 = Realizar // 1 = Editar // 2 = Edicion
 		// DAOS 
-		addProfesores();
-		addProfesoresUCLM(cursoEditado, action);
-		addCentros(cursoEditado, action);
+		addProfesores(director);
+		addProfesoresUCLM(cursoEditado, action, director);
+		addCentros(cursoEditado, action, director);
 		if (action >= 1) addMaterias(cursoEditado);
 
 		// LAYOUTS
@@ -133,15 +133,14 @@ public class PantallaPropuestaCurso extends JFrame {
 	    createComponentMap();
 	}
 
-	private void addProfesores() { 
+	private void addProfesores(ProfesorUCLM director) { 
 		profesores.addColumn("Nombre");
 		profesores.addColumn("Doctor");
 
 		try {
 			profesoresDao = gestorConsultas.listarProfesores();
 		} catch (SQLException e) {
-			errorPopup();
-			e.printStackTrace();
+			errorPopup("Error al cargar profesores", 1, director);
 		}
 
 		if(profesoresDao == null) return;
@@ -151,7 +150,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		}
 	}
 
-	private void addProfesoresUCLM(CursoPropio cursoEditado, int action) {
+	private void addProfesoresUCLM(CursoPropio cursoEditado, int action, ProfesorUCLM director) {
 		profesoresUCLM.addColumn("Nombre");
 		profesoresUCLM.addColumn("Categoria");
 		profesoresUCLM.addColumn("Doctor");
@@ -159,8 +158,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			profesoresUCLMDao = gestorConsultas.listarProfesoresUCLM();
 		} catch (SQLException e) {
-			errorPopup();
-			e.printStackTrace();
+			errorPopup("Error al cargar profesores", 1, director);
 		}
 
 		if(profesoresUCLMDao == null) return;
@@ -171,12 +169,11 @@ public class PantallaPropuestaCurso extends JFrame {
 		}
 	}
 
-	private void addCentros(CursoPropio cursoEditado, int action) {
+	private void addCentros(CursoPropio cursoEditado, int action, ProfesorUCLM director) {
 		try {
 			centrosDao = gestorConsultas.listarCentros();
 		} catch (SQLException e) {
-			errorPopup();
-			e.printStackTrace();
+			errorPopup("Error al cargar centros", 1, director);
 		}
 
 		if(centrosDao == null) return;
@@ -441,8 +438,9 @@ public class PantallaPropuestaCurso extends JFrame {
 				} 
 			}
 			
-			if(complete) {
+			if(!complete) {
 				ectsCurso.addItem(cursoEditado.getECTS());
+				ectsCurso.setSelectedIndex(ectsCurso.getItemCount()-1);
 			}
 			
 		} else {
@@ -639,8 +637,13 @@ public class PantallaPropuestaCurso extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PantallaGestionarCursos(director);
-				setVisible(false);
+				try {
+					new PantallaGestionarCursos(director);
+					setVisible(false);
+				} catch (NullPointerException ex) {
+					errorPopup("Error director invalido", 2, director);
+				}
+				
 			}
 		});
 
@@ -738,14 +741,13 @@ public class PantallaPropuestaCurso extends JFrame {
 						try {
 							gestorPropuestas.editarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							errorPopup();
-							e1.printStackTrace();
+							errorPopup("Error al editar curso", 1, director);
 						}
 					} else { // Crear + Nueva edicion
 						try {
 							gestorPropuestas.realizarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							errorPopup();
+							errorPopup("Error al crear curso", 1, director);
 							e1.printStackTrace();
 						}
 					}
@@ -770,9 +772,20 @@ public class PantallaPropuestaCurso extends JFrame {
 		return result;
 	}
 
-	public void errorPopup() {
+	public void errorPopup(String mensaje, int tipoError, ProfesorUCLM director) {
 		JFrame jFrame = new JFrame();
-		JOptionPane.showMessageDialog(jFrame, "Se ha producido un error");
+		JOptionPane.showMessageDialog(jFrame, mensaje);
+		if(tipoError == 1) {
+			try {
+				new PantallaGestionarCursos(director);
+				setVisible(false);
+			} catch (NullPointerException e) {
+				errorPopup("Error director invalido", 2, director);
+			}
+		} else {
+			new PantallaLogin();
+			setVisible(false);
+		}
 	}
 	
 	private void createComponentMap() {

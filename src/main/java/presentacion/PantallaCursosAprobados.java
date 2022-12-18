@@ -2,6 +2,7 @@ package presentacion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class PantallaCursosAprobados extends JFrame{
 		
 		try {
 			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
-		} catch (ParseException e) {
+		} catch (ParseException | SQLException e) {
 			e.printStackTrace();
 		}
 

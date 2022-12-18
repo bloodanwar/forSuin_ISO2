@@ -63,6 +63,9 @@ public class PantallaGestionarCursos extends JFrame{
 			cursosDao = gestor.listarCursosPorDirector(director);
 		} catch (ParseException e) {
 			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		cursosEnviados.addColumn("Nombre");

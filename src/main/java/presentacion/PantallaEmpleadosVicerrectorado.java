@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +55,9 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 		try {
 			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
 		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
