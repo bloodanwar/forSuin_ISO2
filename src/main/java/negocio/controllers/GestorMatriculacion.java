@@ -60,7 +60,10 @@ public class GestorMatriculacion {
 		if(!tituloMatriculaError && !estudianteMatriculaError) {
 			return;
 		} else if (tituloMatriculaError && estudianteMatriculaError) {
-			throw new MatriculaErroneaException("");
+			throw new MatriculaErroneaException("Matricula no tiene título ni estudiante");
+		} else {
+			if (tituloMatriculaError) throw new MatriculaErroneaException("Matricula no tiene título");
+			if (estudianteMatriculaError) throw new MatriculaErroneaException("Matricula no tiene estudiante");
 		}
 	}
 
