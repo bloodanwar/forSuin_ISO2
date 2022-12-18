@@ -22,7 +22,6 @@ public class GestorConsultasTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
 	public void cp1() throws Exception{
 		TipoCurso tipo = TipoCurso.MASTER;
 		Date fechaInicio = dateFormat.parse("01-01-2000"); 
@@ -37,18 +36,8 @@ public class GestorConsultasTest {
 		g.listarCursosPorEstado(estadoCurso);
 		g.listarTodosCursos();
 		g.listarProfesores();
-		g.listarProfesorUCLM();
+		g.listarProfesoresUCLM();
 		g.listarCentros();
-=======
-	public void testConsultarIngresos() {
-		//g.consultarIngresos();
-		throw new RuntimeException("not yet implemented");
-	} 
-
-	@Test
-	public void testConsultarEstadoCursos() {
-		throw new RuntimeException("not yet implemented");
->>>>>>> 06f32b58eaee0bc904c46adb8ed5cf95a8702464
 	}
 	
 	@Test
