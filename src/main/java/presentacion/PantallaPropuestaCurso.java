@@ -116,7 +116,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		addProfesores();
 		addProfesoresUCLM(cursoEditado, action);
 		addCentros(cursoEditado, action);
-		if (action >= 1 && cursoEditado.materias != null) addMaterias(cursoEditado);
+		if (action >= 1) addMaterias(cursoEditado);
 
 		// LAYOUTS
 		initLayout();
@@ -190,11 +190,15 @@ public class PantallaPropuestaCurso extends JFrame {
 	private void addMaterias(CursoPropio cursoEditado) {
 		Collection<Materia> materiasEditadas = cursoEditado.materias;
 
+		if(materiasEditadas == null) return;
 		Iterator<Materia> ite = materiasEditadas.iterator();
 		while(ite.hasNext()){
 			Materia temp = ite.next();
-			materias.addElement(temp.getNombre());
-			materiasGuardadas.add(temp);
+
+			if(temp != null) {
+				materias.addElement(temp.getNombre());
+				materiasGuardadas.add(temp);
+			}
 		}
 	}
 
@@ -247,10 +251,10 @@ public class PantallaPropuestaCurso extends JFrame {
 			}
 		};
 
-		secretariosTable.setName("secretariosTable");
 		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		secretariosTable.setRowSelectionInterval(secretarioEditado, secretarioEditado);
 		scrollPanel = new JScrollPane(secretariosTable);
+		scrollPanel.setName("secretariosTable");
 		scrollPanel.setBounds(10, 126, 400, 200);
 		mainPanel.add(scrollPanel);
 
@@ -310,10 +314,10 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		centrosLista = new JList<>(centros);
-		centrosLista.setName("centrosListaTable");
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		centrosLista.setSelectedIndex(centroEditado); 
 		scrollPanel = new JScrollPane(centrosLista);
+		scrollPanel.setName("centrosLista");
 		scrollPanel.setBounds(10, 440, 400, 200);
 		mainPanel.add(scrollPanel);
 	}
@@ -326,9 +330,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		categoriasLista = new JList<String>(categorias);
-		categoriasLista.setName("categoriasListaTable");
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(categoriasLista);
+		scrollPanel.setName("categoriasLista");
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
 
@@ -454,9 +458,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		materiasLista = new JList<>(materias);
-		materiasLista.setName("materiasLista");
 		materiasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(materiasLista);
+		scrollPanel.setName("materiasLista");
 		scrollPanel.setBounds(10, 931, 400, 200);
 		mainPanel.add(scrollPanel);
 
@@ -661,7 +665,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 				// COMPROBACION DE DATOS CURSO
-				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) { //!testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso)
+				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) {
 					complete = false;
 				}
 
