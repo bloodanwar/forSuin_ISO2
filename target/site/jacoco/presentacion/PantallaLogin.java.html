@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaLogin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaLogin.java</span></div><h1>PantallaLogin.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.SpringLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import negocio.entities.CursoPropio;
+import negocio.entities.ProfesorUCLM;
+
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodListener;
+import java.util.Properties;
+import java.awt.event.InputMethodEvent;
+
+public class PantallaLogin {
+
+	private JFrame frame;
+	private JTextField textField;
+<span class="fc" id="L31">	private final JButton entrar = new JButton(&quot;Entrar&quot;);</span>
+	private JButton cerrar;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L38">		EventQueue.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L41">					PantallaLogin window = new PantallaLogin();</span>
+<span class="nc" id="L42">					window.frame.setVisible(true);</span>
+<span class="nc" id="L43">				} catch (Exception e) {</span>
+<span class="nc" id="L44">					e.printStackTrace();</span>
+<span class="nc" id="L45">				}</span>
+<span class="nc" id="L46">			}</span>
+		});
+<span class="nc" id="L48">	}</span>
+
+	/**
+	 * Create the application.
+	 */
+<span class="fc" id="L53">	public PantallaLogin() {</span>
+<span class="fc" id="L54">		initialize();</span>
+<span class="fc" id="L55">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="fc" id="L61">		frame = new JFrame();</span>
+<span class="fc" id="L62">		frame.setBounds(10, 10, 800, 600);</span>
+<span class="fc" id="L63">		frame.setLocationRelativeTo(null);</span>
+<span class="fc" id="L64">		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L65">		frame.getContentPane().setLayout(null);</span>
+<span class="fc" id="L66">		frame.setVisible(true);</span>
+		
+<span class="fc" id="L68">		textField = new JTextField(&quot;23568907X&quot;);</span>
+<span class="fc" id="L69">		textField.setBounds(326, 90, 160, 20);</span>
+<span class="fc" id="L70">		frame.getContentPane().add(textField);</span>
+<span class="fc" id="L71">		textField.setColumns(10);</span>
+		
+<span class="fc" id="L73">		JLabel lblNewLabel = new JLabel(&quot;DNI:&quot;);</span>
+<span class="fc" id="L74">		lblNewLabel.setBounds(292, 93, 22, 14);</span>
+<span class="fc" id="L75">		lblNewLabel.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));</span>
+<span class="fc" id="L76">		frame.getContentPane().add(lblNewLabel);</span>
+		
+<span class="fc" id="L78">		JLabel lblbienvenido = new JLabel(&quot;¡Bienvenido!&quot;);</span>
+<span class="fc" id="L79">		lblbienvenido.setBounds(378, 70, 60, 14);</span>
+<span class="fc" id="L80">		lblbienvenido.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));</span>
+<span class="fc" id="L81">		frame.getContentPane().add(lblbienvenido);</span>
+<span class="fc" id="L82">		entrar.setBounds(326, 131, 160, 23);</span>
+		
+<span class="fc" id="L84">		entrar.addActionListener(new ActionListener() {</span>
+		
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L87">				ProfesorUCLM director = new ProfesorUCLM(textField.getText());</span>
+<span class="nc" id="L88">				new PantallaDireccionCursos(director);</span>
+<span class="nc" id="L89">				frame.setVisible(false);</span>
+<span class="nc" id="L90">			}</span>
+		});
+		
+<span class="fc" id="L93">		frame.getContentPane().add(entrar);</span>
+		
+<span class="fc" id="L95">		cerrar = new JButton(&quot;Cerrar Programa&quot;);</span>
+<span class="fc" id="L96">		cerrar.setBounds(326, 165, 160, 23);</span>
+<span class="fc" id="L97">		frame.getContentPane().add(cerrar);</span>
+		
+<span class="fc" id="L99">		JButton profesor = new JButton(&quot;Profesor&quot;);</span>
+<span class="fc" id="L100">		profesor.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L102">				ProfesorUCLM director = new ProfesorUCLM(&quot;23568907X&quot;);</span>
+<span class="nc" id="L103">				new PantallaDireccionCursos(director);</span>
+<span class="nc" id="L104">				frame.setVisible(false);</span>
+<span class="nc" id="L105">			}</span>
+		});
+		
+<span class="fc" id="L108">		profesor.setBounds(231, 338, 160, 23);</span>
+<span class="fc" id="L109">		frame.getContentPane().add(profesor);</span>
+		
+<span class="fc" id="L111">		JButton pesonal = new JButton(&quot;Empleados Vicerrectorado&quot;);</span>
+<span class="fc" id="L112">		pesonal.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L114">				new PantallaEmpleadosVicerrectorado();</span>
+<span class="nc" id="L115">				frame.setVisible(false);</span>
+<span class="nc" id="L116">			}</span>
+		});
+<span class="fc" id="L118">		pesonal.setBounds(418, 304, 160, 23);</span>
+<span class="fc" id="L119">		frame.getContentPane().add(pesonal);</span>
+		
+<span class="fc" id="L121">		JLabel lblBotonesPrototipo = new JLabel(&quot;Botones Prototipo&quot;);</span>
+<span class="fc" id="L122">		lblBotonesPrototipo.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));</span>
+<span class="fc" id="L123">		lblBotonesPrototipo.setBounds(356, 279, 91, 14);</span>
+<span class="fc" id="L124">		frame.getContentPane().add(lblBotonesPrototipo);</span>
+		
+<span class="fc" id="L126">		JButton alumno = new JButton(&quot;Alumno&quot;);</span>
+<span class="fc" id="L127">		alumno.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L129">				new PantallaAlumno();</span>
+<span class="nc" id="L130">				frame.setVisible(false);</span>
+<span class="nc" id="L131">			}</span>
+		});
+<span class="fc" id="L133">		alumno.setBounds(231, 304, 160, 23);</span>
+<span class="fc" id="L134">		frame.getContentPane().add(alumno);</span>
+		
+<span class="fc" id="L136">		JButton jefeGabinete = new JButton(&quot;Jefe Gabinete&quot;);</span>
+<span class="fc" id="L137">		jefeGabinete.setBounds(418, 338, 160, 23);</span>
+<span class="fc" id="L138">		frame.getContentPane().add(jefeGabinete);</span>
+		
+<span class="fc" id="L140">		cerrar.addActionListener(new ActionListener() {</span>
+		
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L143">				 System.exit(0);</span>
+<span class="nc" id="L144">			}</span>
+		});
+<span class="fc" id="L146">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

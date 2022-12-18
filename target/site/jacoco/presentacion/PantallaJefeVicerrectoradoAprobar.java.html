@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaJefeVicerrectoradoAprobar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaJefeVicerrectoradoAprobar.java</span></div><h1>PantallaJefeVicerrectoradoAprobar.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import negocio.controllers.GestorConsultas;
+import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+
+public class PantallaJefeVicerrectoradoAprobar extends JFrame {
+
+<span class="nc" id="L30">	private List&lt;CursoPropio&gt; cursosDao = null;</span>
+<span class="nc" id="L31">    private List&lt;String&gt; cursosNombre = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L32">    private JList&lt;String&gt; propuestasLista = new JList&lt;&gt;();</span>
+    private JButton btnAtras;
+	
+<span class="nc" id="L35">    public PantallaJefeVicerrectoradoAprobar () {</span>
+<span class="nc" id="L36">    	initLayout();</span>
+<span class="nc" id="L37">    	basicLayout();</span>
+<span class="nc" id="L38">    	botonesLayout();</span>
+<span class="nc" id="L39">    }</span>
+
+	private void initLayout() {
+		// Propiedades basicas
+<span class="nc" id="L43">        getContentPane().setLayout(null);</span>
+<span class="nc" id="L44">        setBounds(10, 10, 800,600);</span>
+<span class="nc" id="L45">        setTitle(&quot;Gestion de cursos propuestos&quot;);</span>
+<span class="nc" id="L46">        setResizable(true);</span>
+<span class="nc" id="L47">        setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
+<span class="nc" id="L48">        setLocationRelativeTo(null);</span>
+<span class="nc" id="L49">        setVisible(true);</span>
+		
+<span class="nc" id="L51">	}</span>
+	
+	private void basicLayout() {
+<span class="nc" id="L54">		GestorConsultas gestor = new GestorConsultas();</span>
+
+		try {
+<span class="nc" id="L57">			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);</span>
+<span class="nc" id="L58">		} catch (ParseException | SQLException e) {</span>
+<span class="nc" id="L59">			e.printStackTrace();</span>
+<span class="nc" id="L60">		}</span>
+
+		
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if(cursosDao != null) {</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			for(int i = 0; i&lt;cursosDao.size(); i++) {</span>
+<span class="nc" id="L65">				CursoPropio cursoTemp = cursosDao.get(i);</span>
+<span class="nc" id="L66">				cursosNombre.add(cursoTemp.getNombre());</span>
+			}
+		}
+
+<span class="nc" id="L70">        propuestasLista = new JList(cursosNombre.toArray());</span>
+<span class="nc" id="L71">        propuestasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+
+<span class="nc" id="L73">        JScrollPane scrollLista = new JScrollPane(propuestasLista);</span>
+<span class="nc" id="L74">        scrollLista.setBounds(200, 69, 400, 200);</span>
+<span class="nc" id="L75">        getContentPane().add(scrollLista);</span>
+<span class="nc" id="L76">	}</span>
+
+	private void botonesLayout() {
+<span class="nc" id="L79">		 JButton button = new JButton(&quot;Ver datos&quot;);</span>
+<span class="nc" id="L80">	     button.setBounds(300,280,200,30);</span>
+<span class="nc" id="L81">	     getContentPane().add(button);</span>
+
+<span class="nc" id="L83">		 button.addActionListener(new ActionListener() {</span>
+	            
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">	            	if(propuestasLista.isSelectionEmpty()) return;</span>
+<span class="nc" id="L88">	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));</span>
+<span class="nc" id="L89">	                setVisible(false);</span>
+<span class="nc" id="L90">	            }</span>
+
+	     });
+		 
+<span class="nc" id="L94">		 btnAtras = new JButton(&quot;Atras&quot;);</span>
+<span class="nc" id="L95">	     btnAtras.setBounds(300,321,200,30);</span>
+<span class="nc" id="L96">		 getContentPane().add(btnAtras);</span>
+
+<span class="nc" id="L98">		 btnAtras.addActionListener(new ActionListener() {</span>
+	            
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L102">	            	new PantallaJefeGabineteVicerrectorado();</span>
+<span class="nc" id="L103">	                setVisible(false);</span>
+<span class="nc" id="L104">	            }</span>
+	        });
+<span class="nc" id="L106">	}</span>
+	
+	public void evaluarCurso() {
+<span class="nc" id="L109">		throw new UnsupportedOperationException();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

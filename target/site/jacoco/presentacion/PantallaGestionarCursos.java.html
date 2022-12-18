@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaGestionarCursos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaGestionarCursos.java</span></div><h1>PantallaGestionarCursos.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.concurrent.CountDownLatch;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import negocio.controllers.GestorConsultas;
+import negocio.controllers.GestorPropuestasCursos;
+import negocio.entities.Centro;
+import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+import negocio.entities.ProfesorUCLM;
+
+public class PantallaGestionarCursos extends JFrame{
+
+<span class="fc" id="L36">	private List&lt;CursoPropio&gt; cursosDao = null;</span>
+<span class="fc" id="L37">	private DefaultTableModel cursosEnviados = new DefaultTableModel(); </span>
+<span class="fc" id="L38">	private JTable cursosTable = new JTable();</span>
+
+
+<span class="fc" id="L41">	public PantallaGestionarCursos (ProfesorUCLM director) {</span>
+<span class="fc" id="L42">		initLayout();</span>
+<span class="fc" id="L43">		listLayout(director);</span>
+<span class="fc" id="L44">		botonesLayout(director);</span>
+<span class="fc" id="L45">	}</span>
+
+	private void initLayout() {
+		// Propiedades basicas
+<span class="fc" id="L49">		getContentPane().setLayout(null);</span>
+<span class="fc" id="L50">		setBounds(10, 10, 800,600);</span>
+<span class="fc" id="L51">		setTitle(&quot;Gestion de cursos propuestos&quot;);</span>
+<span class="fc" id="L52">		setResizable(true);</span>
+<span class="fc" id="L53">		setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
+<span class="fc" id="L54">		setLocationRelativeTo(null);</span>
+<span class="fc" id="L55">		setVisible(true);</span>
+
+<span class="fc" id="L57">	}</span>
+
+	private void listLayout(ProfesorUCLM director) {
+<span class="fc" id="L60">		GestorConsultas gestor = new GestorConsultas();</span>
+
+		try {
+<span class="fc" id="L63">			cursosDao = gestor.listarCursosPorDirector(director);</span>
+<span class="nc" id="L64">		} catch (ParseException e) {</span>
+<span class="nc" id="L65">			e.printStackTrace();</span>
+<span class="nc" id="L66">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L68">			e.printStackTrace();</span>
+<span class="pc" id="L69">		}</span>
+		
+<span class="fc" id="L71">		cursosEnviados.addColumn(&quot;Nombre&quot;);</span>
+<span class="fc" id="L72">		cursosEnviados.addColumn(&quot;Edicion&quot;);</span>
+<span class="fc" id="L73">		cursosEnviados.addColumn(&quot;Estado&quot;);</span>
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if(cursosDao != null) {	</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">			for(int i = 0; i&lt;cursosDao.size(); i++) {</span>
+<span class="fc" id="L77">				CursoPropio cursoTemp = cursosDao.get(i);</span>
+<span class="fc" id="L78">				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.getEdicion(), cursoTemp.estado });</span>
+			}
+		}
+
+<span class="fc" id="L82">		cursosTable = new JTable(cursosEnviados){</span>
+			@Override
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+<span class="nc" id="L85">				return false; //Disallow the editing of any cell</span>
+			}
+		};
+
+<span class="fc" id="L89">		cursosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+
+<span class="fc" id="L91">		JScrollPane scrollLista = new JScrollPane(cursosTable);</span>
+<span class="fc" id="L92">		scrollLista.setBounds(199, 113, 400, 200);</span>
+<span class="fc" id="L93">		getContentPane().add(scrollLista);</span>
+<span class="fc" id="L94">	}</span>
+
+	private void botonesLayout(final ProfesorUCLM director) {
+		// Boton para realizar propuesta de curso
+<span class="fc" id="L98">		JButton button = new JButton(&quot;Realizar propuesta&quot;);</span>
+<span class="fc" id="L99">		button.setBounds(195,324,200,30);</span>
+<span class="fc" id="L100">		getContentPane().add(button);</span>
+
+<span class="fc" id="L102">		button.addActionListener(new ActionListener() {</span>
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L106">				CursoPropio curso = new CursoPropio(); </span>
+<span class="nc" id="L107">				new PantallaPropuestaCurso(director, curso, 0);</span>
+<span class="nc" id="L108">				setVisible(false);</span>
+<span class="nc" id="L109">			}</span>
+
+		});
+
+		// Boton para nueva edicion de curso
+<span class="fc" id="L114">		button = new JButton(&quot;Nueva edición&quot;);</span>
+<span class="fc" id="L115">		button.setBounds(405,324,200,30);</span>
+<span class="fc" id="L116">		getContentPane().add(button);</span>
+
+<span class="fc" id="L118">		button.addActionListener(new ActionListener() {</span>
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;</span>
+<span class="nc" id="L123">				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">				if(curso.estado == EstadoCurso.TERMINADO) {</span>
+<span class="nc" id="L125">					new PantallaPropuestaCurso(director, curso, 2);</span>
+<span class="nc" id="L126">					setVisible(false);</span>
+				}
+				
+<span class="nc" id="L129">			}</span>
+
+
+		});
+
+		// Boton para editar propuesta de curso
+<span class="fc" id="L135">		button = new JButton(&quot;Editar&quot;);</span>
+<span class="fc" id="L136">		button.setBounds(195,365,200,30);</span>
+<span class="fc" id="L137">		getContentPane().add(button);</span>
+
+<span class="fc" id="L139">		button.addActionListener(new ActionListener() {</span>
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;</span>
+<span class="nc" id="L144">				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());</span>
+				
+<span class="nc bnc" id="L146" title="All 4 branches missed.">				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {</span>
+<span class="nc" id="L147">					new PantallaPropuestaCurso(director, curso, 1);</span>
+<span class="nc" id="L148">					setVisible(false);</span>
+				}
+				
+<span class="nc" id="L151">			}</span>
+
+		});
+
+		// Boton para eliminar propuesta de curso
+<span class="fc" id="L156">		button = new JButton(&quot;Eliminar&quot;);</span>
+<span class="fc" id="L157">		button.setBounds(405,365,200,30);</span>
+<span class="fc" id="L158">		getContentPane().add(button);</span>
+
+<span class="fc" id="L160">		button.addActionListener(new ActionListener() {</span>
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    </span>
+				
+<span class="nc" id="L166">				int confirm = JOptionPane.showConfirmDialog(null,&quot;¿Eliminar propuesta de curso?&quot;,&quot;Eliminar propuesta de curso&quot;,JOptionPane.YES_NO_OPTION, 1);</span>
+				
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				if (confirm == 0) {</span>
+<span class="nc" id="L169">					GestorPropuestasCursos gestor = new GestorPropuestasCursos();</span>
+					try {
+<span class="nc" id="L171">						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));</span>
+<span class="nc" id="L172">					} catch (Exception e1) {</span>
+<span class="nc" id="L173">						e1.printStackTrace();</span>
+<span class="nc" id="L174">					}</span>
+<span class="nc" id="L175">					cursosEnviados.removeRow(cursosTable.getSelectedRow());</span>
+				}
+<span class="nc" id="L177">			}</span>
+
+		});
+
+
+		// Boton para ir atras
+<span class="fc" id="L183">		button = new JButton(&quot;Atras&quot;);</span>
+<span class="fc" id="L184">		button.setBounds(10,520,200,30);</span>
+<span class="fc" id="L185">		getContentPane().add(button);</span>
+
+<span class="fc" id="L187">		button.addActionListener(new ActionListener() {</span>
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L191">				new PantallaDireccionCursos(director);</span>
+<span class="nc" id="L192">				setVisible(false);</span>
+<span class="nc" id="L193">			}</span>
+
+		});
+
+<span class="fc" id="L197">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

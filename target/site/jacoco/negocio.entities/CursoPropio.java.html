@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CursoPropio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">negocio.entities</a> &gt; <span class="el_source">CursoPropio.java</span></div><h1>CursoPropio.java</h1><pre class="source lang-java linenums">package negocio.entities;
+
+import java.util.*;
+import persistencia.*;
+
+public class CursoPropio {
+
+	public Collection&lt;Matricula&gt; matriculas;
+	public Centro centro;
+	public ProfesorUCLM director;
+	public ProfesorUCLM secretario;
+	public Collection&lt;Materia&gt; materias;
+	public EstadoCurso estado;
+	public TipoCurso tipo;
+	public CursoPropioDAO cursoPropioDao;
+	private String id;
+	private String nombre;
+	private int ECTS;
+	private Date fechaInicio;
+	private Date fechaFin;
+	private double tasaMatricula;
+	private int edicion;
+	public String requisitos;
+	
+	
+<span class="fc" id="L26">	public CursoPropio() {</span>
+<span class="fc" id="L27">		cursoPropioDao = new CursoPropioDAO();</span>
+<span class="fc" id="L28">	}</span>
+	
+<span class="fc" id="L30">	public CursoPropio(String id, int edicion) {</span>
+<span class="fc" id="L31">		cursoPropioDao = new CursoPropioDAO();</span>
+<span class="fc" id="L32">		this.id = id;</span>
+<span class="fc" id="L33">		this.edicion = edicion;</span>
+<span class="fc" id="L34">	}</span>
+	
+<span class="fc" id="L36">	public CursoPropio(String id, String nombre, int eCTS, Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, EstadoCurso estado, TipoCurso tipo, Centro centro, ProfesorUCLM secretario, ProfesorUCLM director, String requisitos) {</span>
+<span class="fc" id="L37">		cursoPropioDao = new CursoPropioDAO();</span>
+<span class="fc" id="L38">		this.id = id;</span>
+<span class="fc" id="L39">		this.nombre = nombre;</span>
+<span class="fc" id="L40">		this.ECTS = eCTS;</span>
+<span class="fc" id="L41">		this.fechaInicio = fechaInicio;</span>
+<span class="fc" id="L42">		this.fechaFin = fechaFin;</span>
+<span class="fc" id="L43">		this.tasaMatricula = tasaMatricula;</span>
+<span class="fc" id="L44">		this.edicion = edicion;</span>
+<span class="fc" id="L45">		this.estado = estado;</span>
+<span class="fc" id="L46">		this.tipo = tipo;</span>
+<span class="fc" id="L47">		this.centro = centro;</span>
+<span class="fc" id="L48">		this.secretario=secretario;</span>
+<span class="fc" id="L49">		this.director=director;</span>
+<span class="fc" id="L50">		this.requisitos=requisitos;</span>
+<span class="fc" id="L51">	}</span>
+	
+	public String toString() {
+		/**String strMaterias = &quot;&quot;;
+		Materia[] arrayMaterias = (Materia[]) materias.toArray();
+		for (int i=0; i&lt;materias.size();i++) {
+			strMaterias+=arrayMaterias[i].toString();
+		}
+		**/
+<span class="nc" id="L60">		return &quot;Curso:&quot;</span>
+				+&quot;\n\tId: &quot;+id
+				+&quot;\n\tNombre: &quot;+nombre
+				+&quot;\n\tECTS: &quot;+ECTS
+<span class="nc" id="L64">				+&quot;\n\tfechaInicio: &quot;+fechaInicio.toString()</span>
+<span class="nc" id="L65">				+&quot;\n\tfechaFin: &quot;+fechaFin.toString()</span>
+				+&quot;\n\ttasaMatricula: &quot;+tasaMatricula
+				+&quot;\n\tEdición: &quot;+edicion
+<span class="nc" id="L68">				+&quot;\n\tEstado:&quot;+estado.toString()</span>
+<span class="nc" id="L69">				+&quot;\n\tTipo: &quot;+tipo.toString()</span>
+<span class="nc" id="L70">				+&quot;\n\tCentro: &quot;+centro.getNombre()</span>
+<span class="nc" id="L71">				+&quot;\n\tSecretario: &quot;+secretario.getDni()</span>
+<span class="nc" id="L72">				+&quot;\n\tDirector: &quot;+director.getDni()</span>
+				//+&quot;\n\tMaterias: &quot;+materias.size()
+				;
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L80">		CursoPropio cursoObj = (CursoPropio) obj; </span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (!(this.getId().equals(cursoObj.getId()))) return false; </span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (!(this.getNombre().equals(cursoObj.getNombre()))) return false; </span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (this.getECTS()!=cursoObj.getECTS()) return false;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (!(this.getFechaInicio().equals(cursoObj.getFechaInicio()))) return false; </span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (!(this.getFechaFin().equals(cursoObj.getFechaFin()))) return false; </span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (this.getTasaMatricula()!=cursoObj.getTasaMatricula()) return false;</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (this.getEdicion()!=cursoObj.getEdicion()) return false; </span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (this.estado != cursoObj.estado) return false;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (this.tipo != cursoObj.tipo) return false;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (!(this.centro.getNombre().equals(cursoObj.centro.getNombre()))) return false;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (!(this.secretario.getDni().equals(cursoObj.secretario.getDni()))) return false;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (!(this.director.getDni().equals(cursoObj.director.getDni()))) return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (this.requisitos == null){</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (cursoObj.requisitos!=null) return false;</span>
+		} else {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (!(this.requisitos).equals(cursoObj.requisitos)) return false;</span>
+		}	
+<span class="fc" id="L98">		return true;</span>
+	}
+	
+<span class="fc" id="L101">	public String getId() { return id; }</span>
+<span class="nc" id="L102">	public void setId(String id) { this.id = id; }</span>
+	
+<span class="fc" id="L104">	public String getNombre() { return nombre; }</span>
+<span class="nc" id="L105">	public void setNombre(String nombre) { this.nombre = nombre; }</span>
+	
+<span class="fc" id="L107">	public int getECTS() { return ECTS; }</span>
+<span class="nc" id="L108">	public void setECTS(int eCTS) { ECTS = eCTS; }</span>
+	
+<span class="fc" id="L110">	public Date getFechaInicio() { return fechaInicio; }</span>
+<span class="nc" id="L111">	public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }</span>
+	
+<span class="fc" id="L113">	public Date getFechaFin() { return fechaFin; }</span>
+<span class="nc" id="L114">	public void setFechaFin(Date fechaFin) { this.fechaFin = fechaFin; }</span>
+	
+<span class="fc" id="L116">	public double getTasaMatricula() { return tasaMatricula; }</span>
+<span class="nc" id="L117">	public void setTasaMatricula(double tasaMatricula) { this.tasaMatricula = tasaMatricula; }</span>
+	
+<span class="fc" id="L119">	public int getEdicion() { return edicion; }</span>
+<span class="nc" id="L120">	public void setEdicion(int edicion) { this.edicion = edicion; }	</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProfesorExternoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">persistencia</a> &gt; <span class="el_source">ProfesorExternoDAO.java</span></div><h1>ProfesorExternoDAO.java</h1><pre class="source lang-java linenums">package persistencia;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+
+import negocio.entities.*;
+
+<span class="nc" id="L10">public class ProfesorExternoDAO {</span>
+	
+<span class="nc" id="L12">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+	
+	public int crearNuevoProfesorExterno(ProfesorExterno profesor) throws SQLException {
+
+<span class="nc" id="L16">		Date fechaCreacion =  new Date();</span>
+<span class="nc" id="L17">		Date fechaActualizacion = fechaCreacion;</span>
+
+<span class="nc" id="L19">		return GestorBD.getInstancia().insert(&quot;INSERT INTO profesorExterno (profesor_Dni, titulacion, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="nc" id="L20">			+ profesor.getDni()+&quot;', &quot;</span>
+<span class="nc" id="L21">			+ profesor.getTitulacion()+&quot;', '&quot;</span>
+<span class="nc" id="L22">			+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="nc" id="L23">			+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+	}
+
+	public ProfesorExterno seleccionarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+<span class="nc" id="L27">		Vector datosProfesorExterno = GestorBD.getInstancia().select(&quot;SELECT * FROM profesorExterno AS pex JOIN profesor AS p ON pex.profesor_DNI = p.dni WHERE pex.profesor_DNI='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+<span class="nc" id="L28">		datosProfesorExterno = (Vector) datosProfesorExterno.get(0);</span>
+		
+		//columnas tras el join:
+		//p.dni, p.nombre, p.apellidos, p.doctor, p.fechaCreacion, p.fechaActualizacion, pex.profesor_Dni, pex.titulacion, pex.fechaCreacion, pex.fechaActualizacion
+		
+<span class="nc" id="L33">		String dni=(String) datosProfesorExterno.get(0);</span>
+<span class="nc" id="L34">		String nombre=(String) datosProfesorExterno.get(1);</span>
+<span class="nc" id="L35">		String apellidos= (String) datosProfesorExterno.get(2);</span>
+<span class="nc" id="L36">		boolean doctor=(Boolean) datosProfesorExterno.get(3);</span>
+<span class="nc" id="L37">		String titulacion=(String) datosProfesorExterno.get(7);</span>
+		
+<span class="nc" id="L39">		return new ProfesorExterno(dni, nombre, apellidos, doctor, titulacion);</span>
+	}
+
+	public int editarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+<span class="nc" id="L43">		Date fechaActualizacion = new Date();</span>
+
+<span class="nc" id="L45">		return GestorBD.getInstancia().update(&quot;UPDATE profesorExterno SET &quot;</span>
+<span class="nc" id="L46">				+ &quot;dni'&quot; + profesor.getDni() + &quot;', &quot;</span>
+<span class="nc" id="L47">				+ &quot;titulacion=&quot; + profesor.getTitulacion() + &quot;, &quot;</span>
+<span class="nc" id="L48">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="nc" id="L49">				+ &quot;' WHERE dni='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+	}
+
+	public int eliminarProfesorExterno(ProfesorExterno profesor) throws SQLException {
+<span class="nc" id="L53">		return GestorBD.getInstancia().delete(&quot;DELETE FROM profesorExterno WHERE profesor_DNI='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

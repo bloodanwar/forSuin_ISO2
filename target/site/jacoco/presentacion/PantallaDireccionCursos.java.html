@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaDireccionCursos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaDireccionCursos.java</span></div><h1>PantallaDireccionCursos.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import negocio.entities.ProfesorUCLM;
+
+public class PantallaDireccionCursos extends JFrame{
+    
+<span class="nc" id="L13">    public PantallaDireccionCursos (ProfesorUCLM director) {</span>
+<span class="nc" id="L14">    	initLayout();</span>
+<span class="nc" id="L15">    	botonesLayout(director);        </span>
+<span class="nc" id="L16">    }</span>
+    
+	private void initLayout() {
+		// Propiedades basicas
+<span class="nc" id="L20">        getContentPane().setLayout(null);</span>
+<span class="nc" id="L21">        setBounds(10, 10, 800,600);</span>
+<span class="nc" id="L22">        setTitle(&quot;Direccion de cursos&quot;);</span>
+<span class="nc" id="L23">        setResizable(true);</span>
+<span class="nc" id="L24">        setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
+<span class="nc" id="L25">        setLocationRelativeTo(null);</span>
+<span class="nc" id="L26">        setVisible(true);</span>
+<span class="nc" id="L27">	}</span>
+	
+	private void botonesLayout(final ProfesorUCLM director) {
+		// Boton para visualizar cursos aprobados
+<span class="nc" id="L31">        JButton button = new JButton(&quot;Consultar cursos aprobados&quot;);</span>
+<span class="nc" id="L32">        button.setBounds(300,163,200,30);</span>
+<span class="nc" id="L33">        getContentPane().add(button);</span>
+    
+<span class="nc" id="L35">        button.addActionListener(new ActionListener() {</span>
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L39">                new PantallaCursosAprobados(1, director);</span>
+<span class="nc" id="L40">                setVisible(false);</span>
+<span class="nc" id="L41">            }</span>
+        });
+        
+        // Boton para gestionar cursos propuestos
+<span class="nc" id="L45">        button = new JButton(&quot;Gestionar cursos propuestos&quot;);</span>
+<span class="nc" id="L46">        button.setBounds(300,213,200,30);</span>
+<span class="nc" id="L47">        getContentPane().add(button);</span>
+    
+<span class="nc" id="L49">        button.addActionListener(new ActionListener() {</span>
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L53">                new PantallaGestionarCursos(director);</span>
+<span class="nc" id="L54">                setVisible(false);</span>
+<span class="nc" id="L55">            }</span>
+        });
+        
+        // Boton para cerrar sesion
+<span class="nc" id="L59">        button = new JButton(&quot;Cerrar sesion&quot;);</span>
+<span class="nc" id="L60">        button.setBounds(300,263,200,30);</span>
+<span class="nc" id="L61">        getContentPane().add(button);</span>
+    
+<span class="nc" id="L63">        button.addActionListener(new ActionListener() {</span>
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L67">                new PantallaLogin();</span>
+<span class="nc" id="L68">                setVisible(false);</span>
+<span class="nc" id="L69">            }</span>
+        });
+<span class="nc" id="L71">	}</span>
+
+	public void altaCurso() {
+<span class="nc" id="L74">		throw new UnsupportedOperationException();</span>
+	}
+
+	public void edicionCurso() {
+<span class="nc" id="L78">		throw new UnsupportedOperationException();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

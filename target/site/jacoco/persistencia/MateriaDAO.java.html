@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MateriaDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">persistencia</a> &gt; <span class="el_source">MateriaDAO.java</span></div><h1>MateriaDAO.java</h1><pre class="source lang-java linenums">package persistencia;
+
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+
+import negocio.entities.*;
+
+<span class="fc" id="L13">public class MateriaDAO {</span>
+
+	//nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion
+	
+<span class="fc" id="L17">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+	
+	public int crearNuevaMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
+<span class="fc" id="L20">		Date fechaCreacion =  new Date();</span>
+<span class="fc" id="L21">		Date fechaActualizacion = fechaCreacion;</span>
+		
+<span class="fc" id="L23">		return GestorBD.getInstancia().insert(&quot;INSERT INTO materia (nombre, horas, fechaInicio, fechaFin, cursoPropio_id, cursoPropio_edicion, responsable_Profesor_DNI, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="fc" id="L24">				+ materia.getNombre()+&quot;', &quot;</span>
+<span class="fc" id="L25">				+ materia.getHoras()+&quot;, '&quot;</span>
+<span class="fc" id="L26">				+ dateFormat.format(materia.getFechaInicio())+&quot;', '&quot;</span>
+<span class="fc" id="L27">				+ dateFormat.format(materia.getFechaFin())+&quot;', '&quot;</span>
+				+ cursoPropioID+&quot;', &quot;
+				+ cursoPropioEdicion+&quot;, '&quot;
+<span class="fc" id="L30">				+ materia.responsable.getDni()+&quot;', '&quot;</span>
+<span class="fc" id="L31">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="fc" id="L32">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+	}
+
+	public Materia seleccionarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
+<span class="nc" id="L36">		Vector datosMateria = GestorBD.getInstancia().select(&quot;SELECT * FROM materia WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropioEdicion=&quot;+cursoPropioEdicion);</span>
+<span class="nc" id="L37">		datosMateria = (Vector) datosMateria.get(0);</span>
+		
+<span class="nc" id="L39">		String nombre = (String) datosMateria.get(0);</span>
+<span class="nc" id="L40">		double horas = (Double) datosMateria.get(1);</span>
+<span class="nc" id="L41">		Date fechaInicio = (Date) datosMateria.get(2);</span>
+<span class="nc" id="L42">		Date fechaFin = (Date) datosMateria.get(3);</span>
+<span class="nc" id="L43">		Profesor responsable = new Profesor((String) datosMateria.get(6));</span>
+		
+<span class="nc" id="L45">		return new Materia(nombre, horas, fechaInicio, fechaFin, responsable);</span>
+	}
+
+	public int editarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
+		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
+<span class="nc" id="L50">		Date fechaActualizacion = new Date();</span>
+
+<span class="nc" id="L52">		return GestorBD.getInstancia().update(&quot;UPDATE materia SET &quot;</span>
+<span class="nc" id="L53">				+ &quot;horas=&quot; + materia.getHoras() + &quot;, &quot;</span>
+<span class="nc" id="L54">				+ &quot;fechaInicio='&quot; + dateFormat.format(materia.getFechaInicio()) + &quot;', &quot;</span>
+<span class="nc" id="L55">				+ &quot;fechaFin='&quot; + dateFormat.format(materia.getFechaFin()) + &quot;', &quot;</span>
+<span class="nc" id="L56">				+ &quot;responsable_Profesor_DNI='&quot; + materia.responsable.getDni() + &quot;', '&quot;</span>
+<span class="nc" id="L57">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="nc" id="L58">				+ &quot;' WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropio_edicion=&quot;+cursoPropioEdicion);</span>
+	}
+
+	public int eliminarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
+<span class="fc" id="L62">		return GestorBD.getInstancia().delete(&quot;DELETE FROM materia WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropio_edicion=&quot;+cursoPropioEdicion);</span>
+	}
+
+	public List&lt;Materia&gt; listarMateriasPorCurso(CursoPropio curso) throws SQLException {
+<span class="fc" id="L66">		Vector listaMateriaDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM materia WHERE cursoPropio_id = '&quot; + curso.getId() + &quot;' AND cursoPropio_edicion=&quot;+curso.getEdicion());</span>
+		
+<span class="fc" id="L68">		List&lt;Materia&gt; listaMateria = new ArrayList&lt;&gt;();</span>
+		
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (int i=0; i&lt;listaMateriaDatos.size(); i++) {</span>
+<span class="fc" id="L71">			Vector lMateriaDatosTemp = (Vector) listaMateriaDatos.get(i);</span>
+			
+<span class="fc" id="L73">			String nombre = (String) lMateriaDatosTemp.get(0);</span>
+<span class="fc" id="L74">			double horas = (Double) lMateriaDatosTemp.get(1);</span>
+<span class="fc" id="L75">			Date fechaInicio = (Date) lMateriaDatosTemp.get(2);</span>
+<span class="fc" id="L76">			Date fechaFin = (Date) lMateriaDatosTemp.get(3);</span>
+<span class="fc" id="L77">			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(6));</span>
+			
+<span class="fc" id="L79">			listaMateria.add(new Materia(nombre, horas, fechaInicio, fechaFin, responsable));</span>
+		}
+		
+<span class="fc" id="L82">		return listaMateria;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

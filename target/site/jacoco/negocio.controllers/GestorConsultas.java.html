@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestorConsultas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">negocio.controllers</a> &gt; <span class="el_source">GestorConsultas.java</span></div><h1>GestorConsultas.java</h1><pre class="source lang-java linenums">package negocio.controllers;
+
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import negocio.entities.*;
+import persistencia.CursoPropioDAO;
+
+<span class="fc" id="L12">public class GestorConsultas {</span>
+
+<span class="fc" id="L14">	SimpleDateFormat formatter = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);      </span>
+	
+	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
+<span class="fc" id="L17">		CursoPropio curso = new CursoPropio();</span>
+<span class="fc" id="L18">		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);</span>
+	}
+
+	public List&lt;CursoPropio&gt; consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) throws SQLException {
+<span class="fc" id="L22">		CursoPropio curso = new CursoPropio();</span>
+<span class="fc" id="L23">		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);</span>
+	}
+	
+	public List&lt;CursoPropio&gt; listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException, SQLException{
+<span class="fc" id="L27">		CursoPropio curso = new CursoPropio();</span>
+<span class="fc" id="L28">	    Date dateInicio = formatter.parse(&quot;01-01-1000&quot;);      </span>
+<span class="fc" id="L29">	    Date dateFin = formatter.parse(&quot;01-01-3000&quot;);  </span>
+	    
+<span class="fc" id="L31">		List&lt;CursoPropio&gt; listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);</span>
+<span class="fc" id="L32">		return listaCursos;</span>
+	}
+	
+	public List&lt;CursoPropio&gt; listarCursosPorEstado(EstadoCurso estado) throws ParseException, SQLException{
+<span class="fc" id="L36">		CursoPropio curso = new CursoPropio(); </span>
+<span class="fc" id="L37">		Date dateInicio = formatter.parse(&quot;01-01-1000&quot;);</span>
+<span class="fc" id="L38">		Date dateFin = formatter.parse(&quot;01-01-3000&quot;);</span>
+<span class="fc" id="L39">		List&lt;CursoPropio&gt; listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);</span>
+	
+<span class="fc" id="L41">		return listaCursos;</span>
+	}
+	
+	public List&lt;CursoPropio&gt; listarTodosCursos() throws SQLException{
+<span class="fc" id="L45">		CursoPropio curso = new CursoPropio();	</span>
+<span class="fc" id="L46">		return curso.cursoPropioDao.listarCursos();</span>
+	}
+	
+	public List&lt;Profesor&gt; listarProfesores() throws SQLException{
+<span class="fc" id="L50">		Profesor profesor = new Profesor();	</span>
+<span class="fc" id="L51">		return profesor.profesorDao.listarProfesores();</span>
+	}
+	
+	public List&lt;ProfesorUCLM&gt; listarProfesoresUCLM() throws SQLException{
+<span class="fc" id="L55">		ProfesorUCLM profesor = new ProfesorUCLM();	</span>
+<span class="fc" id="L56">		return profesor.profesorUCLMDao.listarProfesores();</span>
+	}
+	
+	public List&lt;Centro&gt; listarCentros() throws SQLException{
+<span class="fc" id="L60">		Centro centro = new Centro();	</span>
+<span class="fc" id="L61">		return centro.centroDao.listarCentros();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
