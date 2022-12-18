@@ -38,7 +38,7 @@ public class PantallaPropuestaCursoTest {
 	// ------ VARIABLES -------- //
 	private static PantallaPropuestaCurso pantalla = null;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	
+
 	JTextField tituloBox;
 	JTable secretariosTable;
 	JDatePickerImpl fechaInicioCursoBox;
@@ -51,13 +51,13 @@ public class PantallaPropuestaCursoTest {
 	JComboBox ectsCursoBox;
 	JList materiasLista;
 
-	
+
 	// ------ FUNCIÓN UTIL PARA TESTS -------- //
 	public void setUp(int accion, ProfesorUCLM director,
-			Materia materia, Centro centro, ProfesorUCLM directorCurso, ProfesorUCLM secretario,
+			ArrayList<Materia> materias, Centro centro, ProfesorUCLM directorCurso, ProfesorUCLM secretario,
 			EstadoCurso estado, TipoCurso tipo, String id, String nombre, int ECTS, 
 			Date fechaInicio, Date fechaFin, double tasaMatricula, int edicion, String requisitos) {
-		
+
 		// CREACION
 		CursoPropio curso = new CursoPropio(id, 
 				nombre,
@@ -72,13 +72,12 @@ public class PantallaPropuestaCursoTest {
 				secretario, 
 				directorCurso, 
 				requisitos
-		);
-		curso.materias = new ArrayList<Materia>();
-		curso.materias.add(materia);
-		
+				);
+		curso.materias = materias;
+
 		pantalla = new PantallaPropuestaCurso(director, curso, accion);
-		
-		// BOXES
+
+		// DATOS
 		pantalla = new PantallaPropuestaCurso(director, curso, accion);
 		tituloBox = (JTextField) pantalla.getComponentByName("tituloBox");
 		JScrollPane secretariosScroll = (JScrollPane) pantalla.getComponentByName("secretariosTable");
@@ -94,7 +93,7 @@ public class PantallaPropuestaCursoTest {
 		requisitoCursoBox = (JTextField) pantalla.getComponentByName("requisitoCursoBox");
 		ectsCursoBox = (JComboBox) pantalla.getComponentByName("ectsCursoBox");
 		JScrollPane materiasScroll = (JScrollPane) pantalla.getComponentByName("materiasLista");
-		materiasLista = (JList) categoriasScroll.getViewport().getView();
+		materiasLista = (JList) materiasScroll.getViewport().getView();
 	}
 
 
@@ -104,9 +103,12 @@ public class PantallaPropuestaCursoTest {
 	@Test
 	public void PantallaPropuestaCursoTest1() throws ParseException {
 		// CREACION
+		ArrayList<Materia> materias = new ArrayList();
+		materias.add(new Materia("materia", 0, null, null, null));
+
 		setUp(-5,
 				new ProfesorUCLM("23568907X"),
-				new Materia("materia", 0, null, null, null),
+				materias,
 				new Centro("UCLM TAE"),
 				new ProfesorUCLM("23568907X"),
 				new ProfesorUCLM("23568907X"),
@@ -121,7 +123,8 @@ public class PantallaPropuestaCursoTest {
 				-35,
 				"requsito");
 
-		// TESTEO 
+		// TESTEO DE DATOS 
+		assertEquals(0, materiasLista.getModel().getSize());
 		assertEquals(0, centrosLista.getSelectedIndex());
 		assertEquals(0, secretariosTable.getSelectedRow());
 		assertEquals(0, categoriaLista.getSelectedIndex());
@@ -132,14 +135,21 @@ public class PantallaPropuestaCursoTest {
 		assertEquals("", tasaBox.getText());
 		assertEquals("Edicion de curso: 1", edicionLbl.getText());
 		assertEquals("", requisitoCursoBox.getText());
+
+		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.getAtrasBto().doClick();
+		assertFalse(pantalla.isVisible());
 	}
-	
+
 	@Test
 	public void PantallaPropuestaCursoTest2() throws ParseException {
 		// CREACION
+		ArrayList<Materia> materias = new ArrayList();
+		materias.add(null);
+
 		setUp(1,
 				null,
-				null,
+				materias,
 				null,
 				null,
 				null,
@@ -154,24 +164,163 @@ public class PantallaPropuestaCursoTest {
 				40,
 				"");
 
-		// TESTEO 
+		// TESTEO DE DATOS
+		assertEquals(0, materiasLista.getModel().getSize());
 		assertEquals(0, centrosLista.getSelectedIndex());
 		assertEquals(0, secretariosTable.getSelectedRow());
 		assertEquals(2, categoriaLista.getSelectedIndex());
 		assertEquals("", tituloBox.getText());
-		//assertEquals(20, ectsCursoBox.getPrototypeDisplayValue());
+		assertEquals("20", ectsCursoBox.getSelectedItem().toString());
 		assertEquals("", fechaInicioCursoBox.getJFormattedTextField().getText());
 		assertEquals("", fechaFinalCursoBox.getJFormattedTextField().getText());
 		assertEquals("30.0", tasaBox.getText());
 		assertEquals("Edicion de curso: 40", edicionLbl.getText());
 		assertEquals("", requisitoCursoBox.getText());
+
+		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.getAtrasBto().doClick();
+		assertFalse(pantalla.isVisible());
 	}
 
+	@Test
+	public void PantallaPropuestaCursoTest3() throws ParseException {
+		// CREACION
+		ArrayList<Materia> materias = new ArrayList();
+		materias.add(new Materia("materia", 0, null, null, null));
+		materias.add(null);
+
+		setUp(10,
+				null,
+				materias,
+				null,
+				null,
+				null,
+				EstadoCurso.PROPUESTA_RECHAZADA,
+				TipoCurso.ESPECIALISTA,
+				null,
+				null,
+				0,
+				dateFormat.parse("01-01-2000"),
+				null,
+				0.0,
+				0,
+				null);
+
+		// TESTEO DE DATOS
+		for (int i = 0; i < materiasLista.getModel().getSize(); i++) {
+			String materiaEsperada = materias.get(i).getNombre();
+			String materiaObenida = (String) materiasLista.getModel().getElementAt(i);
+			assertEquals(materiaEsperada, materiaObenida);
+		}	
+		assertEquals(1, materiasLista.getModel().getSize());
+		assertEquals(0, centrosLista.getSelectedIndex());
+		assertEquals(0, secretariosTable.getSelectedRow());
+		assertEquals(1, categoriaLista.getSelectedIndex());
+		assertEquals("", tituloBox.getText());
+		assertEquals("0", ectsCursoBox.getSelectedItem().toString());
+		assertEquals("01-01-2000", fechaInicioCursoBox.getJFormattedTextField().getText());
+		assertEquals("", fechaFinalCursoBox.getJFormattedTextField().getText());
+		assertEquals("0.0", tasaBox.getText());
+		assertEquals("Edicion de curso: 1", edicionLbl.getText());
+		assertEquals("", requisitoCursoBox.getText());
+
+		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.getAtrasBto().doClick();
+		assertFalse(pantalla.isVisible());
+	}
+
+	@Test
+	public void PantallaPropuestaCursoTest4() throws ParseException {
+		// CREACION
+		ArrayList<Materia> materias = new ArrayList();
+		materias.add(null);
+		materias.add(new Materia("materia", 0, null, null, null));
+
+		setUp(0,
+				new ProfesorUCLM("23568907X"),
+				materias,
+				new Centro("UCLM TAL"),
+				null,
+				new ProfesorUCLM("23568907X"),
+				EstadoCurso.EN_MATRICULACION,
+				TipoCurso.FORMACION_AVANZADA,
+				"id",
+				null,
+				20,
+				null,
+				dateFormat.parse("02-02-2000"),
+				-25.0,
+				0,
+				null);
+
+		// TESTEO DE DATOS 
+		assertEquals(0, materiasLista.getModel().getSize());
+		assertEquals(0, centrosLista.getSelectedIndex());
+		assertEquals(0, secretariosTable.getSelectedRow());
+		assertEquals(0, categoriaLista.getSelectedIndex());
+		assertEquals("", tituloBox.getText());
+		assertEquals(0, ectsCursoBox.getSelectedIndex());
+		assertEquals("", fechaInicioCursoBox.getJFormattedTextField().getText());
+		assertEquals("", fechaFinalCursoBox.getJFormattedTextField().getText());
+		assertEquals("", tasaBox.getText());
+		assertEquals("Edicion de curso: 1", edicionLbl.getText());
+		assertEquals("", requisitoCursoBox.getText());
+
+		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.getAtrasBto().doClick();
+		assertFalse(pantalla.isVisible());
+	}
+
+	@Test
+	public void PantallaPropuestaCursoTest5() throws ParseException {
+		// CREACION
+		ArrayList<Materia> materias = new ArrayList();
+		materias.add(new Materia("materia", 0, null, null, null));
+
+		setUp(2,
+				new ProfesorUCLM("23568907X"),
+				materias,
+				new Centro("UCLM TAL"),
+				null,
+				null,
+				EstadoCurso.EN_IMPARTIZICION,
+				TipoCurso.FORMACION_CONTINUA,
+				"",
+				"",
+				0,
+				dateFormat.parse("01-01-2000"),
+				null,
+				30.0,
+				40,
+				"");
+
+		// TESTEO DE DATOS 
+		for (int i = 0; i < materiasLista.getModel().getSize(); i++) {
+			String materiaEsperada = materias.get(i).getNombre();
+			String materiaObenida = (String) materiasLista.getModel().getElementAt(i);
+			assertEquals(materiaEsperada, materiaObenida);
+		}	
+		assertEquals(1, materiasLista.getModel().getSize());
+		assertEquals("UCLM TAL", centrosLista.getSelectedValue());
+		assertEquals(0, secretariosTable.getSelectedRow());
+		assertEquals(4, categoriaLista.getSelectedIndex());
+		assertEquals("", tituloBox.getText());
+		assertEquals("0", ectsCursoBox.getSelectedItem().toString());
+		assertEquals("01-01-2000", fechaInicioCursoBox.getJFormattedTextField().getText());
+		assertEquals("", fechaFinalCursoBox.getJFormattedTextField().getText());
+		assertEquals("30.0", tasaBox.getText());
+		assertEquals("Edicion de curso: 41", edicionLbl.getText());
+		assertEquals("", requisitoCursoBox.getText());
+
+		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.getAtrasBto().doClick();
+		assertFalse(pantalla.isVisible());
+	}
 
 	// ------ PRUEBAS DE CREACION DE CURSO [COBERTURA DE DECISIÓN] -------- //
 
 	@Test
-	public void PantallaPropuestaCursoTest3() throws SQLException {
+	public void EnviarPropuestaTest1() throws SQLException {
 		int action = 1;
 		ProfesorUCLM director = new ProfesorUCLM("23568907X");
 
@@ -210,14 +359,7 @@ public class PantallaPropuestaCursoTest {
 	}
 
 
-	// ------ PRUEBAS DE OTRAS FUNCIONES -------- //
-
-	@Test
-	public void AtrasBtoTest() {
-		pantalla.getAtrasBto().doClick();
-		assertFalse(pantalla.isVisible());
-	}
-
+	// ------ PRUEBAS DE FUNCION TESTS -------- //
 
 	@Test
 	public void testTexts1() {
