@@ -10,7 +10,7 @@
 Ésta se puede observar desde el documento [forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
 
 ## Informe:
-[https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html](/target/site/index.html)
+[https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html](https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html)
 
 ## SonarCloud:
 [https://sonarcloud.io/project/overview?id=forSuin-ISOII_forSuin_ISO2](https://sonarcloud.io/project/overview?id=forSuin-ISOII_forSuin_ISO2)
