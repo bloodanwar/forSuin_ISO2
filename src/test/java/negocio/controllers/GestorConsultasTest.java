@@ -43,7 +43,7 @@ public class GestorConsultasTest {
 		List<CursoPropio> resultadoListarCursosPorDirector=null;
 		List<CursoPropio> resultadoCursosPorEstado=null;
 		List<CursoPropio> resultadoListarTodosCursos=null;
-		List<Profesor> resultadoListarProfesores;
+		List<Profesor> resultadoListarProfesores=null;
 		List<ProfesorUCLM> resultadoListarProfesoresUCLM;
 		List<Centro> resultadoListarCentros;
 		
@@ -211,6 +211,66 @@ public class GestorConsultasTest {
 				new ProfesorUCLM("23568907X"), 
 				null);
 		
+		Profesor profesor01 = new Profesor(
+				"12457890Y",
+				"Jose",
+				"Perez Esteban",
+				true);
+		
+		Profesor profesor02 = new Profesor(
+				"09764312U",
+				"Antonio",
+				"Santos Ruiz",
+				false);
+				
+		Profesor profesor03 = new Profesor(
+				"23568907X",
+				"Marcos",
+				"Fernandez Toledano",
+				false);
+		
+		Profesor profesor04 = new Profesor(
+				"98653214Z",
+				"Miguel",
+				"Romeo Orozco",
+				true);
+				
+		Profesor profesor05 = new Profesor(
+				"14709633I",
+				"Laura",
+				"Mendo Palomeque",
+				true);
+		
+		Profesor profesor06 = new Profesor(
+				"07412588O",
+				"Ana",
+				"Gomez Munoz",
+				false);
+		
+		Profesor profesor07 = new Profesor(
+				"25885236P",
+				"Elena",
+				"Parro Lopez",
+				false);
+		
+		Profesor profesor08 = new Profesor(
+				"45738298T",
+				"Alba",
+				"Vicario Corrochano",
+				true);
+		
+		Profesor profesor09 = new Profesor(
+				"60863916B",
+				"David",
+				"Marquez Alvarez",
+				true);
+				
+		Profesor profesor10 = new Profesor(
+				"92659487C",
+				"Luis",
+				"Garatea Hidalgo",
+				false);
+		
 		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
 		List<CursoPropio> esperadoListarCursosPorDirector=new ArrayList<>();
 		esperadoListarCursosPorDirector.add(curso05);
@@ -233,16 +293,25 @@ public class GestorConsultasTest {
 		esperadoListarTodosCursos.add(curso09);
 		esperadoListarTodosCursos.add(curso10);
 		
-		List<CursoPropio> esperadoListarProfesores=new ArrayList<>();
+		List<Profesor> esperadoListarProfesores=new ArrayList<>();
+		esperadoListarProfesores.add(profesor01);
+		esperadoListarProfesores.add(profesor02);
+		esperadoListarProfesores.add(profesor03);
+		esperadoListarProfesores.add(profesor04);
+		esperadoListarProfesores.add(profesor05);
+		esperadoListarProfesores.add(profesor06);
+		esperadoListarProfesores.add(profesor07);
+		esperadoListarProfesores.add(profesor08);
+		esperadoListarProfesores.add(profesor09);
+		esperadoListarProfesores.add(profesor10);
+		
 		assertTrue(resultadoConsultarIngresos==0.0);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorDirector, resultadoListarCursosPorDirector);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);
-		
 		assertEquals(esperadoListarTodosCursos, resultadoListarTodosCursos);
+		assertEquals(esperadoListarProfesores, resultadoListarProfesores);
 		/**
-		assertTrue(resultadoListarProfesores==);
-		
 		assertTrue(resultadoListarProfesoresUCLM==);
 		assertTrue(resultadoListarCentros==);
 		**/

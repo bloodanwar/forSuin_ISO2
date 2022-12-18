@@ -1,4 +1,4 @@
-/*AUTORES: MIRIAM FERNANDEZ OSUNA, SERGIO GARCIA MUÑOZ, RUBEN GOMEZ VILLEGAS Y CARLOS RINCON GONZALEZ*/
+/*AUTORES: MIRIAM FERNANDEZ OSUNA, SERGIO GARCIA MUNOZ, RUBEN GOMEZ VILLEGAS Y CARLOS RINCON GONZALEZ*/
 DROP TABLE IF EXISTS MATERIA;
 DROP TABLE IF EXISTS MATRICULA;
 DROP TABLE IF EXISTS CURSOPROPIO;
@@ -164,7 +164,7 @@ INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('09764312U', 'Anto
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('23568907X', 'Marcos', 'Fernandez Toledano', FALSE);
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('98653214Z', 'Miguel', 'Romeo Orozco', TRUE);
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('14709633I', 'Laura', 'Mendo Palomeque', TRUE);
-INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('07412588O', 'Ana', 'Gomez Muñoz', FALSE);
+INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('07412588O', 'Ana', 'Gomez Munoz', FALSE);
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('25885236P', 'Elena', 'Parro Lopez', FALSE);
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('45738298T', 'Alba', 'Vicario Corrochano', TRUE);
 INSERT INTO PROFESOR (dni, nombre, apellidos, doctor) VALUES ('60863916B', 'David', 'Marquez Alvarez', TRUE);
