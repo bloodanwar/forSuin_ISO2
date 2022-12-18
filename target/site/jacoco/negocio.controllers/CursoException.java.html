@@ -21,8 +21,14 @@
 	
 	static class CursoNoEliminadoException extends Exception {
 		public CursoNoEliminadoException(String errorMessage) {
-<span class="nc" id="L24">	        super(errorMessage);</span>
-<span class="nc" id="L25">	    }</span>
+<span class="fc" id="L24">	        super(errorMessage);</span>
+<span class="fc" id="L25">	    }</span>
+	}
+	
+	public static class CursoNoExisteException extends Exception {
+		public CursoNoExisteException(String errorMessage) {
+<span class="fc" id="L30">	        super(errorMessage);</span>
+<span class="fc" id="L31">		}</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

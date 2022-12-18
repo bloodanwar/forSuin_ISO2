@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +19,12 @@ import negocio.controllers.CursoException.CursoNoExisteException;
 import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
+import negocio.entities.Materia;
+import negocio.entities.Profesor;
 import negocio.entities.ProfesorUCLM;
 import negocio.entities.TipoCurso;
 
 public class GestorPropuestasCursosTest {
-	
 	private GestorPropuestasCursos g = null;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	
@@ -161,48 +165,63 @@ public class GestorPropuestasCursosTest {
 		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 		
-		try {
-			g.editarPropuestaCurso(curso);
+		try { g.editarPropuestaCurso(curso);
 		} catch (CursoNoExisteException e) { System.out.println(e);
 		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 		
-		try {
-			g.eliminarPropuestaCurso(curso);
+		try { g.eliminarPropuestaCurso(curso);
 		} catch (CursoNoEliminadoException e) { System.out.println(e);
 		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 		
-		try {
-			g.evaluarPropuesta(curso);
+		try { g.evaluarPropuesta(curso);
 		} catch (CursoNoExisteException e) { System.out.println(e);
 		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 		
-		try {
-			g.altaCursoAprobado(curso);
+		try { g.altaCursoAprobado(curso);
 		} catch (CursoNoExisteException e) { System.out.println(e);
 		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 	}
 	
+	@Test
 	public void cp6(){
-		String id = "02";
-		int edicion = 5;
-		/**
-		CursoPropio curso = new CursoPropio(
-				id,
-				edicion,
-				
-				);
+		String id = "ou";
+		int edicion = 3;
+		Date fechaInicio = null;
+		Date fechaFin=null;
 		
-		curso.estado = EstadoCurso.PROPUESTO;
-		curso.tipo = TipoCurso.VERANO;
-		curso.centro = new Centro("Ribera del Tajo");
-		curso.secretario = new ProfesorUCLM("alfonsoSIU");
-		curso.director = new ProfesorUCLM("ascodetodo");
-		//materia= new Materia("Historia de España");
-		 
-		 */
+		try {
+			fechaInicio = dateFormat.parse("20-11-1975");
+			fechaFin = dateFormat.parse("11-03-2011");
+		} catch (ParseException e1) {
+			fail("Fechas mal construidas");
+			e1.printStackTrace();
+		}
+		
+		CursoPropio curso = new CursoPropio(
+			id, "Pesadilla en la cocina", 8, fechaInicio,
+			fechaFin, 7.77, edicion,
+			EstadoCurso.PROPUESTO, TipoCurso.EXPERTO, new Centro("UCLM TAL"),
+			new ProfesorUCLM("14709633I"), new ProfesorUCLM("14709633I"), "Tener una cuchara"
+		);		
+		
+		Collection<Materia> materias = new ArrayList<>();
+		materias.add(new Materia("El hormiguero", 1.3, fechaInicio, fechaFin, new Profesor("07412588O")));
+		curso.materias = materias;
+		
+		try { g.realizarPropuestaCurso(curso);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.editarPropuestaCurso(curso);
+		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.eliminarPropuestaCurso(curso);
+		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
+		}
 	}
 }

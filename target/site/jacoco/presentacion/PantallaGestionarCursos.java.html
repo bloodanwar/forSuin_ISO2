@@ -61,12 +61,12 @@ public class PantallaGestionarCursos extends JFrame{
 
 		try {
 <span class="fc" id="L63">			cursosDao = gestor.listarCursosPorDirector(director);</span>
-<span class="nc" id="L64">		} catch (ParseException e) {</span>
+<span class="pc" id="L64">		} catch (ParseException e) {</span>
 <span class="nc" id="L65">			e.printStackTrace();</span>
 <span class="nc" id="L66">		} catch (SQLException e) {</span>
 			// TODO Auto-generated catch block
 <span class="nc" id="L68">			e.printStackTrace();</span>
-<span class="pc" id="L69">		}</span>
+		}
 		
 <span class="fc" id="L71">		cursosEnviados.addColumn(&quot;Nombre&quot;);</span>
 <span class="fc" id="L72">		cursosEnviados.addColumn(&quot;Edicion&quot;);</span>
@@ -171,7 +171,7 @@ public class PantallaGestionarCursos extends JFrame{
 <span class="nc" id="L171">						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));</span>
 <span class="nc" id="L172">					} catch (Exception e1) {</span>
 <span class="nc" id="L173">						e1.printStackTrace();</span>
-<span class="nc" id="L174">					}</span>
+					}
 <span class="nc" id="L175">					cursosEnviados.removeRow(cursosTable.getSelectedRow());</span>
 				}
 <span class="nc" id="L177">			}</span>

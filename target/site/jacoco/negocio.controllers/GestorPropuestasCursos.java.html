@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestorPropuestasCursos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">negocio.controllers</a> &gt; <span class="el_source">GestorPropuestasCursos.java</span></div><h1>GestorPropuestasCursos.java</h1><pre class="source lang-java linenums">package negocio.controllers;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import negocio.controllers.CursoException.*;
 import negocio.entities.*;
 
-<span class="fc" id="L9">public class GestorPropuestasCursos {</span>
+<span class="fc" id="L11">public class GestorPropuestasCursos {</span>
 
 	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
 	public void realizarPropuestaCurso(CursoPropio cursoPropuesto) throws SQLException, CursoNoCreadoException, CursoErroneoException {
-<span class="nc" id="L14">		comprobarSiTieneIdEdicion(cursoPropuesto);</span>
-<span class="nc bnc" id="L15" title="All 2 branches missed.">		if (cursoPropuesto.cursoPropioDao.crearNuevoCurso(cursoPropuesto) == 0) {</span>
-<span class="nc" id="L16">			throw new CursoNoCreadoException(&quot;No se ha realizado la propuesta del curso&quot;);</span>
+<span class="fc" id="L16">		comprobarSiTieneIdEdicion(cursoPropuesto);</span>
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">		if (cursoPropuesto.cursoPropioDao.crearNuevoCurso(cursoPropuesto) == 0) {</span>
+<span class="nc" id="L18">			throw new CursoNoCreadoException(&quot;No se ha realizado la propuesta del curso&quot;);</span>
 		}
-<span class="nc" id="L18">	}</span>
+<span class="fc" id="L20">	}</span>
 
-	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException {
-<span class="nc" id="L21">		comprobarSiTieneIdEdicion(cursoEditado);</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">		if (cursoEditado.cursoPropioDao.editarCurso(cursoEditado) == 0) {</span>
-<span class="nc" id="L23">			throw new CursoNoEditadoException(&quot;No se ha realizado la edición de la propuesta del curso&quot;);</span>
+	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
+<span class="fc" id="L23">		comprobarSiTieneIdEdicion(cursoEditado);</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">		if (cursoEditado.cursoPropioDao.editarCurso(cursoEditado) == 0) {</span>
+<span class="nc" id="L25">			throw new CursoNoEditadoException(&quot;No se ha realizado la edición de la propuesta del curso&quot;);</span>
 		}
-<span class="nc" id="L25">	}</span>
+<span class="fc" id="L27">	}</span>
 	
 	public void eliminarPropuestaCurso(CursoPropio curso) throws SQLException, CursoNoEliminadoException, CursoErroneoException {
-<span class="nc" id="L28">		comprobarSiTieneIdEdicion(curso);</span>
-<span class="nc bnc" id="L29" title="All 2 branches missed.">		if (curso.cursoPropioDao.eliminarCursoPropio(curso) == 0) {</span>
-<span class="nc" id="L30">			throw new CursoNoEliminadoException(&quot;No se ha eliminado la propuesta del curso&quot;);</span>
+<span class="fc" id="L30">		comprobarSiTieneIdEdicion(curso);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		if (curso.cursoPropioDao.eliminarCursoPropio(curso) == 0) {</span>
+<span class="fc" id="L32">			throw new CursoNoEliminadoException(&quot;No se ha eliminado la propuesta del curso&quot;);</span>
 		}
-<span class="nc" id="L32">	}</span>
+<span class="fc" id="L34">	}</span>
 
-	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, ParseException, CursoErroneoException {
-<span class="nc" id="L35">		comprobarSiTieneIdEdicion(curso);</span>
-<span class="nc" id="L36">		CursoPropio cursoTemp = curso.cursoPropioDao.seleccionarCurso(curso);</span>
-<span class="nc" id="L37">		return cursoTemp.estado;</span>
+	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, ParseException, CursoErroneoException, CursoNoExisteException {
+<span class="fc" id="L37">		comprobarSiTieneIdEdicion(curso);</span>
+<span class="nc" id="L38">		CursoPropio cursoTemp = curso.cursoPropioDao.seleccionarCurso(curso);</span>
+<span class="nc" id="L39">		return cursoTemp.estado;</span>
 	}
 	
-	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException {
-<span class="nc" id="L41">		comprobarSiTieneIdEdicion(curso);</span>
-<span class="nc" id="L42">		curso.estado = EstadoCurso.VALIDADO;</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (curso.cursoPropioDao.editarCurso(curso) == 0) {</span>
-<span class="nc" id="L44">			throw new CursoNoEditadoException(&quot;No se ha dado de alta el curso&quot;);</span>
+	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
+<span class="fc" id="L43">		comprobarSiTieneIdEdicion(curso);</span>
+<span class="fc" id="L44">		curso.estado = EstadoCurso.VALIDADO;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (curso.cursoPropioDao.editarCurso(curso) == 0) {</span>
+<span class="nc" id="L46">			throw new CursoNoEditadoException(&quot;No se ha dado de alta el curso&quot;);</span>
 		}
-<span class="nc" id="L46">	}</span>
+<span class="nc" id="L48">	}</span>
 	
 	private void comprobarSiTieneIdEdicion(CursoPropio curso) throws CursoErroneoException {
-<span class="fc" id="L49">		boolean idCursoError = false;</span>
-<span class="fc" id="L50">		boolean edicionCursoError = false;</span>
-<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (curso == null) throw new CursoErroneoException(&quot;Curso nulo&quot;);</span>
-<span class="pc bpc" id="L52" title="1 of 4 branches missed.">		if (curso.getId()==null || curso.getId().equals(&quot;&quot;)) idCursoError = true;</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (curso.getEdicion()&lt;=0) edicionCursoError = true;</span>
+<span class="fc" id="L51">		boolean idCursoError = false;</span>
+<span class="fc" id="L52">		boolean edicionCursoError = false;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (curso == null) throw new CursoErroneoException(&quot;Curso nulo&quot;);</span>
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">		if (curso.getId()==null || curso.getId().equals(&quot;&quot;)) idCursoError = true;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (curso.getEdicion()&lt;=0) edicionCursoError = true;</span>
 		
-<span class="pc bpc" id="L55" title="1 of 4 branches missed.">		if (!idCursoError &amp;&amp; !edicionCursoError) return;</span>
-<span class="pc bpc" id="L56" title="1 of 4 branches missed.">		else if (idCursoError &amp;&amp; edicionCursoError) throw new CursoErroneoException(&quot;Curso sin id ni edicion&quot;);</span>
+<span class="fc bfc" id="L57" title="All 4 branches covered.">		if (!idCursoError &amp;&amp; !edicionCursoError) return;</span>
+<span class="pc bpc" id="L58" title="1 of 4 branches missed.">		else if (idCursoError &amp;&amp; edicionCursoError) throw new CursoErroneoException(&quot;Curso sin id ni edicion&quot;);</span>
 		else {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (idCursoError) throw new CursoErroneoException(&quot;Curso sin id&quot;);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (edicionCursoError) throw new CursoErroneoException(&quot;Curso sin edicion&quot;);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (idCursoError) throw new CursoErroneoException(&quot;Curso sin id&quot;);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (edicionCursoError) throw new CursoErroneoException(&quot;Curso sin edicion&quot;);</span>
 		}	
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L63">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

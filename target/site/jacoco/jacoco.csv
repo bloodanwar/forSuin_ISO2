@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 Gestor_titulos_propios,negocio.entities,EstadoCurso,0,39,0,0,0,7,0,1,0,1
 Gestor_titulos_propios,negocio.entities,ProfesorExterno,42,0,0,0,11,0,4,0,4,0
-Gestor_titulos_propios,negocio.entities,CursoPropio,136,180,17,15,16,48,24,11,8,11
+Gestor_titulos_propios,negocio.entities,CursoPropio,127,188,17,15,19,50,22,13,6,13
 Gestor_titulos_propios,negocio.entities,Vicerrectorado,67,0,0,0,22,0,11,0,11,0
 Gestor_titulos_propios,negocio.entities,Centro,52,78,10,6,9,24,12,7,4,7
 Gestor_titulos_propios,negocio.entities,ModoPago,0,15,0,0,0,3,0,1,0,1
@@ -12,32 +12,32 @@ Gestor_titulos_propios,negocio.entities,Profesor,61,90,11,7,11,27,14,8,5,8
 Gestor_titulos_propios,negocio.entities,CategoriaProfesor,0,39,0,0,0,7,0,1,0,1
 Gestor_titulos_propios,negocio.entities,ProfesorUCLM,62,94,13,9,8,22,12,4,1,4
 Gestor_titulos_propios,negocio.entities,TipoCurso,0,57,0,0,0,10,0,1,0,1
-Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},11,9,0,0,3,1,1,1,1,1
+Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},9,9,0,0,3,1,1,1,1,1
 Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new JTable() {...},2,7,0,0,1,1,1,1,1,1
-Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},111,241,11,9,18,38,10,2,0,2
+Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},109,240,11,9,17,43,10,2,0,2
 Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new JTable() {...},2,7,0,0,1,1,1,1,1,1
-Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},0,29,0,0,0,7,0,2,0,2
-Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},17,9,0,0,4,1,1,1,1,1
+Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},0,27,0,0,0,6,0,2,0,2
+Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},15,9,0,0,4,1,1,1,1,1
 Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new JTable() {...},2,7,0,0,1,1,1,1,1,1
-Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},34,9,4,0,6,1,3,1,1,1
+Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},32,9,4,0,6,1,3,1,1,1
 Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},33,6,4,0,7,1,3,1,1,1
-Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},38,9,6,0,6,1,4,1,1,1
-Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},179,6,6,0,29,1,4,1,1,1
-Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},44,6,4,0,10,1,3,1,1,1
-Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ListSelectionListener() {...},39,143,7,17,6,30,5,12,0,2
+Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},36,9,6,0,6,1,4,1,1,1
+Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ActionListener() {...},178,6,6,0,28,1,4,1,1,1
+Gestor_titulos_propios,presentacion,PantallaGestionarCursos.new ActionListener() {...},44,6,4,0,9,1,3,1,1,1
+Gestor_titulos_propios,presentacion,PantallaPropuestaCurso.new ListSelectionListener() {...},39,143,7,17,6,31,5,12,0,2
 Gestor_titulos_propios,presentacion,PantallaEmpleadosVicerrectorado.new ActionListener() {...},15,0,0,0,4,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaEmpleadosVicerrectorado.new ActionListener() {...},32,0,2,0,5,0,3,0,2,0
 Gestor_titulos_propios,presentacion,PantallaJefeVicerrectoradoAprobar.new ActionListener() {...},15,0,0,0,4,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaDireccionCursos,111,0,0,0,27,0,5,0,5,0
 Gestor_titulos_propios,presentacion,PantallaLogin,5,274,0,0,2,49,1,2,1,2
 Gestor_titulos_propios,presentacion,PantallaJefeVicerrectoradoAprobar.new ActionListener() {...},32,0,2,0,5,0,3,0,2,0
-Gestor_titulos_propios,presentacion,PantallaPropuestaCurso,40,1770,11,73,11,306,13,47,2,16
+Gestor_titulos_propios,presentacion,PantallaPropuestaCurso,40,1763,11,73,8,310,13,47,2,16
 Gestor_titulos_propios,presentacion,PantallaMatriculacion.new ActionListener() {...},50,0,4,0,13,0,4,0,2,0
 Gestor_titulos_propios,presentacion,PantallaMatriculacion.new ActionListener() {...},26,0,0,0,4,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaLogin.new Runnable() {...},16,0,0,0,7,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaLogin.new ActionListener() {...},19,6,0,0,4,1,1,1,1,1
 Gestor_titulos_propios,presentacion,PantallaLogin.new ActionListener() {...},16,6,0,0,4,1,1,1,1,1
-Gestor_titulos_propios,presentacion,PantallaDatosCurso,606,0,20,0,104,0,17,0,7,0
+Gestor_titulos_propios,presentacion,PantallaDatosCurso,597,0,20,0,105,0,17,0,7,0
 Gestor_titulos_propios,presentacion,PantallaLogin.new ActionListener() {...},10,6,0,0,3,1,1,1,1,1
 Gestor_titulos_propios,presentacion,PantallaLogin.new ActionListener() {...},10,6,0,0,3,1,1,1,1,1
 Gestor_titulos_propios,presentacion,PantallaMatriculacion,324,0,0,0,60,0,5,0,5,0
@@ -54,30 +54,31 @@ Gestor_titulos_propios,presentacion,PantallaJefeGabineteVicerrectorado.new Actio
 Gestor_titulos_propios,presentacion,PantallaAlumno.new ActionListener() {...},17,0,0,0,4,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaAlumno.new ActionListener() {...},15,0,0,0,4,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaCursosAprobados,166,0,4,0,40,0,6,0,4,0
-Gestor_titulos_propios,presentacion,PantallaDatosCurso.new ActionListener() {...},37,0,4,0,5,0,4,0,2,0
-Gestor_titulos_propios,presentacion,PantallaDatosCurso.new ActionListener() {...},95,0,10,0,20,0,7,0,2,0
-Gestor_titulos_propios,presentacion,PantallaGestionarCursos,7,257,1,3,4,53,1,5,0,4
+Gestor_titulos_propios,presentacion,PantallaDatosCurso.new ActionListener() {...},33,0,4,0,5,0,4,0,2,0
+Gestor_titulos_propios,presentacion,PantallaDatosCurso.new ActionListener() {...},91,0,10,0,21,0,7,0,2,0
+Gestor_titulos_propios,presentacion,PantallaGestionarCursos,7,257,1,3,3,53,1,5,0,4
 Gestor_titulos_propios,presentacion,PantallaAlumno,86,0,0,0,23,0,5,0,5,0
 Gestor_titulos_propios,presentacion,PantallaDatosCurso.new ActionListener() {...},22,0,0,0,5,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaDatosCurso.new ActionListener() {...},17,0,0,0,4,0,2,0,2,0
 Gestor_titulos_propios,presentacion,PantallaDatosCurso.new JTable() {...},9,0,0,0,2,0,2,0,2,0
 Gestor_titulos_propios,presentacion,DateLabelFormatter,9,22,1,1,2,6,1,3,0,3
 Gestor_titulos_propios,presentacion,PantallaJefeGabineteVicerrectorado,94,0,0,0,20,0,2,0,2,0
-Gestor_titulos_propios,negocio.controllers,CursoException.CursoNoEliminadoException,4,0,0,0,2,0,1,0,1,0
+Gestor_titulos_propios,negocio.controllers,CursoException.CursoNoEliminadoException,0,4,0,0,0,2,0,1,0,1
 Gestor_titulos_propios,negocio.controllers,GestorMD5,19,24,1,1,4,6,2,1,1,1
 Gestor_titulos_propios,negocio.controllers,MatriculaException.MatriculaErroneaException,4,0,0,0,2,0,1,0,1,0
 Gestor_titulos_propios,negocio.controllers,GestorConsultas,0,109,0,0,0,24,0,9,0,9
 Gestor_titulos_propios,negocio.controllers,CursoException,3,0,0,0,1,0,1,0,1,0
 Gestor_titulos_propios,negocio.controllers,CursoException.CursoNoEditadoException,4,0,0,0,2,0,1,0,1,0
 Gestor_titulos_propios,negocio.controllers,CursoException.CursoErroneoException,0,4,0,0,0,2,0,1,0,1
-Gestor_titulos_propios,negocio.controllers,GestorPropuestasCursos,77,51,14,14,21,10,15,6,5,2
+Gestor_titulos_propios,negocio.controllers,GestorPropuestasCursos,35,93,8,20,8,23,7,14,0,7
 Gestor_titulos_propios,negocio.controllers,GestorMatriculacion,177,0,34,0,39,0,24,0,7,0
 Gestor_titulos_propios,negocio.controllers,MatriculaException.MatriculaNoEditadaException,4,0,0,0,2,0,1,0,1,0
 Gestor_titulos_propios,negocio.controllers,CursoException.CursoNoCreadoException,4,0,0,0,2,0,1,0,1,0
 Gestor_titulos_propios,negocio.controllers,MatriculaException.MatriculaNoCreadaException,4,0,0,0,2,0,1,0,1,0
 Gestor_titulos_propios,negocio.controllers,MatriculaException,3,0,0,0,1,0,1,0,1,0
+Gestor_titulos_propios,negocio.controllers,CursoException.CursoNoExisteException,0,4,0,0,0,2,0,1,0,1
 Gestor_titulos_propios,persistencia,VicerrectoradoDAO,51,0,0,0,8,0,2,0,2,0
-Gestor_titulos_propios,persistencia,GestorBD,21,110,0,6,8,37,3,12,3,9
+Gestor_titulos_propios,persistencia,GestorBD,17,114,0,6,7,38,2,13,2,10
 Gestor_titulos_propios,persistencia,ProfesorUCLMDAO,161,79,0,2,24,14,4,3,4,2
 Gestor_titulos_propios,persistencia,ProfesorExternoDAO,151,0,0,0,24,0,5,0,5,0
 Gestor_titulos_propios,persistencia,MateriaDAO,121,174,0,2,16,24,2,5,2,4
@@ -86,6 +87,6 @@ Gestor_titulos_propios,persistencia,EstudianteDAO,166,9,0,0,27,2,4,1,4,1
 Gestor_titulos_propios,persistencia,MatriculaDAO,235,98,0,2,32,14,4,3,4,2
 Gestor_titulos_propios,persistencia,CentroDAO,140,57,0,2,23,11,4,3,4,2
 Gestor_titulos_propios,persistencia,AbstractEntityDAO,6,0,0,0,3,0,2,0,2,0
-Gestor_titulos_propios,persistencia,CursoPropioDAO,577,736,27,13,107,108,18,12,3,7
+Gestor_titulos_propios,persistencia,CursoPropioDAO,245,1095,16,28,40,177,14,18,1,9
 Gestor_titulos_propios,persistencia,ProfesorDAO,149,63,0,2,24,12,4,3,4,2
 Gestor_titulos_propios,negocio,Prueba,43,0,0,0,15,0,3,0,3,0

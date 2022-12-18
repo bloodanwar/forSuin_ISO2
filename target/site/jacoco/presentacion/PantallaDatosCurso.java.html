@@ -145,7 +145,7 @@ public class PantallaDatosCurso extends JFrame {
 <span class="nc bnc" id="L145" title="All 2 branches missed.">			while(ite.hasNext()){</span>
 <span class="nc" id="L146">				Materia temp = ite.next();</span>
 <span class="nc" id="L147">				materiasCurso.addRow(new Object[] { temp.getNombre(), temp.responsable, temp.getHoras(), temp.getFechaInicio() ,temp.getFechaFin() });</span>
-<span class="nc" id="L148">			}</span>
+			}
 		}
 
 
@@ -183,7 +183,7 @@ public class PantallaDatosCurso extends JFrame {
 
 <span class="nc bnc" id="L184" title="All 2 branches missed.">				if (type == 0) { </span>
 <span class="nc" id="L185">					confirm = JOptionPane.showConfirmDialog(null,&quot;¿Matricular?&quot;,&quot;Matricular en curso&quot;,JOptionPane.YES_NO_OPTION, 1);</span>
-				} else { 
+<span class="nc" id="L186">				} else { </span>
 <span class="nc" id="L187">					confirm = JOptionPane.showConfirmDialog(null,&quot;¿Evaluar propuesta?&quot;,&quot;Evaluar propuesta&quot;,JOptionPane.YES_NO_OPTION, 1);</span>
 				}
 				
@@ -191,7 +191,7 @@ public class PantallaDatosCurso extends JFrame {
 <span class="nc bnc" id="L191" title="All 2 branches missed.">					if (type == 0) { // TODO -- matricular</span>
 <span class="nc" id="L192">						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno</span>
 <span class="nc" id="L193">		                setVisible(false);</span>
-					}	
+<span class="nc" id="L194">					}	</span>
 					else {  // Evaluar
 						
 <span class="nc bnc" id="L197" title="All 2 branches missed.">						if (!evaluarPropuestaCorrecto(type)) return;</span>
@@ -205,7 +205,7 @@ public class PantallaDatosCurso extends JFrame {
 <span class="nc" id="L205">						} catch (Exception e1) {</span>
 <span class="nc" id="L206">							e1.printStackTrace();</span>
 							
-<span class="nc" id="L208">						}</span>
+						}
 						
 <span class="nc" id="L210">						new PantallaEmpleadosVicerrectorado();</span>
 <span class="nc" id="L211">						setVisible(false);</span>
@@ -228,7 +228,7 @@ public class PantallaDatosCurso extends JFrame {
 <span class="nc" id="L228">			aceptarPropuesta.setBackground(new Color(222, 129, 122));</span>
 <span class="nc" id="L229">			rechazarPropuesta.setBackground(new Color(222, 129, 122));</span>
 <span class="nc" id="L230">			result = false;</span>
-		}else {
+<span class="nc" id="L231">		}else {</span>
 <span class="nc" id="L232">			aceptarPropuesta.setBackground(getBackground());</span>
 <span class="nc" id="L233">			rechazarPropuesta.setBackground(getBackground());</span>
 		}
@@ -237,7 +237,7 @@ public class PantallaDatosCurso extends JFrame {
 <span class="nc bnc" id="L237" title="All 2 branches missed.">			if (descripcion.getText().equals(&quot;&quot;)) {</span>
 <span class="nc" id="L238">				descripcion.setBackground(new Color(222, 129, 122));</span>
 <span class="nc" id="L239">				result = false;</span>
-			} else {
+<span class="nc" id="L240">			} else {</span>
 <span class="nc" id="L241">				descripcion.setBackground(new Color(255, 255, 255));</span>
 			}
 		}
