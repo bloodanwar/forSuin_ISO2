@@ -70,9 +70,32 @@ public class CursoPropio {
 				+"\n\tCentro: "+centro.getNombre()
 				+"\n\tSecretario: "+secretario.getDni()
 				+"\n\tDirector: "+director.getDni()
-				+"\n\tMaterias: "+materias.size()
+				//+"\n\tMaterias: "+materias.size()
 				;
-		
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if (getClass() != obj.getClass()) return false;
+		CursoPropio cursoObj = (CursoPropio) obj; 
+		if (!(this.getId().equals(cursoObj.getId()))) return false; 
+		if (!(this.getNombre().equals(cursoObj.getNombre()))) return false; 
+		if (this.getECTS()!=cursoObj.getECTS()) return false;
+		if (!(this.getFechaInicio().equals(cursoObj.getFechaInicio()))) return false; 
+		if (!(this.getFechaFin().equals(cursoObj.getFechaFin()))) return false; 
+		if (this.getTasaMatricula()!=cursoObj.getTasaMatricula()) return false;
+		if (this.getEdicion()!=cursoObj.getEdicion()) return false; 
+		if (this.estado != cursoObj.estado) return false;
+		if (this.tipo != cursoObj.tipo) return false;
+		if (!(this.centro.getNombre().equals(cursoObj.centro.getNombre()))) return false;
+		if (!(this.secretario.getDni().equals(cursoObj.secretario.getDni()))) return false;
+		if (!(this.director.getDni().equals(cursoObj.director.getDni()))) return false;
+		if (this.requisitos == null){
+			if (cursoObj.requisitos!=null) return false;
+		} else {
+			if (!(this.requisitos).equals(cursoObj.requisitos)) return false;
+		}	
+		return true;
 	}
 	
 	public String getId() { return id; }

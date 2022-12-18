@@ -11,6 +11,8 @@ import persistencia.CursoPropioDAO;
 
 public class GestorConsultas {
 
+	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+	
 	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
 		CursoPropio curso = new CursoPropio();
 		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);
@@ -20,54 +22,22 @@ public class GestorConsultas {
 		CursoPropio curso = new CursoPropio();
 		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);
 	}
-
-	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) {
-		// TODO - implement GestorConsultas.listarEdicionesCursos
-		throw new UnsupportedOperationException();
-	}
 	
-	
-	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException{
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException, SQLException{
 		CursoPropio curso = new CursoPropio();
-		List<CursoPropio> listaCursos = null;
-		
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
 	    Date dateInicio = formatter.parse("01-01-1000");      
-	    Date dateFin = formatter.parse("01-01-3000");      
-	    //System.out.println(dateInicio);
+	    Date dateFin = formatter.parse("01-01-3000");  
 	    
-		try {
-			listaCursos = curso.cursoPropioDaoestado listarCursosPorDirector(profesor, dateInicio, dateFin);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		List<CursoPropio> listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
 		return listaCursos;
 	}
 	
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException, SQLException{
+		CursoPropio curso = new CursoPropio(); 
+		Date dateInicio = formatter.parse("01-01-1000");
+		Date dateFin = formatter.parse("01-01-3000");
+		List<CursoPropio> listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
 	
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException{
-		CursoPropio curso = new CursoPropio();
-		List<CursoPropio> listaCursos = null;
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
-	    Date dateInicio = new Date(); 
-	    Date dateFin = null;
-		try {
-			dateInicio = formatter.parse("01-01-1000");
-			dateFin = formatter.parse("01-01-3000");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}      
-	    
-		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return listaCursos;
 	}
 	
