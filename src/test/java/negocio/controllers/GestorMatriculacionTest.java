@@ -29,12 +29,12 @@ public class GestorMatriculacionTest {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	
 	
-	@Before
+	//@Before
 	public void setUp() throws Exception{
 		g= new GestorMatriculacion();
 	}
 	
-	@Test
+	//@Test
 	public void cp1()throws Exception{
 		String id = "01";
 		int edicion = 1;
@@ -67,7 +67,7 @@ public class GestorMatriculacionTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void cp2()throws Exception{
 		String id = "01";
 		int edicion = -1;
@@ -100,7 +100,7 @@ public class GestorMatriculacionTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void cp3()throws Exception{
 		String id = "01";
 		int edicion = 0;
@@ -133,7 +133,7 @@ public class GestorMatriculacionTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void cp4()throws Exception{
 		String id = "01";
 		int edicion = 0;
@@ -165,7 +165,7 @@ public class GestorMatriculacionTest {
 		return;
 	}
 	
-	@Test
+	//@Test
 	public void cp5()throws Exception{
 		String id = "01";
 		int edicion = (Integer) null;

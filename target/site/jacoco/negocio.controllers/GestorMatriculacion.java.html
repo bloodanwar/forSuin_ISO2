@@ -6,21 +6,21 @@ import java.util.Date;
 import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
-<span class="nc" id="L9">public class GestorMatriculacion {</span>
+<span class="fc" id="L9">public class GestorMatriculacion {</span>
 
 	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
 	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException, MatriculaErroneaException {
-<span class="nc" id="L14">		Date fecha = new Date();</span>
-<span class="nc" id="L15">		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);</span>
-<span class="nc" id="L16">		comprobarSiTieneTituloEstudiante(matricula);</span>
+<span class="fc" id="L14">		Date fecha = new Date();</span>
+<span class="fc" id="L15">		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);</span>
+<span class="fc" id="L16">		comprobarSiTieneTituloEstudiante(matricula);</span>
 <span class="nc bnc" id="L17" title="All 2 branches missed.">		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 0) {</span>
 <span class="nc" id="L18">			throw new MatriculaNoCreadaException(&quot;Matrícula no creada&quot;);</span>
 		}
 <span class="nc" id="L20">	}</span>
 
 	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
-<span class="nc" id="L23">		Matricula matricula = new Matricula(estudiante, curso);</span>
+<span class="fc" id="L23">		Matricula matricula = new Matricula(estudiante, curso);</span>
 <span class="nc" id="L24">		matricula.matriculaDAO.seleccionarMatricula(matricula);</span>
 <span class="nc" id="L25">		matricula.setPagado(true);</span>
 <span class="nc bnc" id="L26" title="All 2 branches missed.">		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {</span>
@@ -28,7 +28,7 @@ import negocio.entities.*;
 		}
 <span class="nc" id="L29">	}</span>
 
-	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 <span class="nc" id="L32">		Matricula matricula = new Matricula(estudiante, curso);</span>
 <span class="nc" id="L33">		matricula.matriculaDAO.seleccionarMatricula(matricula);</span>
 <span class="nc" id="L34">		matricula.tipoPago = ModoPago.TARJETA_CREDITO;</span>
@@ -37,7 +37,7 @@ import negocio.entities.*;
 		}
 <span class="nc" id="L38">	}</span>
 
-	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 <span class="nc" id="L41">		Matricula matricula = new Matricula(estudiante, curso);</span>
 <span class="nc" id="L42">		matricula.matriculaDAO.seleccionarMatricula(matricula);</span>
 <span class="nc" id="L43">		matricula.tipoPago = ModoPago.TRANSFERENCIA;</span>
@@ -47,22 +47,22 @@ import negocio.entities.*;
 <span class="nc" id="L47">	}</span>
 	
 	private void comprobarSiTieneTituloEstudiante(Matricula matricula) throws MatriculaErroneaException {
-<span class="nc" id="L50">		boolean tituloMatriculaError = false;</span>
-<span class="nc" id="L51">		boolean estudianteMatriculaError = false;</span>
+<span class="fc" id="L50">		boolean tituloMatriculaError = false;</span>
+<span class="fc" id="L51">		boolean estudianteMatriculaError = false;</span>
 		
-<span class="nc bnc" id="L53" title="All 8 branches missed.">		if (matricula.titulo==null || matricula.titulo.getId().equals(&quot;&quot;) || matricula.titulo.getId() == null || matricula.titulo.getEdicion()&lt;=0) {</span>
-<span class="nc" id="L54">			tituloMatriculaError = true;</span>
+<span class="pc bpc" id="L53" title="3 of 8 branches missed.">		if (matricula.titulo==null || matricula.titulo.getId().equals(&quot;&quot;) || matricula.titulo.getId() == null || matricula.titulo.getEdicion()&lt;=0) {</span>
+<span class="fc" id="L54">			tituloMatriculaError = true;</span>
 		}
-<span class="nc bnc" id="L56" title="All 6 branches missed.">		if (matricula.estudiante == null || matricula.estudiante.getDni().equals(&quot;&quot;) || matricula.estudiante.getDni()==null) {</span>
-<span class="nc" id="L57">			estudianteMatriculaError = true;</span>
+<span class="pc bpc" id="L56" title="2 of 6 branches missed.">		if (matricula.estudiante == null || matricula.estudiante.getDni().equals(&quot;&quot;) || matricula.estudiante.getDni()==null) {</span>
+<span class="fc" id="L57">			estudianteMatriculaError = true;</span>
 		}
 		
-<span class="nc bnc" id="L60" title="All 4 branches missed.">		if(!tituloMatriculaError &amp;&amp; !estudianteMatriculaError) {</span>
-<span class="nc" id="L61">			return;</span>
-<span class="nc bnc" id="L62" title="All 4 branches missed.">		} else if (tituloMatriculaError &amp;&amp; estudianteMatriculaError) {</span>
-<span class="nc" id="L63">			throw new MatriculaErroneaException(&quot;Matricula no tiene título ni estudiante&quot;);</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">		if(!tituloMatriculaError &amp;&amp; !estudianteMatriculaError) {</span>
+<span class="fc" id="L61">			return;</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">		} else if (tituloMatriculaError &amp;&amp; estudianteMatriculaError) {</span>
+<span class="fc" id="L63">			throw new MatriculaErroneaException(&quot;Matricula no tiene título ni estudiante&quot;);</span>
 		} else {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (tituloMatriculaError) throw new MatriculaErroneaException(&quot;Matricula no tiene título&quot;);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (tituloMatriculaError) throw new MatriculaErroneaException(&quot;Matricula no tiene título&quot;);</span>
 <span class="nc bnc" id="L66" title="All 2 branches missed.">			if (estudianteMatriculaError) throw new MatriculaErroneaException(&quot;Matricula no tiene estudiante&quot;);</span>
 		}
 <span class="nc" id="L68">	}</span>

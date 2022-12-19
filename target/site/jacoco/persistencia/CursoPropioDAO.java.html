@@ -35,7 +35,7 @@ import negocio.controllers.CursoException.*;
 <span class="fc" id="L35">				+ curso.centro.getNombre()+&quot;', '&quot;</span>
 <span class="fc" id="L36">				+ curso.secretario.getDni()+&quot;', '&quot;</span>
 <span class="fc" id="L37">				+ curso.director.getDni()+&quot;', '&quot;</span>
-<span class="fc" id="L38">				+ curso.requisitos+&quot;', '&quot;</span>
+				+ curso.requisitos+&quot;', '&quot;
 <span class="fc" id="L39">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
 <span class="fc" id="L40">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
 		
@@ -111,13 +111,13 @@ import negocio.controllers.CursoException.*;
 <span class="fc" id="L111">					materiaYaEnBBDD = true;</span>
 <span class="fc" id="L112">					break;</span>
 				}
-			}
+<span class="nc" id="L114">			}</span>
 			
 <span class="pc bpc" id="L116" title="1 of 2 branches missed.">			if (!materiaYaEnBBDD) {</span>
 <span class="nc" id="L117">				materiasAModificar++;</span>
 <span class="nc" id="L118">				contador += materiaCurso.materiaDao.crearNuevaMateria(materiaCurso, curso.getId(), curso.getEdicion());</span>
 			}
-		}
+<span class="fc" id="L120">		}</span>
 		
 		
 		//comprobar los antiguos a borrar	
@@ -133,13 +133,13 @@ import negocio.controllers.CursoException.*;
 <span class="fc" id="L133">					materiaSeMantiene = true;</span>
 <span class="fc" id="L134">					break;</span>
 				}
-			}
+<span class="nc" id="L136">			}</span>
 			
 <span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (!materiaSeMantiene) {</span>
 <span class="nc" id="L139">				materiasAModificar++;</span>
 <span class="nc" id="L140">				contador += materiaCursoEnBBDD.materiaDao.eliminarMateria(materiaCursoEnBBDD, curso.getId(), curso.getEdicion());</span>
 			}
-		}
+<span class="fc" id="L142">		}</span>
 		
 <span class="fc" id="L144">		contador+= GestorBD.getInstancia().update(&quot;UPDATE cursoPropio SET &quot;</span>
 <span class="fc" id="L145">				+ &quot;nombre='&quot; + curso.getNombre() + &quot;', &quot;</span>
@@ -152,7 +152,7 @@ import negocio.controllers.CursoException.*;
 <span class="fc" id="L152">				+ &quot;centro_nombre='&quot; + curso.centro.getNombre() + &quot;', &quot;</span>
 <span class="fc" id="L153">				+ &quot;secretario_Profesor_DNI='&quot; + curso.secretario.getDni() + &quot;', &quot;</span>
 <span class="fc" id="L154">				+ &quot;director_Profesor_DNI='&quot; + curso.director.getDni() + &quot;', &quot;</span>
-<span class="fc" id="L155">				+ &quot;requisitos='&quot; + curso.requisitos + &quot;', &quot;</span>
+				+ &quot;requisitos='&quot; + curso.requisitos + &quot;', &quot;
 <span class="fc" id="L156">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
 <span class="fc" id="L157">				+ &quot;' WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
 		

@@ -14,21 +14,32 @@ import negocio.controllers.GestorConsultas;
 <span class="nc" id="L14">	private static SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);</span>
 	
 	public static void main (String args[]){
-<span class="nc" id="L17">		TipoCurso tipo = TipoCurso.MASTER;</span>
-<span class="nc" id="L18">		List&lt;Centro&gt; resultadoConsultarEstadoCursos=null;</span>
-<span class="nc" id="L19">		EstadoCurso estadoCurso= EstadoCurso.PROPUESTO;</span>
-<span class="nc" id="L20">		ProfesorUCLM profesor=new ProfesorUCLM(&quot;12457890Y&quot;);</span>
+<span class="nc" id="L17">		TipoCurso tipo = TipoCurso.EXPERTO;</span>
+<span class="nc" id="L18">		Date fechaInicio = null;</span>
+<span class="nc" id="L19">		Date fechaFin = null;</span>
+		
+		try{		
+<span class="nc" id="L22">			fechaInicio = dateFormat.parse(&quot;01-01-2000&quot;); </span>
+<span class="nc" id="L23">			fechaFin= dateFormat.parse(&quot;12-09-2001&quot;);</span>
+<span class="nc" id="L24">		} catch(Exception e){</span>
+<span class="nc" id="L25">			System.out.println(&quot;guatafac&quot;);</span>
+<span class="nc" id="L26">		}</span>
+		
+<span class="nc" id="L28">		EstadoCurso estadoCurso= EstadoCurso.VALIDADO;</span>
+<span class="nc" id="L29">		ProfesorUCLM profesor=new ProfesorUCLM(&quot;11111111A&quot;);</span>
+		
+<span class="nc" id="L31">		double resultadoConsultarIngresos = 0.0;</span>
+<span class="nc" id="L32">		List&lt;CursoPropio&gt; resultadoConsultarEstadoCursos=null;</span>
+<span class="nc" id="L33">		List&lt;CursoPropio&gt; resultadoListarCursosPorDirector=null;</span>
+<span class="nc" id="L34">		List&lt;CursoPropio&gt; resultadoCursosPorEstado=null;</span>
 		
 		try{
-<span class="nc" id="L23">			Date fechaInicio = dateFormat.parse(&quot;01-01-2000&quot;); </span>
-<span class="nc" id="L24">			Date fechaFin= dateFormat.parse(&quot;12-09-2001&quot;);</span>
-<span class="nc" id="L25">			resultadoConsultarEstadoCursos = g.listarCentros();</span>
-
-<span class="nc" id="L27">		} catch (Exception e){</span>
-<span class="nc" id="L28">			e.printStackTrace();</span>
-<span class="nc" id="L29">		}</span>
+<span class="nc" id="L37">			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);</span>
+<span class="nc" id="L38">		} catch (Exception e){</span>
+<span class="nc" id="L39">			e.printStackTrace();</span>
+<span class="nc" id="L40">		}</span>
 		
-<span class="nc" id="L31">		System.out.println(resultadoConsultarEstadoCursos);</span>
-<span class="nc" id="L32">	}</span>
+<span class="nc" id="L42">		System.out.println(resultadoConsultarEstadoCursos);</span>
+<span class="nc" id="L43">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
