@@ -318,6 +318,8 @@ public class PantallaPropuestaCursoTest {
 		assertEquals("Edicion de curso: 41", edicionLbl.getText());
 		assertEquals("", requisitoCursoBox.getText());
 
+		pantalla.f.setOptionPane(new YesMockOptionPane());
+
 		// TESTEO DE VOLVER HACIA ATRAS
 		pantalla.getAtrasBto().doClick();
 		assertFalse(pantalla.isVisible());
