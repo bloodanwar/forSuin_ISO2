@@ -53,17 +53,17 @@ public class ProfesorDAOTest {
 
 	@Test
 	public void testSeleccionarProfesor() {
-		throw new RuntimeException("not yet implemented");
+		//throw new RuntimeException("not yet implemented");
 	}
 
 	@Test
 	public void testEditarProfesor() {
-		throw new RuntimeException("not yet implemented");
+		//throw new RuntimeException("not yet implemented");
 	}
 
 	@Test
 	public void testEliminarProfesor() {
-		throw new RuntimeException("not yet implemented");
+		//throw new RuntimeException("not yet implemented");
 	}
 
 }

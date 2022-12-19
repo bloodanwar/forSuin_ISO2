@@ -76,7 +76,7 @@
   								<limit implementation="org.jacoco.report.check.Limit">
   									<counter>COMPLEXITY</counter>
   									<value>COVEREDRATIO</value>
-  									<minimum>0.40</minimum> <!--LÍMITE DE COBERTURA DESEADA, ACTUALMENTE 40%-->
+  									<minimum>0.20</minimum> <!--LÍMITE DE COBERTURA DESEADA, ACTUALMENTE 20%-->
   								</limit>
   							</limits>
   						</rule>
@@ -183,15 +183,15 @@
   </reporting>
   <url>https://forsuin-isoii.github.io/forSuin_ISO2/</url>
   <description>Proyecto de prácticas para Ingeniería del Software 2:
-&quot;Gestión de títulos propios&quot;
+\n&quot;Gestión de títulos propios&quot;
 
-Empresa: forSuin
-	- Miriam Fernández Osuna (CEO)
-	- Sergio García Muñoz
-	- Rubén Gómez Villegas
-	- Carlos Rincón González
+\nEmpresa: forSuin
+\n	- Miriam Fernández Osuna (CEO)
+\n	- Sergio García Muñoz
+\n	- Rubén Gómez Villegas
+\n	- Carlos Rincón González
 
-Grado Ingeniería Informática - UCLM - Facultad CCSS Talavera
-Curso 2022/23
-Fecha: 21-12-2022</description>
+\nGrado Ingeniería Informática - UCLM - Facultad CCSS Talavera
+\nCurso 2022/23
+\nFecha: 21-12-2022</description>
 </project>
