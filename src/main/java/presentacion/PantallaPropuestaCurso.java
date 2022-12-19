@@ -46,8 +46,6 @@ import negocio.entities.*;
 public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
-	public Foo f = new Foo();
-
 	private HashMap componentMap;
 	private JLabel label;
 	private JLabel labelRequisito;
@@ -131,8 +129,6 @@ public class PantallaPropuestaCurso extends JFrame {
 		scrollPanel = new JScrollPane(mainPanel);
 		scrollPanel.setBounds(0, 0, 0,0);
 		getContentPane().add(scrollPanel);
-
-		createComponentMap();
 	}
 
 	private void addProfesores(ProfesorUCLM director) { 
@@ -521,6 +517,8 @@ public class PantallaPropuestaCurso extends JFrame {
 					// Limpiar selección
 					nombreMateria.setText("");
 					responsablesTable.clearSelection();
+					fechaInicioMateria.getJFormattedTextField().setText("");
+					fechaFinalMateria.getJFormattedTextField().setText("");
 				}
 			}
 		});
@@ -691,9 +689,9 @@ public class PantallaPropuestaCurso extends JFrame {
 				double tasa = 0.0;
 				try {
 					tasa = Double.parseDouble(tasaMatricula.getText());  
-					tasaMatricula.setBackground(new Color(222, 129, 122));
-				}catch (NumberFormatException e1) {
 					tasaMatricula.setBackground(new Color(255, 255, 255));
+				}catch (NumberFormatException e1) {
+					tasaMatricula.setBackground(new Color(222, 129, 122));
 					complete = false;
 				}
 
@@ -719,9 +717,9 @@ public class PantallaPropuestaCurso extends JFrame {
 				if (!complete) return;
 
 
-				//int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
+				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
 
-				if(f.confirm())  {
+				if(confirm == 0)  {
 					String id;
 					if(action == 1) id = cursoEditado.getId();
 					else id = GestorMD5.getMd5(tituloCurso.getText() + fechaInicio.toString() + fechaFinal.toString());
@@ -783,7 +781,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	}
 
 	public void errorPopup(String mensaje, int tipoError, ProfesorUCLM director) {
-		if(f.error()) JOptionPane.showMessageDialog(null, mensaje);
+		JOptionPane.showMessageDialog(null, mensaje);
 		if(tipoError == 1) {
 			try {
 				new PantallaGestionarCursos(director);
@@ -795,37 +793,5 @@ public class PantallaPropuestaCurso extends JFrame {
 			new PantallaLogin();
 			setVisible(false);
 		}
-	}
-
-	private void createComponentMap() {
-		componentMap = new HashMap<String,Component>();
-		Component[] components = mainPanel.getComponents();
-		for (int i=0; i < components.length; i++) {
-			componentMap.put(components[i].getName(), components[i]);
-		}
-	}
-
-	public Component getComponentByName(String name) {
-		if (componentMap.containsKey(name)) {
-			return (Component) componentMap.get(name);
-		}
-		else return null;
-	}
-
-	public JButton getAtrasBto() {
-		return atrasBto;
-	}
-
-	public JButton getSendBto() {
-		return sendBto;
-	}
-
-
-	public JButton getAddMateriaBto() {
-		return addMateriaBto;
-	}
-
-	public JButton getDeleteMateriaBto() {
-		return deleteMateriaBto;
 	}
 }

@@ -28,7 +28,7 @@ public class GestorMatriculacion {
 		}
 	}
 
-	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TARJETA_CREDITO;
@@ -37,7 +37,7 @@ public class GestorMatriculacion {
 		}
 	}
 
-	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TRANSFERENCIA;
