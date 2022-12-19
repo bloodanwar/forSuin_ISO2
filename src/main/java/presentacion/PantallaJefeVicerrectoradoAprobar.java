@@ -1,15 +1,11 @@
 package presentacion;
 
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -19,9 +15,6 @@ import negocio.controllers.GestorConsultas;
 import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 
@@ -55,7 +48,7 @@ public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 
 		try {
 			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
-		} catch (ParseException | SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

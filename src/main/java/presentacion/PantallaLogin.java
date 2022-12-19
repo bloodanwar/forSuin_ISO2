@@ -3,15 +3,7 @@ package presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.SpringLayout;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import negocio.entities.CursoPropio;
 import negocio.entities.ProfesorUCLM;
 
 import javax.swing.JTextField;
@@ -20,9 +12,6 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputMethodListener;
-import java.util.Properties;
-import java.awt.event.InputMethodEvent;
 
 public class PantallaLogin {
 

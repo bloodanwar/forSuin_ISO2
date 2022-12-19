@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

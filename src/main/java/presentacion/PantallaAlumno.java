@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import negocio.entities.ProfesorUCLM;
-
 public class PantallaAlumno extends JFrame{
     
     public PantallaAlumno () {

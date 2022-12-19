@@ -7,11 +7,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import negocio.controllers.GestorConsultas;
 import negocio.entities.CursoPropio;
 import negocio.entities.Estudiante;
 import negocio.entities.Matricula;
