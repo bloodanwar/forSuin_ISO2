@@ -22,7 +22,6 @@ public class CursoPropio {
 	private int edicion;
 	public String requisitos;
 	
-	
 	public CursoPropio() {
 		cursoPropioDao = new CursoPropioDAO();
 	}

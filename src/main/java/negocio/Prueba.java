@@ -14,16 +14,27 @@ public class Prueba {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	
 	public static void main (String args[]){
-		TipoCurso tipo = TipoCurso.MASTER;
-		List<Centro> resultadoConsultarEstadoCursos=null;
-		EstadoCurso estadoCurso= EstadoCurso.PROPUESTO;
-		ProfesorUCLM profesor=new ProfesorUCLM("12457890Y");
+		TipoCurso tipo = TipoCurso.EXPERTO;
+		Date fechaInicio = null;
+		Date fechaFin = null;
+		
+		try{		
+			fechaInicio = dateFormat.parse("01-01-2000"); 
+			fechaFin= dateFormat.parse("12-09-2001");
+		} catch(Exception e){
+			System.out.println("guatafac");
+		}
+		
+		EstadoCurso estadoCurso= EstadoCurso.VALIDADO;
+		ProfesorUCLM profesor=new ProfesorUCLM("11111111A");
+		
+		double resultadoConsultarIngresos = 0.0;
+		List<CursoPropio> resultadoConsultarEstadoCursos=null;
+		List<CursoPropio> resultadoListarCursosPorDirector=null;
+		List<CursoPropio> resultadoCursosPorEstado=null;
 		
 		try{
-			Date fechaInicio = dateFormat.parse("01-01-2000"); 
-			Date fechaFin= dateFormat.parse("12-09-2001");
-			resultadoConsultarEstadoCursos = g.listarCentros();
-
+			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
 		} catch (Exception e){
 			e.printStackTrace();
 		}

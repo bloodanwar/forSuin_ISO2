@@ -13,6 +13,7 @@ import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
 
+import negocio.controllers.ConsultasException.*;
 import negocio.entities.TipoCurso;
 import negocio.entities.CategoriaProfesor;
 import negocio.entities.Centro;
@@ -26,9 +27,170 @@ public class GestorConsultasTest {
 	private GestorConsultas g=null;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	
+	CursoPropio curso01 = null;
+	CursoPropio curso02 = null;
+	CursoPropio curso03 = null;
+	CursoPropio curso04 = null;
+	CursoPropio curso05 = null;
+	CursoPropio curso06 = null;
+	CursoPropio curso07 = null;
+	CursoPropio curso08 = null;
+	CursoPropio curso09 = null;
+	CursoPropio curso10 = null;	
+	
 	@Before
 	public void setUp() throws Exception{
 		g= new GestorConsultas();
+		
+		curso01 = new CursoPropio(
+				"01", 
+				"Cocina", 
+				90, 
+				dateFormat.parse("10-09-2020"), 
+				dateFormat.parse("20-09-2020"), 
+				45.5, 
+				1, 
+				EstadoCurso.PROPUESTO, 
+				TipoCurso.MASTER, 
+				new Centro("UCLM ALB"),
+				new ProfesorUCLM("12457890Y"), 
+				new ProfesorUCLM("23568907X"),
+				null);
+		
+		curso02 = new CursoPropio(
+				"02", 
+				"Robotica", 
+				20, 
+				dateFormat.parse("25-09-2020"), 
+				dateFormat.parse("30-09-2020"), 
+				6.66, 
+				7, 
+				EstadoCurso.VALIDADO, 
+				TipoCurso.EXPERTO, 
+				new Centro("UCLM CUE"),
+				new ProfesorUCLM("23568907X"), 
+				new ProfesorUCLM("09764312U"),
+				null);
+		
+		curso03 = new CursoPropio(
+				"03", 
+				"Gestion de datos", 
+				1, 
+				dateFormat.parse("15-11-2020"), 
+				dateFormat.parse("20-11-2020"), 
+				66.6, 
+				12, 
+				EstadoCurso.TERMINADO, 
+				TipoCurso.CORTA_DURACION, 
+				new Centro("UCLM TAL"),
+				new ProfesorUCLM("12457890Y"), 
+				new ProfesorUCLM("09764312U"),
+				null);
+	
+		curso04 = new CursoPropio(
+				"04", 
+				"Administracion de empresas", 
+				12, 
+				dateFormat.parse("05-10-2021"), 
+				dateFormat.parse("10-10-2021"), 
+				2.22, 
+				98, 
+				EstadoCurso.TERMINADO, 
+				TipoCurso.FORMACION_CONTINUA, 
+				new Centro("UCLM GUA"),
+				new ProfesorUCLM("12457890Y"), 
+				new ProfesorUCLM("14709633I"),
+				null);
+		
+		curso05 = new CursoPropio(
+				"05", 
+				"Gestion de sistemas de informacion", 
+				2, 
+				dateFormat.parse("01-09-2021"), 
+				dateFormat.parse("15-09-2021"), 
+				999.99, 
+				56, 
+				EstadoCurso.VALIDADO, 
+				TipoCurso.MICROCREDENCIALES, 
+				new Centro("UCLM CIU"),
+				new ProfesorUCLM("14709633I"), 
+				new ProfesorUCLM("12457890Y"),
+				null);
+				
+		curso06 = new CursoPropio(
+				"06",
+				"Hackathon",
+				1, 
+				dateFormat.parse("07-12-2021"),
+				dateFormat.parse("14-12-2021"),
+				1.0,
+				23,
+				EstadoCurso.PROPUESTO,
+				TipoCurso.CORTA_DURACION,
+				new Centro("UCLM ALM"),
+				new ProfesorUCLM("12457890Y"),
+				new ProfesorUCLM("98653214Z"),
+				null);
+	
+		curso07 = new CursoPropio(
+				"07",
+				"Educacion social",
+				48, 
+				dateFormat.parse("01-09-2021"),
+				dateFormat.parse("30-09-2021"),
+				67.5,
+				5,
+				EstadoCurso.PROPUESTO,
+				TipoCurso.ESPECIALISTA,
+				new Centro("UCLM TOL"),
+				new ProfesorUCLM("98653214Z"),
+				new ProfesorUCLM("12457890Y"),
+				null);
+		
+		curso08 = new CursoPropio(
+				"08",
+				"Inclusion adultos en nuevas tecnologias",
+				17, 
+				dateFormat.parse("06-10-2022"),
+				dateFormat.parse("12-10-2022"),
+				220.6,
+				73,
+				EstadoCurso.TERMINADO,
+				TipoCurso.FORMACION_AVANZADA,
+				new Centro("UCLM ALB"),
+				new ProfesorUCLM("98653214Z"),
+				new ProfesorUCLM("23568907X"),
+				null);
+				
+		curso09 = new CursoPropio(
+				"09", 
+				"Instrumentos", 
+				15, 
+				dateFormat.parse("12-12-2022"), 
+				dateFormat.parse("14-12-2022"), 
+				45.5, 
+				21, 
+				EstadoCurso.TERMINADO, 
+				TipoCurso.EXPERTO, 
+				new Centro("UCLM ALM"),
+				new ProfesorUCLM("98653214Z"), 
+				new ProfesorUCLM("14709633I"),
+				null);
+		
+		curso10 = new CursoPropio(
+				"10", 
+				"Pedagogia infantil", 
+				2, 
+				dateFormat.parse("15-11-2022"), 
+				dateFormat.parse("18-11-2022"), 
+				19.95, 
+				134,
+				EstadoCurso.VALIDADO,
+				TipoCurso.CORTA_DURACION, 
+				new Centro("UCLM GUA"),
+				new ProfesorUCLM("14709633I"),
+				new ProfesorUCLM("23568907X"), 
+				null);
 	}
 	
 	@Test
@@ -61,156 +223,6 @@ public class GestorConsultasTest {
 		} catch (Exception e){
 			fail("HA TIRADO UNA EXCEPCION");
 		}
-		
-		CursoPropio curso01 = new CursoPropio(
-				"01", 
-				"Cocina", 
-				90, 
-				dateFormat.parse("10-09-2020"), 
-				dateFormat.parse("20-09-2020"), 
-				45.5, 
-				1, 
-				EstadoCurso.PROPUESTO, 
-				TipoCurso.MASTER, 
-				new Centro("UCLM ALB"),
-				new ProfesorUCLM("12457890Y"), 
-				new ProfesorUCLM("23568907X"),
-				null);
-		
-		CursoPropio curso02 = new CursoPropio(
-				"02", 
-				"Robotica", 
-				20, 
-				dateFormat.parse("25-09-2020"), 
-				dateFormat.parse("30-09-2020"), 
-				6.66, 
-				7, 
-				EstadoCurso.VALIDADO, 
-				TipoCurso.EXPERTO, 
-				new Centro("UCLM CUE"),
-				new ProfesorUCLM("23568907X"), 
-				new ProfesorUCLM("09764312U"),
-				null);
-		
-		CursoPropio curso03 = new CursoPropio(
-				"03", 
-				"Gestion de datos", 
-				1, 
-				dateFormat.parse("15-11-2020"), 
-				dateFormat.parse("20-11-2020"), 
-				66.6, 
-				12, 
-				EstadoCurso.TERMINADO, 
-				TipoCurso.CORTA_DURACION, 
-				new Centro("UCLM TAL"),
-				new ProfesorUCLM("12457890Y"), 
-				new ProfesorUCLM("09764312U"),
-				null);
-				
-		CursoPropio curso04 = new CursoPropio(
-				"04", 
-				"Administracion de empresas", 
-				12, 
-				dateFormat.parse("05-10-2021"), 
-				dateFormat.parse("10-10-2021"), 
-				2.22, 
-				98, 
-				EstadoCurso.TERMINADO, 
-				TipoCurso.FORMACION_CONTINUA, 
-				new Centro("UCLM GUA"),
-				new ProfesorUCLM("12457890Y"), 
-				new ProfesorUCLM("14709633I"),
-				null);
-		
-		CursoPropio curso05 = new CursoPropio(
-				"05", 
-				"Gestion de sistemas de informacion", 
-				2, 
-				dateFormat.parse("01-09-2021"), 
-				dateFormat.parse("15-09-2021"), 
-				999.99, 
-				56, 
-				EstadoCurso.VALIDADO, 
-				TipoCurso.MICROCREDENCIALES, 
-				new Centro("UCLM CIU"),
-				new ProfesorUCLM("14709633I"), 
-				profesor,
-				null);
-				
-		CursoPropio curso06 = new CursoPropio(
-				"06",
-				"Hackathon",
-				1, 
-				dateFormat.parse("07-12-2021"),
-				dateFormat.parse("14-12-2021"),
-				1.0,
-				23,
-				EstadoCurso.PROPUESTO,
-				TipoCurso.CORTA_DURACION,
-				new Centro("UCLM ALM"),
-				new ProfesorUCLM("12457890Y"),
-				new ProfesorUCLM("98653214Z"),
-				null);
-	
-		CursoPropio curso07 = new CursoPropio(
-				"07",
-				"Educacion social",
-				48, 
-				dateFormat.parse("01-09-2021"),
-				dateFormat.parse("30-09-2021"),
-				67.5,
-				5,
-				EstadoCurso.PROPUESTO,
-				TipoCurso.ESPECIALISTA,
-				new Centro("UCLM TOL"),
-				new ProfesorUCLM("98653214Z"),
-				profesor,
-				null);
-		
-		CursoPropio curso08 = new CursoPropio(
-				"08",
-				"Inclusion adultos en nuevas tecnologias",
-				17, 
-				dateFormat.parse("06-10-2022"),
-				dateFormat.parse("12-10-2022"),
-				220.6,
-				73,
-				EstadoCurso.TERMINADO,
-				TipoCurso.FORMACION_AVANZADA,
-				new Centro("UCLM ALB"),
-				new ProfesorUCLM("98653214Z"),
-				new ProfesorUCLM("23568907X"),
-				null);
-				
-		CursoPropio curso09 = new CursoPropio(
-				"09", 
-				"Instrumentos", 
-				15, 
-				dateFormat.parse("12-12-2022"), 
-				dateFormat.parse("14-12-2022"), 
-				45.5, 
-				21, 
-				EstadoCurso.TERMINADO, 
-				TipoCurso.EXPERTO, 
-				new Centro("UCLM ALM"),
-				new ProfesorUCLM("98653214Z"), 
-				new ProfesorUCLM("14709633I"),
-				null);
-		
-		CursoPropio curso10 = new CursoPropio(
-				"10", 
-				"Pedagogia infantil", 
-				2, 
-				dateFormat.parse("15-11-2022"), 
-				dateFormat.parse("18-11-2022"), 
-				19.95, 
-				134,
-				EstadoCurso.VALIDADO,
-				TipoCurso.CORTA_DURACION, 
-				new Centro("UCLM GUA"),
-				new ProfesorUCLM("14709633I"),
-				new ProfesorUCLM("23568907X"), 
-				null);
 		
 		Profesor profesor01 = new Profesor(
 				"12457890Y",
@@ -414,6 +426,32 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.VALIDADO;
 		ProfesorUCLM profesor=new ProfesorUCLM("11111111A");
+		
+		double resultadoConsultarIngresos = 0.0;
+		List<CursoPropio> resultadoConsultarEstadoCursos=null;
+		List<CursoPropio> resultadoListarCursosPorDirector=null;
+		List<CursoPropio> resultadoCursosPorEstado=null;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
+			resultadoListarCursosPorDirector= g.listarCursosPorDirector(profesor);
+			resultadoCursosPorEstado=g.listarCursosPorEstado(estadoCurso);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}		
+
+		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
+		List<CursoPropio> esperadoListarCursosPorDirector=new ArrayList<>();
+		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
+		esperadoListarCursosPorEstado.add(curso02);	
+		esperadoListarCursosPorEstado.add(curso05);	
+		esperadoListarCursosPorEstado.add(curso10);
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
+		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
+		assertEquals(esperadoListarCursosPorDirector, resultadoListarCursosPorDirector);
+		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);
 	}
 	
 	@Test
@@ -423,6 +461,33 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.PROPUESTA_RECHAZADA;
 		ProfesorUCLM profesor=new ProfesorUCLM("");
+	
+		double resultadoConsultarIngresos = 0.0;
+		List<CursoPropio> resultadoConsultarEstadoCursos=null;
+		List<CursoPropio> resultadoListarCursosPorDirector=null;
+		List<CursoPropio> resultadoCursosPorEstado=null;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
+			resultadoCursosPorEstado=g.listarCursosPorEstado(estadoCurso);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}		
+		
+		try {
+			g.listarCursosPorDirector(profesor);
+			fail("DEBERÍA HABER TIRADO UNA EXCEPCION");
+		} catch (ProfesorErroneoException e) {
+		} catch (Exception e) { fail("HA TIRADO UNA EXCEPCION");
+		}		
+		
+		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
+		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
+		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
+		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
 	
 	@Test
@@ -432,6 +497,33 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.EN_MATRICULACION;
 		ProfesorUCLM profesor=null; 
+		
+		double resultadoConsultarIngresos = 0.0;
+		List<CursoPropio> resultadoConsultarEstadoCursos=null;
+		List<CursoPropio> resultadoListarCursosPorDirector=null;
+		List<CursoPropio> resultadoCursosPorEstado=null;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
+			resultadoCursosPorEstado=g.listarCursosPorEstado(estadoCurso);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}		
+		
+		try {
+			g.listarCursosPorDirector(profesor);
+			fail("DEBERÍA HABER TIRADO UNA EXCEPCION");
+		} catch (ProfesorErroneoException e) {
+		} catch (Exception e) { fail("HA TIRADO UNA EXCEPCION");
+		}		
+		
+		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
+		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
+		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
+		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
 	
 	@Test
@@ -441,6 +533,25 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.EN_IMPARTIZICION;
 		ProfesorUCLM profesor=new ProfesorUCLM("12457890Y");
+		
+		double resultadoConsultarIngresos = 0.0;
+		List<CursoPropio> resultadoConsultarEstadoCursos=null;
+		List<CursoPropio> resultadoCursosPorEstado=null;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
+			resultadoCursosPorEstado=g.listarCursosPorEstado(estadoCurso);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}
+		
+		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
+		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
+		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
+		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
 	
 	@Test
@@ -450,6 +561,29 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.TERMINADO;
 		ProfesorUCLM profesor=new ProfesorUCLM("11111111A");
+		
+		double resultadoConsultarIngresos = 0.0;
+		List<CursoPropio> resultadoConsultarEstadoCursos=null;
+		List<CursoPropio> resultadoCursosPorEstado=null;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+			resultadoConsultarEstadoCursos= g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
+			resultadoCursosPorEstado=g.listarCursosPorEstado(estadoCurso);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}
+		
+		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
+		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
+		esperadoListarCursosPorEstado.add(curso03);	
+		esperadoListarCursosPorEstado.add(curso04);	
+		esperadoListarCursosPorEstado.add(curso08);
+		esperadoListarCursosPorEstado.add(curso09);
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
+		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
+		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
 	
 	@Test
@@ -459,6 +593,30 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= null;
 		ProfesorUCLM profesor=new ProfesorUCLM("");
+		
+		double resultadoConsultarIngresos = 0.0;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}
+		
+		try {
+			g.consultarEstadoCursos(estadoCurso, fechaInicio, fechaFin);
+			fail("DEBERÍA HABER TIRADO UNA EXCEPCION");
+		} catch (EstadoCursoErroneoException e) {
+		} catch (Exception e) { fail("HA TIRADO UNA EXCEPCION");
+		}
+	
+		try {
+			g.listarCursosPorEstado(estadoCurso);
+			fail("DEBERÍA HABER TIRADO UNA EXCEPCION");
+		} catch (EstadoCursoErroneoException e) {
+		} catch (Exception e) { fail("HA TIRADO UNA EXCEPCION");
+		}
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
 	}
 	
 	@Test
@@ -468,6 +626,16 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.PROPUESTO;
 		ProfesorUCLM profesor=null;
+		
+		double resultadoConsultarIngresos = 0.0;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
 	}
 	
 	@Test
@@ -477,6 +645,16 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.VALIDADO;
 		ProfesorUCLM profesor=new ProfesorUCLM("12457890Y");
+		
+		double resultadoConsultarIngresos = 0.0;
+		
+		try{
+			resultadoConsultarIngresos = g.consultarIngresos(tipo, fechaInicio, fechaFin);
+		} catch (Exception e){
+			fail("HA TIRADO UNA EXCEPCION");
+		}
+		
+		assertTrue(resultadoConsultarIngresos==0.0);
 	}
 	
 	@Test
@@ -486,5 +664,12 @@ public class GestorConsultasTest {
 		Date fechaFin= dateFormat.parse("12-09-2001");
 		EstadoCurso estadoCurso= EstadoCurso.PROPUESTA_RECHAZADA;
 		ProfesorUCLM profesor=new ProfesorUCLM("11111111A");
+		
+		try{
+			g.consultarIngresos(tipo, fechaInicio, fechaFin);
+			fail("DEBERÍA HABER TIRADO UNA EXCEPCION");
+		} catch (TipoCursoErroneoException e) {
+		} catch (Exception e) { fail("HA TIRADO UNA EXCEPCION");
+		}
 	}
 }
