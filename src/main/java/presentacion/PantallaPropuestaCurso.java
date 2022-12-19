@@ -46,6 +46,8 @@ import negocio.entities.*;
 public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
+	public Foo f = new Foo();
+	
 	private HashMap componentMap;
 	private JLabel label;
 	private JLabel labelRequisito;
@@ -686,6 +688,14 @@ public class PantallaPropuestaCurso extends JFrame {
 					materiasLista.setBackground(new Color(255, 255, 255));
 				}
 
+				double tasa = 0.0;
+				try {
+					tasa = Double.parseDouble(tasaMatricula.getText());  
+					tasaMatricula.setBackground(new Color(222, 129, 122));
+				}catch (NumberFormatException e1) {
+					tasaMatricula.setBackground(new Color(255, 255, 255));
+					complete = false;
+				}
 
 				Date fechaInicio = null;
 				Date fechaFinal = null;
@@ -709,9 +719,9 @@ public class PantallaPropuestaCurso extends JFrame {
 				if (!complete) return;
 
 
-				int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
-
-				if(confirm == 0)  {
+				//int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
+				
+				if(f.confirm())  {
 					String id;
 					if(action == 1) id = cursoEditado.getId();
 					else id = GestorMD5.getMd5(tituloCurso.getText() + fechaInicio.toString() + fechaFinal.toString());
@@ -723,7 +733,7 @@ public class PantallaPropuestaCurso extends JFrame {
 							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
 							fechaInicio, 
 							fechaFinal, 
-							Double.parseDouble(tasaMatricula.getText()),
+							tasa,
 							edicion, // Edicion
 							EstadoCurso.PROPUESTO, 
 							tipos[categoriasLista.getSelectedIndex()], 
@@ -773,8 +783,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	}
 
 	public void errorPopup(String mensaje, int tipoError, ProfesorUCLM director) {
-		JFrame jFrame = new JFrame();
-		JOptionPane.showMessageDialog(jFrame, mensaje);
+		if(f.error()) JOptionPane.showMessageDialog(null, mensaje);
 		if(tipoError == 1) {
 			try {
 				new PantallaGestionarCursos(director);

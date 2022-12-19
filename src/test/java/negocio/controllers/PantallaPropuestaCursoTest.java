@@ -1,6 +1,7 @@
 package negocio.controllers;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -32,6 +33,7 @@ import negocio.entities.ProfesorUCLM;
 import negocio.entities.TipoCurso;
 import presentacion.PantallaGestionarCursos;
 import presentacion.PantallaPropuestaCurso;
+import presentacion.YesMockOptionPane;
 
 public class PantallaPropuestaCursoTest {
 
@@ -178,6 +180,8 @@ public class PantallaPropuestaCursoTest {
 		assertEquals("", requisitoCursoBox.getText());
 
 		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.f.setOptionPane(new YesMockOptionPane());
+
 		pantalla.getAtrasBto().doClick();
 		assertFalse(pantalla.isVisible());
 	}
@@ -225,6 +229,8 @@ public class PantallaPropuestaCursoTest {
 		assertEquals("", requisitoCursoBox.getText());
 
 		// TESTEO DE VOLVER HACIA ATRAS
+		pantalla.f.setOptionPane(new YesMockOptionPane());
+		
 		pantalla.getAtrasBto().doClick();
 		assertFalse(pantalla.isVisible());
 	}
@@ -321,6 +327,8 @@ public class PantallaPropuestaCursoTest {
 
 	@Test
 	public void EnviarPropuestaTest1() throws SQLException {
+		
+
 		int action = 1;
 		ProfesorUCLM director = new ProfesorUCLM("23568907X");
 
@@ -343,14 +351,15 @@ public class PantallaPropuestaCursoTest {
 		curso.materias.add(new Materia("materia", 20, new Date(), new Date(), new ProfesorUCLM("23568907X")));
 
 		pantalla = new PantallaPropuestaCurso(director, curso, action);
+		pantalla.f.setOptionPane(new YesMockOptionPane());
 
 
 		curso.cursoPropioDao.crearNuevoCurso(curso);
 
-
+		
 		JTextField titulo = (JTextField) pantalla.getComponentByName("tituloBox");
 		assertEquals(nombre, titulo.getText());
-
+		
 		pantalla.getSendBto().doClick();
 
 
