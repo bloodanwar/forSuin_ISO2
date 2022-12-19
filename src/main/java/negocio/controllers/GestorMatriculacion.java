@@ -14,7 +14,7 @@ public class GestorMatriculacion {
 		Date fecha = new Date();
 		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);
 		comprobarSiTieneTituloEstudiante(matricula);
-		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 0) {
+		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 1) {
 			throw new MatriculaNoCreadaException("Matrícula no creada");
 		}
 	}
@@ -67,9 +67,5 @@ public class GestorMatriculacion {
 		}
 	}
 
-	private void operation() {
-		// TODO - implement GestorMatriculacion.operation
-		throw new UnsupportedOperationException();
-	}
 
 }

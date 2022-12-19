@@ -29,37 +29,42 @@ public class GestorMatriculacionTest {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	
 	
-	//@Before
+	@Before
 	public void setUp() throws Exception{
 		g= new GestorMatriculacion();
 	}
 	
-	//@Test
-	public void cp1()throws Exception{
-		String id = "01";
-		int edicion = 1;
-		String dni = "12345678A";
+	@Test
+	public void cp1()throws Exception{ //Control que deberia no soltar excepciones y hacerlo todo bien.
+		String id = "10";
+		int edicion = 134;
+		String dni = "98653134I";
 		
 		CursoPropio curso = new CursoPropio(id, edicion);
 		Estudiante estudiante = new Estudiante(dni);
 		
 		try{g.realizarMatriculacion(curso, estudiante);
 		}catch(MatriculaErroneaException e){ System.out.println(e);
+		}catch(MatriculaNoCreadaException e){ System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
@@ -67,32 +72,37 @@ public class GestorMatriculacionTest {
 		
 	}
 	
-	//@Test
-	public void cp2()throws Exception{
-		String id = "01";
+	@Test
+	public void cp2()throws Exception{ //Deberia soltar error por curso
+		String id = "10";
 		int edicion = -1;
-		String dni = "12345678A";
+		String dni = "98653134I";
 		
 		CursoPropio curso = new CursoPropio(id, edicion);
 		Estudiante estudiante = new Estudiante(dni);
 		
 		try{g.realizarMatriculacion(curso, estudiante);
 		}catch(MatriculaErroneaException e){ System.out.println(e);
+		}catch(MatriculaNoCreadaException e){ System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
@@ -100,9 +110,9 @@ public class GestorMatriculacionTest {
 		
 	}
 	
-	//@Test
-	public void cp3()throws Exception{
-		String id = "01";
+	@Test
+	public void cp3()throws Exception{ //Deberia soltar error por curso
+		String id = "10";
 		int edicion = 0;
 		String dni = "12345678A";
 		
@@ -111,21 +121,26 @@ public class GestorMatriculacionTest {
 		
 		try{g.realizarMatriculacion(curso, estudiante);
 		}catch(MatriculaErroneaException e){ System.out.println(e);
+		}catch(MatriculaNoCreadaException e){ System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
@@ -133,64 +148,112 @@ public class GestorMatriculacionTest {
 		
 	}
 	
-	//@Test
-	public void cp4()throws Exception{
+	@Test
+	public void cp4()throws Exception{//Deberia soltar error por alumno
 		String id = "01";
-		int edicion = 0;
-		String dni = "12345678A";
+		int edicion = 134;
+		String dni = "98653134I";
 		
 		CursoPropio curso = new CursoPropio(id, edicion);
 		Estudiante estudiante = null;
 		
 		try{g.realizarMatriculacion(curso, estudiante);
 		}catch(MatriculaErroneaException e){ System.out.println(e);
+		}catch(MatriculaNoCreadaException e){ System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		return;
 	}
 	
-	//@Test
-	public void cp5()throws Exception{
-		String id = "01";
-		int edicion = (Integer) null;
-		String dni = "12345678A";
+	@Test
+	public void cp5()throws Exception{ //Deberia soltar error por curso
+		String id = "10";
+		int edicion = 134;
+		String dni = "98653134I";
 		
-		CursoPropio curso = new CursoPropio(id, edicion);
+		CursoPropio curso = null;
 		Estudiante estudiante = new Estudiante(dni);
 		
 		try{g.realizarMatriculacion(curso, estudiante);
 		}catch(MatriculaErroneaException e){ System.out.println(e);
+		}catch(MatriculaNoCreadaException e){ System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
+		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
+		}
+		
+		return;
+
+	}
+
+	@Test
+	public void cp6()throws Exception{ //Deberia soltar error por curso y estudiante
+		String id = "10"; 
+		int edicion = 134;
+		String dni = "98653134I";
+		
+		CursoPropio curso = null;
+		Estudiante estudiante = null;
+		
+		try{g.realizarMatriculacion(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
+		}catch(MatriculaNoCreadaException e){ System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
+		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
+		}
+		
+		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
+		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
+		}
+		
+		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
+		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
+		}
+		
+		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		

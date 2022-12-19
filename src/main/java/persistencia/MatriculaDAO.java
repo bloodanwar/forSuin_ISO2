@@ -24,7 +24,7 @@ public class MatriculaDAO {
 				+ dateFormat.format(matricula.getFecha())+"', "
 				+ matricula.isPagado()+", "
 				+ matricula.getAttribute()+", '"
-				+ matricula.tipoPago.toString()+ "', '"
+				+ matricula.getTipoPago()+ "', '"
 				+ matricula.titulo.getId()+"', "
 				+ matricula.titulo.getEdicion()+", '"
 				+ matricula.estudiante.getDni()+"', '"
