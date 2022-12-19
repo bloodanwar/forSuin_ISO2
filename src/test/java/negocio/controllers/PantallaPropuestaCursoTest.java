@@ -52,6 +52,7 @@ public class PantallaPropuestaCursoTest {
 	JTextField requisitoCursoBox;
 	JComboBox ectsCursoBox;
 	JList materiasLista;
+	
 
 
 	// ------ FUNCIÓN UTIL PARA TESTS -------- //

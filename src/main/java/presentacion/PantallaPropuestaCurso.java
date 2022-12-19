@@ -114,6 +114,13 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 	public PantallaPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) { // 0 = Realizar // 1 = Editar // 2 = Edicion
+		try{
+			
+		} catch (java.awt.HeadlessException e) {
+			// TODO: handle exception
+			return;
+		}
+		
 		// DAOS 
 		addProfesores(director);
 		addProfesoresUCLM(cursoEditado, action, director);
