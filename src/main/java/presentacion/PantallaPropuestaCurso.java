@@ -114,30 +114,25 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 	public PantallaPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) { // 0 = Realizar // 1 = Editar // 2 = Edicion
-		try{
-			// DAOS 
-			addProfesores(director);
-			addProfesoresUCLM(cursoEditado, action, director);
-			addCentros(cursoEditado, action, director);
-			if (action >= 1) addMaterias(cursoEditado);
+		// DAOS 
+		addProfesores(director);
+		addProfesoresUCLM(cursoEditado, action, director);
+		addCentros(cursoEditado, action, director);
+		if (action >= 1) addMaterias(cursoEditado);
 
-			// LAYOUTS
-			initLayout();
-			basicLayout(cursoEditado, action);
-			ensenanzasLayout(cursoEditado, action);
-			materiasLayout(cursoEditado);
-			botonesLayout(director, cursoEditado, action);
+		// LAYOUTS
+		initLayout();
+		basicLayout(cursoEditado, action);
+		ensenanzasLayout(cursoEditado, action);
+		materiasLayout(cursoEditado);
+		botonesLayout(director, cursoEditado, action);
 
-			// MAIN
-			scrollPanel = new JScrollPane(mainPanel);
-			scrollPanel.setBounds(0, 0, 0,0);
-			getContentPane().add(scrollPanel);
+		// MAIN
+		scrollPanel = new JScrollPane(mainPanel);
+		scrollPanel.setBounds(0, 0, 0,0);
+		getContentPane().add(scrollPanel);
 
-			createComponentMap();
-		} catch (java.awt.HeadlessException e) {
-			// TODO: handle exception
-			return;
-		}
+		createComponentMap();
 	}
 
 	private void addProfesores(ProfesorUCLM director) { 
