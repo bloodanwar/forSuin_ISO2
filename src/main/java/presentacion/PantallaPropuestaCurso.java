@@ -47,7 +47,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
 	public Foo f = new Foo();
-	
+
 	private HashMap componentMap;
 	private JLabel label;
 	private JLabel labelRequisito;
@@ -60,7 +60,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	private JComboBox<Integer> ectsCurso;
 	private JComboBox<Integer> horas;
 	private int edicion;
-	
+
 	// Botones
 	private JButton atrasBto;
 	private JButton sendBto;
@@ -115,31 +115,29 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	public PantallaPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) { // 0 = Realizar // 1 = Editar // 2 = Edicion
 		try{
-			
+			// DAOS 
+			addProfesores(director);
+			addProfesoresUCLM(cursoEditado, action, director);
+			addCentros(cursoEditado, action, director);
+			if (action >= 1) addMaterias(cursoEditado);
+
+			// LAYOUTS
+			initLayout();
+			basicLayout(cursoEditado, action);
+			ensenanzasLayout(cursoEditado, action);
+			materiasLayout(cursoEditado);
+			botonesLayout(director, cursoEditado, action);
+
+			// MAIN
+			scrollPanel = new JScrollPane(mainPanel);
+			scrollPanel.setBounds(0, 0, 0,0);
+			getContentPane().add(scrollPanel);
+
+			createComponentMap();
 		} catch (java.awt.HeadlessException e) {
 			// TODO: handle exception
 			return;
 		}
-		
-		// DAOS 
-		addProfesores(director);
-		addProfesoresUCLM(cursoEditado, action, director);
-		addCentros(cursoEditado, action, director);
-		if (action >= 1) addMaterias(cursoEditado);
-
-		// LAYOUTS
-		initLayout();
-		basicLayout(cursoEditado, action);
-		ensenanzasLayout(cursoEditado, action);
-		materiasLayout(cursoEditado);
-		botonesLayout(director, cursoEditado, action);
-		
-		// MAIN
-		scrollPanel = new JScrollPane(mainPanel);
-		scrollPanel.setBounds(0, 0, 0,0);
-		getContentPane().add(scrollPanel);
-		
-	    createComponentMap();
 	}
 
 	private void addProfesores(ProfesorUCLM director) { 
@@ -232,7 +230,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setName("tituloLbl");
 		label.setBounds(10,10,400,30);
 		mainPanel.add(label);
-		
+
 		if (action >= 1 || cursoEditado == null) tituloCurso = new JTextField(cursoEditado.getNombre());
 		else tituloCurso = new JTextField("");
 		tituloCurso.setName("tituloBox");
@@ -446,12 +444,12 @@ public class PantallaPropuestaCurso extends JFrame {
 					break;
 				} 
 			}
-			
+
 			if(!complete) {
 				ectsCurso.addItem(cursoEditado.getECTS());
 				ectsCurso.setSelectedIndex(ectsCurso.getItemCount()-1);
 			}
-			
+
 		} else {
 			categoriasLista.setSelectedIndex(0);
 		}
@@ -652,7 +650,7 @@ public class PantallaPropuestaCurso extends JFrame {
 				} catch (NullPointerException ex) {
 					errorPopup("Error director invalido", 2, director);
 				}
-				
+
 			}
 		});
 
@@ -727,7 +725,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 				//int confirm = JOptionPane.showConfirmDialog(null,"¿Enviar propuesta?","Enviar propuesta",JOptionPane.YES_NO_OPTION, 1);
-				
+
 				if(f.confirm())  {
 					String id;
 					if(action == 1) id = cursoEditado.getId();
@@ -803,7 +801,7 @@ public class PantallaPropuestaCurso extends JFrame {
 			setVisible(false);
 		}
 	}
-	
+
 	private void createComponentMap() {
 		componentMap = new HashMap<String,Component>();
 		Component[] components = mainPanel.getComponents();
@@ -811,7 +809,7 @@ public class PantallaPropuestaCurso extends JFrame {
 			componentMap.put(components[i].getName(), components[i]);
 		}
 	}
-	
+
 	public Component getComponentByName(String name) {
 		if (componentMap.containsKey(name)) {
 			return (Component) componentMap.get(name);
