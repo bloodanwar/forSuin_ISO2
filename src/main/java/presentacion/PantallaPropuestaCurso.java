@@ -726,7 +726,6 @@ public class PantallaPropuestaCurso extends JFrame {
 
 					curso.materias = new ArrayList<Materia>();
 					curso.materias = materiasGuardadas;
-					System.out.println(materiasGuardadas);
 
 					if (action == 1) { // Editar curso
 						try {
