@@ -9,61 +9,75 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.Profesor;
 
 public class ProfesorDAOTest {	
-	
-	@Test
-	public void testCrearNuevoProfesor() throws SQLException {
-		// PRUEBA DE CREACION PROFESOR
-		Profesor profesorEsperado = new Profesor("dni", "nombre", "apellido", true);
-		List<Profesor> profesoresEsperados = profesorEsperado.profesorDao.listarProfesores();
-		profesoresEsperados.add(profesorEsperado);
-		int position = profesoresEsperados.size()-1;
 
-		profesorEsperado.profesorDao.crearNuevoProfesor(profesorEsperado);
-		List<Profesor> profesoresObtenidos = profesorEsperado.profesorDao.listarProfesores();
-		Profesor profesorObtenido = profesoresObtenidos.get(position);
-		
-		assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
-		assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-		assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
-		assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-		assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+	private Profesor profesor;
+	private int position;
 
-		// PRUEBA DE SELECCIONAR PROFESOR
-		profesorObtenido = profesorObtenido.profesorDao.seleccionarProfesor(profesorEsperado);
-		assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-		assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
-		assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-		assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
-		
-		// PRUEBA DE EDITAR PROFESOR
-				
-		
-		
-		// PRUEBA DE ELIMINACION PROFESOR
-		profesorEsperado.profesorDao.eliminarProfesor(profesorObtenido);
-		profesoresEsperados.remove(position);
-		profesoresObtenidos = profesorEsperado.profesorDao.listarProfesores();
+	private Profesor profesorEsperado;
+	private List<Profesor> profesoresEsperados;
 
-		assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
+	private Profesor profesorObtenido;
+	private List<Profesor> profesoresObtenidos;
 
-	}
 
 	@Test
-	public void testSeleccionarProfesor() {
-		//throw new RuntimeException("not yet implemented");
-	}
+	public void cp1() {
+		try {
+			// SETUP
+			String dni = "dni";
+			String nombre = "nombre";
+			String apellidos = "appellido";
+			Boolean doctor = true;
+			profesor = new Profesor(dni, nombre, apellidos, doctor);
 
-	@Test
-	public void testEditarProfesor() {
-		//throw new RuntimeException("not yet implemented");
-	}
+			// ESPERADO
 
-	@Test
-	public void testEliminarProfesor() {
-		//throw new RuntimeException("not yet implemented");
+			profesorEsperado = profesor;
+			profesoresEsperados = profesor.profesorDao.listarProfesores();
+			profesoresEsperados.add(profesorEsperado);
+			position = profesoresEsperados.size()-1;
+
+
+			// CREACION
+			profesorEsperado.profesorDao.crearNuevoProfesor(profesorEsperado);
+			profesoresObtenidos = profesor.profesorDao.listarProfesores();
+			profesorObtenido = profesoresObtenidos.get(position);
+
+			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
+			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
+			assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
+			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
+			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+
+			// SELECCION + EDICCIÓN
+			dni = "dni";
+			nombre = "";
+			apellidos = "";
+			doctor = false;
+			profesor = new Profesor(dni, nombre, apellidos, doctor);
+			profesorEsperado = profesor;
+
+			profesor.profesorDao.editarProfesor(profesor);
+			profesorObtenido = profesor.profesorDao.seleccionarProfesor(profesorObtenido);
+			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
+			assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
+			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
+			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+
+
+			// PRUEBA DE ELIMINACION PROFESOR
+			profesor.profesorDao.eliminarProfesor(profesorObtenido);
+			profesoresEsperados.remove(position);
+			profesoresObtenidos = profesor.profesorDao.listarProfesores();
+
+			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
