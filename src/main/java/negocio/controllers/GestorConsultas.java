@@ -8,7 +8,6 @@ import java.util.List;
 
 import negocio.controllers.ConsultasException.*;
 import negocio.entities.*;
-import persistencia.CursoPropioDAO;
 
 public class GestorConsultas {
 
@@ -34,8 +33,7 @@ public class GestorConsultas {
 	    Date dateInicio = formatter.parse("01-01-1000");      
 	    Date dateFin = formatter.parse("01-01-3000");  
 	    
-		List<CursoPropio> listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
-		return listaCursos;
+		return curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
 	}
 	
 	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException, SQLException, EstadoCursoErroneoException{
@@ -43,9 +41,7 @@ public class GestorConsultas {
 		CursoPropio curso = new CursoPropio(); 
 		Date dateInicio = formatter.parse("01-01-1000");
 		Date dateFin = formatter.parse("01-01-3000");
-		List<CursoPropio> listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
-	
-		return listaCursos;
+		return curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
 	}
 	
 	public List<CursoPropio> listarTodosCursos() throws SQLException{

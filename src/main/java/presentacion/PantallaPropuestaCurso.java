@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -56,12 +55,7 @@ public class PantallaPropuestaCurso extends JFrame {
 	private JComboBox<Integer> ectsCurso;
 	private JComboBox<Integer> horas;
 	private int edicion;
-
-	// Botones
-	private JButton atrasBto;
-	private JButton sendBto;
-	private JButton addMateriaBto;
-	private JButton deleteMateriaBto;
+	private JButton button;
 
 	// Fechas
 	private DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -220,7 +214,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setBounds(10,10,400,30);
 		mainPanel.add(label);
 
-		if (action >= 1 || cursoEditado == null) tituloCurso = new JTextField(cursoEditado.getNombre());
+		if (action >= 1 || cursoEditado != null) tituloCurso = new JTextField(cursoEditado.getNombre());
 		else tituloCurso = new JTextField("");
 		tituloCurso.setName("tituloBox");
 		tituloCurso.setBounds(10,40,400,30);
@@ -460,12 +454,12 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 		// Boton para añadir materia
-		addMateriaBto = new JButton("Añadir materia");
-		addMateriaBto.setName("añadirMateriaBto");
-		addMateriaBto.setBounds(450,931,200,30);
-		mainPanel.add(addMateriaBto);
+		button = new JButton("Añadir materia");
+		button.setName("añadirMateriaBto");
+		button.setBounds(450,931,200,30);
+		mainPanel.add(button);
 
-		addMateriaBto.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) { 
@@ -527,12 +521,12 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		// Boton para eliminar materia
-		deleteMateriaBto = new JButton("Eliminar materia");
-		deleteMateriaBto.setName("eliminarMateriaBto");
-		deleteMateriaBto.setBounds(450,1021,200,30);
-		mainPanel.add(deleteMateriaBto);
+		button = new JButton("Eliminar materia");
+		button.setName("eliminarMateriaBto");
+		button.setBounds(450,1021,200,30);
+		mainPanel.add(button);
 
-		deleteMateriaBto.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -626,12 +620,12 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	private void botonesLayout(final ProfesorUCLM director, final CursoPropio cursoEditado, final int action) {
 		// Boton para ir atras
-		atrasBto = new JButton("Atras");
-		atrasBto.setName("atrasBto");
-		atrasBto.setBounds(270,1530,200,30);
-		mainPanel.add(atrasBto);
+		button = new JButton("Atras");
+		button.setName("atrasBto");
+		button.setBounds(270,1530,200,30);
+		mainPanel.add(button);
 
-		atrasBto.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -653,12 +647,12 @@ public class PantallaPropuestaCurso extends JFrame {
 		else if(action >= 1) cadenaBoton = "Nueva edición";
 
 
-		sendBto = new JButton(cadenaBoton);
-		sendBto.setName("enviarBto");
-		sendBto.setBounds(500,1530,200,30);
-		mainPanel.add(sendBto);
+		button = new JButton(cadenaBoton);
+		button.setName("enviarBto");
+		button.setBounds(500,1530,200,30);
+		mainPanel.add(button);
 
-		sendBto.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -666,7 +660,9 @@ public class PantallaPropuestaCurso extends JFrame {
 
 
 				// COMPROBACION DE DATOS CURSO
-				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) {
+				boolean tituloCursoBool = testTexts(tituloCurso);
+				boolean requistoCursoBool = testTexts(requisitoCurso);
+				if (!tituloCursoBool && !requistoCursoBool) {
 					complete = false;
 				}
 

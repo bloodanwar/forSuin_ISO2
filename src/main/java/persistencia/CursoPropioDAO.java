@@ -55,14 +55,14 @@ public class CursoPropioDAO {
 	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getId()+"' AND edicion="+curso.getEdicion());
 		
-		if (datosCurso.size()==0)
+		if (datosCurso.isEmpty())
 			throw new CursoNoExisteException("No existe el curso seleccionado en la base de datos");
 		
 		datosCurso = (Vector) datosCurso.get(0);
 
 		String id = (String) datosCurso.get(0);
 		String nombre = (String) datosCurso.get(1);
-		int ECTS = (Integer) datosCurso.get(2);
+		int eCTS = (Integer) datosCurso.get(2);
 		Date fechainicio = (Date) datosCurso.get(3);
 		Date fechafin = (Date) datosCurso.get(4);
 		double tasaMatricula = (Double) datosCurso.get(5);
@@ -74,7 +74,7 @@ public class CursoPropioDAO {
 		ProfesorUCLM director = new ProfesorUCLM((String) datosCurso.get(11));
 		String requisitos = (String) datosCurso.get(12);
 		
-		CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
+		CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
 		
 		List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 		cursoDevolver.materias = materiasCurso;

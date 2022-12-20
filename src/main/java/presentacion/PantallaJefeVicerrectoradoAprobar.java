@@ -2,8 +2,6 @@ package presentacion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +76,7 @@ public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	if(propuestasLista.isSelectionEmpty()) return;
-	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));
+	            	new PantallaDatosCurso(2, null, cursosDao.get(propuestasLista.getSelectedIndex()));
 	                setVisible(false);
 	            }
 

@@ -38,6 +38,8 @@ public class Profesor {
 	
 	@Override
 	public boolean equals(Object obj){
+		if(this == obj) return true;
+		if (obj == null) return this != null;
 		if (getClass() != obj.getClass()) return false;
 		Profesor profObj = (Profesor) obj; 
 		if (!(this.getDni().equals(profObj.getDni()))) return false; 	

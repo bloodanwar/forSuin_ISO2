@@ -1,9 +1,7 @@
 package negocio.controllers;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import negocio.controllers.CursoException.*;
 import negocio.entities.*;

@@ -38,7 +38,7 @@ public class MatriculaDAO {
 
 	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException, MatriculaNoExisteException { 
 		Vector datosMatricula = GestorBD.getInstancia().select("SELECT * FROM matricula WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND cursoPropio_edicion="+matricula.titulo.getEdicion()+" AND estudiante_dni='"+matricula.estudiante.getDni()+"'");
-		if (datosMatricula.size()==0)
+		if (datosMatricula.isEmpty())
 			throw new MatriculaNoExisteException("No existe el curso seleccionado en la base de datos");
 		
 		datosMatricula = (Vector) datosMatricula.get(0);

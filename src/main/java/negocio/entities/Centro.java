@@ -38,6 +38,8 @@ public class Centro {
 	
 	@Override
 	public boolean equals(Object obj){
+		if(this == obj) return true;
+		if (obj == null) return this != null;
 		if (getClass() != obj.getClass()) return false;
 		Centro centroObj = (Centro) obj; 
 		if (this.getNombre() == null){

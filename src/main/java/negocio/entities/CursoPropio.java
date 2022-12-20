@@ -75,6 +75,8 @@ public class CursoPropio {
 	
 	@Override
 	public boolean equals(Object obj){
+		if(this == obj) return true;
+		if (obj == null) return this != null;
 		if (getClass() != obj.getClass()) return false;
 		CursoPropio cursoObj = (CursoPropio) obj; 
 		if (!(this.getId().equals(cursoObj.getId()))) return false; 

@@ -40,6 +40,8 @@ public class ProfesorUCLM extends Profesor {
 	
 	@Override
 	public boolean equals(Object obj){
+		if(this == obj) return true;
+		if (obj == null) return this != null;
 		if (getClass() != obj.getClass()) return false;
 		ProfesorUCLM profObj = (ProfesorUCLM) obj; 
 		if (!(this.getDni().equals(profObj.getDni()))) return false; 	
