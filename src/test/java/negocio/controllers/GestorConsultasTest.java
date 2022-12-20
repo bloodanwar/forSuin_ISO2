@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -409,7 +410,7 @@ public class GestorConsultasTest {
 		esperadoListarCentros.add(centro06);
 		esperadoListarCentros.add(centro07);
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorDirector, resultadoListarCursosPorDirector);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);
@@ -448,7 +449,7 @@ public class GestorConsultasTest {
 		esperadoListarCursosPorEstado.add(curso05);	
 		esperadoListarCursosPorEstado.add(curso10);
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorDirector, resultadoListarCursosPorDirector);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);
@@ -485,7 +486,7 @@ public class GestorConsultasTest {
 		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
 		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
@@ -521,7 +522,7 @@ public class GestorConsultasTest {
 		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
 		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
@@ -549,7 +550,7 @@ public class GestorConsultasTest {
 		List<CursoPropio> esperadoConsultarEstadoCursos=new ArrayList<>();
 		List<CursoPropio> esperadoListarCursosPorEstado=new ArrayList<>();
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
@@ -581,7 +582,7 @@ public class GestorConsultasTest {
 		esperadoListarCursosPorEstado.add(curso08);
 		esperadoListarCursosPorEstado.add(curso09);
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 		assertEquals(esperadoConsultarEstadoCursos, resultadoConsultarEstadoCursos);
 		assertEquals(esperadoListarCursosPorEstado, resultadoCursosPorEstado);	
 	}
@@ -616,7 +617,7 @@ public class GestorConsultasTest {
 		} catch (Exception e) { fail("HA TIRADO UNA EXCEPCION");
 		}
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 	}
 	
 	@Test
@@ -635,7 +636,7 @@ public class GestorConsultasTest {
 			fail("HA TIRADO UNA EXCEPCION");
 		}
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 	}
 	
 	@Test
@@ -654,7 +655,7 @@ public class GestorConsultasTest {
 			fail("HA TIRADO UNA EXCEPCION");
 		}
 		
-		assertTrue(resultadoConsultarIngresos==0.0);
+		assertSame(0.0, resultadoConsultarIngresos);
 	}
 	
 	@Test
