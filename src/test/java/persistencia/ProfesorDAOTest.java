@@ -41,7 +41,6 @@ public class ProfesorDAOTest {
 			profesoresEsperados.add(profesorEsperado);
 			position = profesoresEsperados.size()-1;
 
-
 			// CREACION
 			profesorEsperado.profesorDao.crearNuevoProfesor(profesorEsperado);
 			profesoresObtenidos = profesor.profesorDao.listarProfesores();

@@ -48,7 +48,7 @@ public class ProfesorDAO {
 				+ "apellidos='" + profesor.getApellidos() + "', "
 				+ "doctor=" + profesor.isDoctor() + ", "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE dni='"+profesor.getDni());
+				+ "' WHERE dni='"+profesor.getDni() + "'");
 	}
 	
 	public int eliminarProfesor(Profesor profesor) throws SQLException {

@@ -49,7 +49,7 @@ public class CentroDAOTest {
 			assertEquals(centroEsperado.getAtributo(), centroObtenido.getAtributo());
 
 			// SELECCION + EDICCIÓN
-			nombre = "";
+			nombre = "nombre";
 			localizacion = "";
 			atributo = 0;
 			centro = new Centro(nombre, localizacion, atributo);
