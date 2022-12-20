@@ -269,14 +269,14 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		// Fechas editadas
 		if (action >= 1) {
-			if(cursoEditado.getFechaInicio() != null) fechaInicioCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaInicio()));
-			if(cursoEditado.getFechaFin() != null) fechaFinalCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaFin()));
+			if(cursoEditado != null && cursoEditado.getFechaInicio() != null) fechaInicioCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaInicio()));
+			if(cursoEditado != null && cursoEditado.getFechaFin() != null) fechaFinalCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaFin()));
 		}
 
 		// Edicion de curso
-		if (action < 1) edicion = 1;
-		else if (action == 1) edicion = cursoEditado.getEdicion();
-		else if (action >= 1) edicion = cursoEditado.getEdicion() + 1;
+		if (cursoEditado != null && action >= 1) edicion = cursoEditado.getEdicion() + 1;
+		else if (cursoEditado != null && action == 1) edicion = cursoEditado.getEdicion();
+		else edicion = 1;
 		label = new JLabel("Edicion de curso: " + edicion);
 		label.setName("edicionLbl");
 		label.setBounds(450,40,200,30);
@@ -288,7 +288,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setBounds(450,90,200,30);
 		mainPanel.add(label);
 
-		if (action >= 1) tasaMatricula = new JTextField("" + cursoEditado.getTasaMatricula());
+		if (action >= 1 && cursoEditado != null) tasaMatricula = new JTextField("" + cursoEditado.getTasaMatricula());
 		else tasaMatricula = new JTextField("" );
 		tasaMatricula.setName("tasaBox");
 		tasaMatricula.setBounds(450,131,180,30);
