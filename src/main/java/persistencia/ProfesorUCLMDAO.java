@@ -21,7 +21,7 @@ public class ProfesorUCLMDAO {
 		
 		return GestorBD.getInstancia().insert("INSERT INTO profesorUCLM (profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ profesor.getDni()+"', '"
-				+ profesor.categoria.toString()+"', ''"
+				+ profesor.categoria.toString()+"', '"
 				+ profesor.centroAdscripcion.getNombre()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
