@@ -16,125 +16,124 @@ import negocio.entities.Matricula;
 import negocio.entities.ModoPago;
 import negocio.entities.ProfesorUCLM;
 
-
+@Generated
 public class PantallaMatriculacion extends JFrame{
 	
 	JRadioButton rdbtnTran;
 	JRadioButton rdbtnTarj;
 	
-<span class="nc" id="L25">	public PantallaMatriculacion(ProfesorUCLM director, CursoPropio curso) {</span>
+	public PantallaMatriculacion(ProfesorUCLM director, CursoPropio curso) {
 		
-<span class="nc" id="L27">		Estudiante estudiante=new Estudiante(&quot;12457560J&quot;, &quot;Ricardo&quot;, &quot;Balas Bodas&quot; , &quot;Enfermeria&quot;, &quot;Apto&quot;);</span>
+		Estudiante estudiante=new Estudiante(&quot;12457560J&quot;, &quot;Ricardo&quot;, &quot;Balas Bodas&quot; , &quot;Enfermeria&quot;, &quot;Apto&quot;);
 		
-<span class="nc" id="L29">		getContentPane().setLayout(null);</span>
+		getContentPane().setLayout(null);
 		
-<span class="nc" id="L31">		initLayout();</span>
-<span class="nc" id="L32">		metodoPago();</span>
-<span class="nc" id="L33">		datosCurso(curso);</span>
-<span class="nc" id="L34">		buttonLayout(curso,estudiante,director);</span>
-		
-		
-<span class="nc" id="L37">	}</span>
+		initLayout();
+		metodoPago();
+		datosCurso(curso);
+		buttonLayout(curso,estudiante,director);
+	}
 		
 		
 		private void initLayout() {
-<span class="nc" id="L41">			setBounds(10, 10, 800,600);</span>
-<span class="nc" id="L42">			setTitle(&quot;Matriculacion&quot;);</span>
-<span class="nc" id="L43">			setResizable(true);</span>
-<span class="nc" id="L44">			setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
-<span class="nc" id="L45">			setLocationRelativeTo(null);</span>
-<span class="nc" id="L46">			setVisible(true);</span>
-<span class="nc" id="L47">		}</span>
+			setBounds(10, 10, 800,600);
+			setTitle(&quot;Matriculacion&quot;);
+			setResizable(true);
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
+			setLocationRelativeTo(null);
+			setVisible(true);
+		}
 		
 		private void datosCurso(CursoPropio curso) {  //Texto de display de la info del curso
-<span class="nc" id="L50">		JLabel tituloCurso = 	new JLabel(curso.getNombre());</span>
-<span class="nc" id="L51">		tituloCurso.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="nc" id="L52">		tituloCurso.setBounds(250, 50, 300, 14);</span>
-<span class="nc" id="L53">		getContentPane().add(tituloCurso);</span>
+		JLabel tituloCurso = 	new JLabel(curso.getNombre());
+		tituloCurso.setHorizontalAlignment(SwingConstants.CENTER);
+		tituloCurso.setBounds(250, 50, 300, 14);
+		getContentPane().add(tituloCurso);
 				
-<span class="nc" id="L55">		JLabel tasaMatricula = new JLabel(&quot;Centro: &quot;+curso.centro.getNombre());</span>
-<span class="nc" id="L56">		tasaMatricula.setBounds(60, 123, 200, 14);</span>
-<span class="nc" id="L57">		getContentPane().add(tasaMatricula);</span>
+		JLabel tasaMatricula = new JLabel(&quot;Centro: &quot;+curso.centro.getNombre());
+		tasaMatricula.setBounds(60, 123, 200, 14);
+		getContentPane().add(tasaMatricula);
 			
-<span class="nc" id="L59">		JLabel fechaInicio = new JLabel(&quot;Fecha Inicio: &quot;+curso.getFechaInicio());</span>
-<span class="nc" id="L60">		fechaInicio.setBounds(60, 172, 200, 14);</span>
-<span class="nc" id="L61">		getContentPane().add(fechaInicio);</span>
+		JLabel fechaInicio = new JLabel(&quot;Fecha Inicio: &quot;+curso.getFechaInicio());
+		fechaInicio.setBounds(60, 172, 200, 14);
+		getContentPane().add(fechaInicio);
 		
-<span class="nc" id="L63">		JLabel edicion = new JLabel(&quot;Edicion: &quot;+curso.getEdicion());</span>
-<span class="nc" id="L64">		edicion.setBounds(60, 100, 200, 14);</span>
-<span class="nc" id="L65">		getContentPane().add(edicion);</span>
+		JLabel edicion = new JLabel(&quot;Edicion: &quot;+curso.getEdicion());
+		edicion.setBounds(60, 100, 200, 14);
+		getContentPane().add(edicion);
 		
-<span class="nc" id="L67">		JLabel categoria = new JLabel(&quot;Categoria: &quot;+curso.tipo);</span>
-<span class="nc" id="L68">		categoria.setBounds(60, 147, 200, 14);</span>
-<span class="nc" id="L69">		getContentPane().add(categoria);</span>
+		JLabel categoria = new JLabel(&quot;Categoria: &quot;+curso.tipo);
+		categoria.setBounds(60, 147, 200, 14);
+		getContentPane().add(categoria);
 		
-<span class="nc" id="L71">		JLabel fechaFin = new JLabel(&quot;Fecha Fin: &quot;+curso.getFechaFin());</span>
-<span class="nc" id="L72">		fechaFin.setBounds(60, 197, 200, 14);</span>
-<span class="nc" id="L73">		getContentPane().add(fechaFin);</span>
+		JLabel fechaFin = new JLabel(&quot;Fecha Fin: &quot;+curso.getFechaFin());
+		fechaFin.setBounds(60, 197, 200, 14);
+		getContentPane().add(fechaFin);
 		
-<span class="nc" id="L75">		JLabel lblNewLabel = new JLabel(&quot;Selecciona tu Metodo de pago&quot;);</span>
-<span class="nc" id="L76">		lblNewLabel.setBounds(500, 100, 150, 14);</span>
-<span class="nc" id="L77">		getContentPane().add(lblNewLabel);</span>
+		JLabel lblNewLabel = new JLabel(&quot;Selecciona tu Metodo de pago&quot;);
+		lblNewLabel.setBounds(500, 100, 150, 14);
+		getContentPane().add(lblNewLabel);
 		
-<span class="nc" id="L79">		JLabel totalAPagar = new JLabel(&quot;Total a pagar: &quot;+curso.getTasaMatricula());</span>
-<span class="nc" id="L80">		totalAPagar.setBounds(500, 196, 200, 14);</span>
-<span class="nc" id="L81">		getContentPane().add(totalAPagar);</span>
-<span class="nc" id="L82">		}</span>
+		JLabel totalAPagar = new JLabel(&quot;Total a pagar: &quot;+curso.getTasaMatricula());
+		totalAPagar.setBounds(500, 196, 200, 14);
+		getContentPane().add(totalAPagar);
+		}
 		
 		private void metodoPago() {
 		//Seleccion del metodo de pago
+			JRadioButton rdbtnTran = new JRadioButton(&quot;Transferencia&quot;);
+			rdbtnTran.setBounds(526, 121, 150, 15);
+			getContentPane().add(rdbtnTran);
 			
-<span class="nc" id="L87">		JRadioButton rdbtnTran = new JRadioButton(&quot;Transferencia&quot;);</span>
-<span class="nc" id="L88">		rdbtnTran.setBounds(526, 121, 150, 15);</span>
-<span class="nc" id="L89">		getContentPane().add(rdbtnTran);</span>
-		
-<span class="nc" id="L91">		JRadioButton rdbtnTarj = new JRadioButton(&quot;Tarjeta&quot;);</span>
-<span class="nc" id="L92">		rdbtnTarj.setBounds(526, 139, 90, 15);</span>
-<span class="nc" id="L93">		getContentPane().add(rdbtnTarj);</span>
-
-<span class="nc" id="L95">		ButtonGroup group = new ButtonGroup();</span>
-<span class="nc" id="L96">		group.add(rdbtnTran);</span>
-<span class="nc" id="L97">		group.add(rdbtnTarj);</span>
-<span class="nc" id="L98">		}</span>
+			JRadioButton rdbtnTarj = new JRadioButton(&quot;Tarjeta&quot;);
+			rdbtnTarj.setBounds(526, 139, 90, 15);
+			getContentPane().add(rdbtnTarj);
+	
+			ButtonGroup group = new ButtonGroup();
+			group.add(rdbtnTran);
+			group.add(rdbtnTarj);
+		}
 		
 		private void buttonLayout(final CursoPropio curso, final Estudiante estudiante,final ProfesorUCLM director) {
-		//Botones Atras y Pagar
-		
-<span class="nc" id="L103">		JButton btnPagar = new JButton(&quot;Realizar Pago&quot;);</span>
-<span class="nc" id="L104">		btnPagar.addActionListener(new ActionListener() {</span>
-			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L106">				ModoPago metodoPago = null;</span>
-<span class="nc" id="L107">				boolean pagado=false;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">				if(rdbtnTran.isSelected()) {</span>
-<span class="nc" id="L109">					metodoPago=ModoPago.TRANSFERENCIA;</span>
-<span class="nc" id="L110">					pagado=true;</span>
-				}
-<span class="nc bnc" id="L112" title="All 2 branches missed.">				else if(rdbtnTarj.isSelected()) {</span>
-<span class="nc" id="L113">					metodoPago=ModoPago.TARJETA_CREDITO;</span>
-<span class="nc" id="L114">					pagado=true;</span>
+			//Botones Atras y Pagar
+			
+			JButton btnPagar = new JButton(&quot;Realizar Pago&quot;);
+<span class="nc" id="L101">			btnPagar.addActionListener(new ActionListener() {</span>
+				@Generated @Override
+				public void actionPerformed(ActionEvent e) {
+					ModoPago metodoPago = null;
+					boolean pagado=false;
+					if(rdbtnTran.isSelected()) {
+						metodoPago=ModoPago.TRANSFERENCIA;
+						pagado=true;
+					}
+					else if(rdbtnTarj.isSelected()) {
+						metodoPago=ModoPago.TARJETA_CREDITO;
+						pagado=true;
+					};
+					Matricula matricula = new Matricula(estudiante,curso);
+				
+					matricula.setPagado(pagado);
+					matricula.setTipoPago(metodoPago);
 				};
-<span class="nc" id="L116">				Matricula matricula = new Matricula(estudiante,curso);</span>
-			
-<span class="nc" id="L118">				matricula.setPagado(pagado);</span>
-<span class="nc" id="L119">				matricula.setTipoPago(metodoPago);</span>
-<span class="nc" id="L120">			};</span>
 			
 			
 			
 		});
-<span class="nc" id="L125">		btnPagar.setBounds(590, 500, 150, 25);</span>
-<span class="nc" id="L126">		getContentPane().add(btnPagar);</span>
+		btnPagar.setBounds(590, 500, 150, 25);
+		getContentPane().add(btnPagar);
 		
-<span class="nc" id="L128">		JButton btnAtras = new JButton(&quot;Atras&quot;);</span>
-<span class="nc" id="L129">		btnAtras.addActionListener(new ActionListener() {</span>
+		JButton btnAtras = new JButton(&quot;Atras&quot;);
+<span class="nc" id="L127">		btnAtras.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L131">				new PantallaDatosCurso(0, director, curso);</span>
-<span class="nc" id="L132">				setVisible(false);</span>
-<span class="nc" id="L133">			}</span>
+				new PantallaDatosCurso(0, director, curso);
+				setVisible(false);
+			}
 		});
-<span class="nc" id="L135">		btnAtras.setBounds(60, 500, 150, 25);</span>
-<span class="nc" id="L136">		getContentPane().add(btnAtras);</span>
-<span class="nc" id="L137">	}</span>
+		btnAtras.setBounds(60, 500, 150, 25);
+		getContentPane().add(btnAtras);
+	}
 
 	
 }

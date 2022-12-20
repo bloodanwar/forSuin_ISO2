@@ -16,6 +16,7 @@ import negocio.entities.EstadoCurso;
 import javax.swing.JButton;
 import javax.swing.JList;
 
+@Generated
 public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 
 	private List<CursoPropio> cursosDao = null;
@@ -72,8 +73,7 @@ public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 	     getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
-	            
-	            @Override
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	if(propuestasLista.isSelectionEmpty()) return;
 	            	new PantallaDatosCurso(2, null, cursosDao.get(propuestasLista.getSelectedIndex()));
@@ -87,8 +87,7 @@ public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 		 getContentPane().add(btnAtras);
 
 		 btnAtras.addActionListener(new ActionListener() {
-	            
-	            @Override
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	new PantallaJefeGabineteVicerrectorado();
 	                setVisible(false);

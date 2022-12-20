@@ -41,6 +41,7 @@ import negocio.controllers.GestorMD5;
 import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.*;
 
+@Generated
 public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
@@ -207,6 +208,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		p.put("text.year", "Year");
 	}
 
+	@SuppressWarnings("serial")
 	private void basicLayout(CursoPropio cursoEditado, int action) {
 		// Titulo		
 		label = new JLabel("Titulo de curso");
@@ -227,12 +229,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		secretariosTable = new JTable(profesoresUCLM) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -350,7 +347,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		categoriasLista.addListSelectionListener(new ListSelectionListener() {
 
-			@Override
+			@Generated @Override
 			public void valueChanged(ListSelectionEvent e) {
 				int index = categoriasLista.getSelectedIndex();
 				int requisito = -1;				
@@ -461,7 +458,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		button.addActionListener(new ActionListener() {
 
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) { 
 				boolean complete = true;
 
@@ -527,8 +524,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if (materiasLista.isSelectionEmpty()) return;
 
@@ -598,12 +594,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		responsablesTable = new JTable(profesores) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -626,8 +617,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new PantallaGestionarCursos(director);
@@ -653,8 +643,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				boolean complete = true;
 

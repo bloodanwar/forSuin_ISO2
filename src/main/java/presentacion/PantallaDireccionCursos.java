@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import negocio.entities.ProfesorUCLM;
 
+@Generated
 public class PantallaDireccionCursos extends JFrame{
     
     public PantallaDireccionCursos (ProfesorUCLM director) {
@@ -33,8 +34,7 @@ public class PantallaDireccionCursos extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
                 new PantallaCursosAprobados(1, director);
                 setVisible(false);
@@ -47,8 +47,7 @@ public class PantallaDireccionCursos extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
                 new PantallaGestionarCursos(director);
                 setVisible(false);
@@ -61,20 +60,11 @@ public class PantallaDireccionCursos extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
                 new PantallaLogin();
                 setVisible(false);
             }
         });
-	}
-
-	public void altaCurso() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void edicionCurso() {
-		throw new UnsupportedOperationException();
 	}
 }

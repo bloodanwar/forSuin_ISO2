@@ -8,72 +8,68 @@ import java.util.List;
 
 import negocio.controllers.ConsultasException.*;
 import negocio.entities.*;
-import persistencia.CursoPropioDAO;
 
-<span class="fc" id="L13">public class GestorConsultas {</span>
+<span class="fc" id="L12">public class GestorConsultas {</span>
 
-<span class="fc" id="L15">	SimpleDateFormat formatter = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);      </span>
+<span class="fc" id="L14">	SimpleDateFormat formatter = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);      </span>
 	
 	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException, TipoCursoErroneoException {
-<span class="fc" id="L18">		comprobarTipo(tipo);</span>
-<span class="fc" id="L19">		CursoPropio curso = new CursoPropio();</span>
-<span class="fc" id="L20">		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);</span>
+<span class="fc" id="L17">		comprobarTipo(tipo);</span>
+<span class="fc" id="L18">		CursoPropio curso = new CursoPropio();</span>
+<span class="fc" id="L19">		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);</span>
 	}
 
 	public List&lt;CursoPropio&gt; consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) throws SQLException, EstadoCursoErroneoException {
-<span class="fc" id="L24">		comprobarEstado(estadoCurso);</span>
-<span class="fc" id="L25">		CursoPropio curso = new CursoPropio();</span>
-<span class="fc" id="L26">		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);</span>
+<span class="fc" id="L23">		comprobarEstado(estadoCurso);</span>
+<span class="fc" id="L24">		CursoPropio curso = new CursoPropio();</span>
+<span class="fc" id="L25">		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);</span>
 	}
 	
 	public List&lt;CursoPropio&gt; listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException, SQLException, ProfesorErroneoException{
-<span class="pc bpc" id="L30" title="1 of 6 branches missed.">		if (profesor==null || profesor.getDni()==null || profesor.getDni().equals(&quot;&quot;))</span>
-<span class="fc" id="L31">			throw new ProfesorErroneoException(&quot;Profesor no tiene DNI o es nulo&quot;);</span>
+<span class="pc bpc" id="L29" title="1 of 6 branches missed.">		if (profesor==null || profesor.getDni()==null || profesor.getDni().equals(&quot;&quot;))</span>
+<span class="fc" id="L30">			throw new ProfesorErroneoException(&quot;Profesor no tiene DNI o es nulo&quot;);</span>
 		
-<span class="fc" id="L33">		CursoPropio curso = new CursoPropio();</span>
-<span class="fc" id="L34">	    Date dateInicio = formatter.parse(&quot;01-01-1000&quot;);      </span>
-<span class="fc" id="L35">	    Date dateFin = formatter.parse(&quot;01-01-3000&quot;);  </span>
+<span class="fc" id="L32">		CursoPropio curso = new CursoPropio();</span>
+<span class="fc" id="L33">	    Date dateInicio = formatter.parse(&quot;01-01-1000&quot;);      </span>
+<span class="fc" id="L34">	    Date dateFin = formatter.parse(&quot;01-01-3000&quot;);  </span>
 	    
-<span class="fc" id="L37">		List&lt;CursoPropio&gt; listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);</span>
-<span class="fc" id="L38">		return listaCursos;</span>
+<span class="fc" id="L36">		return curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);</span>
 	}
 	
 	public List&lt;CursoPropio&gt; listarCursosPorEstado(EstadoCurso estado) throws ParseException, SQLException, EstadoCursoErroneoException{
-<span class="fc" id="L42">		comprobarEstado(estado);</span>
-<span class="fc" id="L43">		CursoPropio curso = new CursoPropio(); </span>
-<span class="fc" id="L44">		Date dateInicio = formatter.parse(&quot;01-01-1000&quot;);</span>
-<span class="fc" id="L45">		Date dateFin = formatter.parse(&quot;01-01-3000&quot;);</span>
-<span class="fc" id="L46">		List&lt;CursoPropio&gt; listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);</span>
-	
-<span class="fc" id="L48">		return listaCursos;</span>
+<span class="fc" id="L40">		comprobarEstado(estado);</span>
+<span class="fc" id="L41">		CursoPropio curso = new CursoPropio(); </span>
+<span class="fc" id="L42">		Date dateInicio = formatter.parse(&quot;01-01-1000&quot;);</span>
+<span class="fc" id="L43">		Date dateFin = formatter.parse(&quot;01-01-3000&quot;);</span>
+<span class="fc" id="L44">		return curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);</span>
 	}
 	
 	public List&lt;CursoPropio&gt; listarTodosCursos() throws SQLException{
-<span class="fc" id="L52">		CursoPropio curso = new CursoPropio();	</span>
-<span class="fc" id="L53">		return curso.cursoPropioDao.listarCursos();</span>
+<span class="fc" id="L48">		CursoPropio curso = new CursoPropio();	</span>
+<span class="fc" id="L49">		return curso.cursoPropioDao.listarCursos();</span>
 	}
 	
 	public List&lt;Profesor&gt; listarProfesores() throws SQLException{
-<span class="fc" id="L57">		Profesor profesor = new Profesor();	</span>
-<span class="fc" id="L58">		return profesor.profesorDao.listarProfesores();</span>
+<span class="fc" id="L53">		Profesor profesor = new Profesor();	</span>
+<span class="fc" id="L54">		return profesor.profesorDao.listarProfesores();</span>
 	}
 	
 	public List&lt;ProfesorUCLM&gt; listarProfesoresUCLM() throws SQLException{
-<span class="fc" id="L62">		ProfesorUCLM profesor = new ProfesorUCLM();	</span>
-<span class="fc" id="L63">		return profesor.profesorUCLMDao.listarProfesores();</span>
+<span class="fc" id="L58">		ProfesorUCLM profesor = new ProfesorUCLM();	</span>
+<span class="fc" id="L59">		return profesor.profesorUCLMDao.listarProfesores();</span>
 	}
 	
 	public List&lt;Centro&gt; listarCentros() throws SQLException{
-<span class="fc" id="L67">		Centro centro = new Centro();	</span>
-<span class="fc" id="L68">		return centro.centroDao.listarCentros();</span>
+<span class="fc" id="L63">		Centro centro = new Centro();	</span>
+<span class="fc" id="L64">		return centro.centroDao.listarCentros();</span>
 	}
 	
 	private void comprobarEstado(EstadoCurso estado) throws EstadoCursoErroneoException{
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		if(estado==null) throw new EstadoCursoErroneoException(&quot;El estado del curso es nulo&quot;) ;</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if(estado==null) throw new EstadoCursoErroneoException(&quot;El estado del curso es nulo&quot;) ;</span>
+<span class="fc" id="L69">	}</span>
 	
 	private void comprobarTipo(TipoCurso tipo) throws TipoCursoErroneoException{
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if(tipo==null) throw new TipoCursoErroneoException(&quot;El tipo del curso es nulo&quot;) ;</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if(tipo==null) throw new TipoCursoErroneoException(&quot;El tipo del curso es nulo&quot;) ;</span>
+<span class="fc" id="L73">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

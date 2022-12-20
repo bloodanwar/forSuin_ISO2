@@ -36,6 +36,11 @@
   			<groupId>org.jacoco</groupId>
   			<artifactId>jacoco-maven-plugin</artifactId>
   			<version>0.8.6</version>
+  			<configuration>
+            	<excludes>
+                	<exclude>**/presentacion/*</exclude>
+                </excludes>
+            </configuration>
   			<executions>
   				<execution>
   					<id>default-prepare-agent</id>
@@ -183,15 +188,15 @@
   </reporting>
   <url>https://forsuin-isoii.github.io/forSuin_ISO2/</url>
   <description>Proyecto de prácticas para Ingeniería del Software 2:
-\n&quot;Gestión de títulos propios&quot;
+&quot;Gestión de títulos propios&quot;
 
-\nEmpresa: forSuin
-\n	- Miriam Fernández Osuna (CEO)
-\n	- Sergio García Muñoz
-\n	- Rubén Gómez Villegas
-\n	- Carlos Rincón González
+Empresa: forSuin
+- Miriam Fernández Osuna (CEO)
+- Sergio García Muñoz
+- Rubén Gómez Villegas
+- Carlos Rincón González
 
-\nGrado Ingeniería Informática - UCLM - Facultad CCSS Talavera
-\nCurso 2022/23
-\nFecha: 21-12-2022</description>
+Grado Ingeniería Informática - UCLM - Facultad CCSS Talavera
+Curso 2022/23
+Fecha: 21-12-2022</description>
 </project>

@@ -16,6 +16,7 @@ import negocio.entities.EstadoCurso;
 import javax.swing.JButton;
 import javax.swing.JList;
 
+@Generated
 public class PantallaEmpleadosVicerrectorado extends JFrame {
 
 	private List<CursoPropio> cursosDao = null;
@@ -70,8 +71,7 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	     getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
-	            
-	            @Override
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	if(propuestasLista.isSelectionEmpty()) return;
 	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));
@@ -85,18 +85,12 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 		 getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
-	            
-	            @Override
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	new PantallaLogin();
 	                setVisible(false);
 	            }
 
 	        });
-	}
-
-	
-	public void evaluarCurso() {
-		throw new UnsupportedOperationException();
 	}
 }

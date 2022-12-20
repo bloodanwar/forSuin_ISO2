@@ -16,7 +16,7 @@ import negocio.entities.Matricula;
 import negocio.entities.ModoPago;
 import negocio.entities.ProfesorUCLM;
 
-
+@Generated
 public class PantallaMatriculacion extends JFrame{
 	
 	JRadioButton rdbtnTran;
@@ -32,8 +32,6 @@ public class PantallaMatriculacion extends JFrame{
 		metodoPago();
 		datosCurso(curso);
 		buttonLayout(curso,estudiante,director);
-		
-		
 	}
 		
 		
@@ -83,41 +81,41 @@ public class PantallaMatriculacion extends JFrame{
 		
 		private void metodoPago() {
 		//Seleccion del metodo de pago
+			JRadioButton rdbtnTran = new JRadioButton("Transferencia");
+			rdbtnTran.setBounds(526, 121, 150, 15);
+			getContentPane().add(rdbtnTran);
 			
-		JRadioButton rdbtnTran = new JRadioButton("Transferencia");
-		rdbtnTran.setBounds(526, 121, 150, 15);
-		getContentPane().add(rdbtnTran);
-		
-		JRadioButton rdbtnTarj = new JRadioButton("Tarjeta");
-		rdbtnTarj.setBounds(526, 139, 90, 15);
-		getContentPane().add(rdbtnTarj);
-
-		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnTran);
-		group.add(rdbtnTarj);
+			JRadioButton rdbtnTarj = new JRadioButton("Tarjeta");
+			rdbtnTarj.setBounds(526, 139, 90, 15);
+			getContentPane().add(rdbtnTarj);
+	
+			ButtonGroup group = new ButtonGroup();
+			group.add(rdbtnTran);
+			group.add(rdbtnTarj);
 		}
 		
 		private void buttonLayout(final CursoPropio curso, final Estudiante estudiante,final ProfesorUCLM director) {
-		//Botones Atras y Pagar
-		
-		JButton btnPagar = new JButton("Realizar Pago");
-		btnPagar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ModoPago metodoPago = null;
-				boolean pagado=false;
-				if(rdbtnTran.isSelected()) {
-					metodoPago=ModoPago.TRANSFERENCIA;
-					pagado=true;
-				}
-				else if(rdbtnTarj.isSelected()) {
-					metodoPago=ModoPago.TARJETA_CREDITO;
-					pagado=true;
-				};
-				Matricula matricula = new Matricula(estudiante,curso);
+			//Botones Atras y Pagar
 			
-				matricula.setPagado(pagado);
-				matricula.setTipoPago(metodoPago);
-			};
+			JButton btnPagar = new JButton("Realizar Pago");
+			btnPagar.addActionListener(new ActionListener() {
+				@Generated @Override
+				public void actionPerformed(ActionEvent e) {
+					ModoPago metodoPago = null;
+					boolean pagado=false;
+					if(rdbtnTran.isSelected()) {
+						metodoPago=ModoPago.TRANSFERENCIA;
+						pagado=true;
+					}
+					else if(rdbtnTarj.isSelected()) {
+						metodoPago=ModoPago.TARJETA_CREDITO;
+						pagado=true;
+					};
+					Matricula matricula = new Matricula(estudiante,curso);
+				
+					matricula.setPagado(pagado);
+					matricula.setTipoPago(metodoPago);
+				};
 			
 			
 			
@@ -127,6 +125,7 @@ public class PantallaMatriculacion extends JFrame{
 		
 		JButton btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaDatosCurso(0, director, curso);
 				setVisible(false);

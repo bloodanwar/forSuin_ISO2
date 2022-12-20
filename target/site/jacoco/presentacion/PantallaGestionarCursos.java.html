@@ -2,8 +2,6 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,166 +18,162 @@ import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
+@Generated
 public class PantallaGestionarCursos extends JFrame{
 
-<span class="nc" id="L25">	private List&lt;CursoPropio&gt; cursosDao = null;</span>
-<span class="nc" id="L26">	private DefaultTableModel cursosEnviados = new DefaultTableModel(); </span>
-<span class="nc" id="L27">	private JTable cursosTable = new JTable();</span>
+	private List&lt;CursoPropio&gt; cursosDao = null;
+	private DefaultTableModel cursosEnviados = new DefaultTableModel(); 
+	private JTable cursosTable = new JTable();
 
 
-<span class="nc" id="L30">	public PantallaGestionarCursos (ProfesorUCLM director) {</span>
-<span class="nc" id="L31">		initLayout();</span>
-<span class="nc" id="L32">		listLayout(director);</span>
-<span class="nc" id="L33">		botonesLayout(director);</span>
-<span class="nc" id="L34">	}</span>
+	public PantallaGestionarCursos (ProfesorUCLM director) {
+		initLayout();
+		listLayout(director);
+		botonesLayout(director);
+	}
 
 	private void initLayout() {
 		// Propiedades basicas
-<span class="nc" id="L38">		getContentPane().setLayout(null);</span>
-<span class="nc" id="L39">		setBounds(10, 10, 800,600);</span>
-<span class="nc" id="L40">		setTitle(&quot;Gestion de cursos propuestos&quot;);</span>
-<span class="nc" id="L41">		setResizable(true);</span>
-<span class="nc" id="L42">		setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
-<span class="nc" id="L43">		setLocationRelativeTo(null);</span>
-<span class="nc" id="L44">		setVisible(true);</span>
+		getContentPane().setLayout(null);
+		setBounds(10, 10, 800,600);
+		setTitle(&quot;Gestion de cursos propuestos&quot;);
+		setResizable(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
 
-<span class="nc" id="L46">	}</span>
+	}
 
 	private void listLayout(ProfesorUCLM director) {
-<span class="nc" id="L49">		GestorConsultas gestor = new GestorConsultas();</span>
+		GestorConsultas gestor = new GestorConsultas();
 
 		try {
-<span class="nc" id="L52">			cursosDao = gestor.listarCursosPorDirector(director);</span>
-<span class="nc" id="L53">		} catch (Exception e) {</span>
-<span class="nc" id="L54">			e.printStackTrace();</span>
-<span class="nc" id="L55">		}</span>
+			cursosDao = gestor.listarCursosPorDirector(director);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-<span class="nc" id="L57">		cursosEnviados.addColumn(&quot;Nombre&quot;);</span>
-<span class="nc" id="L58">		cursosEnviados.addColumn(&quot;Edicion&quot;);</span>
-<span class="nc" id="L59">		cursosEnviados.addColumn(&quot;Estado&quot;);</span>
+		cursosEnviados.addColumn(&quot;Nombre&quot;);
+		cursosEnviados.addColumn(&quot;Edicion&quot;);
+		cursosEnviados.addColumn(&quot;Estado&quot;);
 
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if(cursosDao != null) {	</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">			for(int i = 0; i&lt;cursosDao.size(); i++) {</span>
-<span class="nc" id="L63">				CursoPropio cursoTemp = cursosDao.get(i);</span>
-<span class="nc" id="L64">				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.getEdicion(), cursoTemp.estado });</span>
+		if(cursosDao != null) {	
+			for(int i = 0; i&lt;cursosDao.size(); i++) {
+				CursoPropio cursoTemp = cursosDao.get(i);
+				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.getEdicion(), cursoTemp.estado });
 			}
 		}
 
-<span class="nc" id="L68">		cursosTable = new JTable(cursosEnviados){</span>
-			@Override
+<span class="nc" id="L67">		cursosTable = new JTable(cursosEnviados){</span>
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
-<span class="nc" id="L71">				return false; //Disallow the editing of any cell</span>
+				return false; //Disallow the editing of any cell
 			}
 		};
 
-<span class="nc" id="L75">		cursosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+		cursosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-<span class="nc" id="L77">		JScrollPane scrollLista = new JScrollPane(cursosTable);</span>
-<span class="nc" id="L78">		scrollLista.setBounds(199, 113, 400, 200);</span>
-<span class="nc" id="L79">		getContentPane().add(scrollLista);</span>
-<span class="nc" id="L80">	}</span>
+		JScrollPane scrollLista = new JScrollPane(cursosTable);
+		scrollLista.setBounds(199, 113, 400, 200);
+		getContentPane().add(scrollLista);
+	}
 
 	private void botonesLayout(final ProfesorUCLM director) {
 		// Boton para realizar propuesta de curso
-<span class="nc" id="L84">		JButton button = new JButton(&quot;Realizar propuesta&quot;);</span>
-<span class="nc" id="L85">		button.setBounds(195,324,200,30);</span>
-<span class="nc" id="L86">		getContentPane().add(button);</span>
+		JButton button = new JButton(&quot;Realizar propuesta&quot;);
+		button.setBounds(195,324,200,30);
+		getContentPane().add(button);
 
-<span class="nc" id="L88">		button.addActionListener(new ActionListener() {</span>
-
-			@Override
+<span class="nc" id="L87">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L92">				CursoPropio curso = new CursoPropio(); </span>
-<span class="nc" id="L93">				new PantallaPropuestaCurso(director, curso, 0);</span>
-<span class="nc" id="L94">				setVisible(false);</span>
-<span class="nc" id="L95">			}</span>
+				CursoPropio curso = new CursoPropio(); 
+				new PantallaPropuestaCurso(director, curso, 0);
+				setVisible(false);
+			}
 
 		});
 
 		// Boton para nueva edicion de curso
-<span class="nc" id="L100">		button = new JButton(&quot;Nueva edición&quot;);</span>
-<span class="nc" id="L101">		button.setBounds(405,324,200,30);</span>
-<span class="nc" id="L102">		getContentPane().add(button);</span>
+		button = new JButton(&quot;Nueva edición&quot;);
+		button.setBounds(405,324,200,30);
+		getContentPane().add(button);
 
-<span class="nc" id="L104">		button.addActionListener(new ActionListener() {</span>
-
-			@Override
+<span class="nc" id="L102">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc bnc" id="L108" title="All 2 branches missed.">				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;</span>
-<span class="nc" id="L109">				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">				if(curso.estado == EstadoCurso.TERMINADO) {</span>
-<span class="nc" id="L111">					new PantallaPropuestaCurso(director, curso, 2);</span>
-<span class="nc" id="L112">					setVisible(false);</span>
+				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
+				if(curso.estado == EstadoCurso.TERMINADO) {
+					new PantallaPropuestaCurso(director, curso, 2);
+					setVisible(false);
 				}
 				
-<span class="nc" id="L115">			}</span>
+			}
 
 
 		});
 
 		// Boton para editar propuesta de curso
-<span class="nc" id="L121">		button = new JButton(&quot;Editar&quot;);</span>
-<span class="nc" id="L122">		button.setBounds(195,365,200,30);</span>
-<span class="nc" id="L123">		getContentPane().add(button);</span>
+		button = new JButton(&quot;Editar&quot;);
+		button.setBounds(195,365,200,30);
+		getContentPane().add(button);
 
-<span class="nc" id="L125">		button.addActionListener(new ActionListener() {</span>
-
-			@Override
+<span class="nc" id="L122">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc bnc" id="L129" title="All 2 branches missed.">				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;</span>
-<span class="nc" id="L130">				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());</span>
+				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
 				
-<span class="nc bnc" id="L132" title="All 4 branches missed.">				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {</span>
-<span class="nc" id="L133">					new PantallaPropuestaCurso(director, curso, 1);</span>
-<span class="nc" id="L134">					setVisible(false);</span>
+				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
+					new PantallaPropuestaCurso(director, curso, 1);
+					setVisible(false);
 				}
 				
-<span class="nc" id="L137">			}</span>
+			}
 
 		});
 
 		// Boton para eliminar propuesta de curso
-<span class="nc" id="L142">		button = new JButton(&quot;Eliminar&quot;);</span>
-<span class="nc" id="L143">		button.setBounds(405,365,200,30);</span>
-<span class="nc" id="L144">		getContentPane().add(button);</span>
+		button = new JButton(&quot;Eliminar&quot;);
+		button.setBounds(405,365,200,30);
+		getContentPane().add(button);
 
-<span class="nc" id="L146">		button.addActionListener(new ActionListener() {</span>
-
-			@Override
+<span class="nc" id="L142">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    </span>
+				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    
 				
-<span class="nc" id="L152">				int confirm = JOptionPane.showConfirmDialog(null,&quot;¿Eliminar propuesta de curso?&quot;,&quot;Eliminar propuesta de curso&quot;,JOptionPane.YES_NO_OPTION, 1);</span>
+				int confirm = JOptionPane.showConfirmDialog(null,&quot;¿Eliminar propuesta de curso?&quot;,&quot;Eliminar propuesta de curso&quot;,JOptionPane.YES_NO_OPTION, 1);
 				
-<span class="nc bnc" id="L154" title="All 2 branches missed.">				if (confirm == 0) {</span>
-<span class="nc" id="L155">					GestorPropuestasCursos gestor = new GestorPropuestasCursos();</span>
+				if (confirm == 0) {
+					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
 					try {
-<span class="nc" id="L157">						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));</span>
-<span class="nc" id="L158">					} catch (Exception e1) {</span>
-<span class="nc" id="L159">						e1.printStackTrace();</span>
-<span class="nc" id="L160">					}</span>
-<span class="nc" id="L161">					cursosEnviados.removeRow(cursosTable.getSelectedRow());</span>
+						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					cursosEnviados.removeRow(cursosTable.getSelectedRow());
 				}
-<span class="nc" id="L163">			}</span>
+			}
 
 		});
 
 
 		// Boton para ir atras
-<span class="nc" id="L169">		button = new JButton(&quot;Atras&quot;);</span>
-<span class="nc" id="L170">		button.setBounds(10,520,200,30);</span>
-<span class="nc" id="L171">		getContentPane().add(button);</span>
+		button = new JButton(&quot;Atras&quot;);
+		button.setBounds(10,520,200,30);
+		getContentPane().add(button);
 
-<span class="nc" id="L173">		button.addActionListener(new ActionListener() {</span>
-
-			@Override
+<span class="nc" id="L168">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L177">				new PantallaDireccionCursos(director);</span>
-<span class="nc" id="L178">				setVisible(false);</span>
-<span class="nc" id="L179">			}</span>
+				new PantallaDireccionCursos(director);
+				setVisible(false);
+			}
 
 		});
 
-<span class="nc" id="L183">	}</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

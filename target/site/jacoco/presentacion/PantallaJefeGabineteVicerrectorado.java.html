@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@Generated
 public class PantallaJefeGabineteVicerrectorado extends JFrame {
 
 	private JPanel contentPane;
@@ -17,49 +18,50 @@ public class PantallaJefeGabineteVicerrectorado extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-<span class="nc" id="L20">		EventQueue.invokeLater(new Runnable() {</span>
+<span class="nc" id="L21">		EventQueue.invokeLater(new Runnable() {</span>
+			@Generated
 			public void run() {
 				try {
-<span class="nc" id="L23">					PantallaJefeGabineteVicerrectorado frame = new PantallaJefeGabineteVicerrectorado();</span>
-<span class="nc" id="L24">					frame.setVisible(true);</span>
-<span class="nc" id="L25">				} catch (Exception e) {</span>
-<span class="nc" id="L26">					e.printStackTrace();</span>
-<span class="nc" id="L27">				}</span>
-<span class="nc" id="L28">			}</span>
+					PantallaJefeGabineteVicerrectorado frame = new PantallaJefeGabineteVicerrectorado();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		});
-<span class="nc" id="L30">	}</span>
+	}
 
 	/**
 	 * Create the frame.
 	 */
-<span class="nc" id="L35">	public PantallaJefeGabineteVicerrectorado() {</span>
-<span class="nc" id="L36">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
-<span class="nc" id="L37">		setBounds(100, 100, 672, 459);</span>
-<span class="nc" id="L38">		contentPane = new JPanel();</span>
-<span class="nc" id="L39">		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+	public PantallaJefeGabineteVicerrectorado() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 672, 459);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-<span class="nc" id="L41">		setContentPane(contentPane);</span>
-<span class="nc" id="L42">		contentPane.setLayout(null);</span>
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-<span class="nc" id="L44">		JButton btnAprobar_cursos = new JButton(&quot;Aprobar Cursos&quot;);</span>
-<span class="nc" id="L45">		btnAprobar_cursos.addActionListener(new ActionListener() {</span>
-			@Override
+		JButton btnAprobar_cursos = new JButton(&quot;Aprobar Cursos&quot;);
+<span class="nc" id="L47">		btnAprobar_cursos.addActionListener(new ActionListener() {</span>
+			@Generated @Override
             public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L48">            	new PantallaLogin();</span>
-<span class="nc" id="L49">                setVisible(false);</span>
-<span class="nc" id="L50">            }</span>
+            	new PantallaLogin();
+                setVisible(false);
+            }
 		});
 		
-<span class="nc" id="L53">		btnAprobar_cursos.setBounds(76, 223, 174, 19);</span>
-<span class="nc" id="L54">		contentPane.add(btnAprobar_cursos);</span>
+		btnAprobar_cursos.setBounds(76, 223, 174, 19);
+		contentPane.add(btnAprobar_cursos);
 		
-<span class="nc" id="L56">		JButton btnRealizar_consulta_cursos = new JButton(&quot;Realizar consulta cursos&quot;);</span>
-<span class="nc" id="L57">		btnRealizar_consulta_cursos.setBounds(404, 223, 199, 19);</span>
-<span class="nc" id="L58">		contentPane.add(btnRealizar_consulta_cursos);</span>
+		JButton btnRealizar_consulta_cursos = new JButton(&quot;Realizar consulta cursos&quot;);
+		btnRealizar_consulta_cursos.setBounds(404, 223, 199, 19);
+		contentPane.add(btnRealizar_consulta_cursos);
 		
-<span class="nc" id="L60">		JButton btnCerrar_sesion = new JButton(&quot;Cerrar sesión&quot;);</span>
-<span class="nc" id="L61">		btnCerrar_sesion.setBounds(297, 395, 87, 19);</span>
-<span class="nc" id="L62">		contentPane.add(btnCerrar_sesion);</span>
-<span class="nc" id="L63">	}</span>
+		JButton btnCerrar_sesion = new JButton(&quot;Cerrar sesión&quot;);
+		btnCerrar_sesion.setBounds(297, 395, 87, 19);
+		contentPane.add(btnCerrar_sesion);
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

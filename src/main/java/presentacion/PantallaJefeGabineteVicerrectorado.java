@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@Generated
 public class PantallaJefeGabineteVicerrectorado extends JFrame {
 
 	private JPanel contentPane;
@@ -18,6 +19,7 @@ public class PantallaJefeGabineteVicerrectorado extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Generated
 			public void run() {
 				try {
 					PantallaJefeGabineteVicerrectorado frame = new PantallaJefeGabineteVicerrectorado();
@@ -43,7 +45,7 @@ public class PantallaJefeGabineteVicerrectorado extends JFrame {
 		
 		JButton btnAprobar_cursos = new JButton("Aprobar Cursos");
 		btnAprobar_cursos.addActionListener(new ActionListener() {
-			@Override
+			@Generated @Override
             public void actionPerformed(ActionEvent e) {
             	new PantallaLogin();
                 setVisible(false);

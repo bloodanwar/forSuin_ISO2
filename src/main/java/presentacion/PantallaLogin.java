@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@Generated
 public class PantallaLogin {
 
 	private JFrame frame;
@@ -25,6 +26,7 @@ public class PantallaLogin {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Generated
 			public void run() {
 				try {
 					PantallaLogin window = new PantallaLogin();
@@ -71,7 +73,7 @@ public class PantallaLogin {
 		entrar.setBounds(326, 131, 160, 23);
 		
 		entrar.addActionListener(new ActionListener() {
-		
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM(textField.getText());
 				new PantallaDireccionCursos(director);
@@ -87,6 +89,7 @@ public class PantallaLogin {
 		
 		JButton profesor = new JButton("Profesor");
 		profesor.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM("23568907X");
 				new PantallaDireccionCursos(director);
@@ -99,6 +102,7 @@ public class PantallaLogin {
 		
 		JButton pesonal = new JButton("Empleados Vicerrectorado");
 		pesonal.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaEmpleadosVicerrectorado();
 				frame.setVisible(false);
@@ -114,6 +118,7 @@ public class PantallaLogin {
 		
 		JButton alumno = new JButton("Alumno");
 		alumno.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaAlumno();
 				frame.setVisible(false);
@@ -127,7 +132,7 @@ public class PantallaLogin {
 		frame.getContentPane().add(jefeGabinete);
 		
 		cerrar.addActionListener(new ActionListener() {
-		
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				 System.exit(0);
 			}

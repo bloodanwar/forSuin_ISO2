@@ -16,6 +16,7 @@ import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
+@Generated
 public class PantallaCursosAprobados extends JFrame{
 
 	private List<CursoPropio> cursosDao = null;
@@ -75,8 +76,7 @@ public class PantallaCursosAprobados extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
             	if(!cursosLista.isSelectionEmpty()) {
             		 new PantallaDatosCurso(type, director, cursosDao.get(cursosLista.getSelectedIndex()));
@@ -92,8 +92,7 @@ public class PantallaCursosAprobados extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
             	if (type == 0) new PantallaAlumno();
             	else if (type == 1) new PantallaDireccionCursos(director);

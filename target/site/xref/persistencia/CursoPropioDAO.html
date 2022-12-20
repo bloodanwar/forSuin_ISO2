@@ -63,14 +63,14 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  	<strong class="jxr_keyword">public</strong> <a name="CursoPropio" href=".<a name="CursoPropio" href="../negocio/entities/CursoPropio.html#CursoPropio">CursoPropio</a>ntities/CursoPropio.html#CursoPropio">CursoPropio</a> seleccionarCurso(<a name="CursoPropio" href="../negocio/entities/CursoPropio.html#CursoPropio">CursoPropio</a> curso) <strong class="jxr_keyword">throws</strong> SQLException, ParseException, CursoNoExisteException {
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  		Vector datosCurso = GestorBD.getInstancia().select(<span class="jxr_string">"SELECT * FROM cursoPropio WHERE id='"</span>+curso.getId()+<span class="jxr_string">"' AND edicion="</span>+curso.getEdicion());
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  		
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  		<strong class="jxr_keyword">if</strong> (datosCurso.size()==0)
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  		<strong class="jxr_keyword">if</strong> (datosCurso.isEmpty())
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> CursoNoExisteException(<span class="jxr_string">"No existe el curso seleccionado en la base de datos"</span>);
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  		
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  		datosCurso = (Vector) datosCurso.get(0);
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  		String id = (String) datosCurso.get(0);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  		String nombre = (String) datosCurso.get(1);
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  		<strong class="jxr_keyword">int</strong> ECTS = (Integer) datosCurso.get(2);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  		<strong class="jxr_keyword">int</strong> eCTS = (Integer) datosCurso.get(2);
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  		Date fechainicio = (Date) datosCurso.get(3);
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  		Date fechafin = (Date) datosCurso.get(4);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  		<strong class="jxr_keyword">double</strong> tasaMatricula = (Double) datosCurso.get(5);
@@ -82,7 +82,7 @@
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  		ProfesorUCLM director = <strong class="jxr_keyword">new</strong> <a name="ProfesorUCLM" href="../negocio/entities/ProfesorUCLM.html#ProfesorUCLM">ProfesorUCLM</a>((String) datosCurso.get(11));
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  		String requisitos = (String) datosCurso.get(12);
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>  		
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  		CursoPropio cursoDevolver = <strong class="jxr_keyword">new</strong> <a name="CursoPropio" href="../negocio/entities/CursoPropio.html#CursoPropio">CursoPropio</a>(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  		CursoPropio cursoDevolver = <strong class="jxr_keyword">new</strong> <a name="CursoPropio" href="../negocio/entities/CursoPropio.html#CursoPropio">CursoPropio</a>(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  		
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  		List&lt;Materia&gt; materiasCurso = <strong class="jxr_keyword">new</strong> <a name="Materia" href="../negocio/entities/Materia.html#Materia">Materia</a>().materiaDao.listarMateriasPorCurso(cursoDevolver);
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  		cursoDevolver.materias = materiasCurso;

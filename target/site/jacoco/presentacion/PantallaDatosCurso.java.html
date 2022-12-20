@@ -23,225 +23,228 @@ import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import java.util.Iterator;
 
+@Generated
 public class PantallaDatosCurso extends JFrame {
-<span class="nc" id="L27">	private DefaultTableModel materiasCurso = new DefaultTableModel(); </span>
+	private DefaultTableModel materiasCurso = new DefaultTableModel(); 
 
 	JTextArea descripcion;
 	JRadioButton aceptarPropuesta;
 	JRadioButton rechazarPropuesta;
 
 
-<span class="nc" id="L34">	public PantallaDatosCurso (int type, ProfesorUCLM director, CursoPropio curso) {</span>
-<span class="nc" id="L35">		initLayout();</span>
-<span class="nc" id="L36">		basicLayout(type, director, curso);</span>
-<span class="nc" id="L37">		tablaMaterias(curso);</span>
+	public PantallaDatosCurso (int type, ProfesorUCLM director, CursoPropio curso) {
+		initLayout();
+		basicLayout(type, director, curso);
+		tablaMaterias(curso);
 
 		//if (type == 0)	matricularCurso(); // TODO - matricular alumno en la misma pantalla
-<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (type == 2)	evaluarCurso();</span>
+		if (type == 2)	evaluarCurso();
 
-<span class="nc" id="L42">		botonesLayout(type, director, curso);</span>
-<span class="nc" id="L43">	}</span>
+		botonesLayout(type, director, curso);
+	}
 
 	private void initLayout() {
-<span class="nc" id="L46">		setBounds(10, 10, 800,600);</span>
-<span class="nc" id="L47">		setTitle(&quot;Gestion de cursos propuestos&quot;);</span>
-<span class="nc" id="L48">		setResizable(true);</span>
-<span class="nc" id="L49">		setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
-<span class="nc" id="L50">		setLocationRelativeTo(null);</span>
-<span class="nc" id="L51">		setVisible(true);</span>
-<span class="nc" id="L52">	}</span>
+		setBounds(10, 10, 800,600);
+		setTitle(&quot;Gestion de cursos propuestos&quot;);
+		setResizable(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
 
 	private void basicLayout(final int type, final ProfesorUCLM director, final CursoPropio curso) {
 		// Propiedades basicas
-<span class="nc" id="L56">		getContentPane().setLayout(null);</span>
+		getContentPane().setLayout(null);
 
-<span class="nc" id="L58">		JLabel tasaMatricula = new JLabel(&quot;Centro: &quot; + curso.centro.getNombre());</span>
-<span class="nc" id="L59">		tasaMatricula.setBounds(43, 75, 200, 14);</span>
-<span class="nc" id="L60">		getContentPane().add(tasaMatricula);</span>
+		JLabel tasaMatricula = new JLabel(&quot;Centro: &quot; + curso.centro.getNombre());
+		tasaMatricula.setBounds(43, 75, 200, 14);
+		getContentPane().add(tasaMatricula);
 
-<span class="nc" id="L62">		JLabel tituloCurso = new JLabel(&quot;Titulo: &quot; + curso.getNombre());</span>
-<span class="nc" id="L63">		tituloCurso.setBounds(43, 27, 250, 14);</span>
-<span class="nc" id="L64">		getContentPane().add(tituloCurso);</span>
+		JLabel tituloCurso = new JLabel(&quot;Titulo: &quot; + curso.getNombre());
+		tituloCurso.setBounds(43, 27, 250, 14);
+		getContentPane().add(tituloCurso);
 
-<span class="nc" id="L66">		JLabel precio = new JLabel(&quot;Precio: &quot; + curso.getTasaMatricula());</span>
-<span class="nc" id="L67">		precio.setBounds(43, 175, 200, 14);</span>
-<span class="nc" id="L68">		getContentPane().add(precio);</span>
+		JLabel precio = new JLabel(&quot;Precio: &quot; + curso.getTasaMatricula());
+		precio.setBounds(43, 175, 200, 14);
+		getContentPane().add(precio);
 
-<span class="nc" id="L70">		JLabel creditos = new JLabel(&quot;Creditos: &quot; + curso.getECTS());</span>
-<span class="nc" id="L71">		creditos.setBounds(43, 125, 200, 14);</span>
-<span class="nc" id="L72">		getContentPane().add(creditos);</span>
+		JLabel creditos = new JLabel(&quot;Creditos: &quot; + curso.getECTS());
+		creditos.setBounds(43, 125, 200, 14);
+		getContentPane().add(creditos);
 
-<span class="nc" id="L74">		JLabel directorLabel = new JLabel(&quot;Profesor Director: &quot; + curso.director.getNombre());</span>
-<span class="nc" id="L75">		directorLabel.setBounds(43, 100, 200, 14);</span>
-<span class="nc" id="L76">		getContentPane().add(directorLabel);</span>
+		JLabel directorLabel = new JLabel(&quot;Profesor Director: &quot; + curso.director.getNombre());
+		directorLabel.setBounds(43, 100, 200, 14);
+		getContentPane().add(directorLabel);
 
-<span class="nc" id="L78">		JLabel fechaInicio = new JLabel(&quot;Fecha Inicio: &quot; + curso.getFechaInicio());</span>
-<span class="nc" id="L79">		fechaInicio.setBounds(43, 200, 200, 14);</span>
-<span class="nc" id="L80">		getContentPane().add(fechaInicio);</span>
+		JLabel fechaInicio = new JLabel(&quot;Fecha Inicio: &quot; + curso.getFechaInicio());
+		fechaInicio.setBounds(43, 200, 200, 14);
+		getContentPane().add(fechaInicio);
 
-<span class="nc" id="L82">		JLabel edicion = new JLabel(&quot;Edicion: &quot; + curso.getEdicion());</span>
-<span class="nc" id="L83">		edicion.setBounds(43, 52, 200, 14);</span>
-<span class="nc" id="L84">		getContentPane().add(edicion);</span>
+		JLabel edicion = new JLabel(&quot;Edicion: &quot; + curso.getEdicion());
+		edicion.setBounds(43, 52, 200, 14);
+		getContentPane().add(edicion);
 
-<span class="nc" id="L86">		JLabel categoria = new JLabel(&quot;Categoria: &quot; + curso.tipo);</span>
-<span class="nc" id="L87">		categoria.setBounds(43, 150, 200, 14);</span>
-<span class="nc" id="L88">		getContentPane().add(categoria);</span>
+		JLabel categoria = new JLabel(&quot;Categoria: &quot; + curso.tipo);
+		categoria.setBounds(43, 150, 200, 14);
+		getContentPane().add(categoria);
 
-<span class="nc" id="L90">		JLabel fechaFin = new JLabel(&quot;Fecha Fin: &quot; + curso.getFechaFin());</span>
-<span class="nc" id="L91">		fechaFin.setBounds(43, 225, 200, 14);</span>
-<span class="nc" id="L92">		getContentPane().add(fechaFin);</span>
+		JLabel fechaFin = new JLabel(&quot;Fecha Fin: &quot; + curso.getFechaFin());
+		fechaFin.setBounds(43, 225, 200, 14);
+		getContentPane().add(fechaFin);
 
-<span class="nc" id="L94">		JLabel materiasLabel = new JLabel(&quot;Materias&quot;);</span>
-<span class="nc" id="L95">		materiasLabel.setBounds(473, 27, 53, 14);</span>
-<span class="nc" id="L96">		getContentPane().add(materiasLabel);</span>
-<span class="nc" id="L97">	}</span>
+		JLabel materiasLabel = new JLabel(&quot;Materias&quot;);
+		materiasLabel.setBounds(473, 27, 53, 14);
+		getContentPane().add(materiasLabel);
+	}
 
 	private void evaluarCurso(){
-<span class="nc" id="L100">		descripcion = new JTextArea();</span>
-<span class="nc" id="L101">		descripcion.setBounds(306, 300, 400, 163);</span>
-<span class="nc" id="L102">		getContentPane().add(descripcion);</span>
+		descripcion = new JTextArea();
+		descripcion.setBounds(306, 300, 400, 163);
+		getContentPane().add(descripcion);
 
-<span class="nc" id="L104">		aceptarPropuesta = new JRadioButton(&quot;Aceptar propuesta&quot;);</span>
-<span class="nc" id="L105">		aceptarPropuesta.setBounds(125, 301, 157, 23);</span>
-<span class="nc" id="L106">		getContentPane().add(aceptarPropuesta);</span>
+		aceptarPropuesta = new JRadioButton(&quot;Aceptar propuesta&quot;);
+		aceptarPropuesta.setBounds(125, 301, 157, 23);
+		getContentPane().add(aceptarPropuesta);
 
-<span class="nc" id="L108">		rechazarPropuesta = new JRadioButton(&quot;Rechazar Propuesta&quot;);</span>
-<span class="nc" id="L109">		rechazarPropuesta.setBounds(125, 334, 157, 23);</span>
-<span class="nc" id="L110">		getContentPane().add(rechazarPropuesta);</span>
+		rechazarPropuesta = new JRadioButton(&quot;Rechazar Propuesta&quot;);
+		rechazarPropuesta.setBounds(125, 334, 157, 23);
+		getContentPane().add(rechazarPropuesta);
 
-<span class="nc" id="L112">		ButtonGroup group = new ButtonGroup();</span>
-<span class="nc" id="L113">		group.add(aceptarPropuesta);</span>
-<span class="nc" id="L114">		group.add(rechazarPropuesta);</span>
+		ButtonGroup group = new ButtonGroup();
+		group.add(aceptarPropuesta);
+		group.add(rechazarPropuesta);
 
-<span class="nc" id="L116">		aceptarPropuesta.addActionListener(new ActionListener() {</span>
-			@Override
+<span class="nc" id="L117">		aceptarPropuesta.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L119">				descripcion.setEnabled(false);</span>
-<span class="nc" id="L120">				descripcion.setText(&quot;&quot;);</span>
-<span class="nc" id="L121">				descripcion.setBackground(Color.lightGray);</span>
-<span class="nc" id="L122">			}</span>
+				descripcion.setEnabled(false);
+				descripcion.setText(&quot;&quot;);
+				descripcion.setBackground(Color.lightGray);
+			}
 		});
 
-<span class="nc" id="L125">		rechazarPropuesta.addActionListener(new ActionListener() {</span>
-			@Override
+<span class="nc" id="L126">		rechazarPropuesta.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L128">				descripcion.setEnabled(true);</span>
-<span class="nc" id="L129">				descripcion.setBackground(Color.white);</span>
-<span class="nc" id="L130">			}</span>
+				descripcion.setEnabled(true);
+				descripcion.setBackground(Color.white);
+			}
 		});
-<span class="nc" id="L132">	}</span>
+	}
 
 	private void tablaMaterias(CursoPropio curso) {
-<span class="nc" id="L135">		materiasCurso.addColumn(&quot;Nombre&quot;);</span>
-<span class="nc" id="L136">		materiasCurso.addColumn(&quot;Responsable&quot;);</span>
-<span class="nc" id="L137">		materiasCurso.addColumn(&quot;Horas&quot;);</span>
-<span class="nc" id="L138">		materiasCurso.addColumn(&quot;Fecha Inicio&quot;);</span>
-<span class="nc" id="L139">		materiasCurso.addColumn(&quot;Fecha Fin&quot;);</span>
+		materiasCurso.addColumn(&quot;Nombre&quot;);
+		materiasCurso.addColumn(&quot;Responsable&quot;);
+		materiasCurso.addColumn(&quot;Horas&quot;);
+		materiasCurso.addColumn(&quot;Fecha Inicio&quot;);
+		materiasCurso.addColumn(&quot;Fecha Fin&quot;);
 		
-<span class="nc" id="L141">		Collection&lt;Materia&gt; materias = curso.materias;</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (materias!=null) {</span>
-<span class="nc" id="L143">			Iterator&lt;Materia&gt; ite = materias.iterator();</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			while(ite.hasNext()){</span>
-<span class="nc" id="L145">				Materia temp = ite.next();</span>
-<span class="nc" id="L146">				materiasCurso.addRow(new Object[] { temp.getNombre(), temp.responsable, temp.getHoras(), temp.getFechaInicio() ,temp.getFechaFin() });</span>
-<span class="nc" id="L147">			}</span>
+		Collection&lt;Materia&gt; materias = curso.materias;
+		if (materias!=null) {
+			Iterator&lt;Materia&gt; ite = materias.iterator();
+			while(ite.hasNext()){
+				Materia temp = ite.next();
+				materiasCurso.addRow(new Object[] { temp.getNombre(), temp.responsable, temp.getHoras(), temp.getFechaInicio() ,temp.getFechaFin() });
+			}
 		}
 
 
-<span class="nc" id="L151">		JTable materiasTable = new JTable(materiasCurso){</span>
-			@Override
+<span class="nc" id="L152">		JTable materiasTable = new JTable(materiasCurso){</span>
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
-<span class="nc" id="L154">				return false; //Disallow the editing of any cell</span>
+				return false; //Disallow the editing of any cell
 			}
 		};
 
-<span class="nc" id="L158">		materiasTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+		materiasTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-<span class="nc" id="L160">		JScrollPane scrollLista = new JScrollPane(materiasTable);</span>
-<span class="nc" id="L161">		scrollLista.setBounds(306, 51, 400, 188);</span>
-<span class="nc" id="L162">		getContentPane().add(scrollLista);</span>
-<span class="nc" id="L163">	}</span>
+		JScrollPane scrollLista = new JScrollPane(materiasTable);
+		scrollLista.setBounds(306, 51, 400, 188);
+		getContentPane().add(scrollLista);
+	}
 
 	private void botonesLayout(final int type, final ProfesorUCLM director, final CursoPropio curso) {
-<span class="nc" id="L166">		JButton btnNewButton = new JButton(&quot;Atras&quot;);</span>
-<span class="nc" id="L167">		btnNewButton.addActionListener(new ActionListener() {</span>
+		JButton btnNewButton = new JButton(&quot;Atras&quot;);
+<span class="nc" id="L168">		btnNewButton.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-<span class="nc bnc" id="L169" title="All 4 branches missed.">				if (type == 0 || type == 1) new PantallaCursosAprobados(type, director);</span>
-<span class="nc" id="L170">				else new PantallaEmpleadosVicerrectorado();</span>
-<span class="nc" id="L171">				setVisible(false);</span>
-<span class="nc" id="L172">			}</span>
+				if (type == 0 || type == 1) new PantallaCursosAprobados(type, director);
+				else new PantallaEmpleadosVicerrectorado();
+				setVisible(false);
+			}
 		});
-<span class="nc" id="L174">		btnNewButton.setBounds(10, 513, 200,30);</span>
-<span class="nc" id="L175">		getContentPane().add(btnNewButton);</span>
+		btnNewButton.setBounds(10, 513, 200,30);
+		getContentPane().add(btnNewButton);
 
-<span class="nc" id="L177">		JButton btnMatricularEvaluar = new JButton(&quot;Matricular&quot;);</span>
-<span class="nc" id="L178">		btnMatricularEvaluar.addActionListener(new ActionListener() {</span>
+		JButton btnMatricularEvaluar = new JButton(&quot;Matricular&quot;);
+<span class="nc" id="L180">		btnMatricularEvaluar.addActionListener(new ActionListener() {</span>
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				
-<span class="nc" id="L181">				int confirm = 1;</span>
+				int confirm = 1;
 
-<span class="nc bnc" id="L183" title="All 2 branches missed.">				if (type == 0) { </span>
-<span class="nc" id="L184">					confirm = JOptionPane.showConfirmDialog(null,&quot;¿Matricular?&quot;,&quot;Matricular en curso&quot;,JOptionPane.YES_NO_OPTION, 1);</span>
+				if (type == 0) { 
+					confirm = JOptionPane.showConfirmDialog(null,&quot;¿Matricular?&quot;,&quot;Matricular en curso&quot;,JOptionPane.YES_NO_OPTION, 1);
 				} else { 
-<span class="nc" id="L186">					confirm = JOptionPane.showConfirmDialog(null,&quot;¿Evaluar propuesta?&quot;,&quot;Evaluar propuesta&quot;,JOptionPane.YES_NO_OPTION, 1);</span>
+					confirm = JOptionPane.showConfirmDialog(null,&quot;¿Evaluar propuesta?&quot;,&quot;Evaluar propuesta&quot;,JOptionPane.YES_NO_OPTION, 1);
 				}
 				
-<span class="nc bnc" id="L189" title="All 2 branches missed.">				if(confirm == 0)  {</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">					if (type == 0) { // TODO -- matricular</span>
-<span class="nc" id="L191">						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno</span>
-<span class="nc" id="L192">		                setVisible(false);</span>
+				if(confirm == 0)  {
+					if (type == 0) { // TODO -- matricular
+						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno
+		                setVisible(false);
 					}	
 					else {  // Evaluar
 						
-<span class="nc bnc" id="L196" title="All 2 branches missed.">						if (!evaluarPropuestaCorrecto(type)) return;</span>
+						if (!evaluarPropuestaCorrecto(type)) return;
 						
-<span class="nc" id="L198">						GestorPropuestasCursos gestor = new GestorPropuestasCursos();</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">						if (aceptarPropuesta.isSelected()) curso.estado = EstadoCurso.VALIDADO;</span>
-<span class="nc" id="L200">						else curso.estado = EstadoCurso.PROPUESTA_RECHAZADA;</span>
+						GestorPropuestasCursos gestor = new GestorPropuestasCursos();
+						if (aceptarPropuesta.isSelected()) curso.estado = EstadoCurso.VALIDADO;
+						else curso.estado = EstadoCurso.PROPUESTA_RECHAZADA;
 						
 						try {
-<span class="nc" id="L203">							gestor.editarPropuestaCurso(curso);</span>
-<span class="nc" id="L204">						} catch (Exception e1) {</span>
-<span class="nc" id="L205">							e1.printStackTrace();</span>
+							gestor.editarPropuestaCurso(curso);
+						} catch (Exception e1) {
+							e1.printStackTrace();
 							
-<span class="nc" id="L207">						}</span>
+						}
 						
-<span class="nc" id="L209">						new PantallaEmpleadosVicerrectorado();</span>
-<span class="nc" id="L210">						setVisible(false);</span>
+						new PantallaEmpleadosVicerrectorado();
+						setVisible(false);
 					}
 					
 				}
-<span class="nc" id="L214">			}</span>
+			}
 		});
-<span class="nc" id="L216">		btnMatricularEvaluar.setBounds(574, 513, 200,30);</span>
-<span class="nc" id="L217">		getContentPane().add(btnMatricularEvaluar);</span>
+		btnMatricularEvaluar.setBounds(574, 513, 200,30);
+		getContentPane().add(btnMatricularEvaluar);
 
 		// CAMBIOS DE BOTONES
-<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (type == 1) btnMatricularEvaluar.setVisible(false);</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		else if (type == 2) btnMatricularEvaluar.setText(&quot;Evaluar&quot;);		</span>
-<span class="nc" id="L222">	}</span>
+		if (type == 1) btnMatricularEvaluar.setVisible(false);
+		else if (type == 2) btnMatricularEvaluar.setText(&quot;Evaluar&quot;);		
+	}
 	
 	public boolean evaluarPropuestaCorrecto(final int type) {
-<span class="nc" id="L225">		boolean result = true;</span>
-<span class="nc bnc" id="L226" title="All 4 branches missed.">		if (!aceptarPropuesta.isSelected() &amp;&amp; !rechazarPropuesta.isSelected()) {</span>
-<span class="nc" id="L227">			aceptarPropuesta.setBackground(new Color(222, 129, 122));</span>
-<span class="nc" id="L228">			rechazarPropuesta.setBackground(new Color(222, 129, 122));</span>
-<span class="nc" id="L229">			result = false;</span>
+		boolean result = true;
+		if (!aceptarPropuesta.isSelected() &amp;&amp; !rechazarPropuesta.isSelected()) {
+			aceptarPropuesta.setBackground(new Color(222, 129, 122));
+			rechazarPropuesta.setBackground(new Color(222, 129, 122));
+			result = false;
 		}else {
-<span class="nc" id="L231">			aceptarPropuesta.setBackground(getBackground());</span>
-<span class="nc" id="L232">			rechazarPropuesta.setBackground(getBackground());</span>
+			aceptarPropuesta.setBackground(getBackground());
+			rechazarPropuesta.setBackground(getBackground());
 		}
 		
-<span class="nc bnc" id="L235" title="All 4 branches missed.">		if (type == 2 &amp;&amp; rechazarPropuesta.isSelected()) {</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">			if (descripcion.getText().equals(&quot;&quot;)) {</span>
-<span class="nc" id="L237">				descripcion.setBackground(new Color(222, 129, 122));</span>
-<span class="nc" id="L238">				result = false;</span>
+		if (type == 2 &amp;&amp; rechazarPropuesta.isSelected()) {
+			if (descripcion.getText().equals(&quot;&quot;)) {
+				descripcion.setBackground(new Color(222, 129, 122));
+				result = false;
 			} else {
-<span class="nc" id="L240">				descripcion.setBackground(new Color(255, 255, 255));</span>
+				descripcion.setBackground(new Color(255, 255, 255));
 			}
 		}
 		
-<span class="nc" id="L244">		return result;</span>
+		return result;
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

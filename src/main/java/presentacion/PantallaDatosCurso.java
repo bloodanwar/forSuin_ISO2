@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import java.util.Iterator;
 
+@Generated
 public class PantallaDatosCurso extends JFrame {
 	private DefaultTableModel materiasCurso = new DefaultTableModel(); 
 
@@ -114,7 +115,7 @@ public class PantallaDatosCurso extends JFrame {
 		group.add(rechazarPropuesta);
 
 		aceptarPropuesta.addActionListener(new ActionListener() {
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				descripcion.setEnabled(false);
 				descripcion.setText("");
@@ -123,7 +124,7 @@ public class PantallaDatosCurso extends JFrame {
 		});
 
 		rechazarPropuesta.addActionListener(new ActionListener() {
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				descripcion.setEnabled(true);
 				descripcion.setBackground(Color.white);
@@ -149,7 +150,7 @@ public class PantallaDatosCurso extends JFrame {
 
 
 		JTable materiasTable = new JTable(materiasCurso){
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -165,6 +166,7 @@ public class PantallaDatosCurso extends JFrame {
 	private void botonesLayout(final int type, final ProfesorUCLM director, final CursoPropio curso) {
 		JButton btnNewButton = new JButton("Atras");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if (type == 0 || type == 1) new PantallaCursosAprobados(type, director);
 				else new PantallaEmpleadosVicerrectorado();
@@ -176,6 +178,7 @@ public class PantallaDatosCurso extends JFrame {
 
 		JButton btnMatricularEvaluar = new JButton("Matricular");
 		btnMatricularEvaluar.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				
 				int confirm = 1;

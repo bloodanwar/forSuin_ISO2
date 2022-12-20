@@ -28,7 +28,7 @@ import negocio.entities.*;
 <span class="fc" id="L28">				+ dateFormat.format(matricula.getFecha())+&quot;', &quot;</span>
 <span class="fc" id="L29">				+ matricula.isPagado()+&quot;, &quot;</span>
 <span class="fc" id="L30">				+ matricula.getAttribute()+&quot;, '&quot;</span>
-				+ tipoPago+ &quot;', '&quot;
+<span class="fc" id="L31">				+ tipoPago+ &quot;', '&quot;</span>
 <span class="fc" id="L32">				+ matricula.titulo.getId()+&quot;', &quot;</span>
 <span class="fc" id="L33">				+ matricula.titulo.getEdicion()+&quot;, '&quot;</span>
 <span class="fc" id="L34">				+ matricula.estudiante.getDni()+&quot;', '&quot;</span>
@@ -38,7 +38,7 @@ import negocio.entities.*;
 
 	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException, MatriculaNoExisteException { 
 <span class="fc" id="L40">		Vector datosMatricula = GestorBD.getInstancia().select(&quot;SELECT * FROM matricula WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion()+&quot; AND estudiante_dni='&quot;+matricula.estudiante.getDni()+&quot;'&quot;);</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if (datosMatricula.size()==0)</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if (datosMatricula.isEmpty())</span>
 <span class="nc" id="L42">			throw new MatriculaNoExisteException(&quot;No existe el curso seleccionado en la base de datos&quot;);</span>
 		
 <span class="fc" id="L44">		datosMatricula = (Vector) datosMatricula.get(0);</span>
@@ -64,7 +64,7 @@ import negocio.entities.*;
 <span class="fc" id="L64">				+ &quot;fecha='&quot; + matricula.getFecha() + &quot;', &quot;</span>
 <span class="fc" id="L65">				+ &quot;pagado=&quot; + matricula.isPagado() + &quot;, &quot;</span>
 <span class="fc" id="L66">				+ &quot;attribute=&quot; + matricula.getAttribute() + &quot;, &quot;</span>
-				+ &quot;modopago='&quot; + tipoPago + &quot;', &quot;
+<span class="fc" id="L67">				+ &quot;modopago='&quot; + tipoPago + &quot;', &quot;</span>
 <span class="fc" id="L68">				+ &quot;dni='&quot; + matricula.estudiante.getDni() + &quot;', &quot;</span>
 <span class="fc" id="L69">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
 <span class="fc" id="L70">				+ &quot;' WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion());</span>

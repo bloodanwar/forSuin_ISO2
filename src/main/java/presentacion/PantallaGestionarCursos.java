@@ -18,6 +18,7 @@ import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
+@Generated
 public class PantallaGestionarCursos extends JFrame{
 
 	private List<CursoPropio> cursosDao = null;
@@ -64,7 +65,7 @@ public class PantallaGestionarCursos extends JFrame{
 		}
 
 		cursosTable = new JTable(cursosEnviados){
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -84,8 +85,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				CursoPropio curso = new CursoPropio(); 
 				new PantallaPropuestaCurso(director, curso, 0);
@@ -100,8 +100,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
@@ -121,8 +120,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
@@ -142,8 +140,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    
 				
@@ -169,8 +166,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaDireccionCursos(director);
 				setVisible(false);

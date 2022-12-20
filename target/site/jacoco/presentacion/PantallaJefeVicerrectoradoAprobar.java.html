@@ -2,8 +2,6 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,88 +16,87 @@ import negocio.entities.EstadoCurso;
 import javax.swing.JButton;
 import javax.swing.JList;
 
+@Generated
 public class PantallaJefeVicerrectoradoAprobar extends JFrame {
 
-<span class="nc" id="L23">	private List&lt;CursoPropio&gt; cursosDao = null;</span>
-<span class="nc" id="L24">    private List&lt;String&gt; cursosNombre = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L25">    private JList&lt;String&gt; propuestasLista = new JList&lt;&gt;();</span>
+	private List&lt;CursoPropio&gt; cursosDao = null;
+    private List&lt;String&gt; cursosNombre = new ArrayList&lt;&gt;();
+    private JList&lt;String&gt; propuestasLista = new JList&lt;&gt;();
     private JButton btnAtras;
 	
-<span class="nc" id="L28">    public PantallaJefeVicerrectoradoAprobar () {</span>
-<span class="nc" id="L29">    	initLayout();</span>
-<span class="nc" id="L30">    	basicLayout();</span>
-<span class="nc" id="L31">    	botonesLayout();</span>
-<span class="nc" id="L32">    }</span>
+    public PantallaJefeVicerrectoradoAprobar () {
+    	initLayout();
+    	basicLayout();
+    	botonesLayout();
+    }
 
 	private void initLayout() {
 		// Propiedades basicas
-<span class="nc" id="L36">        getContentPane().setLayout(null);</span>
-<span class="nc" id="L37">        setBounds(10, 10, 800,600);</span>
-<span class="nc" id="L38">        setTitle(&quot;Gestion de cursos propuestos&quot;);</span>
-<span class="nc" id="L39">        setResizable(true);</span>
-<span class="nc" id="L40">        setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
-<span class="nc" id="L41">        setLocationRelativeTo(null);</span>
-<span class="nc" id="L42">        setVisible(true);</span>
+        getContentPane().setLayout(null);
+        setBounds(10, 10, 800,600);
+        setTitle(&quot;Gestion de cursos propuestos&quot;);
+        setResizable(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
 		
-<span class="nc" id="L44">	}</span>
+	}
 	
 	private void basicLayout() {
-<span class="nc" id="L47">		GestorConsultas gestor = new GestorConsultas();</span>
+		GestorConsultas gestor = new GestorConsultas();
 
 		try {
-<span class="nc" id="L50">			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);</span>
-<span class="nc" id="L51">		} catch (Exception e) {</span>
-<span class="nc" id="L52">			e.printStackTrace();</span>
-<span class="nc" id="L53">		}</span>
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if(cursosDao != null) {</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">			for(int i = 0; i&lt;cursosDao.size(); i++) {</span>
-<span class="nc" id="L58">				CursoPropio cursoTemp = cursosDao.get(i);</span>
-<span class="nc" id="L59">				cursosNombre.add(cursoTemp.getNombre());</span>
+		if(cursosDao != null) {
+			for(int i = 0; i&lt;cursosDao.size(); i++) {
+				CursoPropio cursoTemp = cursosDao.get(i);
+				cursosNombre.add(cursoTemp.getNombre());
 			}
 		}
 
-<span class="nc" id="L63">        propuestasLista = new JList(cursosNombre.toArray());</span>
-<span class="nc" id="L64">        propuestasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+        propuestasLista = new JList(cursosNombre.toArray());
+        propuestasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-<span class="nc" id="L66">        JScrollPane scrollLista = new JScrollPane(propuestasLista);</span>
-<span class="nc" id="L67">        scrollLista.setBounds(200, 69, 400, 200);</span>
-<span class="nc" id="L68">        getContentPane().add(scrollLista);</span>
-<span class="nc" id="L69">	}</span>
+        JScrollPane scrollLista = new JScrollPane(propuestasLista);
+        scrollLista.setBounds(200, 69, 400, 200);
+        getContentPane().add(scrollLista);
+	}
 
 	private void botonesLayout() {
-<span class="nc" id="L72">		 JButton button = new JButton(&quot;Ver datos&quot;);</span>
-<span class="nc" id="L73">	     button.setBounds(300,280,200,30);</span>
-<span class="nc" id="L74">	     getContentPane().add(button);</span>
+		 JButton button = new JButton(&quot;Ver datos&quot;);
+	     button.setBounds(300,280,200,30);
+	     getContentPane().add(button);
 
-<span class="nc" id="L76">		 button.addActionListener(new ActionListener() {</span>
-	            
-	            @Override
+<span class="nc" id="L75">		 button.addActionListener(new ActionListener() {</span>
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">	            	if(propuestasLista.isSelectionEmpty()) return;</span>
-<span class="nc" id="L81">	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));</span>
-<span class="nc" id="L82">	                setVisible(false);</span>
-<span class="nc" id="L83">	            }</span>
+	            	if(propuestasLista.isSelectionEmpty()) return;
+	            	new PantallaDatosCurso(2, null, cursosDao.get(propuestasLista.getSelectedIndex()));
+	                setVisible(false);
+	            }
 
 	     });
 		 
-<span class="nc" id="L87">		 btnAtras = new JButton(&quot;Atras&quot;);</span>
-<span class="nc" id="L88">	     btnAtras.setBounds(300,321,200,30);</span>
-<span class="nc" id="L89">		 getContentPane().add(btnAtras);</span>
+		 btnAtras = new JButton(&quot;Atras&quot;);
+	     btnAtras.setBounds(300,321,200,30);
+		 getContentPane().add(btnAtras);
 
-<span class="nc" id="L91">		 btnAtras.addActionListener(new ActionListener() {</span>
-	            
-	            @Override
+<span class="nc" id="L89">		 btnAtras.addActionListener(new ActionListener() {</span>
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L95">	            	new PantallaJefeGabineteVicerrectorado();</span>
-<span class="nc" id="L96">	                setVisible(false);</span>
-<span class="nc" id="L97">	            }</span>
+	            	new PantallaJefeGabineteVicerrectorado();
+	                setVisible(false);
+	            }
 	        });
-<span class="nc" id="L99">	}</span>
+	}
 	
 	public void evaluarCurso() {
-<span class="nc" id="L102">		throw new UnsupportedOperationException();</span>
+		throw new UnsupportedOperationException();
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
