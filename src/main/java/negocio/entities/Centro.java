@@ -56,6 +56,11 @@ public class Centro {
 		
 		return true;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre, localizacion, attribute, cursoPropios, plantilla);
+	}
 
 	public String getNombre() { return nombre; }
 	public void setNombre(String nombre) {	this.nombre = nombre; }

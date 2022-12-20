@@ -1,5 +1,7 @@
 package negocio.entities;
 
+import java.util.Objects;
+
 import persistencia.*;
 
 public class ProfesorUCLM extends Profesor {
@@ -60,5 +62,10 @@ public class ProfesorUCLM extends Profesor {
 		if (this.categoria!=profObj.categoria) return false;
 
 		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getDni(), getNombre(), getApellidos(), isDoctor(), centroAdscripcion, categoria);
 	}
 }

@@ -23,7 +23,7 @@ public class ProfesorUCLMDAOTest {
 	private ProfesorUCLM profesorObtenido;
 	private List<ProfesorUCLM> profesoresObtenidos;
 
-	@Test
+	//@Test
 	public void cp1() {
 		try {
 			// SETUP
@@ -125,7 +125,7 @@ public class ProfesorUCLMDAOTest {
 		}
 	}
 
-	@Test
+	//@Test
 	public void cp3() {
 		try {
 			// SETUP

@@ -1,5 +1,7 @@
 package negocio.entities;
 
+import java.util.Objects;
+
 import persistencia.*;
 
 public class Profesor {
@@ -55,6 +57,11 @@ public class Profesor {
 		}	
 		if (this.isDoctor() != profObj.isDoctor()) return false;
 		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(dni, nombre, apellidos, doctor);
 	}
 	
 	public String getDni() { return dni; }
