@@ -29,15 +29,15 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  		Date fechaActualizacion = fechaCreacion;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  		<strong class="jxr_keyword">return</strong> GestorBD.getInstancia().insert(<span class="jxr_string">"INSERT INTO centro (nombre, localizacion, atributo, fechaCreacion, fechaActualizacion) VALUES ('"</span>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  				+ centro.getNombre()+<span class="jxr_string">"', "</span>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  				+ centro.getLocalizacion()+<span class="jxr_string">", "</span>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  				+ centro.getNombre()+<span class="jxr_string">"', '"</span>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  				+ centro.getLocalizacion()+<span class="jxr_string">"', "</span>
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  				+ centro.getAtributo()+<span class="jxr_string">", '"</span>
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  				+ dateFormat.format(fechaCreacion)+<span class="jxr_string">"', '"</span>
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  				+ dateFormat.format(fechaActualizacion)+<span class="jxr_string">"')"</span>);
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  	}
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  	<strong class="jxr_keyword">public</strong> <a name="Centro" href="..<a name="Centro" href="../negocio/entities/Centro.html#Centro">Centro</a>io/entities/Centro.html#Centro">Centro</a> seleccionarCentro(<a name="Centro" href="../negocio/entities/Centro.html#Centro">Centro</a> centro) <strong class="jxr_keyword">throws</strong> SQLException {
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  		Vector datosCentro = GestorBD.getInstancia().select(<span class="jxr_string">"SELECT * FROM centro WHERE id='"</span>+centro.getNombre()+<span class="jxr_string">"'"</span>);
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  		Vector datosCentro = GestorBD.getInstancia().select(<span class="jxr_string">"SELECT * FROM centro WHERE nombre='"</span>+centro.getNombre()+<span class="jxr_string">"'"</span>);
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  		datosCentro = (Vector) datosCentro.get(0);
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  		String nombre = (String) datosCentro.get(0);
@@ -56,10 +56,10 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  		<strong class="jxr_keyword">return</strong> GestorBD.getInstancia().update(<span class="jxr_string">"UPDATE centro SET "</span>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  				+ <span class="jxr_string">"nombre='"</span> + centro.getNombre() + <span class="jxr_string">"', "</span>
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  				+ <span class="jxr_string">"localizacion="</span> + centro.getLocalizacion() + <span class="jxr_string">", "</span>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  				+ <span class="jxr_string">"localizacion='"</span> + centro.getLocalizacion() + <span class="jxr_string">"', "</span>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  				+ <span class="jxr_string">"atributo="</span> + centro.getAtributo() + <span class="jxr_string">", "</span>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  				+ <span class="jxr_string">"fechaActualizacion='"</span> + dateFormat.format(fechaActualizacion)
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  				+ <span class="jxr_string">"' WHERE nombre='"</span>+centro.getNombre());
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  				+ <span class="jxr_string">"' WHERE nombre='"</span>+centro.getNombre()+<span class="jxr_string">"'"</span>);
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  	}
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> eliminarCentro(<a name="Centro" href="../negocio/entities/Centro.html#Centro">Centro</a> centro) <strong class="jxr_keyword">throws</strong> SQLException {

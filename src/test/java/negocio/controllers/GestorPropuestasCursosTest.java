@@ -216,12 +216,92 @@ public class GestorPropuestasCursosTest {
 		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 		
+		try { assertEquals(EstadoCurso.PROPUESTO, g.evaluarPropuesta(curso));
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		materias = new ArrayList<>();
+		materias.add(new Materia("Los simson", 666, fechaInicio, fechaFin, new Profesor("07412588O")));
+		curso.materias = materias;
+		
 		try { g.editarPropuestaCurso(curso);
 		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.altaCursoAprobado(curso);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
 		}
 		
 		try { g.eliminarPropuestaCurso(curso);
 		} catch (Exception e) {	fail("Ocurrió excepción no esperada: "+e.toString());
 		}
+	}
+	
+	@Test
+	public void cp7() {
+		String id = null;
+		int edicion = 1;
+		CursoPropio curso = new CursoPropio(id, edicion);
+		
+		try { g.realizarPropuestaCurso(curso);
+		} catch (CursoErroneoException e) {	System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.editarPropuestaCurso(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.eliminarPropuestaCurso(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.evaluarPropuesta(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.altaCursoAprobado(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		return;
+	}
+	
+	@Test
+	public void cp8() {
+		String id = "02";
+		int edicion = 0;
+		CursoPropio curso = new CursoPropio(id, edicion);
+		
+		try { g.realizarPropuestaCurso(curso);
+		} catch (CursoErroneoException e) {	System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.editarPropuestaCurso(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.eliminarPropuestaCurso(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.evaluarPropuesta(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.altaCursoAprobado(curso);
+		} catch (CursoErroneoException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		return;
 	}
 }

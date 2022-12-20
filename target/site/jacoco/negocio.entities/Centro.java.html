@@ -56,14 +56,19 @@ public class Centro {
 		
 <span class="fc" id="L57">		return true;</span>
 	}
+	
+	@Override
+	public int hashCode() {
+<span class="nc" id="L62">		return Objects.hash(nombre, localizacion, attribute, cursoPropios, plantilla);</span>
+	}
 
-<span class="fc" id="L60">	public String getNombre() { return nombre; }</span>
-<span class="nc" id="L61">	public void setNombre(String nombre) {	this.nombre = nombre; }</span>
+<span class="fc" id="L65">	public String getNombre() { return nombre; }</span>
+<span class="nc" id="L66">	public void setNombre(String nombre) {	this.nombre = nombre; }</span>
 
-<span class="fc" id="L63">	public String getLocalizacion() { return localizacion; }</span>
-<span class="nc" id="L64">	public void setLocalizacion(String localizacion) { this.localizacion = localizacion; }</span>
+<span class="fc" id="L68">	public String getLocalizacion() { return localizacion; }</span>
+<span class="nc" id="L69">	public void setLocalizacion(String localizacion) { this.localizacion = localizacion; }</span>
 
-<span class="fc" id="L66">	public int getAtributo() { return attribute; }</span>
-<span class="nc" id="L67">	public void setAttribute(int attribute) { this.attribute = attribute; }</span>
+<span class="fc" id="L71">	public int getAtributo() { return attribute; }</span>
+<span class="nc" id="L72">	public void setAttribute(int attribute) { this.attribute = attribute; }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

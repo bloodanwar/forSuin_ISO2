@@ -33,29 +33,29 @@ import negocio.entities.*;
 
 	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, ParseException, CursoErroneoException, CursoNoExisteException {
 <span class="fc" id="L35">		comprobarSiTieneIdEdicion(curso);</span>
-<span class="nc" id="L36">		CursoPropio cursoTemp = curso.cursoPropioDao.seleccionarCurso(curso);</span>
-<span class="nc" id="L37">		return cursoTemp.estado;</span>
+<span class="fc" id="L36">		CursoPropio cursoTemp = curso.cursoPropioDao.seleccionarCurso(curso);</span>
+<span class="fc" id="L37">		return cursoTemp.estado;</span>
 	}
 	
 	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
 <span class="fc" id="L41">		comprobarSiTieneIdEdicion(curso);</span>
 <span class="fc" id="L42">		curso.estado = EstadoCurso.VALIDADO;</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (curso.cursoPropioDao.editarCurso(curso) == 0) {</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if (curso.cursoPropioDao.editarCurso(curso) == 0) {</span>
 <span class="nc" id="L44">			throw new CursoNoEditadoException(&quot;No se ha dado de alta el curso&quot;);</span>
 		}
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L46">	}</span>
 	
 	private void comprobarSiTieneIdEdicion(CursoPropio curso) throws CursoErroneoException {
 <span class="fc" id="L49">		boolean idCursoError = false;</span>
 <span class="fc" id="L50">		boolean edicionCursoError = false;</span>
 <span class="fc bfc" id="L51" title="All 2 branches covered.">		if (curso == null) throw new CursoErroneoException(&quot;Curso nulo&quot;);</span>
-<span class="pc bpc" id="L52" title="1 of 4 branches missed.">		if (curso.getId()==null || curso.getId().equals(&quot;&quot;)) idCursoError = true;</span>
+<span class="fc bfc" id="L52" title="All 4 branches covered.">		if (curso.getId()==null || curso.getId().equals(&quot;&quot;)) idCursoError = true;</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">		if (curso.getEdicion()&lt;=0) edicionCursoError = true;</span>
 		
 <span class="fc bfc" id="L55" title="All 4 branches covered.">		if (!idCursoError &amp;&amp; !edicionCursoError) return;</span>
-<span class="pc bpc" id="L56" title="1 of 4 branches missed.">		else if (idCursoError &amp;&amp; edicionCursoError) throw new CursoErroneoException(&quot;Curso sin id ni edicion&quot;);</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">		else if (idCursoError &amp;&amp; edicionCursoError) throw new CursoErroneoException(&quot;Curso sin id ni edicion&quot;);</span>
 		else {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (idCursoError) throw new CursoErroneoException(&quot;Curso sin id&quot;);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (idCursoError) throw new CursoErroneoException(&quot;Curso sin id&quot;);</span>
 <span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (edicionCursoError) throw new CursoErroneoException(&quot;Curso sin edicion&quot;);</span>
 		}	
 <span class="nc" id="L61">	}</span>

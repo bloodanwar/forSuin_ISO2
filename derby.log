@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Tue Dec 20 22:00:15 CET 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-3156-4279-00000891c330 
-on database directory C:\Users\ruben\Documents\GitHub\forSuin_ISO2\forSuinISO2DB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@579bb367 
+Tue Dec 20 22:37:31 CET 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-3178-6198-000008684f20 
+on database directory C:\Users\ruben\Documents\GitHub\forSuin_ISO2\forSuinISO2DB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2e5c649 
 Loaded from file:/C:/Users/ruben/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=16.0.2+7-67

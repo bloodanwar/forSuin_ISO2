@@ -21,7 +21,7 @@ import java.util.Vector;
 		
 <span class="nc" id="L22">		return GestorBD.getInstancia().insert(&quot;INSERT INTO profesorUCLM (profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
 <span class="nc" id="L23">				+ profesor.getDni()+&quot;', '&quot;</span>
-<span class="nc" id="L24">				+ profesor.categoria.toString()+&quot;', ''&quot;</span>
+<span class="nc" id="L24">				+ profesor.categoria.toString()+&quot;', '&quot;</span>
 <span class="nc" id="L25">				+ profesor.centroAdscripcion.getNombre()+&quot;', '&quot;</span>
 <span class="nc" id="L26">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
 <span class="nc" id="L27">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>

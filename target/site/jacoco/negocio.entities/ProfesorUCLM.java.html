@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProfesorUCLM.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">negocio.entities</a> &gt; <span class="el_source">ProfesorUCLM.java</span></div><h1>ProfesorUCLM.java</h1><pre class="source lang-java linenums">package negocio.entities;
 
+import java.util.Objects;
+
 import persistencia.*;
 
 public class ProfesorUCLM extends Profesor {
@@ -9,57 +11,62 @@ public class ProfesorUCLM extends Profesor {
 	public ProfesorUCLMDAO profesorUCLMDao;
 
 	public ProfesorUCLM() {
-<span class="fc" id="L12">		super(&quot;&quot;, &quot;&quot;, &quot;&quot;, false);</span>
-<span class="fc" id="L13">		profesorUCLMDao = new ProfesorUCLMDAO();</span>
-<span class="fc" id="L14">	}</span>
+<span class="fc" id="L14">		super(&quot;&quot;, &quot;&quot;, &quot;&quot;, false);</span>
+<span class="fc" id="L15">		profesorUCLMDao = new ProfesorUCLMDAO();</span>
+<span class="fc" id="L16">	}</span>
 
 	public ProfesorUCLM(String id) {
-<span class="fc" id="L17">		super(id, &quot;&quot;, &quot;&quot;, false);</span>
-<span class="fc" id="L18">		profesorUCLMDao = new ProfesorUCLMDAO();</span>
-<span class="fc" id="L19">	}</span>
+<span class="fc" id="L19">		super(id, &quot;&quot;, &quot;&quot;, false);</span>
+<span class="fc" id="L20">		profesorUCLMDao = new ProfesorUCLMDAO();</span>
+<span class="fc" id="L21">	}</span>
 
 	public ProfesorUCLM(String dni, String nombre, String apellidos, boolean doctor, CategoriaProfesor categoria, Centro centroAdscripcion) {
-<span class="fc" id="L22">		super(dni, nombre, apellidos, doctor);</span>
-<span class="fc" id="L23">		this.centroAdscripcion = centroAdscripcion;</span>
-<span class="fc" id="L24">		this.categoria = categoria;</span>
-<span class="fc" id="L25">		profesorUCLMDao = new ProfesorUCLMDAO();</span>
-<span class="fc" id="L26">	} </span>
+<span class="fc" id="L24">		super(dni, nombre, apellidos, doctor);</span>
+<span class="fc" id="L25">		this.centroAdscripcion = centroAdscripcion;</span>
+<span class="fc" id="L26">		this.categoria = categoria;</span>
+<span class="fc" id="L27">		profesorUCLMDao = new ProfesorUCLMDAO();</span>
+<span class="fc" id="L28">	} </span>
 	
 	@Override
 	public String toString() {
-<span class="nc" id="L30">		return &quot;ProfesorUCLM:&quot;</span>
-<span class="nc" id="L31">		+&quot;\nDNI: &quot;+this.getDni()</span>
-<span class="nc" id="L32">		+&quot;\nNombre: &quot;+this.getNombre()</span>
-<span class="nc" id="L33">		+&quot;\nApellidos: &quot;+this.getApellidos()</span>
-<span class="nc" id="L34">		+&quot;\nDoctor: &quot;+this.isDoctor()</span>
-<span class="nc" id="L35">		+&quot;\nCategoria: &quot;+this.categoria</span>
-<span class="nc" id="L36">		+&quot;\nCentro: &quot;+this.centroAdscripcion.getNombre()</span>
-<span class="nc" id="L37">		+&quot;\n&quot;;</span>
+<span class="nc" id="L32">		return &quot;ProfesorUCLM:&quot;</span>
+<span class="nc" id="L33">		+&quot;\nDNI: &quot;+this.getDni()</span>
+<span class="nc" id="L34">		+&quot;\nNombre: &quot;+this.getNombre()</span>
+<span class="nc" id="L35">		+&quot;\nApellidos: &quot;+this.getApellidos()</span>
+<span class="nc" id="L36">		+&quot;\nDoctor: &quot;+this.isDoctor()</span>
+<span class="nc" id="L37">		+&quot;\nCategoria: &quot;+this.categoria</span>
+<span class="nc" id="L38">		+&quot;\nCentro: &quot;+this.centroAdscripcion.getNombre()</span>
+<span class="nc" id="L39">		+&quot;\n&quot;;</span>
 		
 	}
 	
 	@Override
 	public boolean equals(Object obj){
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if(this == obj) return true;</span>
-<span class="pc bpc" id="L44" title="3 of 4 branches missed.">		if (obj == null) return this != null;</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (getClass() != obj.getClass()) return false;</span>
-<span class="fc" id="L46">		ProfesorUCLM profObj = (ProfesorUCLM) obj; </span>
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (!(this.getDni().equals(profObj.getDni()))) return false; 	</span>
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (this.getNombre() == null){</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">			if (profObj.getNombre()!=null) return false;</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if(this == obj) return true;</span>
+<span class="pc bpc" id="L46" title="3 of 4 branches missed.">		if (obj == null) return this != null;</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L48">		ProfesorUCLM profObj = (ProfesorUCLM) obj; </span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (!(this.getDni().equals(profObj.getDni()))) return false; 	</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (this.getNombre() == null){</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">			if (profObj.getNombre()!=null) return false;</span>
 		} else {
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">			if (!(this.getNombre().equals(profObj.getNombre()))) return false;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">			if (!(this.getNombre().equals(profObj.getNombre()))) return false;</span>
 		}
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (this.getApellidos() == null){</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">			if (profObj.getApellidos()!=null) return false;</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (this.getApellidos() == null){</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (profObj.getApellidos()!=null) return false;</span>
 		} else {
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (!(this.getApellidos().equals(profObj.getApellidos()))) return false;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (!(this.getApellidos().equals(profObj.getApellidos()))) return false;</span>
 		}	
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (this.isDoctor() != profObj.isDoctor()) return false;</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (!(this.centroAdscripcion.getNombre().equals(profObj.centroAdscripcion.getNombre()))) return false;</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (this.categoria!=profObj.categoria) return false;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (this.isDoctor() != profObj.isDoctor()) return false;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (!(this.centroAdscripcion.getNombre().equals(profObj.centroAdscripcion.getNombre()))) return false;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (this.categoria!=profObj.categoria) return false;</span>
 
-<span class="fc" id="L62">		return true;</span>
+<span class="fc" id="L64">		return true;</span>
+	}
+	
+	@Override
+	public int hashCode() {
+<span class="nc" id="L69">		return Objects.hash(getDni(), getNombre(), getApellidos(), isDoctor(), centroAdscripcion, categoria);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

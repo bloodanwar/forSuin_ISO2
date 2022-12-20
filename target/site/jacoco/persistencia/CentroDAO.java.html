@@ -17,45 +17,45 @@ import negocio.entities.*;
 <span class="fc" id="L17">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
 	
 	public int crearNuevoCentro(Centro centro) throws SQLException {
-<span class="nc" id="L20">		Date fechaCreacion =  new Date();</span>
-<span class="nc" id="L21">		Date fechaActualizacion = fechaCreacion;</span>
+<span class="fc" id="L20">		Date fechaCreacion =  new Date();</span>
+<span class="fc" id="L21">		Date fechaActualizacion = fechaCreacion;</span>
 
-<span class="nc" id="L23">		return GestorBD.getInstancia().insert(&quot;INSERT INTO centro (nombre, localizacion, atributo, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
-<span class="nc" id="L24">				+ centro.getNombre()+&quot;', &quot;</span>
-<span class="nc" id="L25">				+ centro.getLocalizacion()+&quot;, &quot;</span>
-<span class="nc" id="L26">				+ centro.getAtributo()+&quot;, '&quot;</span>
-<span class="nc" id="L27">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
-<span class="nc" id="L28">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+<span class="fc" id="L23">		return GestorBD.getInstancia().insert(&quot;INSERT INTO centro (nombre, localizacion, atributo, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="fc" id="L24">				+ centro.getNombre()+&quot;', '&quot;</span>
+<span class="fc" id="L25">				+ centro.getLocalizacion()+&quot;', &quot;</span>
+<span class="fc" id="L26">				+ centro.getAtributo()+&quot;, '&quot;</span>
+<span class="fc" id="L27">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="fc" id="L28">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
 	}
 
 	public Centro seleccionarCentro(Centro centro) throws SQLException {
-<span class="nc" id="L32">		Vector datosCentro = GestorBD.getInstancia().select(&quot;SELECT * FROM centro WHERE id='&quot;+centro.getNombre()+&quot;'&quot;);</span>
-<span class="nc" id="L33">		datosCentro = (Vector) datosCentro.get(0);</span>
+<span class="fc" id="L32">		Vector datosCentro = GestorBD.getInstancia().select(&quot;SELECT * FROM centro WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
+<span class="fc" id="L33">		datosCentro = (Vector) datosCentro.get(0);</span>
 
-<span class="nc" id="L35">		String nombre = (String) datosCentro.get(0);</span>
-<span class="nc" id="L36">		String localizacion= (String) datosCentro.get(1);</span>
-<span class="nc" id="L37">		int atributo = (Integer) datosCentro.get(2);</span>
+<span class="fc" id="L35">		String nombre = (String) datosCentro.get(0);</span>
+<span class="fc" id="L36">		String localizacion= (String) datosCentro.get(1);</span>
+<span class="fc" id="L37">		int atributo = (Integer) datosCentro.get(2);</span>
 		
-<span class="nc" id="L39">		Centro centroDevolver = new Centro(nombre, localizacion, atributo);</span>
+<span class="fc" id="L39">		Centro centroDevolver = new Centro(nombre, localizacion, atributo);</span>
 		
 		//faltaria obtener la plantilla, y los cursos
 
-<span class="nc" id="L43">		return centroDevolver;</span>
+<span class="fc" id="L43">		return centroDevolver;</span>
 	}
 
 	public int editarCentro(Centro centro) throws SQLException{
-<span class="nc" id="L47">		Date fechaActualizacion = new Date();</span>
+<span class="fc" id="L47">		Date fechaActualizacion = new Date();</span>
 
-<span class="nc" id="L49">		return GestorBD.getInstancia().update(&quot;UPDATE centro SET &quot;</span>
-<span class="nc" id="L50">				+ &quot;nombre='&quot; + centro.getNombre() + &quot;', &quot;</span>
-<span class="nc" id="L51">				+ &quot;localizacion=&quot; + centro.getLocalizacion() + &quot;, &quot;</span>
-<span class="nc" id="L52">				+ &quot;atributo=&quot; + centro.getAtributo() + &quot;, &quot;</span>
-<span class="nc" id="L53">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
-<span class="nc" id="L54">				+ &quot;' WHERE nombre='&quot;+centro.getNombre());</span>
+<span class="fc" id="L49">		return GestorBD.getInstancia().update(&quot;UPDATE centro SET &quot;</span>
+<span class="fc" id="L50">				+ &quot;nombre='&quot; + centro.getNombre() + &quot;', &quot;</span>
+<span class="fc" id="L51">				+ &quot;localizacion='&quot; + centro.getLocalizacion() + &quot;', &quot;</span>
+<span class="fc" id="L52">				+ &quot;atributo=&quot; + centro.getAtributo() + &quot;, &quot;</span>
+<span class="fc" id="L53">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="fc" id="L54">				+ &quot;' WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
 	}
 
 	public int eliminarCentro(Centro centro) throws SQLException {
-<span class="nc" id="L58">		return GestorBD.getInstancia().delete(&quot;DELETE FROM centro WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
+<span class="fc" id="L58">		return GestorBD.getInstancia().delete(&quot;DELETE FROM centro WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
 	}
 	
 	public List&lt;Centro&gt; listarCentros() throws SQLException {
