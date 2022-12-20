@@ -19,12 +19,12 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 
     @Override
     public String valueToString(Object value) throws ParseException {
-<span class="pc bpc" id="L22" title="1 of 2 branches missed.">    	if (value != null) {</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">    	if (value != null) {</span>
 <span class="nc" id="L23">            Calendar cal = (Calendar) value;</span>
 <span class="nc" id="L24">            return dateFormatter.format(cal.getTime());</span>
         }
 
-<span class="fc" id="L27">        return &quot;&quot;;</span>
+<span class="nc" id="L27">        return &quot;&quot;;</span>
     }
 
 }

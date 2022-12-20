@@ -6,63 +6,61 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import negocio.entities.ProfesorUCLM;
-
 public class PantallaAlumno extends JFrame{
     
-<span class="nc" id="L13">    public PantallaAlumno () {</span>
-<span class="nc" id="L14">    	initLayout();</span>
-<span class="nc" id="L15">    	botonesLayout();        </span>
-<span class="nc" id="L16">    }</span>
+<span class="nc" id="L11">    public PantallaAlumno () {</span>
+<span class="nc" id="L12">    	initLayout();</span>
+<span class="nc" id="L13">    	botonesLayout();        </span>
+<span class="nc" id="L14">    }</span>
     
 	private void initLayout() {
 		// Propiedades basicas
-<span class="nc" id="L20">        getContentPane().setLayout(null);</span>
-<span class="nc" id="L21">        setBounds(10, 10, 800,600);</span>
-<span class="nc" id="L22">        setTitle(&quot;Direccion de cursos&quot;);</span>
-<span class="nc" id="L23">        setResizable(true);</span>
-<span class="nc" id="L24">        setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
-<span class="nc" id="L25">        setLocationRelativeTo(null);</span>
-<span class="nc" id="L26">        setVisible(true);</span>
-<span class="nc" id="L27">	}</span>
+<span class="nc" id="L18">        getContentPane().setLayout(null);</span>
+<span class="nc" id="L19">        setBounds(10, 10, 800,600);</span>
+<span class="nc" id="L20">        setTitle(&quot;Direccion de cursos&quot;);</span>
+<span class="nc" id="L21">        setResizable(true);</span>
+<span class="nc" id="L22">        setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
+<span class="nc" id="L23">        setLocationRelativeTo(null);</span>
+<span class="nc" id="L24">        setVisible(true);</span>
+<span class="nc" id="L25">	}</span>
 	
 	private void botonesLayout() {
 		// Boton para visualizar cursos aprobados
-<span class="nc" id="L31">        JButton button = new JButton(&quot;Consultar cursos aprobados&quot;);</span>
-<span class="nc" id="L32">        button.setBounds(300,163,200,30);</span>
-<span class="nc" id="L33">        getContentPane().add(button);</span>
+<span class="nc" id="L29">        JButton button = new JButton(&quot;Consultar cursos aprobados&quot;);</span>
+<span class="nc" id="L30">        button.setBounds(300,163,200,30);</span>
+<span class="nc" id="L31">        getContentPane().add(button);</span>
     
-<span class="nc" id="L35">        button.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L33">        button.addActionListener(new ActionListener() {</span>
             
             @Override
             public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L39">                new PantallaCursosAprobados(0, null);</span>
-<span class="nc" id="L40">                setVisible(false);</span>
-<span class="nc" id="L41">            }</span>
+<span class="nc" id="L37">                new PantallaCursosAprobados(0, null);</span>
+<span class="nc" id="L38">                setVisible(false);</span>
+<span class="nc" id="L39">            }</span>
         });
         
         
         // Boton para cerrar sesion
-<span class="nc" id="L46">        button = new JButton(&quot;Cerrar sesion&quot;);</span>
-<span class="nc" id="L47">        button.setBounds(300,204,200,30);</span>
-<span class="nc" id="L48">        getContentPane().add(button);</span>
+<span class="nc" id="L44">        button = new JButton(&quot;Cerrar sesion&quot;);</span>
+<span class="nc" id="L45">        button.setBounds(300,204,200,30);</span>
+<span class="nc" id="L46">        getContentPane().add(button);</span>
     
-<span class="nc" id="L50">        button.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L48">        button.addActionListener(new ActionListener() {</span>
             
             @Override
             public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L54">                new PantallaLogin();</span>
-<span class="nc" id="L55">                setVisible(false);</span>
-<span class="nc" id="L56">            }</span>
+<span class="nc" id="L52">                new PantallaLogin();</span>
+<span class="nc" id="L53">                setVisible(false);</span>
+<span class="nc" id="L54">            }</span>
         });
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L56">	}</span>
 
 	public void altaCurso() {
-<span class="nc" id="L61">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L59">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void edicionCurso() {
-<span class="nc" id="L65">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L63">		throw new UnsupportedOperationException();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

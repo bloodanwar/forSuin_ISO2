@@ -8,83 +8,91 @@ import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
 
+import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
-<span class="fc" id="L13">public class MatriculaDAO {</span>
+<span class="fc" id="L14">public class MatriculaDAO {</span>
 
 //fecha, pagado, atributo, modoPago, cursoPropio_id, estudiante_dni
 
-<span class="fc" id="L17">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+<span class="fc" id="L18">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
 	
 	public int crearNuevaMatricula(Matricula matricula) throws SQLException {
-<span class="nc" id="L20">		Date fechaCreacion= new Date();</span>
-<span class="nc" id="L21">		Date fechaActualizacion = fechaCreacion;</span>
+<span class="fc" id="L21">		Date fechaCreacion= new Date();</span>
+<span class="fc" id="L22">		Date fechaActualizacion = fechaCreacion;</span>
 		
-<span class="nc" id="L23">		return GestorBD.getInstancia().insert(&quot;INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
-<span class="nc" id="L24">				+ dateFormat.format(matricula.getFecha())+&quot;', &quot;</span>
-<span class="nc" id="L25">				+ matricula.isPagado()+&quot;, &quot;</span>
-<span class="nc" id="L26">				+ matricula.getAttribute()+&quot;, '&quot;</span>
-<span class="nc" id="L27">				+ matricula.tipoPago.toString()+ &quot;', '&quot;</span>
-<span class="nc" id="L28">				+ matricula.titulo.getId()+&quot;', &quot;</span>
-<span class="nc" id="L29">				+ matricula.titulo.getEdicion()+&quot;, '&quot;</span>
-<span class="nc" id="L30">				+ matricula.estudiante.getDni()+&quot;', '&quot;</span>
-<span class="nc" id="L31">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
-<span class="nc" id="L32">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+<span class="fc" id="L24">		String tipoPago = null;</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">		if (matricula.tipoPago != null) tipoPago = matricula.tipoPago.toString();</span>
+		
+<span class="pc" id="L27">		return GestorBD.getInstancia().insert(&quot;INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="fc" id="L28">				+ dateFormat.format(matricula.getFecha())+&quot;', &quot;</span>
+<span class="fc" id="L29">				+ matricula.isPagado()+&quot;, &quot;</span>
+<span class="fc" id="L30">				+ matricula.getAttribute()+&quot;, '&quot;</span>
+				+ tipoPago+ &quot;', '&quot;
+<span class="fc" id="L32">				+ matricula.titulo.getId()+&quot;', &quot;</span>
+<span class="fc" id="L33">				+ matricula.titulo.getEdicion()+&quot;, '&quot;</span>
+<span class="fc" id="L34">				+ matricula.estudiante.getDni()+&quot;', '&quot;</span>
+<span class="fc" id="L35">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="fc" id="L36">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
 	}
 
-	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException { 
+	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException, MatriculaNoExisteException { 
+<span class="fc" id="L40">		Vector datosMatricula = GestorBD.getInstancia().select(&quot;SELECT * FROM matricula WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion()+&quot; AND estudiante_dni='&quot;+matricula.estudiante.getDni()+&quot;'&quot;);</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if (datosMatricula.size()==0)</span>
+<span class="nc" id="L42">			throw new MatriculaNoExisteException(&quot;No existe el curso seleccionado en la base de datos&quot;);</span>
 		
-<span class="nc" id="L37">		Vector datosMatricula = GestorBD.getInstancia().select(&quot;SELECT * FROM matricula WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion()+&quot; AND estudiante_dni='&quot;+matricula.estudiante.getDni()+&quot;'&quot;);</span>
-<span class="nc" id="L38">		datosMatricula = (Vector) datosMatricula.get(0);</span>
+<span class="fc" id="L44">		datosMatricula = (Vector) datosMatricula.get(0);</span>
 
-<span class="nc" id="L40">		Date fecha= (Date) datosMatricula.get(0);</span>
-<span class="nc" id="L41">		Boolean pagado = (Boolean) datosMatricula.get(1);</span>
-<span class="nc" id="L42">		int attribute = (Integer) datosMatricula.get(2);</span>
-<span class="nc" id="L43">		ModoPago tipoPago = ModoPago.valueOf((String) datosMatricula.get(3));</span>
-<span class="nc" id="L44">		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4), (int) datosMatricula.get(5));</span>
-<span class="nc" id="L45">		Estudiante estudiante = new Estudiante((String) datosMatricula.get(6));</span>
+<span class="fc" id="L46">		Date fecha= (Date) datosMatricula.get(0);</span>
+<span class="fc" id="L47">		Boolean pagado = (Boolean) datosMatricula.get(1);</span>
+<span class="fc" id="L48">		int attribute = (Integer) datosMatricula.get(2);</span>
+<span class="fc" id="L49">		ModoPago tipoPago = ModoPago.valueOf((String) datosMatricula.get(3));</span>
+<span class="fc" id="L50">		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4), (int) datosMatricula.get(5));</span>
+<span class="fc" id="L51">		Estudiante estudiante = new Estudiante((String) datosMatricula.get(6));</span>
 		
-<span class="nc" id="L47">		Matricula matriculaDevolver = new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);</span>
-		
-<span class="nc" id="L49">		return matriculaDevolver;</span>
+<span class="fc" id="L53">		return new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);</span>
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
-<span class="nc" id="L53">		Date fechaActualizacion = new Date();</span>
+		
+<span class="fc" id="L58">		String tipoPago = null;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (matricula.tipoPago != null) tipoPago = matricula.tipoPago.toString();</span>
+		
+<span class="fc" id="L61">		Date fechaActualizacion = new Date();</span>
 
-<span class="nc" id="L55">		return GestorBD.getInstancia().update(&quot;UPDATE matricula SET &quot;</span>
-<span class="nc" id="L56">				+ &quot;fecha='&quot; + matricula.getFecha() + &quot;', &quot;</span>
-<span class="nc" id="L57">				+ &quot;pagado=&quot; + matricula.isPagado() + &quot;, &quot;</span>
-<span class="nc" id="L58">				+ &quot;attribute=&quot; + matricula.getAttribute() + &quot;, &quot;</span>
-<span class="nc" id="L59">				+ &quot;modopago='&quot; + matricula.tipoPago.toString() + &quot;', &quot;</span>
-<span class="nc" id="L60">				+ &quot;dni='&quot; + matricula.estudiante.getDni() + &quot;', &quot;</span>
-<span class="nc" id="L61">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
-<span class="nc" id="L62">				+ &quot;' WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion());</span>
+<span class="pc" id="L63">		return GestorBD.getInstancia().update(&quot;UPDATE matricula SET &quot;</span>
+<span class="fc" id="L64">				+ &quot;fecha='&quot; + matricula.getFecha() + &quot;', &quot;</span>
+<span class="fc" id="L65">				+ &quot;pagado=&quot; + matricula.isPagado() + &quot;, &quot;</span>
+<span class="fc" id="L66">				+ &quot;attribute=&quot; + matricula.getAttribute() + &quot;, &quot;</span>
+				+ &quot;modopago='&quot; + tipoPago + &quot;', &quot;
+<span class="fc" id="L68">				+ &quot;dni='&quot; + matricula.estudiante.getDni() + &quot;', &quot;</span>
+<span class="fc" id="L69">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="fc" id="L70">				+ &quot;' WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion());</span>
 	}
 
 	public int eliminarMatricula(Matricula matricula) throws SQLException {
-<span class="nc" id="L66">		return GestorBD.getInstancia().delete(&quot;DELETE FROM matricula WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion());</span>
+<span class="nc" id="L74">		return GestorBD.getInstancia().delete(&quot;DELETE FROM matricula WHERE cursoPropio_id='&quot;+matricula.titulo.getId()+&quot;' AND cursoPropio_edicion=&quot;+matricula.titulo.getEdicion());</span>
 	}
 
 	public List&lt;Matricula&gt; listarMatriculasPorCurso(CursoPropio curso) throws SQLException {
-<span class="fc" id="L70">		Vector matriculasDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM matricula WHERE cursoPropio_id = '&quot;+curso.getId()+&quot;'&quot;);</span>
+<span class="fc" id="L78">		Vector matriculasDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM matricula WHERE cursoPropio_id = '&quot;+curso.getId()+&quot;'&quot;);</span>
 		
-<span class="fc" id="L72">		List &lt;Matricula&gt; listaMatriculas=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L80">		List &lt;Matricula&gt; listaMatriculas=new ArrayList&lt;&gt;();</span>
 		
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (int i=0; i&lt;matriculasDatos.size(); i++){</span>
-<span class="fc" id="L75">			Vector matDatosTemp = (Vector) matriculasDatos.get(i);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (int i=0; i&lt;matriculasDatos.size(); i++){</span>
+<span class="fc" id="L83">			Vector matDatosTemp = (Vector) matriculasDatos.get(i);</span>
 
-<span class="fc" id="L77">			Date fecha= (Date) matDatosTemp.get(0);</span>
-<span class="fc" id="L78">			Boolean pagado = (Boolean) matDatosTemp.get(1);</span>
-<span class="fc" id="L79">			int attribute = (Integer) matDatosTemp.get(2);</span>
-<span class="fc" id="L80">			ModoPago tipoPago = ModoPago.valueOf((String) matDatosTemp.get(3));</span>
-<span class="fc" id="L81">			CursoPropio cursoPropio = new CursoPropio((String) matDatosTemp.get(4), (int) matDatosTemp.get(5));</span>
-<span class="fc" id="L82">			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(6));</span>
+<span class="fc" id="L85">			Date fecha= (Date) matDatosTemp.get(0);</span>
+<span class="fc" id="L86">			Boolean pagado = (Boolean) matDatosTemp.get(1);</span>
+<span class="fc" id="L87">			int attribute = (Integer) matDatosTemp.get(2);</span>
+<span class="fc" id="L88">			ModoPago tipoPago = ModoPago.valueOf((String) matDatosTemp.get(3));</span>
+<span class="fc" id="L89">			CursoPropio cursoPropio = new CursoPropio((String) matDatosTemp.get(4), (int) matDatosTemp.get(5));</span>
+<span class="fc" id="L90">			Estudiante estudiante = new Estudiante((String) matDatosTemp.get(6));</span>
 			
-<span class="fc" id="L84">			listaMatriculas.add(new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante));</span>
+<span class="fc" id="L92">			listaMatriculas.add(new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante));</span>
 		}
 		
-<span class="fc" id="L87">		return listaMatriculas; </span>
+<span class="fc" id="L95">		return listaMatriculas; </span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

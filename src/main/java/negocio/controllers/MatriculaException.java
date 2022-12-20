@@ -18,4 +18,10 @@ public class MatriculaException extends Exception {
 	        super(errorMessage);
 	    }
 	}
+	
+	public static class MatriculaNoExisteException extends Exception {
+		public MatriculaNoExisteException(String errorMessage) {
+	        super(errorMessage);
+		}
+	}
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
 
+import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
 public class MatriculaDAO {
@@ -20,11 +21,14 @@ public class MatriculaDAO {
 		Date fechaCreacion= new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
+		String tipoPago = null;
+		if (matricula.tipoPago != null) tipoPago = matricula.tipoPago.toString();
+		
 		return GestorBD.getInstancia().insert("INSERT INTO matricula (fecha, pagado, atributo, modoPago, cursoPropio_id, cursoPropio_edicion, estudiante_dni, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ dateFormat.format(matricula.getFecha())+"', "
 				+ matricula.isPagado()+", "
 				+ matricula.getAttribute()+", '"
-				+ matricula.getTipoPago()+ "', '"
+				+ tipoPago+ "', '"
 				+ matricula.titulo.getId()+"', "
 				+ matricula.titulo.getEdicion()+", '"
 				+ matricula.estudiante.getDni()+"', '"
@@ -32,9 +36,11 @@ public class MatriculaDAO {
 				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
-	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException { 
-		
+	public Matricula seleccionarMatricula(Matricula matricula) throws SQLException, MatriculaNoExisteException { 
 		Vector datosMatricula = GestorBD.getInstancia().select("SELECT * FROM matricula WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND cursoPropio_edicion="+matricula.titulo.getEdicion()+" AND estudiante_dni='"+matricula.estudiante.getDni()+"'");
+		if (datosMatricula.size()==0)
+			throw new MatriculaNoExisteException("No existe el curso seleccionado en la base de datos");
+		
 		datosMatricula = (Vector) datosMatricula.get(0);
 
 		Date fecha= (Date) datosMatricula.get(0);
@@ -44,19 +50,21 @@ public class MatriculaDAO {
 		CursoPropio cursoPropio = new CursoPropio((String) datosMatricula.get(4), (int) datosMatricula.get(5));
 		Estudiante estudiante = new Estudiante((String) datosMatricula.get(6));
 		
-		Matricula matriculaDevolver = new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);
-		
-		return matriculaDevolver;
+		return new Matricula(fecha, pagado, attribute, tipoPago, cursoPropio, estudiante);
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
+		
+		String tipoPago = null;
+		if (matricula.tipoPago != null) tipoPago = matricula.tipoPago.toString();
+		
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE matricula SET "
 				+ "fecha='" + matricula.getFecha() + "', "
 				+ "pagado=" + matricula.isPagado() + ", "
 				+ "attribute=" + matricula.getAttribute() + ", "
-				+ "modopago='" + matricula.tipoPago.toString() + "', "
+				+ "modopago='" + tipoPago + "', "
 				+ "dni='" + matricula.estudiante.getDni() + "', "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
 				+ "' WHERE cursoPropio_id='"+matricula.titulo.getId()+"' AND cursoPropio_edicion="+matricula.titulo.getEdicion());

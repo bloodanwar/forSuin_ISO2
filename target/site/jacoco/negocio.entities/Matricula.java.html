@@ -19,11 +19,11 @@ public class Matricula {
 <span class="fc" id="L19">		matriculaDAO = new MatriculaDAO();</span>
 <span class="fc" id="L20">	}</span>
 	
-<span class="nc" id="L22">	public Matricula(Estudiante estudiante, CursoPropio titulo){</span>
-<span class="nc" id="L23">		matriculaDAO = new MatriculaDAO();</span>
-<span class="nc" id="L24">		this.estudiante = estudiante;</span>
-<span class="nc" id="L25">		this.titulo = titulo;</span>
-<span class="nc" id="L26">	}</span>
+<span class="fc" id="L22">	public Matricula(Estudiante estudiante, CursoPropio titulo){</span>
+<span class="fc" id="L23">		matriculaDAO = new MatriculaDAO();</span>
+<span class="fc" id="L24">		this.estudiante = estudiante;</span>
+<span class="fc" id="L25">		this.titulo = titulo;</span>
+<span class="fc" id="L26">	}</span>
 	
 <span class="fc" id="L28">	public Matricula(Date fecha, boolean pagado, int attribute, ModoPago tipoPago, CursoPropio titulo, Estudiante estudiante) {</span>
 <span class="fc" id="L29">		matriculaDAO = new MatriculaDAO();</span>
@@ -35,13 +35,13 @@ public class Matricula {
 <span class="fc" id="L35">		this.attribute = attribute;</span>
 <span class="fc" id="L36">	}</span>
 
-<span class="nc" id="L38">	public Date getFecha() { return fecha; }</span>
+<span class="fc" id="L38">	public Date getFecha() { return fecha; }</span>
 <span class="nc" id="L39">	public void setFecha(Date fecha) { this.fecha = fecha; }</span>
 	
-<span class="nc" id="L41">	public boolean isPagado() { return pagado; }</span>
-<span class="nc" id="L42">	public void setPagado(boolean pagado) {	this.pagado = pagado; }</span>
+<span class="fc" id="L41">	public boolean isPagado() { return pagado; }</span>
+<span class="fc" id="L42">	public void setPagado(boolean pagado) {	this.pagado = pagado; }</span>
 	
-<span class="nc" id="L44">	public int getAttribute() { return attribute; }</span>
+<span class="fc" id="L44">	public int getAttribute() { return attribute; }</span>
 <span class="nc" id="L45">	public void setAttribute(int attribute) { this.attribute = attribute; }	</span>
 	
 <span class="nc" id="L47">	public ModoPago getTipoPago(){return tipoPago;}</span>

@@ -7,19 +7,17 @@ import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
 public class GestorMatriculacion {
-
-	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
 	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException, MatriculaErroneaException {
 		Date fecha = new Date();
 		Matricula matricula = new Matricula(fecha, false, 0, null, curso, estudiante);
 		comprobarSiTieneTituloEstudiante(matricula);
-		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 1) {
+		if (matricula.matriculaDAO.crearNuevaMatricula(matricula) == 0) {
 			throw new MatriculaNoCreadaException("Matrícula no creada");
 		}
 	}
 
-	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException, MatriculaNoExisteException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.setPagado(true);
@@ -28,7 +26,7 @@ public class GestorMatriculacion {
 		}
 	}
 
-	public void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException, MatriculaNoExisteException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TARJETA_CREDITO;
@@ -37,7 +35,7 @@ public class GestorMatriculacion {
 		}
 	}
 
-	public void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException, MatriculaNoExisteException {
 		Matricula matricula = new Matricula(estudiante, curso);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TRANSFERENCIA;

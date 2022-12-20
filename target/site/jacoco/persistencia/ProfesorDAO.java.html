@@ -14,29 +14,29 @@ import negocio.entities.*;
 <span class="fc" id="L14">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
 	
 	public int crearNuevoProfesor(Profesor profesor) throws SQLException {
-<span class="nc" id="L17">		Date fechaCreacion =  new Date();</span>
-<span class="nc" id="L18">		Date fechaActualizacion = fechaCreacion;</span>
+<span class="fc" id="L17">		Date fechaCreacion =  new Date();</span>
+<span class="fc" id="L18">		Date fechaActualizacion = fechaCreacion;</span>
 		
-<span class="nc" id="L20">		return GestorBD.getInstancia().insert(&quot;INSERT INTO profesor (dni, nombre, apellidos, doctor, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
-<span class="nc" id="L21">			+ profesor.getDni()+&quot;', '&quot;</span>
-<span class="nc" id="L22">			+ profesor.getNombre()+&quot;', '&quot;</span>
-<span class="nc" id="L23">			+ profesor.getApellidos()+&quot;', &quot;</span>
-<span class="nc" id="L24">			+ profesor.isDoctor()+&quot;, '&quot;</span>
-<span class="nc" id="L25">			+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
-<span class="nc" id="L26">			+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+<span class="fc" id="L20">		return GestorBD.getInstancia().insert(&quot;INSERT INTO profesor (dni, nombre, apellidos, doctor, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="fc" id="L21">			+ profesor.getDni()+&quot;', '&quot;</span>
+<span class="fc" id="L22">			+ profesor.getNombre()+&quot;', '&quot;</span>
+<span class="fc" id="L23">			+ profesor.getApellidos()+&quot;', &quot;</span>
+<span class="fc" id="L24">			+ profesor.isDoctor()+&quot;, '&quot;</span>
+<span class="fc" id="L25">			+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="fc" id="L26">			+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
 	}
 
 	public Profesor seleccionarProfesor(Profesor profesor) throws SQLException {
-<span class="nc" id="L30">		Vector datosProfesor = GestorBD.getInstancia().select(&quot;SELECT * FROM profesor WHERE dni='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+<span class="fc" id="L30">		Vector datosProfesor = GestorBD.getInstancia().select(&quot;SELECT * FROM profesor WHERE dni='&quot;+profesor.getDni()+&quot;'&quot;);</span>
 		
-<span class="nc" id="L32">		datosProfesor = (Vector) datosProfesor.get(0);</span>
+<span class="fc" id="L32">		datosProfesor = (Vector) datosProfesor.get(0);</span>
 		
-<span class="nc" id="L34">		String dni=(String) datosProfesor.get(0);</span>
-<span class="nc" id="L35">		String nombre=(String) datosProfesor.get(1);</span>
-<span class="nc" id="L36">		String apellidos= (String) datosProfesor.get(2);</span>
-<span class="nc" id="L37">		boolean doctor=(Boolean) datosProfesor.get(3);</span>
+<span class="fc" id="L34">		String dni=(String) datosProfesor.get(0);</span>
+<span class="fc" id="L35">		String nombre=(String) datosProfesor.get(1);</span>
+<span class="fc" id="L36">		String apellidos= (String) datosProfesor.get(2);</span>
+<span class="fc" id="L37">		boolean doctor=(Boolean) datosProfesor.get(3);</span>
 		
-<span class="nc" id="L39">		return new Profesor(dni, nombre, apellidos, doctor);</span>
+<span class="fc" id="L39">		return new Profesor(dni, nombre, apellidos, doctor);</span>
 	}
 
 	public int editarProfesor(Profesor profesor) throws SQLException {
@@ -52,7 +52,7 @@ import negocio.entities.*;
 	}
 	
 	public int eliminarProfesor(Profesor profesor) throws SQLException {
-<span class="nc" id="L55">		return GestorBD.getInstancia().delete(&quot;DELETE FROM profesor WHERE dni='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+<span class="fc" id="L55">		return GestorBD.getInstancia().delete(&quot;DELETE FROM profesor WHERE dni='&quot;+profesor.getDni()+&quot;'&quot;);</span>
 	}
 	
 	public List&lt;Profesor&gt; listarProfesores() throws SQLException {
