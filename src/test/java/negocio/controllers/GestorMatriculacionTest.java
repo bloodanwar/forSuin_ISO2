@@ -51,19 +51,25 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
@@ -89,6 +95,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -96,6 +103,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -103,12 +111,12 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
-		
 		return;
 		
 	}
@@ -130,6 +138,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -137,6 +146,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -144,6 +154,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -171,6 +182,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -178,6 +190,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -185,6 +198,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -211,6 +225,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -218,6 +233,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -225,6 +241,7 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
 		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
@@ -252,19 +269,25 @@ public class GestorMatriculacionTest {
 		}
 		
 		try {g.realizarPagoMatricula(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTarjeta(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
 		
 		try {g.realizarPagoTransferencia(curso, estudiante);
+		}catch(MatriculaErroneaException e){ System.out.println(e);
 		}catch(MatriculaNoEditadaException e ) {System.out.println(e);
+		}catch(MatriculaNoExisteException e ) {System.out.println(e);
 		}catch(SQLException e){ System.out.println(e);
 		}catch(Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());	
 		}
