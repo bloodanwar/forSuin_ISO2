@@ -42,7 +42,6 @@ public class GestorBD {
 	public Vector<Object> select(String sql) throws SQLException {
 		/* Metodo para realizar una busqueda o seleccion de informacion en la base de datos.
 		 * Develve un vector de vectores, donde cada uno de los vectores que contiene el vector principal representa los registros que se recuperan de la base de datos. */
-		System.out.println(sql);
 
 		Vector<Object> vectoradevolver = new Vector<Object>();
 		Statement stmt = mBD.createStatement();

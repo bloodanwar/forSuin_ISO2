@@ -85,7 +85,7 @@ public class CursoPropioDAO {
 		return cursoDevolver;
 	}
 
-	public int editarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
+	public int editarCurso(CursoPropio curso) throws SQLException, CursoNoExisteException {
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
@@ -96,8 +96,6 @@ public class CursoPropioDAO {
 		//curso.materias y cursoEnBBDD.materias
 		
 		//comprobar los nuevos a añadir
-		System.out.println(curso.materias);
-		
 		Iterator<Materia> recorrerMateriaCurso = curso.materias.iterator();
 		while(recorrerMateriaCurso.hasNext()) {
 			boolean materiaYaEnBBDD = false;

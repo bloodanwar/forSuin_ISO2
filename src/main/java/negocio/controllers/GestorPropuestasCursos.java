@@ -15,7 +15,7 @@ public class GestorPropuestasCursos {
 		}
 	}
 
-	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
+	public void editarPropuestaCurso(CursoPropio cursoEditado) throws SQLException, CursoNoEditadoException, CursoErroneoException, CursoNoExisteException {
 		comprobarSiTieneIdEdicion(cursoEditado);
 		if (cursoEditado.cursoPropioDao.editarCurso(cursoEditado) == 0) {
 			throw new CursoNoEditadoException("No se ha realizado la edición de la propuesta del curso");
