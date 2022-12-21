@@ -109,6 +109,26 @@ public class GestorPropuestasCursosTest {
 		} catch (NullPointerException e) {	System.out.println(e);
 		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
 		}
+		
+		try { g.editarPropuestaCurso(curso);
+		} catch (CursoNoExisteException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.evaluarPropuesta(curso);
+		} catch (CursoNoExisteException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.altaCursoAprobado(curso);
+		} catch (CursoNoExisteException e) { System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
+		
+		try { g.eliminarPropuestaCurso(curso);
+		} catch (CursoNoEliminadoException e) {	System.out.println(e);
+		} catch (Exception e) { fail("Ocurrió excepción no esperada: "+e.toString());
+		}
 	}
 
 	@Test
