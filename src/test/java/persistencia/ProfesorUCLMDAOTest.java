@@ -11,9 +11,12 @@ import org.junit.Test;
 
 import negocio.entities.CategoriaProfesor;
 import negocio.entities.Centro;
+import negocio.entities.Profesor;
 import negocio.entities.ProfesorUCLM;
 
 public class ProfesorUCLMDAOTest {
+	private Profesor profesorBase;
+	
 	private ProfesorUCLM profesor;
 	private int position;
 
@@ -26,11 +29,19 @@ public class ProfesorUCLMDAOTest {
 	//@Test
 	public void cp1() {
 		try {
-			// SETUP
+			// PROFESOR BASE
 			String dni = "dni";
 			String nombre = "nombre";
 			String apellidos = "appellido";
 			Boolean doctor = true;
+			profesorBase = new Profesor(dni, nombre, apellidos, doctor);
+			profesorBase.profesorDao.crearNuevoProfesor(profesorBase);
+			
+			// SETUP
+			dni = "dni";
+			nombre = "nombre";
+			apellidos = "appellido";
+			doctor = true;
 			CategoriaProfesor categoria = CategoriaProfesor.CATEDRATICO;
 			Centro centro = new Centro("UCLM TAL");
 			profesor = new ProfesorUCLM(dni, nombre, apellidos, doctor, categoria, centro);
@@ -76,7 +87,7 @@ public class ProfesorUCLMDAOTest {
 
 			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
 		} catch (SQLException e) {		
-			//e.printStackTrace();
+			e.printStackTrace();
 			fail("HA TIRADO UNA EXCEPCION");
 		}
 	}

@@ -47,7 +47,7 @@ public class ProfesorUCLMDAO {
 	public int editarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
 		Date fechaActualizacion=new Date();
 		return GestorBD.getInstancia().update("UPDATE profesorUCLM SET "
-				+ "categoriaProfesor='" +profesor.categoria.toString()+"','"
+				+ "categoriaProfesor='" +profesor.categoria.toString()+"', "
 				+ "centro_nombre='"+profesor.centroAdscripcion.getNombre()+"',"
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
 				+ "' WHERE profesor_DNI='"+profesor.getDni()+"'");
