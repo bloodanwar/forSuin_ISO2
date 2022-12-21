@@ -76,10 +76,10 @@ public class ProfesorUCLMDAO {
 		Profesor profesorNormal = new Profesor(profesor.getDni(), profesor.getNombre(), profesor.getApellidos(), profesor.isDoctor());
 		
 		int _return = 0;
+				
+		_return += GestorBD.getInstancia().delete("DELETE FROM profesorUCLM WHERE profesor_DNI='"+profesor.getDni()+"'");
 		
 		_return += profesorNormal.profesorDao.eliminarProfesor(profesorNormal);
-		
-		_return += GestorBD.getInstancia().delete("DELETE FROM profesorUCLM WHERE profesor_DNI='"+profesor.getDni()+"'");
 		
 		if (_return == 2) return 1;
 		else return 0;

@@ -1,12 +1,12 @@
 ----------------------------------------------------------------
-Wed Dec 21 13:02:07 CET 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-348f-f2b4-00000e4ec5a8 
-on database directory C:\Users\carlo\OneDrive\Escritorio\forSuin_ISO2\forSuinISO2DB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2f333739 
-Loaded from file:/C:/Users/carlo/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+Wed Dec 21 15:12:40 CET 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-3507-776b-00000e6eb330 
+on database directory D:\GitHub\forSuin_ISO2\forSuinISO2DB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2f333739 
+Loaded from file:/C:/Users/Sergio/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Eclipse Adoptium
-java.runtime.version=17.0.4.1+1
-user.dir=C:\Users\carlo\OneDrive\Escritorio\forSuin_ISO2
-os.name=Windows 11
+java.runtime.version=17.0.2+8
+user.dir=D:\GitHub\forSuin_ISO2
+os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
