@@ -11,13 +11,17 @@
 - Carlos Rincón González (*Desarrollador*)
 
 ## Memoria del proyecto:
-Ésta se puede observar desde el documento [forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](extras/forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
+[forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](extras/forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
+
+## Pruebas:
+[forSuin_GestióndeTitulosPropios_Pruebas_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález](https://docs.google.com/spreadsheets/d/1FG3XACQhAKrVoBJqentbW4dV6VVOkwqE_Lmp_fjrzSo/edit#gid=0)
 
 ## Informe:
 [https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html](https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html)
 
 ## SonarCloud:
 [https://sonarcloud.io/project/overview?id=forSuin-ISOII_forSuin_ISO2](https://sonarcloud.io/project/overview?id=forSuin-ISOII_forSuin_ISO2)   
+
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=forSuin-ISOII_forSuin_ISO2)](https://sonarcloud.io/summary/new_code?id=forSuin-ISOII_forSuin_ISO2)
 
 ## Ejecuciones maven:
