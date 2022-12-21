@@ -7,10 +7,8 @@ import static org.junit.Assert.fail;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.Profesor;
 
 public class ProfesorDAOTest {	
@@ -24,6 +22,7 @@ public class ProfesorDAOTest {
 	private Profesor profesorObtenido;
 	private List<Profesor> profesoresObtenidos;
 
+
 	@Test
 	public void cp1() {
 		try {
@@ -33,23 +32,18 @@ public class ProfesorDAOTest {
 			String apellidos = "appellido";
 			Boolean doctor = true;
 			profesor = new Profesor(dni, nombre, apellidos, doctor);
-
+			
 			// ESPERADO
 			profesorEsperado = profesor;
 			profesoresEsperados = profesor.profesorDao.listarProfesores();
 			profesoresEsperados.add(profesorEsperado);
 			position = profesoresEsperados.size()-1;
-
+			
 			// CREACION
 			profesor.profesorDao.crearNuevoProfesor(profesor);
 			profesoresObtenidos = profesor.profesorDao.listarProfesores();
 			profesorObtenido = profesoresObtenidos.get(position);
-
-			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
-			assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
-			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+			assertEquals(profesorEsperado, profesorObtenido);
 
 			// SELECCION + EDICCIÓN
 			dni = "dni";
@@ -61,18 +55,16 @@ public class ProfesorDAOTest {
 
 			profesor.profesorDao.editarProfesor(profesor);
 			profesorObtenido = profesor.profesorDao.seleccionarProfesor(profesorObtenido);
-			assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
-			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+			assertEquals(profesorEsperado, profesorObtenido);
 
 			// ELIMINACION
 			profesor.profesorDao.eliminarProfesor(profesorObtenido);
 			profesoresEsperados.remove(position);
 			profesoresObtenidos = profesor.profesorDao.listarProfesores();
-
 			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
+			
 		} catch (SQLException e) {
+			System.out.println(e);
 			fail("HA TIRADO UNA EXCEPCION");
 		}
 	}
@@ -97,12 +89,8 @@ public class ProfesorDAOTest {
 			profesor.profesorDao.crearNuevoProfesor(profesor);
 			profesoresObtenidos = profesor.profesorDao.listarProfesores();
 			profesorObtenido = profesoresObtenidos.get(position);
-
 			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
-			assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
-			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+			assertEquals(profesorEsperado, profesorObtenido);
 
 			// SELECCION + EDICCIÓN
 			dni = "";
@@ -111,20 +99,17 @@ public class ProfesorDAOTest {
 			doctor = true;
 			profesor = new Profesor(dni, nombre, apellidos, doctor);
 			profesorEsperado = profesor;
-
+			
 			profesor.profesorDao.editarProfesor(profesor);
 			profesorObtenido = profesor.profesorDao.seleccionarProfesor(profesorObtenido);
-			assertEquals(profesorEsperado.getDni(), profesorObtenido.getDni());
-			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
+			assertEquals(profesorEsperado, profesorObtenido);
 
 			// ELIMINACION
 			profesor.profesorDao.eliminarProfesor(profesorObtenido);
 			profesoresEsperados.remove(position);
 			profesoresObtenidos = profesor.profesorDao.listarProfesores();
-
 			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
+			
 		} catch (SQLException e) {
 			fail("HA TIRADO UNA EXCEPCION");
 		}
@@ -132,59 +117,6 @@ public class ProfesorDAOTest {
 
 	@Test
 	public void cp3() {
-		try {
-			// SETUP
-			String dni = null;
-			String nombre = null;
-			String apellidos = null;
-			Boolean doctor = false;
-			profesor = new Profesor(dni, nombre, apellidos, doctor);
-
-			// ESPERADO
-			profesorEsperado = profesor;
-			profesoresEsperados = profesor.profesorDao.listarProfesores();
-			profesoresEsperados.add(profesorEsperado);
-			position = profesoresEsperados.size()-1;
-
-			// CREACION			
-			profesor.profesorDao.crearNuevoProfesor(profesor);
-			profesoresObtenidos = profesor.profesorDao.listarProfesores();
-			profesorObtenido = profesoresObtenidos.get(position);
-
-			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
-			assertEquals("null", profesorObtenido.getDni());
-			assertEquals("null", profesorObtenido.getNombre());
-			assertEquals("null", profesorObtenido.getApellidos());
-			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
-
-			// SELECCION + EDICCIÓN
-			dni = null;
-			nombre = "nombre";
-			apellidos = "apellido";
-			doctor = true;
-			profesor = new Profesor(dni, nombre, apellidos, doctor);
-			profesorEsperado = profesor;
-
-			profesor.profesorDao.editarProfesor(profesor);
-			profesorObtenido = profesor.profesorDao.seleccionarProfesor(profesorObtenido);
-			assertEquals("null", profesorObtenido.getDni());
-			assertEquals(profesorEsperado.getNombre(), profesorObtenido.getNombre());
-			assertEquals(profesorEsperado.getApellidos(), profesorObtenido.getApellidos());
-			assertEquals(profesorEsperado.isDoctor(), profesorObtenido.isDoctor());
-
-			// ELIMINACION 
-			profesor.profesorDao.eliminarProfesor(profesorObtenido);
-			profesoresEsperados.remove(position);
-			profesoresObtenidos = profesor.profesorDao.listarProfesores();
-
-			assertEquals(profesoresEsperados.size(), profesoresObtenidos.size());
-		} catch (SQLException e) {
-			fail("HA TIRADO UNA EXCEPCION");
-		}
-	}
-
-	@Test
-	public void cp4() {
 		try {
 			// SETUP
 			profesor = null;
