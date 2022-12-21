@@ -7,8 +7,6 @@ import negocio.controllers.CursoException.*;
 import negocio.entities.*;
 
 public class GestorPropuestasCursos {
-
-	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
 	public void realizarPropuestaCurso(CursoPropio cursoPropuesto) throws SQLException, CursoNoCreadoException, CursoErroneoException {
 		comprobarSiTieneIdEdicion(cursoPropuesto);

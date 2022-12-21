@@ -73,7 +73,6 @@ public class GestorBD {
 	}
 	
 	public int executeInsertUpdateDelete(String sql) throws SQLException {
-		System.out.println(sql);
 		PreparedStatement stmt = mBD.prepareStatement(sql);
     	int res=stmt.executeUpdate();
     	stmt.close();
@@ -81,12 +80,7 @@ public class GestorBD {
 		return res;  
 	}
 
-	public void operation() {
-		// TODO - implement GestorBD.operation
-		throw new UnsupportedOperationException();
-	}
-
-	// TODO BORRAR FUNCIÓN
+	
 	public static void crearBaseDeDatos() throws Exception {
 		try {
 		    Connection connection = DriverManager.getConnection(BDConstantes.CONNECTION_STRING, BDConstantes.DBUSER, BDConstantes.DBPASS);

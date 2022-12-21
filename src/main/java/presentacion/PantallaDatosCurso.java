@@ -37,7 +37,6 @@ public class PantallaDatosCurso extends JFrame {
 		basicLayout(type, director, curso);
 		tablaMaterias(curso);
 
-		//if (type == 0)	matricularCurso(); // TODO - matricular alumno en la misma pantalla
 		if (type == 2)	evaluarCurso();
 
 		botonesLayout(type, director, curso);
@@ -190,7 +189,7 @@ public class PantallaDatosCurso extends JFrame {
 				}
 				
 				if(confirm == 0)  {
-					if (type == 0) { // TODO -- matricular
+					if (type == 0) {
 						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno
 		                setVisible(false);
 					}	

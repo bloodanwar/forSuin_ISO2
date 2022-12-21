@@ -54,7 +54,6 @@ public class MatriculaDAO {
 	}
 	
 	public int editarMatricula(Matricula matricula) throws SQLException {
-		
 		String tipoPago = null;
 		if (matricula.tipoPago != null) tipoPago = matricula.tipoPago.toString();
 		

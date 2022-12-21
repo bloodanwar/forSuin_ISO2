@@ -15,7 +15,7 @@ public class CursoPropio {
 	public CursoPropioDAO cursoPropioDao;
 	private String id;
 	private String nombre;
-	private int ECTS;
+	private int eCTS;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private double tasaMatricula;
@@ -36,7 +36,7 @@ public class CursoPropio {
 		cursoPropioDao = new CursoPropioDAO();
 		this.id = id;
 		this.nombre = nombre;
-		this.ECTS = eCTS;
+		this.eCTS = eCTS;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.tasaMatricula = tasaMatricula;
@@ -59,7 +59,7 @@ public class CursoPropio {
 		return "Curso:"
 				+"\n\tId: "+id
 				+"\n\tNombre: "+nombre
-				+"\n\tECTS: "+ECTS
+				+"\n\tECTS: "+eCTS
 				+"\n\tfechaInicio: "+fechaInicio.toString()
 				+"\n\tfechaFin: "+fechaFin.toString()
 				+"\n\ttasaMatricula: "+tasaMatricula
@@ -101,7 +101,7 @@ public class CursoPropio {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos,
+		return Objects.hash(id, nombre, eCTS, fechaInicio, fechaFin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos,
 				matriculas, materias);
 	}
 	
@@ -111,8 +111,8 @@ public class CursoPropio {
 	public String getNombre() { return nombre; }
 	public void setNombre(String nombre) { this.nombre = nombre; }
 	
-	public int getECTS() { return ECTS; }
-	public void setECTS(int eCTS) { ECTS = eCTS; }
+	public int getECTS() { return eCTS; }
+	public void setECTS(int eCTS) { this.eCTS = eCTS; }
 	
 	public Date getFechaInicio() { return fechaInicio; }
 	public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }

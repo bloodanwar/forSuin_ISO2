@@ -37,14 +37,11 @@ public class EstudianteDAO {
 		String apellidos = (String) datosEstudiante.get(2);
 		String titulacion = (String) datosEstudiante.get(3);
 		String cualificacion = (String) datosEstudiante.get(4);
-		
-		//TODO - Falta obtener las matriculas de este estudiante
-		
+				
 		return new Estudiante(dni, nombre, apellidos, titulacion, cualificacion);
 	}
 
 	public int editarEstudiante(Estudiante estudiante) throws SQLException {
-		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Estudiante
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE estudiante SET "

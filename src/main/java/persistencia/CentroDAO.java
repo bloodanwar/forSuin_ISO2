@@ -36,11 +36,7 @@ public class CentroDAO {
 		String localizacion= (String) datosCentro.get(1);
 		int atributo = (Integer) datosCentro.get(2);
 		
-		Centro centroDevolver = new Centro(nombre, localizacion, atributo);
-		
-		//faltaria obtener la plantilla, y los cursos
-
-		return centroDevolver;
+		return new Centro(nombre, localizacion, atributo);
 	}
 
 	public int editarCentro(Centro centro) throws SQLException{

@@ -46,7 +46,6 @@ public class MateriaDAO {
 	}
 
 	public int editarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
-		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
 		Date fechaActualizacion = new Date();
 
 		return GestorBD.getInstancia().update("UPDATE materia SET "

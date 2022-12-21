@@ -40,7 +40,6 @@ public class ProfesorDAO {
 	}
 
 	public int editarProfesor(Profesor profesor) throws SQLException {
-		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Profesor
 		Date fechaActualizacion = new Date();
 		
 		return GestorBD.getInstancia().update("UPDATE profesor SET "

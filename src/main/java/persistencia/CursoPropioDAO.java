@@ -52,7 +52,7 @@ public class CursoPropioDAO {
 		}
 	}
 
-	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
+	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, CursoNoExisteException {
 		Vector datosCurso = GestorBD.getInstancia().select("SELECT * FROM cursoPropio WHERE id='"+curso.getId()+"' AND edicion="+curso.getEdicion());
 		
 		if (datosCurso.isEmpty())
@@ -86,7 +86,6 @@ public class CursoPropioDAO {
 	}
 
 	public int editarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
-		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
 		Date fechaActualizacion = new Date();
 
 		int contador = 0;
@@ -189,7 +188,7 @@ public class CursoPropioDAO {
 			
 			String id = (String) curDatosTemp.get(0);
 			String nombre = (String) curDatosTemp.get(1);
-			int ECTS = (Integer)curDatosTemp.get(2);
+			int eCTS = (Integer)curDatosTemp.get(2);
 			Date fechainicio = (Date) curDatosTemp.get(3);
 			Date fechafin = (Date) curDatosTemp.get(4);
 			double tasaMatricula = (Double) curDatosTemp.get(5);
@@ -201,7 +200,7 @@ public class CursoPropioDAO {
 			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));
 			String requisitos = (String) curDatosTemp.get(12);			
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);
 			
 			List<Matricula> matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);
 			cursoDevolver.matriculas = matriculasCurso;
@@ -225,7 +224,7 @@ public class CursoPropioDAO {
 			
 			String id = (String) curDatosTemp.get(0);
 			String nombre = (String) curDatosTemp.get(1);
-			int ECTS = (Integer)curDatosTemp.get(2);
+			int eCTS = (Integer)curDatosTemp.get(2);
 			Date fechainicio = (Date) curDatosTemp.get(3);
 			Date fechafin = (Date) curDatosTemp.get(4);
 			double tasaMatricula = (Double) curDatosTemp.get(5);
@@ -237,7 +236,7 @@ public class CursoPropioDAO {
 			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));
 			String requisitos = (String) curDatosTemp.get(12);
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);
 			
 			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 			cursoDevolver.materias = materiasCurso;
@@ -260,7 +259,7 @@ public class CursoPropioDAO {
 			
 			String id = (String) curDatosTemp.get(0);
 			String nombre = (String) curDatosTemp.get(1);
-			int ECTS = (Integer) curDatosTemp.get(2);
+			int eCTS = (Integer) curDatosTemp.get(2);
 			Date fechainicio = (Date) curDatosTemp.get(3);
 			Date fechafin = (Date) curDatosTemp.get(4);
 			double tasaMatricula = (Double) curDatosTemp.get(5);
@@ -272,7 +271,7 @@ public class CursoPropioDAO {
 			ProfesorUCLM directorObtenido = new ProfesorUCLM((String) curDatosTemp.get(11));
 			String requisitos = (String) curDatosTemp.get(12);
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido, requisitos);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido, requisitos);
 			
 			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 			cursoDevolver.materias = materiasCurso;
@@ -321,7 +320,7 @@ public class CursoPropioDAO {
 			
 			String id = (String) lEdicnDatosTemp.get(0);
 			String nombre = (String) lEdicnDatosTemp.get(1);
-			int ECTS = (Integer) lEdicnDatosTemp.get(2);
+			int eCTS = (Integer) lEdicnDatosTemp.get(2);
 			Date fechainicio = (Date) lEdicnDatosTemp.get(3);
 			Date fechafin = (Date) lEdicnDatosTemp.get(4);
 			double tasaMatricula = (Double) lEdicnDatosTemp.get(5);
@@ -333,7 +332,7 @@ public class CursoPropioDAO {
 			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));
 			String requisitos = (String) lEdicnDatosTemp.get(12);
 			
-			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
+			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);
 			
 			List<Materia> materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);
 			cursoDevolver.materias = materiasCurso;
