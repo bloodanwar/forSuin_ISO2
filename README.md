@@ -23,9 +23,8 @@
 ## Ejecuciones maven:
 - Ejecutar con maven: `mvn compile exec:java`
 - `mvn clean install`
-- `mvn build`
 - Verificar sonar: `mvn verify sonar:sonar`
-- Generar informes (surefire): `mvn site:site` (se generan en target/site/index.html)
+- Generar informes (Surefire): `mvn site:site` (se generan en target/site/index.html)
 
 ## Extras:
 - [UML](extras/TitulosPropiosUCLM2022.vpp)
