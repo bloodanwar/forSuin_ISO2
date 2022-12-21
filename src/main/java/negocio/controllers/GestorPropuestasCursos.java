@@ -1,7 +1,6 @@
 package negocio.controllers;
 
 import java.sql.SQLException;
-import java.text.ParseException;
 
 import negocio.controllers.CursoException.*;
 import negocio.entities.*;
@@ -29,13 +28,13 @@ public class GestorPropuestasCursos {
 		}
 	}
 
-	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, ParseException, CursoErroneoException, CursoNoExisteException {
+	public EstadoCurso evaluarPropuesta(CursoPropio curso) throws SQLException, CursoErroneoException, CursoNoExisteException {
 		comprobarSiTieneIdEdicion(curso);
 		CursoPropio cursoTemp = curso.cursoPropioDao.seleccionarCurso(curso);
 		return cursoTemp.estado;
 	}
 	
-	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, ParseException, CursoErroneoException, CursoNoExisteException {
+	public void altaCursoAprobado(CursoPropio curso) throws SQLException, CursoNoEditadoException, CursoErroneoException, CursoNoExisteException {
 		comprobarSiTieneIdEdicion(curso);
 		curso.estado = EstadoCurso.VALIDADO;
 		if (curso.cursoPropioDao.editarCurso(curso) == 0) {
