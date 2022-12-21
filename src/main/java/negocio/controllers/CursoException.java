@@ -1,6 +1,12 @@
 package negocio.controllers;
 
 public class CursoException extends Exception{
+	static class CursoErroneoException extends Exception {
+		public CursoErroneoException(String errorMessage) {
+			super(errorMessage);
+		}
+	}
+	
 	static class CursoNoCreadoException extends Exception {
 		public CursoNoCreadoException(String errorMessage) {
 	        super(errorMessage);
@@ -17,5 +23,11 @@ public class CursoException extends Exception{
 		public CursoNoEliminadoException(String errorMessage) {
 	        super(errorMessage);
 	    }
+	}
+	
+	public static class CursoNoExisteException extends Exception {
+		public CursoNoExisteException(String errorMessage) {
+	        super(errorMessage);
+		}
 	}
 }

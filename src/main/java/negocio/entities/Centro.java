@@ -20,13 +20,46 @@ public class Centro {
 		this.nombre = nombre;
 	}
 	
-	
-	
 	public Centro(String nombre, String localizacion, int attribute) {
 		centroDao = new CentroDAO();
 		this.nombre = nombre;
 		this.localizacion = localizacion;
 		this.attribute = attribute;
+	}
+	
+	@Override
+	public String toString(){
+		return "Centro:"
+		+"\nNombre: "+this.getNombre()
+		+"\nLocalizacion: "+this.getLocalizacion()
+		+"\nnAtributo: "+this.getAtributo()
+		+"\n";	
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj) return true;
+		if (obj == null) return this != null;
+		if (getClass() != obj.getClass()) return false;
+		Centro centroObj = (Centro) obj; 
+		if (this.getNombre() == null){
+			if (centroObj.getNombre()!=null) return false;
+		} else {
+			if (!(this.getNombre().equals(centroObj.getNombre()))) return false;
+		}
+		if (this.getLocalizacion() == null){
+			if (centroObj.getNombre()!=null) return false;
+		} else {
+			if (!(this.getNombre().equals(centroObj.getNombre()))) return false;
+		}
+		if (this.getAtributo()!=centroObj.getAtributo()) return false;
+		
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre, localizacion, attribute, cursoPropios, plantilla);
 	}
 
 	public String getNombre() { return nombre; }

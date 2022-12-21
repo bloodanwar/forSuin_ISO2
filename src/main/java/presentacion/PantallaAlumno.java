@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import negocio.entities.ProfesorUCLM;
-
+@Generated
 public class PantallaAlumno extends JFrame{
     
     public PantallaAlumno () {
@@ -33,8 +32,7 @@ public class PantallaAlumno extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
                 new PantallaCursosAprobados(0, null);
                 setVisible(false);
@@ -48,8 +46,7 @@ public class PantallaAlumno extends JFrame{
         getContentPane().add(button);
     
         button.addActionListener(new ActionListener() {
-            
-            @Override
+            @Generated @Override
             public void actionPerformed(ActionEvent e) {
                 new PantallaLogin();
                 setVisible(false);

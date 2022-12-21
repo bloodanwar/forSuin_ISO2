@@ -1,14 +1,9 @@
 package presentacion;
 
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -18,12 +13,10 @@ import negocio.controllers.GestorConsultas;
 import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 
+@Generated
 public class PantallaEmpleadosVicerrectorado extends JFrame {
 
 	private List<CursoPropio> cursosDao = null;
@@ -53,11 +46,10 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	    
 		try {
 			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 
-		
 		if(cursosDao != null) {
 			for(int i = 0; i<cursosDao.size(); i++) {
 				CursoPropio cursoTemp = cursosDao.get(i);
@@ -79,8 +71,7 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 	     getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
-	            
-	            @Override
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	if(propuestasLista.isSelectionEmpty()) return;
 	            	new PantallaDatosCurso(2, null, (CursoPropio) cursosDao.get(propuestasLista.getSelectedIndex()));
@@ -94,18 +85,12 @@ public class PantallaEmpleadosVicerrectorado extends JFrame {
 		 getContentPane().add(button);
 
 		 button.addActionListener(new ActionListener() {
-	            
-	            @Override
+	            @Generated @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	new PantallaLogin();
 	                setVisible(false);
 	            }
 
 	        });
-	}
-
-	
-	public void evaluarCurso() {
-		throw new UnsupportedOperationException();
 	}
 }

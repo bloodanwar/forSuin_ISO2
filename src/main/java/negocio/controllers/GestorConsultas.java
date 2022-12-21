@@ -6,69 +6,42 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import negocio.controllers.ConsultasException.*;
 import negocio.entities.*;
-import persistencia.CursoPropioDAO;
 
 public class GestorConsultas {
 
-	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
+	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+	
+	public double consultarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException, TipoCursoErroneoException {
+		comprobarTipo(tipo);
 		CursoPropio curso = new CursoPropio();
 		return curso.cursoPropioDao.listarIngresos(tipo, fechaInicio, fechaFin);
 	}
 
-	public List<CursoPropio> consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) throws SQLException {
+	public List<CursoPropio> consultarEstadoCursos(EstadoCurso estadoCurso, Date fechaInicio, Date fechaFin) throws SQLException, EstadoCursoErroneoException {
+		comprobarEstado(estadoCurso);
 		CursoPropio curso = new CursoPropio();
 		return curso.cursoPropioDao.listarCursosPorEstado(estadoCurso, fechaInicio, fechaFin);
 	}
-
-	public List<CursoPropio> listarEdicionesCursos(Date fechaInicio, Date fechaFin) {
-		// TODO - implement GestorConsultas.listarEdicionesCursos
-		throw new UnsupportedOperationException();
-	}
 	
-	
-	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException{
-		CursoPropio curso = new CursoPropio();
-		List<CursoPropio> listaCursos = null;
+	public List<CursoPropio> listarCursosPorDirector(ProfesorUCLM profesor) throws ParseException, SQLException, ProfesorErroneoException{
+		if (profesor==null || profesor.getDni()==null || profesor.getDni().equals(""))
+			throw new ProfesorErroneoException("Profesor no tiene DNI o es nulo");
 		
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
+		CursoPropio curso = new CursoPropio();
 	    Date dateInicio = formatter.parse("01-01-1000");      
-	    Date dateFin = formatter.parse("01-01-3000");      
-	    //System.out.println(dateInicio);
+	    Date dateFin = formatter.parse("01-01-3000");  
 	    
-		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return listaCursos;
+		return curso.cursoPropioDao.listarCursosPorDirector(profesor, dateInicio, dateFin);
 	}
 	
-	
-	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException{
-		CursoPropio curso = new CursoPropio();
-		List<CursoPropio> listaCursos = null;
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");      
-	    Date dateInicio = new Date(); 
-	    Date dateFin = null;
-		try {
-			dateInicio = formatter.parse("01-01-1000");
-			dateFin = formatter.parse("01-01-3000");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}      
-	    
-		try {
-			listaCursos = curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return listaCursos;
+	public List<CursoPropio> listarCursosPorEstado(EstadoCurso estado) throws ParseException, SQLException, EstadoCursoErroneoException{
+		comprobarEstado(estado);
+		CursoPropio curso = new CursoPropio(); 
+		Date dateInicio = formatter.parse("01-01-1000");
+		Date dateFin = formatter.parse("01-01-3000");
+		return curso.cursoPropioDao.listarCursosPorEstado(estado, dateInicio, dateFin);
 	}
 	
 	public List<CursoPropio> listarTodosCursos() throws SQLException{
@@ -89,5 +62,13 @@ public class GestorConsultas {
 	public List<Centro> listarCentros() throws SQLException{
 		Centro centro = new Centro();	
 		return centro.centroDao.listarCentros();
+	}
+	
+	private void comprobarEstado(EstadoCurso estado) throws EstadoCursoErroneoException{
+		if(estado==null) throw new EstadoCursoErroneoException("El estado del curso es nulo") ;
+	}
+	
+	private void comprobarTipo(TipoCurso tipo) throws TipoCursoErroneoException{
+		if(tipo==null) throw new TipoCursoErroneoException("El tipo del curso es nulo") ;
 	}
 }

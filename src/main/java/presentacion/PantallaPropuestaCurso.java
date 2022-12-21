@@ -2,7 +2,6 @@ package presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -43,10 +41,10 @@ import negocio.controllers.GestorMD5;
 import negocio.controllers.GestorPropuestasCursos;
 import negocio.entities.*;
 
+@Generated
 public class PantallaPropuestaCurso extends JFrame {
 
 	// Variables generales
-	private HashMap componentMap;
 	private JLabel label;
 	private JLabel labelRequisito;
 	private JPanel mainPanel;
@@ -58,15 +56,10 @@ public class PantallaPropuestaCurso extends JFrame {
 	private JComboBox<Integer> ectsCurso;
 	private JComboBox<Integer> horas;
 	private int edicion;
-	
-	// Botones
-	private JButton atrasBto;
-	private JButton sendBto;
-	private JButton addMateriaBto;
-	private JButton deleteMateriaBto;
+	private JButton button;
 
 	// Fechas
-	private DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+	private DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	private Properties p = new Properties();
 	private JDatePickerImpl fechaInicioCurso;
 	private JDatePickerImpl fechaFinalCurso;
@@ -109,15 +102,14 @@ public class PantallaPropuestaCurso extends JFrame {
 	// Edicion
 	private int secretarioEditado = 0;
 	private int centroEditado = 0;
-	private int categoriaEditado = 0;
 
 
 	public PantallaPropuestaCurso (ProfesorUCLM director, CursoPropio cursoEditado, int action) { // 0 = Realizar // 1 = Editar // 2 = Edicion
 		// DAOS 
-		addProfesores();
-		addProfesoresUCLM(cursoEditado, action);
-		addCentros(cursoEditado, action);
-		if (action != 0) addMaterias(cursoEditado);
+		addProfesores(director);
+		addProfesoresUCLM(cursoEditado, action, director);
+		addCentros(cursoEditado, action, director);
+		if (action >= 1) addMaterias(cursoEditado);
 
 		// LAYOUTS
 		initLayout();
@@ -125,24 +117,21 @@ public class PantallaPropuestaCurso extends JFrame {
 		ensenanzasLayout(cursoEditado, action);
 		materiasLayout(cursoEditado);
 		botonesLayout(director, cursoEditado, action);
-		
+
 		// MAIN
 		scrollPanel = new JScrollPane(mainPanel);
 		scrollPanel.setBounds(0, 0, 0,0);
 		getContentPane().add(scrollPanel);
-		
-	    createComponentMap();
 	}
 
-	private void addProfesores() { 
+	private void addProfesores(ProfesorUCLM director) { 
 		profesores.addColumn("Nombre");
 		profesores.addColumn("Doctor");
 
 		try {
 			profesoresDao = gestorConsultas.listarProfesores();
 		} catch (SQLException e) {
-			errorPopup();
-			e.printStackTrace();
+			errorPopup("Error al cargar profesores", 1, director);
 		}
 
 		if(profesoresDao == null) return;
@@ -152,7 +141,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		}
 	}
 
-	private void addProfesoresUCLM(CursoPropio cursoEditado, int action) {
+	private void addProfesoresUCLM(CursoPropio cursoEditado, int action, ProfesorUCLM director) {
 		profesoresUCLM.addColumn("Nombre");
 		profesoresUCLM.addColumn("Categoria");
 		profesoresUCLM.addColumn("Doctor");
@@ -160,31 +149,29 @@ public class PantallaPropuestaCurso extends JFrame {
 		try {
 			profesoresUCLMDao = gestorConsultas.listarProfesoresUCLM();
 		} catch (SQLException e) {
-			errorPopup();
-			e.printStackTrace();
+			errorPopup("Error al cargar profesores", 1, director);
 		}
 
 		if(profesoresUCLMDao == null) return;
 		for (int i = 0; i<profesoresUCLMDao.size(); i++) {
 			ProfesorUCLM profesortemp = profesoresUCLMDao.get(i);
 			profesoresUCLM.insertRow(i, new Object[] { profesortemp.getNombre(), profesortemp.categoria, profesortemp.isDoctor() });
-			if(action != 0 && profesortemp.getDni().equals(cursoEditado.secretario.getDni())) secretarioEditado=i;
+			if(action >= 1 && cursoEditado.secretario != null && profesortemp.getDni().equals(cursoEditado.secretario.getDni())) secretarioEditado=i;
 		}
 	}
 
-	private void addCentros(CursoPropio cursoEditado, int action) {
+	private void addCentros(CursoPropio cursoEditado, int action, ProfesorUCLM director) {
 		try {
 			centrosDao = gestorConsultas.listarCentros();
 		} catch (SQLException e) {
-			errorPopup();
-			e.printStackTrace();
+			errorPopup("Error al cargar centros", 1, director);
 		}
 
 		if(centrosDao == null) return;
 		for (int i = 0; i<centrosDao.size(); i++) {
 			Centro centrostemp = centrosDao.get(i);
 			centros.add(i, centrostemp.getNombre());
-			if(action != 0 && centrostemp.getNombre().equals(cursoEditado.centro.getNombre())) centroEditado=i;
+			if(action >= 1 && cursoEditado.centro != null && centrostemp.getNombre().equals(cursoEditado.centro.getNombre())) centroEditado=i;
 		}		
 	}
 
@@ -195,8 +182,11 @@ public class PantallaPropuestaCurso extends JFrame {
 		Iterator<Materia> ite = materiasEditadas.iterator();
 		while(ite.hasNext()){
 			Materia temp = ite.next();
-			materias.addElement(temp.getNombre());
-			materiasGuardadas.add(temp);
+
+			if(temp != null) {
+				materias.addElement(temp.getNombre());
+				materiasGuardadas.add(temp);
+			}
 		}
 	}
 
@@ -218,6 +208,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		p.put("text.year", "Year");
 	}
 
+	@SuppressWarnings("serial")
 	private void basicLayout(CursoPropio cursoEditado, int action) {
 		// Titulo		
 		label = new JLabel("Titulo de curso");
@@ -225,7 +216,8 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setBounds(10,10,400,30);
 		mainPanel.add(label);
 
-		tituloCurso = new JTextField(cursoEditado.getNombre());
+		if (action >= 1 || cursoEditado != null) tituloCurso = new JTextField(cursoEditado.getNombre());
+		else tituloCurso = new JTextField("");
 		tituloCurso.setName("tituloBox");
 		tituloCurso.setBounds(10,40,400,30);
 		mainPanel.add(tituloCurso);
@@ -237,21 +229,16 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		secretariosTable = new JTable(profesoresUCLM) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
 		};
 
-		secretariosTable.setName("secretariosTable");
 		secretariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		secretariosTable.setRowSelectionInterval(secretarioEditado, secretarioEditado);
 		scrollPanel = new JScrollPane(secretariosTable);
+		scrollPanel.setName("secretariosTable");
 		scrollPanel.setBounds(10, 126, 400, 200);
 		mainPanel.add(scrollPanel);
 
@@ -278,15 +265,15 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(fechaFinalCurso);
 
 		// Fechas editadas
-		if (cursoEditado.getFechaInicio() != null) {
-			fechaInicioCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaInicio()));
-			fechaFinalCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaFin()));
+		if (action >= 1) {
+			if(cursoEditado != null && cursoEditado.getFechaInicio() != null) fechaInicioCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaInicio()));
+			if(cursoEditado != null && cursoEditado.getFechaFin() != null) fechaFinalCurso.getJFormattedTextField().setText(format.format(cursoEditado.getFechaFin()));
 		}
 
 		// Edicion de curso
-		if (action == 0) edicion = 1;
-		else if(action == 1) edicion = cursoEditado.getEdicion();
-		else edicion = cursoEditado.getEdicion() + 1;
+		if (cursoEditado != null && action >= 1) edicion = cursoEditado.getEdicion() + 1;
+		else if (cursoEditado != null && action == 1) edicion = cursoEditado.getEdicion();
+		else edicion = 1;
 		label = new JLabel("Edicion de curso: " + edicion);
 		label.setName("edicionLbl");
 		label.setBounds(450,40,200,30);
@@ -298,7 +285,8 @@ public class PantallaPropuestaCurso extends JFrame {
 		label.setBounds(450,90,200,30);
 		mainPanel.add(label);
 
-		tasaMatricula = new JTextField("" + cursoEditado.getTasaMatricula());
+		if (action >= 1 && cursoEditado != null) tasaMatricula = new JTextField("" + cursoEditado.getTasaMatricula());
+		else tasaMatricula = new JTextField("" );
 		tasaMatricula.setName("tasaBox");
 		tasaMatricula.setBounds(450,131,180,30);
 		mainPanel.add(tasaMatricula);
@@ -310,10 +298,10 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		centrosLista = new JList<>(centros);
-		centrosLista.setName("centrosListaTable");
 		centrosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		centrosLista.setSelectedIndex(centroEditado); 
 		scrollPanel = new JScrollPane(centrosLista);
+		scrollPanel.setName("centrosLista");
 		scrollPanel.setBounds(10, 440, 400, 200);
 		mainPanel.add(scrollPanel);
 	}
@@ -326,9 +314,9 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		categoriasLista = new JList<String>(categorias);
-		categoriasLista.setName("categoriasListaTable");
 		categoriasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(categoriasLista);
+		scrollPanel.setName("categoriasLista");
 		scrollPanel.setBounds(10, 681, 400, 200);
 		mainPanel.add(scrollPanel);
 
@@ -338,7 +326,8 @@ public class PantallaPropuestaCurso extends JFrame {
 		labelRequisito.setBounds(450,681,200,30);
 		mainPanel.add(labelRequisito);
 
-		requisitoCurso = new JTextField(cursoEditado.requisitos);
+		if (action >= 1 || cursoEditado.requisitos == null) requisitoCurso = new JTextField(cursoEditado.requisitos);
+		else requisitoCurso = new JTextField("");
 		requisitoCurso.setName("requisitoCursoBox");
 		requisitoCurso.setBounds(450,711,200,30);
 		requisitoCurso.setEnabled(false);
@@ -358,7 +347,7 @@ public class PantallaPropuestaCurso extends JFrame {
 
 		categoriasLista.addListSelectionListener(new ListSelectionListener() {
 
-			@Override
+			@Generated @Override
 			public void valueChanged(ListSelectionEvent e) {
 				int index = categoriasLista.getSelectedIndex();
 				int requisito = -1;				
@@ -419,14 +408,30 @@ public class PantallaPropuestaCurso extends JFrame {
 		});
 
 		// Categoria + ECTS editado
-		categoriasLista.setSelectedIndex(categoriaEditado);
-		if (action != 0) {
-			for (int i = 0; i < ectsCurso.getItemCount(); i++) {
-				if (cursoEditado.getECTS() == ectsCurso.getItemAt(i)) {
-					ectsCurso.setSelectedIndex(i); 
+		if (action >= 1 && cursoEditado.tipo != null) {
+			boolean complete = false;
+			for (int i = 0; i< tipos.length; i++) {
+				if(tipos[i] == cursoEditado.tipo) {
+					categoriasLista.setSelectedIndex(i);
 					break;
 				}
 			}
+
+			for (int i = 0; i < ectsCurso.getItemCount(); i++) {
+				if (cursoEditado.getECTS() == ectsCurso.getItemAt(i)) {
+					ectsCurso.setSelectedIndex(i); 
+					complete = true;
+					break;
+				} 
+			}
+
+			if(!complete) {
+				ectsCurso.addItem(cursoEditado.getECTS());
+				ectsCurso.setSelectedIndex(ectsCurso.getItemCount()-1);
+			}
+
+		} else {
+			categoriasLista.setSelectedIndex(0);
 		}
 	}
 
@@ -438,22 +443,22 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		materiasLista = new JList<>(materias);
-		materiasLista.setName("materiasLista");
 		materiasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPanel = new JScrollPane(materiasLista);
+		scrollPanel.setName("materiasLista");
 		scrollPanel.setBounds(10, 931, 400, 200);
 		mainPanel.add(scrollPanel);
 
 
 		// Boton para añadir materia
-		addMateriaBto = new JButton("Añadir materia");
-		addMateriaBto.setName("añadirMateriaBto");
-		addMateriaBto.setBounds(450,931,200,30);
-		mainPanel.add(addMateriaBto);
+		button = new JButton("Añadir materia");
+		button.setName("añadirMateriaBto");
+		button.setBounds(450,931,200,30);
+		mainPanel.add(button);
 
-		addMateriaBto.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {
 
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) { 
 				boolean complete = true;
 
@@ -501,6 +506,8 @@ public class PantallaPropuestaCurso extends JFrame {
 					// Limpiar selección
 					nombreMateria.setText("");
 					responsablesTable.clearSelection();
+					fechaInicioMateria.getJFormattedTextField().setText("");
+					fechaFinalMateria.getJFormattedTextField().setText("");
 				}
 			}
 		});
@@ -511,14 +518,13 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		// Boton para eliminar materia
-		deleteMateriaBto = new JButton("Eliminar materia");
-		deleteMateriaBto.setName("eliminarMateriaBto");
-		deleteMateriaBto.setBounds(450,1021,200,30);
-		mainPanel.add(deleteMateriaBto);
+		button = new JButton("Eliminar materia");
+		button.setName("eliminarMateriaBto");
+		button.setBounds(450,1021,200,30);
+		mainPanel.add(button);
 
-		deleteMateriaBto.addActionListener(new ActionListener() {
-
-			@Override
+		button.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if (materiasLista.isSelectionEmpty()) return;
 
@@ -560,7 +566,6 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(horas);
 
 		// Fecha Inicio Materia
-		Date fecha = curso.getFechaInicio();			
 		label = new JLabel("Fecha inicio");
 		label.setName("fechaInicioMateriaLbl");
 		label.setBounds(10,1210,200,30);
@@ -589,12 +594,7 @@ public class PantallaPropuestaCurso extends JFrame {
 		mainPanel.add(label);
 
 		responsablesTable = new JTable(profesores) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -611,42 +611,47 @@ public class PantallaPropuestaCurso extends JFrame {
 
 	private void botonesLayout(final ProfesorUCLM director, final CursoPropio cursoEditado, final int action) {
 		// Boton para ir atras
-		atrasBto = new JButton("Atras");
-		atrasBto.setName("atrasBto");
-		atrasBto.setBounds(270,1530,200,30);
-		mainPanel.add(atrasBto);
+		button = new JButton("Atras");
+		button.setName("atrasBto");
+		button.setBounds(270,1530,200,30);
+		mainPanel.add(button);
 
-		atrasBto.addActionListener(new ActionListener() {
-
-			@Override
+		button.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
-				new PantallaGestionarCursos(director);
-				setVisible(false);
+				try {
+					new PantallaGestionarCursos(director);
+					setVisible(false);
+				} catch (NullPointerException ex) {
+					errorPopup("Error director invalido", 2, director);
+				}
+
 			}
 		});
 
 		// Boton para enviar propuesta
 		String cadenaBoton = "";
 
-		if(action == 0) cadenaBoton = "Enviar propuesta";
+		if(action <= 1) cadenaBoton = "Enviar propuesta";
 		else if (action == 1) cadenaBoton = "Editar propuesta";
-		else if(action == 2) cadenaBoton = "Nueva edición";
+		else if(action >= 1) cadenaBoton = "Nueva edición";
 
 
-		sendBto = new JButton(cadenaBoton);
-		sendBto.setName("enviarBto");
-		sendBto.setBounds(500,1530,200,30);
-		mainPanel.add(sendBto);
+		button = new JButton(cadenaBoton);
+		button.setName("enviarBto");
+		button.setBounds(500,1530,200,30);
+		mainPanel.add(button);
 
-		sendBto.addActionListener(new ActionListener() {
-
-			@Override
+		button.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				boolean complete = true;
 
 
 				// COMPROBACION DE DATOS CURSO
-				if (!testTexts(tituloCurso) & !testTexts(requisitoCurso)) { //!testTexts(fechaInicioCurso) & !testTexts(fechaFinCurso)
+				boolean tituloCursoBool = testTexts(tituloCurso);
+				boolean requistoCursoBool = testTexts(requisitoCurso);
+				if (!tituloCursoBool && !requistoCursoBool) {
 					complete = false;
 				}
 
@@ -664,6 +669,14 @@ public class PantallaPropuestaCurso extends JFrame {
 					materiasLista.setBackground(new Color(255, 255, 255));
 				}
 
+				double tasa = 0.0;
+				try {
+					tasa = Double.parseDouble(tasaMatricula.getText());  
+					tasaMatricula.setBackground(new Color(255, 255, 255));
+				}catch (NumberFormatException e1) {
+					tasaMatricula.setBackground(new Color(222, 129, 122));
+					complete = false;
+				}
 
 				Date fechaInicio = null;
 				Date fechaFinal = null;
@@ -701,7 +714,7 @@ public class PantallaPropuestaCurso extends JFrame {
 							ectsCurso.getItemAt(ectsCurso.getSelectedIndex()), 
 							fechaInicio, 
 							fechaFinal, 
-							Double.parseDouble(tasaMatricula.getText()),
+							tasa,
 							edicion, // Edicion
 							EstadoCurso.PROPUESTO, 
 							tipos[categoriasLista.getSelectedIndex()], 
@@ -713,20 +726,18 @@ public class PantallaPropuestaCurso extends JFrame {
 
 					curso.materias = new ArrayList<Materia>();
 					curso.materias = materiasGuardadas;
-					System.out.println(materiasGuardadas);
 
 					if (action == 1) { // Editar curso
 						try {
 							gestorPropuestas.editarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							errorPopup();
-							e1.printStackTrace();
+							errorPopup("Error al editar curso", 1, director);
 						}
 					} else { // Crear + Nueva edicion
 						try {
 							gestorPropuestas.realizarPropuestaCurso(curso);
 						} catch (Exception e1) {
-							errorPopup();
+							errorPopup("Error al crear curso", 1, director);
 							e1.printStackTrace();
 						}
 					}
@@ -751,40 +762,18 @@ public class PantallaPropuestaCurso extends JFrame {
 		return result;
 	}
 
-	public void errorPopup() {
-		JFrame jFrame = new JFrame();
-		JOptionPane.showMessageDialog(jFrame, "Se ha producido un error");
-	}
-	
-	private void createComponentMap() {
-		componentMap = new HashMap<String,Component>();
-		Component[] components = mainPanel.getComponents();
-		for (int i=0; i < components.length; i++) {
-			componentMap.put(components[i].getName(), components[i]);
+	public void errorPopup(String mensaje, int tipoError, ProfesorUCLM director) {
+		JOptionPane.showMessageDialog(null, mensaje);
+		if(tipoError == 1) {
+			try {
+				new PantallaGestionarCursos(director);
+				setVisible(false);
+			} catch (NullPointerException e) {
+				errorPopup("Error director invalido", 2, director);
+			}
+		} else {
+			new PantallaLogin();
+			setVisible(false);
 		}
-	}
-	
-	public Component getComponentByName(String name) {
-		if (componentMap.containsKey(name)) {
-			return (Component) componentMap.get(name);
-		}
-		else return null;
-	}
-
-	public JButton getAtrasBto() {
-		return atrasBto;
-	}
-
-	public JButton getSendBto() {
-		return sendBto;
-	}
-
-
-	public JButton getAddMateriaBto() {
-		return addMateriaBto;
-	}
-
-	public JButton getDeleteMateriaBto() {
-		return deleteMateriaBto;
 	}
 }

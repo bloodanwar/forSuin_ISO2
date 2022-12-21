@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EstudianteDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">persistencia</a> &gt; <span class="el_source">EstudianteDAO.java</span></div><h1>EstudianteDAO.java</h1><pre class="source lang-java linenums">package persistencia;
+
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+
+import negocio.entities.*;
+
+<span class="fc" id="L11">public class EstudianteDAO {</span>
+
+	//dni, nombre, apellidos, titulacion, cualificacion
+	
+<span class="fc" id="L15">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+	
+	public int crearNuevoEstudiante(Estudiante estudiante) throws SQLException {
+<span class="nc" id="L18">		Date fechaCreacion =  new Date();</span>
+<span class="nc" id="L19">		Date fechaActualizacion = fechaCreacion;</span>
+		
+<span class="nc" id="L21">		return GestorBD.getInstancia().insert(&quot;INSERT INTO estudiante (dni, nombre, apellidos, titulacion, cualificacion, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="nc" id="L22">				+ estudiante.getDni()+&quot;', '&quot;</span>
+<span class="nc" id="L23">				+ estudiante.getNombre()+&quot;', '&quot;</span>
+<span class="nc" id="L24">				+ estudiante.getApellidos()+&quot;', &quot;</span>
+<span class="nc" id="L25">				+ estudiante.getTitulacion()+&quot;', '&quot;</span>
+<span class="nc" id="L26">				+ estudiante.getCualificacion()+&quot;', '&quot;</span>
+<span class="nc" id="L27">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="nc" id="L28">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+	}
+
+	public Estudiante seleccionarEstudiante(Estudiante estudiante) throws SQLException {
+<span class="nc" id="L32">		Vector datosEstudiante = GestorBD.getInstancia().select(&quot;SELECT * FROM estudiante WHERE dni='&quot;+estudiante.getDni()+&quot;'&quot;);</span>
+<span class="nc" id="L33">		datosEstudiante = (Vector) datosEstudiante.get(0);</span>
+		
+<span class="nc" id="L35">		String dni = (String) datosEstudiante.get(0);</span>
+<span class="nc" id="L36">		String nombre = (String) datosEstudiante.get(1);</span>
+<span class="nc" id="L37">		String apellidos = (String) datosEstudiante.get(2);</span>
+<span class="nc" id="L38">		String titulacion = (String) datosEstudiante.get(3);</span>
+<span class="nc" id="L39">		String cualificacion = (String) datosEstudiante.get(4);</span>
+		
+		//TODO - Falta obtener las matriculas de este estudiante
+		
+<span class="nc" id="L43">		return new Estudiante(dni, nombre, apellidos, titulacion, cualificacion);</span>
+	}
+
+	public int editarEstudiante(Estudiante estudiante) throws SQLException {
+		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Estudiante
+<span class="nc" id="L48">		Date fechaActualizacion = new Date();</span>
+
+<span class="nc" id="L50">		return GestorBD.getInstancia().update(&quot;UPDATE estudiante SET &quot;</span>
+<span class="nc" id="L51">				+ &quot;nombre='&quot; + estudiante.getNombre() + &quot;', &quot;</span>
+<span class="nc" id="L52">				+ &quot;apellidos='&quot; + estudiante.getApellidos() + &quot;', &quot;</span>
+<span class="nc" id="L53">				+ &quot;titulacion='&quot; + estudiante.getTitulacion() + &quot;', &quot;</span>
+<span class="nc" id="L54">				+ &quot;cualificacion='&quot; + estudiante.getCualificacion() + &quot;', &quot;</span>
+<span class="nc" id="L55">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="nc" id="L56">				+ &quot;' WHERE dni='&quot;+estudiante.getDni()+&quot;'&quot;);</span>
+	}
+
+	public int eliminarEstudiante(Estudiante estudiante) throws SQLException {
+<span class="nc" id="L60">		return GestorBD.getInstancia().delete(&quot;DELETE FROM estudiante WHERE dni='&quot; + estudiante.getDni() + &quot;'&quot;);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

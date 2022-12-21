@@ -21,15 +21,15 @@ public class CentroDAO {
 		Date fechaActualizacion = fechaCreacion;
 
 		return GestorBD.getInstancia().insert("INSERT INTO centro (nombre, localizacion, atributo, fechaCreacion, fechaActualizacion) VALUES ('"
-				+ centro.getNombre()+"', "
-				+ centro.getLocalizacion()+", "
+				+ centro.getNombre()+"', '"
+				+ centro.getLocalizacion()+"', "
 				+ centro.getAtributo()+", '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
 	}
 
 	public Centro seleccionarCentro(Centro centro) throws SQLException {
-		Vector datosCentro = GestorBD.getInstancia().select("SELECT * FROM centro WHERE id='"+centro.getNombre()+"'");
+		Vector datosCentro = GestorBD.getInstancia().select("SELECT * FROM centro WHERE nombre='"+centro.getNombre()+"'");
 		datosCentro = (Vector) datosCentro.get(0);
 
 		String nombre = (String) datosCentro.get(0);
@@ -48,10 +48,10 @@ public class CentroDAO {
 
 		return GestorBD.getInstancia().update("UPDATE centro SET "
 				+ "nombre='" + centro.getNombre() + "', "
-				+ "localizacion=" + centro.getLocalizacion() + ", "
+				+ "localizacion='" + centro.getLocalizacion() + "', "
 				+ "atributo=" + centro.getAtributo() + ", "
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
-				+ "' WHERE nombre='"+centro.getNombre());
+				+ "' WHERE nombre='"+centro.getNombre()+"'");
 	}
 
 	public int eliminarCentro(Centro centro) throws SQLException {

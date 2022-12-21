@@ -19,12 +19,21 @@ public class ProfesorUCLMDAO {
 		Date fechaCreacion =  new Date();
 		Date fechaActualizacion = fechaCreacion;
 		
-		return GestorBD.getInstancia().insert("INSERT INTO profesorUCLM (profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion) VALUES ('"
+		Profesor profesorNormal = new Profesor(profesor.getDni(), profesor.getNombre(), profesor.getApellidos(), profesor.isDoctor());
+		
+		int numberReturn = 0;
+		
+		numberReturn += profesorNormal.profesorDao.crearNuevoProfesor(profesorNormal);
+		
+		numberReturn += GestorBD.getInstancia().insert("INSERT INTO profesorUCLM (profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion) VALUES ('"
 				+ profesor.getDni()+"', '"
-				+ profesor.categoria.toString()+"', ''"
+				+ profesor.categoria.toString()+"', '"
 				+ profesor.centroAdscripcion.getNombre()+"', '"
 				+ dateFormat.format(fechaCreacion)+"', '"
 				+ dateFormat.format(fechaActualizacion)+"')");
+		
+		if (numberReturn == 2) return 1;
+		else return 0;
 	}
 
 	public ProfesorUCLM seleccionarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
@@ -46,15 +55,34 @@ public class ProfesorUCLMDAO {
 
 	public int editarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
 		Date fechaActualizacion=new Date();
-		return GestorBD.getInstancia().update("UPDATE profesorUCLM SET "
-				+ "categoriaProfesor='" +profesor.categoria.toString()+"','"
+		
+		Profesor profesorNormal = new Profesor(profesor.getDni(), profesor.getNombre(), profesor.getApellidos(), profesor.isDoctor());
+		
+		int numberReturn = 0;
+		
+		numberReturn += profesorNormal.profesorDao.editarProfesor(profesorNormal);
+
+		numberReturn += GestorBD.getInstancia().update("UPDATE profesorUCLM SET "
+				+ "categoriaProfesor='" +profesor.categoria.toString()+"', "
 				+ "centro_nombre='"+profesor.centroAdscripcion.getNombre()+"',"
 				+ "fechaActualizacion='" + dateFormat.format(fechaActualizacion)
 				+ "' WHERE profesor_DNI='"+profesor.getDni()+"'");
+		
+		if (numberReturn == 2) return 1;
+		else return 0;
 	}
 
 	public int eliminarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
-		return GestorBD.getInstancia().delete("DELETE FROM profesorUCLM WHERE profesor_DNI='"+profesor.getDni()+"'");
+		Profesor profesorNormal = new Profesor(profesor.getDni(), profesor.getNombre(), profesor.getApellidos(), profesor.isDoctor());
+		
+		int numberReturn = 0;
+				
+		numberReturn += GestorBD.getInstancia().delete("DELETE FROM profesorUCLM WHERE profesor_DNI='"+profesor.getDni()+"'");
+		
+		numberReturn += profesorNormal.profesorDao.eliminarProfesor(profesorNormal);
+		
+		if (numberReturn == 2) return 1;
+		else return 0;
 	}
 	
 	public List<ProfesorUCLM> listarProfesores() throws SQLException {

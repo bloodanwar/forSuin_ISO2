@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProfesorUCLMDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">persistencia</a> &gt; <span class="el_source">ProfesorUCLMDAO.java</span></div><h1>ProfesorUCLMDAO.java</h1><pre class="source lang-java linenums">package persistencia;
+
+import negocio.entities.*;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+
+<span class="fc" id="L12">public class ProfesorUCLMDAO {</span>
+
+	//profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion
+
+<span class="fc" id="L16">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+	
+	public int crearNuevoProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
+<span class="nc" id="L19">		Date fechaCreacion =  new Date();</span>
+<span class="nc" id="L20">		Date fechaActualizacion = fechaCreacion;</span>
+		
+<span class="nc" id="L22">		return GestorBD.getInstancia().insert(&quot;INSERT INTO profesorUCLM (profesor_DNI, categoriaProfesor, centro_nombre, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="nc" id="L23">				+ profesor.getDni()+&quot;', '&quot;</span>
+<span class="nc" id="L24">				+ profesor.categoria.toString()+&quot;', '&quot;</span>
+<span class="nc" id="L25">				+ profesor.centroAdscripcion.getNombre()+&quot;', '&quot;</span>
+<span class="nc" id="L26">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="nc" id="L27">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+	}
+
+	public ProfesorUCLM seleccionarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
+<span class="nc" id="L31">		Vector datosProfUCLM = GestorBD.getInstancia().select(&quot;SELECT * FROM profesor AS p JOIN profesorUCLM AS puclm ON puclm.profesor_DNI = p.dni WHERE puclm.profesor_DNI='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+<span class="nc" id="L32">		datosProfUCLM = (Vector) datosProfUCLM.get(0);</span>
+		
+		//columnas tras el join:
+		//p.dni, p.nombre, p.apellidos, p.doctor, p.fechaCreacion, p.fechaActualizacion, puclm.profesor_DNI, puclm.categoriaProfesor, puclm.centro_nombre, puclm.fechaCreacion, puclm.fechaActualizacion		
+		
+<span class="nc" id="L37">		String dni=(String) datosProfUCLM.get(0);</span>
+<span class="nc" id="L38">		String nombre=(String) datosProfUCLM.get(1);</span>
+<span class="nc" id="L39">		String apellidos= (String) datosProfUCLM.get(2);</span>
+<span class="nc" id="L40">		boolean doctor=(Boolean) datosProfUCLM.get(3);</span>
+<span class="nc" id="L41">		CategoriaProfesor categoria = CategoriaProfesor.valueOf((String) datosProfUCLM.get(7));</span>
+<span class="nc" id="L42">		Centro centro = new Centro((String) datosProfUCLM.get(8));</span>
+		
+<span class="nc" id="L44">		return new ProfesorUCLM(dni, nombre, apellidos, doctor, categoria, centro);</span>
+	}
+
+	public int editarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
+<span class="nc" id="L48">		Date fechaActualizacion=new Date();</span>
+<span class="nc" id="L49">		return GestorBD.getInstancia().update(&quot;UPDATE profesorUCLM SET &quot;</span>
+<span class="nc" id="L50">				+ &quot;categoriaProfesor='&quot; +profesor.categoria.toString()+&quot;','&quot;</span>
+<span class="nc" id="L51">				+ &quot;centro_nombre='&quot;+profesor.centroAdscripcion.getNombre()+&quot;',&quot;</span>
+<span class="nc" id="L52">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="nc" id="L53">				+ &quot;' WHERE profesor_DNI='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+	}
+
+	public int eliminarProfesorUCLM(ProfesorUCLM profesor) throws SQLException {
+<span class="nc" id="L57">		return GestorBD.getInstancia().delete(&quot;DELETE FROM profesorUCLM WHERE profesor_DNI='&quot;+profesor.getDni()+&quot;'&quot;);</span>
+	}
+	
+	public List&lt;ProfesorUCLM&gt; listarProfesores() throws SQLException {
+<span class="fc" id="L61">		Vector datosProfUCLM = GestorBD.getInstancia().select(&quot;SELECT * FROM profesor AS p JOIN profesorUCLM AS puclm ON puclm.profesor_DNI = p.dni&quot;);</span>
+		
+<span class="fc" id="L63">		List&lt;ProfesorUCLM&gt; listaProfesUCLM = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (int i=0; i&lt;datosProfUCLM.size(); i++) {</span>
+<span class="fc" id="L65">			Vector profUCLMDatosTemp = (Vector) datosProfUCLM.get(i);</span>
+			
+<span class="fc" id="L67">			String dni=(String) profUCLMDatosTemp.get(0);</span>
+<span class="fc" id="L68">			String nombre=(String) profUCLMDatosTemp.get(1);</span>
+<span class="fc" id="L69">			String apellidos= (String) profUCLMDatosTemp.get(2);</span>
+<span class="fc" id="L70">			boolean doctor=(Boolean) profUCLMDatosTemp.get(3);</span>
+<span class="fc" id="L71">			CategoriaProfesor categoria = CategoriaProfesor.valueOf((String) profUCLMDatosTemp.get(7));</span>
+<span class="fc" id="L72">			Centro centro = new Centro((String) profUCLMDatosTemp.get(8));</span>
+			
+<span class="fc" id="L74">			listaProfesUCLM.add(new ProfesorUCLM(dni, nombre, apellidos,doctor,categoria,centro));</span>
+		}
+<span class="fc" id="L76">		return listaProfesUCLM;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

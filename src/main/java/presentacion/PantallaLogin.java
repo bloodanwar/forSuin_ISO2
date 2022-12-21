@@ -3,15 +3,7 @@ package presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.SpringLayout;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import negocio.entities.CursoPropio;
 import negocio.entities.ProfesorUCLM;
 
 import javax.swing.JTextField;
@@ -20,10 +12,8 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputMethodListener;
-import java.util.Properties;
-import java.awt.event.InputMethodEvent;
 
+@Generated
 public class PantallaLogin {
 
 	private JFrame frame;
@@ -36,10 +26,10 @@ public class PantallaLogin {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Generated
 			public void run() {
 				try {
 					PantallaLogin window = new PantallaLogin();
-					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -51,13 +41,6 @@ public class PantallaLogin {
 	 * Create the application.
 	 */
 	public PantallaLogin() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(10, 10, 800, 600);
 		frame.setLocationRelativeTo(null);
@@ -82,7 +65,7 @@ public class PantallaLogin {
 		entrar.setBounds(326, 131, 160, 23);
 		
 		entrar.addActionListener(new ActionListener() {
-		
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM(textField.getText());
 				new PantallaDireccionCursos(director);
@@ -98,6 +81,7 @@ public class PantallaLogin {
 		
 		JButton profesor = new JButton("Profesor");
 		profesor.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM("23568907X");
 				new PantallaDireccionCursos(director);
@@ -110,6 +94,7 @@ public class PantallaLogin {
 		
 		JButton pesonal = new JButton("Empleados Vicerrectorado");
 		pesonal.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaEmpleadosVicerrectorado();
 				frame.setVisible(false);
@@ -125,6 +110,7 @@ public class PantallaLogin {
 		
 		JButton alumno = new JButton("Alumno");
 		alumno.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaAlumno();
 				frame.setVisible(false);
@@ -137,8 +123,17 @@ public class PantallaLogin {
 		jefeGabinete.setBounds(418, 338, 160, 23);
 		frame.getContentPane().add(jefeGabinete);
 		
-		cerrar.addActionListener(new ActionListener() {
+		jefeGabinete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaJefeGabineteVicerrectorado();
+				frame.setVisible(false);
+			}
+		});
 		
+		cerrar.addActionListener(new ActionListener() {
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				 System.exit(0);
 			}

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaJefeVicerrectoradoAprobar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaJefeVicerrectoradoAprobar.java</span></div><h1>PantallaJefeVicerrectoradoAprobar.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import negocio.controllers.GestorConsultas;
+import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+
+import javax.swing.JButton;
+import javax.swing.JList;
+
+@Generated
+public class PantallaJefeVicerrectoradoAprobar extends JFrame {
+
+	private List&lt;CursoPropio&gt; cursosDao = null;
+    private List&lt;String&gt; cursosNombre = new ArrayList&lt;&gt;();
+    private JList&lt;String&gt; propuestasLista = new JList&lt;&gt;();
+    private JButton btnAtras;
+	
+    public PantallaJefeVicerrectoradoAprobar () {
+    	initLayout();
+    	basicLayout();
+    	botonesLayout();
+    }
+
+	private void initLayout() {
+		// Propiedades basicas
+        getContentPane().setLayout(null);
+        setBounds(10, 10, 800,600);
+        setTitle(&quot;Gestion de cursos propuestos&quot;);
+        setResizable(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+		
+	}
+	
+	private void basicLayout() {
+		GestorConsultas gestor = new GestorConsultas();
+
+		try {
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.PROPUESTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		if(cursosDao != null) {
+			for(int i = 0; i&lt;cursosDao.size(); i++) {
+				CursoPropio cursoTemp = cursosDao.get(i);
+				cursosNombre.add(cursoTemp.getNombre());
+			}
+		}
+
+        propuestasLista = new JList(cursosNombre.toArray());
+        propuestasLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane scrollLista = new JScrollPane(propuestasLista);
+        scrollLista.setBounds(200, 69, 400, 200);
+        getContentPane().add(scrollLista);
+	}
+
+	private void botonesLayout() {
+		 JButton button = new JButton(&quot;Ver datos&quot;);
+	     button.setBounds(300,280,200,30);
+	     getContentPane().add(button);
+
+<span class="nc" id="L75">		 button.addActionListener(new ActionListener() {</span>
+	            @Generated @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	if(propuestasLista.isSelectionEmpty()) return;
+	            	new PantallaDatosCurso(2, null, cursosDao.get(propuestasLista.getSelectedIndex()));
+	                setVisible(false);
+	            }
+
+	     });
+		 
+		 btnAtras = new JButton(&quot;Atras&quot;);
+	     btnAtras.setBounds(300,321,200,30);
+		 getContentPane().add(btnAtras);
+
+<span class="nc" id="L89">		 btnAtras.addActionListener(new ActionListener() {</span>
+	            @Generated @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	new PantallaJefeGabineteVicerrectorado();
+	                setVisible(false);
+	            }
+	        });
+	}
+	
+	public void evaluarCurso() {
+		throw new UnsupportedOperationException();
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

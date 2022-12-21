@@ -7,8 +7,6 @@ import negocio.controllers.MatriculaException.*;
 import negocio.entities.*;
 
 public class GestorMatriculacion {
-
-	//TODO - crear excepcion para cuando operaciones sql devuelvan 0
 	
 	public void realizarMatriculacion(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoCreadaException, MatriculaErroneaException {
 		Date fecha = new Date();
@@ -19,8 +17,9 @@ public class GestorMatriculacion {
 		}
 	}
 
-	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoMatricula(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException, MatriculaNoExisteException, MatriculaErroneaException {
 		Matricula matricula = new Matricula(estudiante, curso);
+		comprobarSiTieneTituloEstudiante(matricula);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.setPagado(true);
 		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
@@ -28,8 +27,9 @@ public class GestorMatriculacion {
 		}
 	}
 
-	private void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTarjeta(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException, MatriculaNoExisteException, MatriculaErroneaException {
 		Matricula matricula = new Matricula(estudiante, curso);
+		comprobarSiTieneTituloEstudiante(matricula);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TARJETA_CREDITO;
 		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
@@ -37,8 +37,9 @@ public class GestorMatriculacion {
 		}
 	}
 
-	private void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException {
+	public void realizarPagoTransferencia(CursoPropio curso, Estudiante estudiante) throws SQLException, MatriculaNoEditadaException, MatriculaNoExisteException, MatriculaErroneaException {
 		Matricula matricula = new Matricula(estudiante, curso);
+		comprobarSiTieneTituloEstudiante(matricula);
 		matricula.matriculaDAO.seleccionarMatricula(matricula);
 		matricula.tipoPago = ModoPago.TRANSFERENCIA;
 		if (matricula.matriculaDAO.editarMatricula(matricula) == 0) {
@@ -60,13 +61,12 @@ public class GestorMatriculacion {
 		if(!tituloMatriculaError && !estudianteMatriculaError) {
 			return;
 		} else if (tituloMatriculaError && estudianteMatriculaError) {
-			throw new MatriculaErroneaException("");
+			throw new MatriculaErroneaException("Matricula no tiene título ni estudiante");
+		} else {
+			if (tituloMatriculaError) throw new MatriculaErroneaException("Matricula no tiene título");
+			if (estudianteMatriculaError) throw new MatriculaErroneaException("Matricula no tiene estudiante");
 		}
 	}
 
-	private void operation() {
-		// TODO - implement GestorMatriculacion.operation
-		throw new UnsupportedOperationException();
-	}
 
 }

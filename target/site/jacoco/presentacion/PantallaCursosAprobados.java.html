@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaCursosAprobados.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaCursosAprobados.java</span></div><h1>PantallaCursosAprobados.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import negocio.controllers.GestorConsultas;
+import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+import negocio.entities.ProfesorUCLM;
+
+@Generated
+public class PantallaCursosAprobados extends JFrame{
+
+	private List&lt;CursoPropio&gt; cursosDao = null;
+    private List&lt;String&gt; cursosNombre = new ArrayList&lt;&gt;();
+    private JList&lt;String&gt; cursosLista = new JList&lt;&gt;();
+
+    
+    public PantallaCursosAprobados (int type, ProfesorUCLM director) {
+    	initLayout();
+    	listLayout();
+    	botonesLayout(type, director);
+    }
+
+	private void initLayout() {
+		// Propiedades basicas
+        getContentPane().setLayout(null);
+        setBounds(10, 10, 800,600);
+        setTitle(&quot;Cursos aprobados&quot;);
+        setResizable(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+		
+	}
+	
+	private void listLayout() {
+		GestorConsultas gestor = new GestorConsultas();
+	    
+		
+		try {
+			cursosDao = gestor.listarCursosPorEstado(EstadoCurso.VALIDADO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		if(cursosDao != null) {
+			for(int i = 0; i&lt;cursosDao.size(); i++) {
+				CursoPropio cursoTemp = cursosDao.get(i);
+				cursosNombre.add(cursoTemp.getNombre());
+			}
+		}
+		
+		
+        cursosLista = new JList(cursosNombre.toArray());
+        cursosLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane scrollLista = new JScrollPane(cursosLista);
+        scrollLista.setBounds(198, 79, 400, 200);
+        getContentPane().add(scrollLista);
+	}
+
+	private void botonesLayout(final int type, final ProfesorUCLM director) {
+        // Boton para ver datos curso
+        JButton button = new JButton(&quot;Ver datos&quot;);
+        button.setBounds(296,290,200,30);
+        getContentPane().add(button);
+    
+<span class="nc" id="L78">        button.addActionListener(new ActionListener() {</span>
+            @Generated @Override
+            public void actionPerformed(ActionEvent e) {
+            	if(!cursosLista.isSelectionEmpty()) {
+            		 new PantallaDatosCurso(type, director, cursosDao.get(cursosLista.getSelectedIndex()));
+                     setVisible(false);
+            	}  
+            }
+        });
+        
+        
+        // Boton para ir atras
+        button = new JButton(&quot;Atras&quot;);
+        button.setBounds(10,520,200,30);
+        getContentPane().add(button);
+    
+<span class="nc" id="L94">        button.addActionListener(new ActionListener() {</span>
+            @Generated @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (type == 0) new PantallaAlumno();
+            	else if (type == 1) new PantallaDireccionCursos(director);
+                setVisible(false);
+            }
+
+        });
+		
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

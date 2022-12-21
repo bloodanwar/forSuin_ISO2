@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Materia.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">negocio.entities</a> &gt; <span class="el_source">Materia.java</span></div><h1>Materia.java</h1><pre class="source lang-java linenums">package negocio.entities;
+
+import java.util.Date;
+
+import persistencia.*;
+
+public class Materia {
+
+	public Profesor responsable;
+	public MateriaDAO materiaDao;
+	private String nombre;
+	private double horas;
+	private Date fechaInicio;
+	private Date fechaFin;
+	
+<span class="fc" id="L16">	public Materia() {</span>
+<span class="fc" id="L17">		materiaDao = new MateriaDAO();</span>
+<span class="fc" id="L18">	}</span>
+	
+<span class="fc" id="L20">	public Materia(String nombre, double horas, Date fechaInicio, Date fechaFin, Profesor responsable) {</span>
+<span class="fc" id="L21">		materiaDao = new MateriaDAO();</span>
+<span class="fc" id="L22">		this.nombre = nombre;</span>
+<span class="fc" id="L23">		this.horas = horas;</span>
+<span class="fc" id="L24">		this.fechaInicio = fechaInicio;</span>
+<span class="fc" id="L25">		this.fechaFin = fechaFin;</span>
+<span class="fc" id="L26">		this.responsable = responsable;</span>
+<span class="fc" id="L27">	}</span>
+
+<span class="fc" id="L29">	public String getNombre() { return nombre; }</span>
+<span class="nc" id="L30">	public void setNombre(String nombre) { this.nombre = nombre; }</span>
+
+<span class="fc" id="L32">	public double getHoras() { return horas; }</span>
+<span class="nc" id="L33">	public void setHoras(double horas) { this.horas = horas; }</span>
+
+<span class="fc" id="L35">	public Date getFechaInicio() { return fechaInicio; }</span>
+<span class="nc" id="L36">	public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }</span>
+
+<span class="fc" id="L38">	public Date getFechaFin() { return fechaFin; }</span>
+<span class="nc" id="L39">	public void setFechaFin(Date fechaFin) { this.fechaFin = fechaFin; }</span>
+	
+	@Override
+	public String toString() {
+<span class="fc" id="L43">		return &quot;Materia:&quot;+</span>
+				&quot;\n\tNombre: &quot;+nombre+
+				&quot;\n\tHoras: &quot;+horas+
+				&quot;\n\tFecha inicio: &quot;+fechaInicio+
+				&quot;\n\tFecha fin: &quot;+fechaFin+
+<span class="fc" id="L48">				&quot;\n\tResponsable: &quot;+responsable.getDni();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

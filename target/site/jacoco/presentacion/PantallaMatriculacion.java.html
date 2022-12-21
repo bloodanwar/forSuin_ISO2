@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaMatriculacion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaMatriculacion.java</span></div><h1>PantallaMatriculacion.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JRadioButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import negocio.entities.CursoPropio;
+import negocio.entities.Estudiante;
+import negocio.entities.Matricula;
+import negocio.entities.ModoPago;
+import negocio.entities.ProfesorUCLM;
+
+@Generated
+public class PantallaMatriculacion extends JFrame{
+	
+	JRadioButton rdbtnTran;
+	JRadioButton rdbtnTarj;
+	
+	public PantallaMatriculacion(ProfesorUCLM director, CursoPropio curso) {
+		
+		Estudiante estudiante=new Estudiante(&quot;12457560J&quot;, &quot;Ricardo&quot;, &quot;Balas Bodas&quot; , &quot;Enfermeria&quot;, &quot;Apto&quot;);
+		
+		getContentPane().setLayout(null);
+		
+		initLayout();
+		metodoPago();
+		datosCurso(curso);
+		buttonLayout(curso,estudiante,director);
+	}
+		
+		
+		private void initLayout() {
+			setBounds(10, 10, 800,600);
+			setTitle(&quot;Matriculacion&quot;);
+			setResizable(true);
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
+			setLocationRelativeTo(null);
+			setVisible(true);
+		}
+		
+		private void datosCurso(CursoPropio curso) {  //Texto de display de la info del curso
+		JLabel tituloCurso = 	new JLabel(curso.getNombre());
+		tituloCurso.setHorizontalAlignment(SwingConstants.CENTER);
+		tituloCurso.setBounds(250, 50, 300, 14);
+		getContentPane().add(tituloCurso);
+				
+		JLabel tasaMatricula = new JLabel(&quot;Centro: &quot;+curso.centro.getNombre());
+		tasaMatricula.setBounds(60, 123, 200, 14);
+		getContentPane().add(tasaMatricula);
+			
+		JLabel fechaInicio = new JLabel(&quot;Fecha Inicio: &quot;+curso.getFechaInicio());
+		fechaInicio.setBounds(60, 172, 200, 14);
+		getContentPane().add(fechaInicio);
+		
+		JLabel edicion = new JLabel(&quot;Edicion: &quot;+curso.getEdicion());
+		edicion.setBounds(60, 100, 200, 14);
+		getContentPane().add(edicion);
+		
+		JLabel categoria = new JLabel(&quot;Categoria: &quot;+curso.tipo);
+		categoria.setBounds(60, 147, 200, 14);
+		getContentPane().add(categoria);
+		
+		JLabel fechaFin = new JLabel(&quot;Fecha Fin: &quot;+curso.getFechaFin());
+		fechaFin.setBounds(60, 197, 200, 14);
+		getContentPane().add(fechaFin);
+		
+		JLabel lblNewLabel = new JLabel(&quot;Selecciona tu Metodo de pago&quot;);
+		lblNewLabel.setBounds(500, 100, 150, 14);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel totalAPagar = new JLabel(&quot;Total a pagar: &quot;+curso.getTasaMatricula());
+		totalAPagar.setBounds(500, 196, 200, 14);
+		getContentPane().add(totalAPagar);
+		}
+		
+		private void metodoPago() {
+		//Seleccion del metodo de pago
+			JRadioButton rdbtnTran = new JRadioButton(&quot;Transferencia&quot;);
+			rdbtnTran.setBounds(526, 121, 150, 15);
+			getContentPane().add(rdbtnTran);
+			
+			JRadioButton rdbtnTarj = new JRadioButton(&quot;Tarjeta&quot;);
+			rdbtnTarj.setBounds(526, 139, 90, 15);
+			getContentPane().add(rdbtnTarj);
+	
+			ButtonGroup group = new ButtonGroup();
+			group.add(rdbtnTran);
+			group.add(rdbtnTarj);
+		}
+		
+		private void buttonLayout(final CursoPropio curso, final Estudiante estudiante,final ProfesorUCLM director) {
+			//Botones Atras y Pagar
+			
+			JButton btnPagar = new JButton(&quot;Realizar Pago&quot;);
+<span class="nc" id="L101">			btnPagar.addActionListener(new ActionListener() {</span>
+				@Generated @Override
+				public void actionPerformed(ActionEvent e) {
+					ModoPago metodoPago = null;
+					boolean pagado=false;
+					if(rdbtnTran.isSelected()) {
+						metodoPago=ModoPago.TRANSFERENCIA;
+						pagado=true;
+					}
+					else if(rdbtnTarj.isSelected()) {
+						metodoPago=ModoPago.TARJETA_CREDITO;
+						pagado=true;
+					};
+					Matricula matricula = new Matricula(estudiante,curso);
+				
+					matricula.setPagado(pagado);
+					matricula.setTipoPago(metodoPago);
+				};
+			
+			
+			
+		});
+		btnPagar.setBounds(590, 500, 150, 25);
+		getContentPane().add(btnPagar);
+		
+		JButton btnAtras = new JButton(&quot;Atras&quot;);
+<span class="nc" id="L127">		btnAtras.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaDatosCurso(0, director, curso);
+				setVisible(false);
+			}
+		});
+		btnAtras.setBounds(60, 500, 150, 25);
+		getContentPane().add(btnAtras);
+	}
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -38,6 +38,7 @@ public class Materia {
 	public Date getFechaFin() { return fechaFin; }
 	public void setFechaFin(Date fechaFin) { this.fechaFin = fechaFin; }
 	
+	@Override
 	public String toString() {
 		return "Materia:"+
 				"\n\tNombre: "+nombre+

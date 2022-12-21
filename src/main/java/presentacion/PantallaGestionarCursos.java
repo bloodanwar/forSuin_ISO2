@@ -1,36 +1,24 @@
 package presentacion;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.concurrent.CountDownLatch;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import negocio.controllers.GestorConsultas;
 import negocio.controllers.GestorPropuestasCursos;
-import negocio.entities.Centro;
 import negocio.entities.CursoPropio;
 import negocio.entities.EstadoCurso;
 import negocio.entities.ProfesorUCLM;
 
+@Generated
 public class PantallaGestionarCursos extends JFrame{
 
 	private List<CursoPropio> cursosDao = null;
@@ -61,7 +49,7 @@ public class PantallaGestionarCursos extends JFrame{
 
 		try {
 			cursosDao = gestor.listarCursosPorDirector(director);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -77,7 +65,7 @@ public class PantallaGestionarCursos extends JFrame{
 		}
 
 		cursosTable = new JTable(cursosEnviados){
-			@Override
+			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
 			}
@@ -97,8 +85,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				CursoPropio curso = new CursoPropio(); 
 				new PantallaPropuestaCurso(director, curso, 0);
@@ -113,8 +100,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
@@ -134,8 +120,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
 				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
@@ -155,8 +140,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    
 				
@@ -182,8 +166,7 @@ public class PantallaGestionarCursos extends JFrame{
 		getContentPane().add(button);
 
 		button.addActionListener(new ActionListener() {
-
-			@Override
+			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaDireccionCursos(director);
 				setVisible(false);

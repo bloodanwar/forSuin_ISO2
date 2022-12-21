@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaGestionarCursos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaGestionarCursos.java</span></div><h1>PantallaGestionarCursos.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
+import negocio.controllers.GestorConsultas;
+import negocio.controllers.GestorPropuestasCursos;
+import negocio.entities.CursoPropio;
+import negocio.entities.EstadoCurso;
+import negocio.entities.ProfesorUCLM;
+
+@Generated
+public class PantallaGestionarCursos extends JFrame{
+
+	private List&lt;CursoPropio&gt; cursosDao = null;
+	private DefaultTableModel cursosEnviados = new DefaultTableModel(); 
+	private JTable cursosTable = new JTable();
+
+
+	public PantallaGestionarCursos (ProfesorUCLM director) {
+		initLayout();
+		listLayout(director);
+		botonesLayout(director);
+	}
+
+	private void initLayout() {
+		// Propiedades basicas
+		getContentPane().setLayout(null);
+		setBounds(10, 10, 800,600);
+		setTitle(&quot;Gestion de cursos propuestos&quot;);
+		setResizable(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
+
+	}
+
+	private void listLayout(ProfesorUCLM director) {
+		GestorConsultas gestor = new GestorConsultas();
+
+		try {
+			cursosDao = gestor.listarCursosPorDirector(director);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		cursosEnviados.addColumn(&quot;Nombre&quot;);
+		cursosEnviados.addColumn(&quot;Edicion&quot;);
+		cursosEnviados.addColumn(&quot;Estado&quot;);
+
+		if(cursosDao != null) {	
+			for(int i = 0; i&lt;cursosDao.size(); i++) {
+				CursoPropio cursoTemp = cursosDao.get(i);
+				cursosEnviados.insertRow(i, new Object[] { cursoTemp.getNombre(), cursoTemp.getEdicion(), cursoTemp.estado });
+			}
+		}
+
+<span class="nc" id="L67">		cursosTable = new JTable(cursosEnviados){</span>
+			@Generated @Override
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; //Disallow the editing of any cell
+			}
+		};
+
+		cursosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		JScrollPane scrollLista = new JScrollPane(cursosTable);
+		scrollLista.setBounds(199, 113, 400, 200);
+		getContentPane().add(scrollLista);
+	}
+
+	private void botonesLayout(final ProfesorUCLM director) {
+		// Boton para realizar propuesta de curso
+		JButton button = new JButton(&quot;Realizar propuesta&quot;);
+		button.setBounds(195,324,200,30);
+		getContentPane().add(button);
+
+<span class="nc" id="L87">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				CursoPropio curso = new CursoPropio(); 
+				new PantallaPropuestaCurso(director, curso, 0);
+				setVisible(false);
+			}
+
+		});
+
+		// Boton para nueva edicion de curso
+		button = new JButton(&quot;Nueva edición&quot;);
+		button.setBounds(405,324,200,30);
+		getContentPane().add(button);
+
+<span class="nc" id="L102">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
+				if(curso.estado == EstadoCurso.TERMINADO) {
+					new PantallaPropuestaCurso(director, curso, 2);
+					setVisible(false);
+				}
+				
+			}
+
+
+		});
+
+		// Boton para editar propuesta de curso
+		button = new JButton(&quot;Editar&quot;);
+		button.setBounds(195,365,200,30);
+		getContentPane().add(button);
+
+<span class="nc" id="L122">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;
+				CursoPropio curso = cursosDao.get(cursosTable.getSelectedRow());
+				
+				if(curso.estado == EstadoCurso.PROPUESTO || curso.estado == EstadoCurso.PROPUESTA_RECHAZADA) {
+					new PantallaPropuestaCurso(director, curso, 1);
+					setVisible(false);
+				}
+				
+			}
+
+		});
+
+		// Boton para eliminar propuesta de curso
+		button = new JButton(&quot;Eliminar&quot;);
+		button.setBounds(405,365,200,30);
+		getContentPane().add(button);
+
+<span class="nc" id="L142">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				if(cursosTable.getSelectionModel().isSelectionEmpty()) return;    
+				
+				int confirm = JOptionPane.showConfirmDialog(null,&quot;¿Eliminar propuesta de curso?&quot;,&quot;Eliminar propuesta de curso&quot;,JOptionPane.YES_NO_OPTION, 1);
+				
+				if (confirm == 0) {
+					GestorPropuestasCursos gestor = new GestorPropuestasCursos();
+					try {
+						gestor.eliminarPropuestaCurso(cursosDao.get(cursosTable.getSelectedRow()));
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					cursosEnviados.removeRow(cursosTable.getSelectedRow());
+				}
+			}
+
+		});
+
+
+		// Boton para ir atras
+		button = new JButton(&quot;Atras&quot;);
+		button.setBounds(10,520,200,30);
+		getContentPane().add(button);
+
+<span class="nc" id="L168">		button.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaDireccionCursos(director);
+				setVisible(false);
+			}
+
+		});
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

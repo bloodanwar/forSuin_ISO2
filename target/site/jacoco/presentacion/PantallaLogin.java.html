@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PantallaLogin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Gestor_titulos_propios</a> &gt; <a href="index.source.html" class="el_package">presentacion</a> &gt; <span class="el_source">PantallaLogin.java</span></div><h1>PantallaLogin.java</h1><pre class="source lang-java linenums">package presentacion;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import negocio.entities.ProfesorUCLM;
+
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+@Generated
+public class PantallaLogin {
+
+	private JFrame frame;
+	private JTextField textField;
+	private final JButton entrar = new JButton(&quot;Entrar&quot;);
+	private JButton cerrar;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L28">		EventQueue.invokeLater(new Runnable() {</span>
+			@Generated
+			public void run() {
+				try {
+					PantallaLogin window = new PantallaLogin();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public PantallaLogin() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(10, 10, 800, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
+		
+		textField = new JTextField(&quot;23568907X&quot;);
+		textField.setBounds(326, 90, 160, 20);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel(&quot;DNI:&quot;);
+		lblNewLabel.setBounds(292, 93, 22, 14);
+		lblNewLabel.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblbienvenido = new JLabel(&quot;¡Bienvenido!&quot;);
+		lblbienvenido.setBounds(378, 70, 60, 14);
+		lblbienvenido.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));
+		frame.getContentPane().add(lblbienvenido);
+		entrar.setBounds(326, 131, 160, 23);
+		
+<span class="nc" id="L75">		entrar.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				ProfesorUCLM director = new ProfesorUCLM(textField.getText());
+				new PantallaDireccionCursos(director);
+				frame.setVisible(false);
+			}
+		});
+		
+		frame.getContentPane().add(entrar);
+		
+		cerrar = new JButton(&quot;Cerrar Programa&quot;);
+		cerrar.setBounds(326, 165, 160, 23);
+		frame.getContentPane().add(cerrar);
+		
+		JButton profesor = new JButton(&quot;Profesor&quot;);
+<span class="nc" id="L91">		profesor.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				ProfesorUCLM director = new ProfesorUCLM(&quot;23568907X&quot;);
+				new PantallaDireccionCursos(director);
+				frame.setVisible(false);
+			}
+		});
+		
+		profesor.setBounds(231, 338, 160, 23);
+		frame.getContentPane().add(profesor);
+		
+		JButton pesonal = new JButton(&quot;Empleados Vicerrectorado&quot;);
+<span class="nc" id="L104">		pesonal.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaEmpleadosVicerrectorado();
+				frame.setVisible(false);
+			}
+		});
+		pesonal.setBounds(418, 304, 160, 23);
+		frame.getContentPane().add(pesonal);
+		
+		JLabel lblBotonesPrototipo = new JLabel(&quot;Botones Prototipo&quot;);
+		lblBotonesPrototipo.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));
+		lblBotonesPrototipo.setBounds(356, 279, 91, 14);
+		frame.getContentPane().add(lblBotonesPrototipo);
+		
+		JButton alumno = new JButton(&quot;Alumno&quot;);
+<span class="nc" id="L120">		alumno.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaAlumno();
+				frame.setVisible(false);
+			}
+		});
+		alumno.setBounds(231, 304, 160, 23);
+		frame.getContentPane().add(alumno);
+		
+		JButton jefeGabinete = new JButton(&quot;Jefe Gabinete&quot;);
+		jefeGabinete.setBounds(418, 338, 160, 23);
+		frame.getContentPane().add(jefeGabinete);
+		
+<span class="nc" id="L134">		cerrar.addActionListener(new ActionListener() {</span>
+			@Generated @Override
+			public void actionPerformed(ActionEvent e) {
+				 System.exit(0);
+			}
+		});
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
