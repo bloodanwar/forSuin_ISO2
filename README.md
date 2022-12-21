@@ -29,5 +29,3 @@
 ## Extras:
 - [UML](extras/TitulosPropiosUCLM2022_v2.vpp)
 - [SQL para nuestra base de datos](extras/forsuin.sql)
-
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=forSuin-ISOII_forSuin_ISO2)](https://sonarcloud.io/summary/new_code?id=forSuin-ISOII_forSuin_ISO2)
