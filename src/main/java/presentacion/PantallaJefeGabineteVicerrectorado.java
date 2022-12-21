@@ -12,8 +12,8 @@ import java.awt.event.ActionEvent;
 @Generated
 public class PantallaJefeGabineteVicerrectorado extends JFrame {
 
-	private JPanel contentPane;
-
+	private JFrame frame;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -22,8 +22,8 @@ public class PantallaJefeGabineteVicerrectorado extends JFrame {
 			@Generated
 			public void run() {
 				try {
-					PantallaJefeGabineteVicerrectorado frame = new PantallaJefeGabineteVicerrectorado();
-					frame.setVisible(true);
+					PantallaJefeGabineteVicerrectorado window = new PantallaJefeGabineteVicerrectorado();
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,32 +35,40 @@ public class PantallaJefeGabineteVicerrectorado extends JFrame {
 	 * Create the frame.
 	 */
 	public PantallaJefeGabineteVicerrectorado() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 672, 459);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		frame = new JFrame();
+		frame.setBounds(10, 10, 800, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		
 		JButton btnAprobar_cursos = new JButton("Aprobar Cursos");
 		btnAprobar_cursos.addActionListener(new ActionListener() {
 			@Generated @Override
             public void actionPerformed(ActionEvent e) {
-            	new PantallaLogin();
+            	new PantallaJefeVicerrectoradoAprobar();
                 setVisible(false);
             }
 		});
 		
 		btnAprobar_cursos.setBounds(76, 223, 174, 19);
-		contentPane.add(btnAprobar_cursos);
+		frame.getContentPane().add(btnAprobar_cursos);
 		
 		JButton btnRealizar_consulta_cursos = new JButton("Realizar consulta cursos");
 		btnRealizar_consulta_cursos.setBounds(404, 223, 199, 19);
-		contentPane.add(btnRealizar_consulta_cursos);
+		frame.getContentPane().add(btnRealizar_consulta_cursos);
 		
 		JButton btnCerrar_sesion = new JButton("Cerrar sesión");
 		btnCerrar_sesion.setBounds(297, 395, 87, 19);
-		contentPane.add(btnCerrar_sesion);
+		frame.getContentPane().add(btnCerrar_sesion);
+		
+		btnCerrar_sesion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaLogin();
+				frame.setVisible(false);
+			}
+		});
 	}
 }

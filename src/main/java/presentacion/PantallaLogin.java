@@ -30,7 +30,6 @@ public class PantallaLogin {
 			public void run() {
 				try {
 					PantallaLogin window = new PantallaLogin();
-					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,13 +41,6 @@ public class PantallaLogin {
 	 * Create the application.
 	 */
 	public PantallaLogin() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(10, 10, 800, 600);
 		frame.setLocationRelativeTo(null);
@@ -130,6 +122,15 @@ public class PantallaLogin {
 		JButton jefeGabinete = new JButton("Jefe Gabinete");
 		jefeGabinete.setBounds(418, 338, 160, 23);
 		frame.getContentPane().add(jefeGabinete);
+		
+		jefeGabinete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PantallaJefeGabineteVicerrectorado();
+				frame.setVisible(false);
+			}
+		});
 		
 		cerrar.addActionListener(new ActionListener() {
 			@Generated @Override
