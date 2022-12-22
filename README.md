@@ -11,7 +11,11 @@
 - Carlos Rincón González (*Desarrollador*)
 
 ## Memoria del proyecto:
-[forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](extras/forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
+### Parte 1 de la memoria:
+[forSuin(Parte1)_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](extras/forSuin(Parte1)_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
+
+### Parte 2 de la memoria:
+[forSuin(Parte2)_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](extras/forSuin(Parte2)_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
 
 ### Tablas de las pruebas:
 https://docs.google.com/spreadsheets/d/1FG3XACQhAKrVoBJqentbW4dV6VVOkwqE_Lmp_fjrzSo/edit?usp=sharing
