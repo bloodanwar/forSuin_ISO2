@@ -3,8 +3,6 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -12,18 +10,18 @@ import java.awt.event.ActionEvent;
 @Generated
 public class PantallaJefeGabineteVicerrectorado extends JFrame {
 
-	private JPanel contentPane;
-
+	private JFrame frame;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-<span class="nc" id="L21">		EventQueue.invokeLater(new Runnable() {</span>
+<span class="nc" id="L19">		EventQueue.invokeLater(new Runnable() {</span>
 			@Generated
 			public void run() {
 				try {
-					PantallaJefeGabineteVicerrectorado frame = new PantallaJefeGabineteVicerrectorado();
-					frame.setVisible(true);
+					PantallaJefeGabineteVicerrectorado window = new PantallaJefeGabineteVicerrectorado();
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,33 +33,41 @@ public class PantallaJefeGabineteVicerrectorado extends JFrame {
 	 * Create the frame.
 	 */
 	public PantallaJefeGabineteVicerrectorado() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 672, 459);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		frame = new JFrame();
+		frame.setBounds(10, 10, 800, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		
 		JButton btnAprobar_cursos = new JButton(&quot;Aprobar Cursos&quot;);
-<span class="nc" id="L47">		btnAprobar_cursos.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L44">		btnAprobar_cursos.addActionListener(new ActionListener() {</span>
 			@Generated @Override
             public void actionPerformed(ActionEvent e) {
-            	new PantallaLogin();
+            	new PantallaJefeVicerrectoradoAprobar();
                 setVisible(false);
             }
 		});
 		
 		btnAprobar_cursos.setBounds(76, 223, 174, 19);
-		contentPane.add(btnAprobar_cursos);
+		frame.getContentPane().add(btnAprobar_cursos);
 		
 		JButton btnRealizar_consulta_cursos = new JButton(&quot;Realizar consulta cursos&quot;);
 		btnRealizar_consulta_cursos.setBounds(404, 223, 199, 19);
-		contentPane.add(btnRealizar_consulta_cursos);
+		frame.getContentPane().add(btnRealizar_consulta_cursos);
 		
 		JButton btnCerrar_sesion = new JButton(&quot;Cerrar sesión&quot;);
 		btnCerrar_sesion.setBounds(297, 395, 87, 19);
-		contentPane.add(btnCerrar_sesion);
+		frame.getContentPane().add(btnCerrar_sesion);
+		
+<span class="nc" id="L63">		btnCerrar_sesion.addActionListener(new ActionListener() {</span>
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L67">				new PantallaLogin();</span>
+<span class="nc" id="L68">				frame.setVisible(false);</span>
+<span class="nc" id="L69">			}</span>
+		});
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

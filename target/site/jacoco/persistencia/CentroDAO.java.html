@@ -36,44 +36,40 @@ import negocio.entities.*;
 <span class="fc" id="L36">		String localizacion= (String) datosCentro.get(1);</span>
 <span class="fc" id="L37">		int atributo = (Integer) datosCentro.get(2);</span>
 		
-<span class="fc" id="L39">		Centro centroDevolver = new Centro(nombre, localizacion, atributo);</span>
-		
-		//faltaria obtener la plantilla, y los cursos
-
-<span class="fc" id="L43">		return centroDevolver;</span>
+<span class="fc" id="L39">		return new Centro(nombre, localizacion, atributo);</span>
 	}
 
 	public int editarCentro(Centro centro) throws SQLException{
-<span class="fc" id="L47">		Date fechaActualizacion = new Date();</span>
+<span class="fc" id="L43">		Date fechaActualizacion = new Date();</span>
 
-<span class="fc" id="L49">		return GestorBD.getInstancia().update(&quot;UPDATE centro SET &quot;</span>
-<span class="fc" id="L50">				+ &quot;nombre='&quot; + centro.getNombre() + &quot;', &quot;</span>
-<span class="fc" id="L51">				+ &quot;localizacion='&quot; + centro.getLocalizacion() + &quot;', &quot;</span>
-<span class="fc" id="L52">				+ &quot;atributo=&quot; + centro.getAtributo() + &quot;, &quot;</span>
-<span class="fc" id="L53">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
-<span class="fc" id="L54">				+ &quot;' WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
+<span class="fc" id="L45">		return GestorBD.getInstancia().update(&quot;UPDATE centro SET &quot;</span>
+<span class="fc" id="L46">				+ &quot;nombre='&quot; + centro.getNombre() + &quot;', &quot;</span>
+<span class="fc" id="L47">				+ &quot;localizacion='&quot; + centro.getLocalizacion() + &quot;', &quot;</span>
+<span class="fc" id="L48">				+ &quot;atributo=&quot; + centro.getAtributo() + &quot;, &quot;</span>
+<span class="fc" id="L49">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="fc" id="L50">				+ &quot;' WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
 	}
 
 	public int eliminarCentro(Centro centro) throws SQLException {
-<span class="fc" id="L58">		return GestorBD.getInstancia().delete(&quot;DELETE FROM centro WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
+<span class="fc" id="L54">		return GestorBD.getInstancia().delete(&quot;DELETE FROM centro WHERE nombre='&quot;+centro.getNombre()+&quot;'&quot;);</span>
 	}
 	
 	public List&lt;Centro&gt; listarCentros() throws SQLException {
-<span class="fc" id="L62">		Vector listaCursosDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM centro&quot;);</span>
+<span class="fc" id="L58">		Vector listaCursosDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM centro&quot;);</span>
 		
-<span class="fc" id="L64">		List&lt;Centro&gt; centros = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">		List&lt;Centro&gt; centros = new ArrayList&lt;&gt;();</span>
 		
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int i=0; i&lt;listaCursosDatos.size(); i++) {</span>
-<span class="fc" id="L67">			Vector lCursosDatosTemp = (Vector) listaCursosDatos.get(i);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (int i=0; i&lt;listaCursosDatos.size(); i++) {</span>
+<span class="fc" id="L63">			Vector lCursosDatosTemp = (Vector) listaCursosDatos.get(i);</span>
 
-<span class="fc" id="L69">			String nombre = (String) lCursosDatosTemp.get(0);</span>
-<span class="fc" id="L70">			String localizacion = (String) lCursosDatosTemp.get(1);</span>
-<span class="fc" id="L71">			int atributo = (Integer) lCursosDatosTemp.get(2);</span>
+<span class="fc" id="L65">			String nombre = (String) lCursosDatosTemp.get(0);</span>
+<span class="fc" id="L66">			String localizacion = (String) lCursosDatosTemp.get(1);</span>
+<span class="fc" id="L67">			int atributo = (Integer) lCursosDatosTemp.get(2);</span>
 			
-<span class="fc" id="L73">			centros.add(new Centro(nombre, localizacion, atributo));</span>
+<span class="fc" id="L69">			centros.add(new Centro(nombre, localizacion, atributo));</span>
 		}
 		
-<span class="fc" id="L76">		return centros;</span>
+<span class="fc" id="L72">		return centros;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

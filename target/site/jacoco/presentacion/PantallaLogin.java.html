@@ -30,7 +30,6 @@ public class PantallaLogin {
 			public void run() {
 				try {
 					PantallaLogin window = new PantallaLogin();
-					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,13 +41,6 @@ public class PantallaLogin {
 	 * Create the application.
 	 */
 	public PantallaLogin() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(10, 10, 800, 600);
 		frame.setLocationRelativeTo(null);
@@ -72,7 +64,7 @@ public class PantallaLogin {
 		frame.getContentPane().add(lblbienvenido);
 		entrar.setBounds(326, 131, 160, 23);
 		
-<span class="nc" id="L75">		entrar.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L67">		entrar.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM(textField.getText());
@@ -88,7 +80,7 @@ public class PantallaLogin {
 		frame.getContentPane().add(cerrar);
 		
 		JButton profesor = new JButton(&quot;Profesor&quot;);
-<span class="nc" id="L91">		profesor.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L83">		profesor.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				ProfesorUCLM director = new ProfesorUCLM(&quot;23568907X&quot;);
@@ -101,7 +93,7 @@ public class PantallaLogin {
 		frame.getContentPane().add(profesor);
 		
 		JButton pesonal = new JButton(&quot;Empleados Vicerrectorado&quot;);
-<span class="nc" id="L104">		pesonal.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L96">		pesonal.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaEmpleadosVicerrectorado();
@@ -117,7 +109,7 @@ public class PantallaLogin {
 		frame.getContentPane().add(lblBotonesPrototipo);
 		
 		JButton alumno = new JButton(&quot;Alumno&quot;);
-<span class="nc" id="L120">		alumno.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L112">		alumno.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				new PantallaAlumno();
@@ -131,7 +123,16 @@ public class PantallaLogin {
 		jefeGabinete.setBounds(418, 338, 160, 23);
 		frame.getContentPane().add(jefeGabinete);
 		
-<span class="nc" id="L134">		cerrar.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L126">		jefeGabinete.addActionListener(new ActionListener() {</span>
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L130">				new PantallaJefeGabineteVicerrectorado();</span>
+<span class="nc" id="L131">				frame.setVisible(false);</span>
+<span class="nc" id="L132">			}</span>
+		});
+		
+<span class="nc" id="L135">		cerrar.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				 System.exit(0);

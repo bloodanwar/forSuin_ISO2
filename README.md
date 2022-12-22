@@ -13,8 +13,8 @@
 ## Memoria del proyecto:
 [forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf](extras/forSuin_GestióndeTitulosPropios_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález.pdf)
 
-## Pruebas:
-[forSuin_GestióndeTitulosPropios_Pruebas_MiriamFernándezOsuna_SergioGarcíaMuñoz_RubénGómezVillegas_CarlosRincónGonzález](https://docs.google.com/spreadsheets/d/1FG3XACQhAKrVoBJqentbW4dV6VVOkwqE_Lmp_fjrzSo/edit#gid=0)
+### Tablas de las pruebas:
+https://docs.google.com/spreadsheets/d/1FG3XACQhAKrVoBJqentbW4dV6VVOkwqE_Lmp_fjrzSo/edit?usp=sharing
 
 ## Informe:
 [https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html](https://forsuin-isoii.github.io/forSuin_ISO2/target/site/index.html)

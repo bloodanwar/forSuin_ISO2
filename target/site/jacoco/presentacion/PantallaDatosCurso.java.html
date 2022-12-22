@@ -37,7 +37,6 @@ public class PantallaDatosCurso extends JFrame {
 		basicLayout(type, director, curso);
 		tablaMaterias(curso);
 
-		//if (type == 0)	matricularCurso(); // TODO - matricular alumno en la misma pantalla
 		if (type == 2)	evaluarCurso();
 
 		botonesLayout(type, director, curso);
@@ -114,7 +113,7 @@ public class PantallaDatosCurso extends JFrame {
 		group.add(aceptarPropuesta);
 		group.add(rechazarPropuesta);
 
-<span class="nc" id="L117">		aceptarPropuesta.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L116">		aceptarPropuesta.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				descripcion.setEnabled(false);
@@ -123,7 +122,7 @@ public class PantallaDatosCurso extends JFrame {
 			}
 		});
 
-<span class="nc" id="L126">		rechazarPropuesta.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L125">		rechazarPropuesta.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				descripcion.setEnabled(true);
@@ -149,7 +148,7 @@ public class PantallaDatosCurso extends JFrame {
 		}
 
 
-<span class="nc" id="L152">		JTable materiasTable = new JTable(materiasCurso){</span>
+<span class="nc" id="L151">		JTable materiasTable = new JTable(materiasCurso){</span>
 			@Generated @Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; //Disallow the editing of any cell
@@ -165,7 +164,7 @@ public class PantallaDatosCurso extends JFrame {
 
 	private void botonesLayout(final int type, final ProfesorUCLM director, final CursoPropio curso) {
 		JButton btnNewButton = new JButton(&quot;Atras&quot;);
-<span class="nc" id="L168">		btnNewButton.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L167">		btnNewButton.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				if (type == 0 || type == 1) new PantallaCursosAprobados(type, director);
@@ -177,7 +176,7 @@ public class PantallaDatosCurso extends JFrame {
 		getContentPane().add(btnNewButton);
 
 		JButton btnMatricularEvaluar = new JButton(&quot;Matricular&quot;);
-<span class="nc" id="L180">		btnMatricularEvaluar.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L179">		btnMatricularEvaluar.addActionListener(new ActionListener() {</span>
 			@Generated @Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -190,7 +189,7 @@ public class PantallaDatosCurso extends JFrame {
 				}
 				
 				if(confirm == 0)  {
-					if (type == 0) { // TODO -- matricular
+					if (type == 0) {
 						new PantallaMatriculacion(director, curso); //aqui hay que meter alumno
 		                setVisible(false);
 					}	

@@ -15,7 +15,7 @@ public class CursoPropio {
 	public CursoPropioDAO cursoPropioDao;
 	private String id;
 	private String nombre;
-	private int ECTS;
+	private int eCTS;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private double tasaMatricula;
@@ -36,7 +36,7 @@ public class CursoPropio {
 <span class="fc" id="L36">		cursoPropioDao = new CursoPropioDAO();</span>
 <span class="fc" id="L37">		this.id = id;</span>
 <span class="fc" id="L38">		this.nombre = nombre;</span>
-<span class="fc" id="L39">		this.ECTS = eCTS;</span>
+<span class="fc" id="L39">		this.eCTS = eCTS;</span>
 <span class="fc" id="L40">		this.fechaInicio = fechaInicio;</span>
 <span class="fc" id="L41">		this.fechaFin = fechaFin;</span>
 <span class="fc" id="L42">		this.tasaMatricula = tasaMatricula;</span>
@@ -57,13 +57,13 @@ public class CursoPropio {
 		}
 		**/
 <span class="nc" id="L59">		return &quot;Curso:&quot;</span>
-				+&quot;\n\tId: &quot;+id
-				+&quot;\n\tNombre: &quot;+nombre
-				+&quot;\n\tECTS: &quot;+ECTS
+<span class="nc" id="L60">				+&quot;\n\tId: &quot;+id</span>
+<span class="nc" id="L61">				+&quot;\n\tNombre: &quot;+nombre</span>
+<span class="nc" id="L62">				+&quot;\n\tECTS: &quot;+eCTS</span>
 <span class="nc" id="L63">				+&quot;\n\tfechaInicio: &quot;+fechaInicio.toString()</span>
 <span class="nc" id="L64">				+&quot;\n\tfechaFin: &quot;+fechaFin.toString()</span>
-				+&quot;\n\ttasaMatricula: &quot;+tasaMatricula
-				+&quot;\n\tEdición: &quot;+edicion
+<span class="nc" id="L65">				+&quot;\n\ttasaMatricula: &quot;+tasaMatricula</span>
+<span class="nc" id="L66">				+&quot;\n\tEdición: &quot;+edicion</span>
 <span class="nc" id="L67">				+&quot;\n\tEstado:&quot;+estado.toString()</span>
 <span class="nc" id="L68">				+&quot;\n\tTipo: &quot;+tipo.toString()</span>
 <span class="nc" id="L69">				+&quot;\n\tCentro: &quot;+centro.getNombre()</span>
@@ -101,8 +101,8 @@ public class CursoPropio {
 	
 	@Override
 	public int hashCode() {
-<span class="nc" id="L104">		return Objects.hash(id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos,</span>
-				matriculas, materias);
+<span class="nc" id="L104">		return Objects.hash(id, nombre, eCTS, fechaInicio, fechaFin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos,</span>
+<span class="nc" id="L105">				matriculas, materias);</span>
 	}
 	
 <span class="fc" id="L108">	public String getId() { return id; }</span>
@@ -111,8 +111,8 @@ public class CursoPropio {
 <span class="fc" id="L111">	public String getNombre() { return nombre; }</span>
 <span class="nc" id="L112">	public void setNombre(String nombre) { this.nombre = nombre; }</span>
 	
-<span class="fc" id="L114">	public int getECTS() { return ECTS; }</span>
-<span class="nc" id="L115">	public void setECTS(int eCTS) { ECTS = eCTS; }</span>
+<span class="fc" id="L114">	public int getECTS() { return eCTS; }</span>
+<span class="nc" id="L115">	public void setECTS(int eCTS) { this.eCTS = eCTS; }</span>
 	
 <span class="fc" id="L117">	public Date getFechaInicio() { return fechaInicio; }</span>
 <span class="fc" id="L118">	public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }</span>

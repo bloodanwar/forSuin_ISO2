@@ -30,7 +30,7 @@ public class GestorBD {
 <span class="fc" id="L30">		Driver derbyEmbeddedDriver = new EmbeddedDriver();</span>
 <span class="fc" id="L31">		DriverManager.registerDriver(derbyEmbeddedDriver);</span>
 <span class="fc" id="L32">		mBD = DriverManager.getConnection(&quot;&quot; + BDConstantes.DRIVER + &quot;:&quot; + BDConstantes.DBNAME + &quot;;create=false&quot;,</span>
-				BDConstantes.DBUSER, BDConstantes.DBPASS);
+<span class="fc" id="L33">				BDConstantes.DBUSER, BDConstantes.DBPASS);</span>
 <span class="fc" id="L34">		return this;</span>
 	}
 
@@ -42,60 +42,53 @@ public class GestorBD {
 	public Vector&lt;Object&gt; select(String sql) throws SQLException {
 		/* Metodo para realizar una busqueda o seleccion de informacion en la base de datos.
 		 * Develve un vector de vectores, donde cada uno de los vectores que contiene el vector principal representa los registros que se recuperan de la base de datos. */
-<span class="fc" id="L45">		System.out.println(sql);</span>
 
-<span class="fc" id="L47">		Vector&lt;Object&gt; vectoradevolver = new Vector&lt;Object&gt;();</span>
-<span class="fc" id="L48">		Statement stmt = mBD.createStatement();</span>
-<span class="fc" id="L49">		ResultSet res = stmt.executeQuery(sql);</span>
-<span class="fc" id="L50">		int nColumnas = res.getMetaData().getColumnCount();</span>
+<span class="fc" id="L46">		Vector&lt;Object&gt; vectoradevolver = new Vector&lt;Object&gt;();</span>
+<span class="fc" id="L47">		Statement stmt = mBD.createStatement();</span>
+<span class="fc" id="L48">		ResultSet res = stmt.executeQuery(sql);</span>
+<span class="fc" id="L49">		int nColumnas = res.getMetaData().getColumnCount();</span>
 		
-<span class="fc bfc" id="L52" title="All 2 branches covered.">		while (res.next()) {</span>
-<span class="fc" id="L53">			Vector&lt;Object&gt; v = new Vector&lt;Object&gt;();</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">			for (int i=1; i&lt;nColumnas+1; i++)</span>
-<span class="fc" id="L55">				v.add(res.getObject(i));</span>
-<span class="fc" id="L56">			vectoradevolver.add(v);</span>
-<span class="fc" id="L57">		}</span>
-<span class="fc" id="L58">		stmt.close();</span>
-<span class="fc" id="L59">		desconectarBD();</span>
-<span class="fc" id="L60">		return vectoradevolver;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		while (res.next()) {</span>
+<span class="fc" id="L52">			Vector&lt;Object&gt; v = new Vector&lt;Object&gt;();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			for (int i=1; i&lt;nColumnas+1; i++)</span>
+<span class="fc" id="L54">				v.add(res.getObject(i));</span>
+<span class="fc" id="L55">			vectoradevolver.add(v);</span>
+		}
+<span class="fc" id="L57">		stmt.close();</span>
+<span class="fc" id="L58">		desconectarBD();</span>
+<span class="fc" id="L59">		return vectoradevolver;</span>
 	}
 
 	public int insert(String sql) throws SQLException {
-<span class="fc" id="L64">		return executeInsertUpdateDelete(sql);</span>
+<span class="fc" id="L63">		return executeInsertUpdateDelete(sql);</span>
 	}
 
 	public int update(String sql) throws SQLException {
-<span class="fc" id="L68">		return executeInsertUpdateDelete(sql);	</span>
+<span class="fc" id="L67">		return executeInsertUpdateDelete(sql);	</span>
 	}
 
 	public int delete(String sql) throws SQLException {
-<span class="fc" id="L72">		return executeInsertUpdateDelete(sql);</span>
+<span class="fc" id="L71">		return executeInsertUpdateDelete(sql);</span>
 	}
 	
 	public int executeInsertUpdateDelete(String sql) throws SQLException {
-<span class="fc" id="L76">		System.out.println(sql);</span>
-<span class="fc" id="L77">		PreparedStatement stmt = mBD.prepareStatement(sql);</span>
-<span class="fc" id="L78">    	int res=stmt.executeUpdate();</span>
-<span class="fc" id="L79">    	stmt.close();</span>
-<span class="fc" id="L80">    	desconectarBD();</span>
-<span class="fc" id="L81">		return res;  </span>
+<span class="fc" id="L75">		PreparedStatement stmt = mBD.prepareStatement(sql);</span>
+<span class="fc" id="L76">    	int res=stmt.executeUpdate();</span>
+<span class="fc" id="L77">    	stmt.close();</span>
+<span class="fc" id="L78">    	desconectarBD();</span>
+<span class="fc" id="L79">		return res;  </span>
 	}
 
-	public void operation() {
-		// TODO - implement GestorBD.operation
-<span class="nc" id="L86">		throw new UnsupportedOperationException();</span>
-	}
-
-	// TODO BORRAR FUNCIÓN
+	
 	public static void crearBaseDeDatos() throws Exception {
 		try {
-<span class="nc" id="L92">		    Connection connection = DriverManager.getConnection(BDConstantes.CONNECTION_STRING, BDConstantes.DBUSER, BDConstantes.DBPASS);</span>
-<span class="nc" id="L93">		    System.out.println(&quot;New derby database created&quot;);</span>
+<span class="nc" id="L85">		    Connection connection = DriverManager.getConnection(BDConstantes.CONNECTION_STRING, BDConstantes.DBUSER, BDConstantes.DBPASS);</span>
+<span class="nc" id="L86">		    System.out.println(&quot;New derby database created&quot;);</span>
 
-<span class="nc" id="L95">	    } catch (SQLException e) {</span>
-<span class="nc" id="L96">	        e.printStackTrace();</span>
-<span class="nc" id="L97">	    }</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L88">	    } catch (SQLException e) {</span>
+<span class="nc" id="L89">	        e.printStackTrace();</span>
+	    }
+<span class="nc" id="L91">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -2,7 +2,6 @@
 
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -12,339 +11,336 @@ import java.util.ArrayList;
 import negocio.entities.*;
 import negocio.controllers.CursoException.*;
 
-<span class="fc" id="L15">public class CursoPropioDAO {</span>
+<span class="fc" id="L14">public class CursoPropioDAO {</span>
 
-<span class="fc" id="L17">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+<span class="fc" id="L16">	private DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
 	
 	public int crearNuevoCurso(CursoPropio curso) throws SQLException {
-<span class="fc" id="L20">		Date fechaCreacion =  new Date();</span>
-<span class="fc" id="L21">		Date fechaActualizacion = fechaCreacion;</span>
+<span class="fc" id="L19">		Date fechaCreacion =  new Date();</span>
+<span class="fc" id="L20">		Date fechaActualizacion = fechaCreacion;</span>
 
-<span class="fc" id="L23">		int contador = 0;</span>
+<span class="fc" id="L22">		int contador = 0;</span>
 		
-<span class="fc" id="L25">		contador += GestorBD.getInstancia().insert(&quot;INSERT INTO cursoPropio (id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estadoCurso, tipoCurso, centro_nombre, secretario_Profesor_DNI, director_Profesor_DNI, requisitos, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
-<span class="fc" id="L26">				+ curso.getId()+&quot;', '&quot;</span>
-<span class="fc" id="L27">				+ curso.getNombre()+&quot;', &quot;</span>
-<span class="fc" id="L28">				+ curso.getECTS()+&quot;, '&quot;</span>
-<span class="fc" id="L29">				+ dateFormat.format(curso.getFechaInicio())+&quot;', '&quot;</span>
-<span class="fc" id="L30">				+ dateFormat.format(curso.getFechaFin())+&quot;', &quot;</span>
-<span class="fc" id="L31">				+ curso.getTasaMatricula()+&quot;, &quot;</span>
-<span class="fc" id="L32">				+ curso.getEdicion()+&quot;, '&quot;</span>
-<span class="fc" id="L33">				+ curso.estado.toString()+&quot;', '&quot;</span>
-<span class="fc" id="L34">				+ curso.tipo.toString()+&quot;', '&quot;</span>
-<span class="fc" id="L35">				+ curso.centro.getNombre()+&quot;', '&quot;</span>
-<span class="fc" id="L36">				+ curso.secretario.getDni()+&quot;', '&quot;</span>
-<span class="fc" id="L37">				+ curso.director.getDni()+&quot;', '&quot;</span>
-				+ curso.requisitos+&quot;', '&quot;
-<span class="fc" id="L39">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
-<span class="fc" id="L40">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
+<span class="fc" id="L24">		contador += GestorBD.getInstancia().insert(&quot;INSERT INTO cursoPropio (id, nombre, ECTS, fechaInicio, fechaFin, tasaMatricula, edicion, estadoCurso, tipoCurso, centro_nombre, secretario_Profesor_DNI, director_Profesor_DNI, requisitos, fechaCreacion, fechaActualizacion) VALUES ('&quot;</span>
+<span class="fc" id="L25">				+ curso.getId()+&quot;', '&quot;</span>
+<span class="fc" id="L26">				+ curso.getNombre()+&quot;', &quot;</span>
+<span class="fc" id="L27">				+ curso.getECTS()+&quot;, '&quot;</span>
+<span class="fc" id="L28">				+ dateFormat.format(curso.getFechaInicio())+&quot;', '&quot;</span>
+<span class="fc" id="L29">				+ dateFormat.format(curso.getFechaFin())+&quot;', &quot;</span>
+<span class="fc" id="L30">				+ curso.getTasaMatricula()+&quot;, &quot;</span>
+<span class="fc" id="L31">				+ curso.getEdicion()+&quot;, '&quot;</span>
+<span class="fc" id="L32">				+ curso.estado.toString()+&quot;', '&quot;</span>
+<span class="fc" id="L33">				+ curso.tipo.toString()+&quot;', '&quot;</span>
+<span class="fc" id="L34">				+ curso.centro.getNombre()+&quot;', '&quot;</span>
+<span class="fc" id="L35">				+ curso.secretario.getDni()+&quot;', '&quot;</span>
+<span class="fc" id="L36">				+ curso.director.getDni()+&quot;', '&quot;</span>
+<span class="fc" id="L37">				+ curso.requisitos+&quot;', '&quot;</span>
+<span class="fc" id="L38">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
+<span class="fc" id="L39">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
 		
-<span class="fc" id="L42">		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);</span>
+<span class="fc" id="L41">		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);</span>
 
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		for (int i=0; i&lt;materias.length; i++){</span>
-<span class="fc" id="L45">			contador += materias[i].materiaDao.crearNuevaMateria(materias[i], curso.getId(), curso.getEdicion());</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for (int i=0; i&lt;materias.length; i++){</span>
+<span class="fc" id="L44">			contador += materias[i].materiaDao.crearNuevaMateria(materias[i], curso.getId(), curso.getEdicion());</span>
 		}
 		
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (contador == curso.materias.size() + 1){</span>
-<span class="fc" id="L49">			return 1;	</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (contador == curso.materias.size() + 1){</span>
+<span class="fc" id="L48">			return 1;	</span>
 		} else {
-<span class="nc" id="L51">			return 0;</span>
+<span class="nc" id="L50">			return 0;</span>
 		}
 	}
 
-	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
-<span class="fc" id="L56">		Vector datosCurso = GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
+	public CursoPropio seleccionarCurso(CursoPropio curso) throws SQLException, CursoNoExisteException {
+<span class="fc" id="L55">		Vector datosCurso = GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
 		
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (datosCurso.isEmpty())</span>
-<span class="fc" id="L59">			throw new CursoNoExisteException(&quot;No existe el curso seleccionado en la base de datos&quot;);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (datosCurso.isEmpty())</span>
+<span class="fc" id="L58">			throw new CursoNoExisteException(&quot;No existe el curso seleccionado en la base de datos&quot;);</span>
 		
-<span class="fc" id="L61">		datosCurso = (Vector) datosCurso.get(0);</span>
+<span class="fc" id="L60">		datosCurso = (Vector) datosCurso.get(0);</span>
 
-<span class="fc" id="L63">		String id = (String) datosCurso.get(0);</span>
-<span class="fc" id="L64">		String nombre = (String) datosCurso.get(1);</span>
-<span class="fc" id="L65">		int eCTS = (Integer) datosCurso.get(2);</span>
-<span class="fc" id="L66">		Date fechainicio = (Date) datosCurso.get(3);</span>
-<span class="fc" id="L67">		Date fechafin = (Date) datosCurso.get(4);</span>
-<span class="fc" id="L68">		double tasaMatricula = (Double) datosCurso.get(5);</span>
-<span class="fc" id="L69">		int edicion = (Integer) datosCurso.get(6);</span>
-<span class="fc" id="L70">		EstadoCurso estado = EstadoCurso.valueOf((String) datosCurso.get(7));</span>
-<span class="fc" id="L71">		TipoCurso tipo = TipoCurso.valueOf((String) datosCurso.get(8));</span>
-<span class="fc" id="L72">		Centro centro = new Centro((String) datosCurso.get(9));</span>
-<span class="fc" id="L73">		ProfesorUCLM secretario = new ProfesorUCLM((String) datosCurso.get(10));</span>
-<span class="fc" id="L74">		ProfesorUCLM director = new ProfesorUCLM((String) datosCurso.get(11));</span>
-<span class="fc" id="L75">		String requisitos = (String) datosCurso.get(12);</span>
+<span class="fc" id="L62">		String id = (String) datosCurso.get(0);</span>
+<span class="fc" id="L63">		String nombre = (String) datosCurso.get(1);</span>
+<span class="fc" id="L64">		int eCTS = (Integer) datosCurso.get(2);</span>
+<span class="fc" id="L65">		Date fechainicio = (Date) datosCurso.get(3);</span>
+<span class="fc" id="L66">		Date fechafin = (Date) datosCurso.get(4);</span>
+<span class="fc" id="L67">		double tasaMatricula = (Double) datosCurso.get(5);</span>
+<span class="fc" id="L68">		int edicion = (Integer) datosCurso.get(6);</span>
+<span class="fc" id="L69">		EstadoCurso estado = EstadoCurso.valueOf((String) datosCurso.get(7));</span>
+<span class="fc" id="L70">		TipoCurso tipo = TipoCurso.valueOf((String) datosCurso.get(8));</span>
+<span class="fc" id="L71">		Centro centro = new Centro((String) datosCurso.get(9));</span>
+<span class="fc" id="L72">		ProfesorUCLM secretario = new ProfesorUCLM((String) datosCurso.get(10));</span>
+<span class="fc" id="L73">		ProfesorUCLM director = new ProfesorUCLM((String) datosCurso.get(11));</span>
+<span class="fc" id="L74">		String requisitos = (String) datosCurso.get(12);</span>
 		
-<span class="fc" id="L77">		CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);</span>
+<span class="fc" id="L76">		CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);</span>
 		
-<span class="fc" id="L79">		List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L80">		cursoDevolver.materias = materiasCurso;</span>
+<span class="fc" id="L78">		List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L79">		cursoDevolver.materias = materiasCurso;</span>
 		
-<span class="fc" id="L82">		List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L83">		cursoDevolver.matriculas = matriculasCurso;</span>
+<span class="fc" id="L81">		List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L82">		cursoDevolver.matriculas = matriculasCurso;</span>
 		
-<span class="fc" id="L85">		return cursoDevolver;</span>
+<span class="fc" id="L84">		return cursoDevolver;</span>
 	}
 
-	public int editarCurso(CursoPropio curso) throws SQLException, ParseException, CursoNoExisteException {
-		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era CursoPropio
-<span class="fc" id="L90">		Date fechaActualizacion = new Date();</span>
+	public int editarCurso(CursoPropio curso) throws SQLException, CursoNoExisteException {
+<span class="fc" id="L88">		Date fechaActualizacion = new Date();</span>
 
-<span class="fc" id="L92">		int contador = 0;</span>
-<span class="fc" id="L93">		int materiasAModificar = 0;</span>
+<span class="fc" id="L90">		int contador = 0;</span>
+<span class="fc" id="L91">		int materiasAModificar = 0;</span>
 		
-<span class="fc" id="L95">		CursoPropio cursoEnBBDD = curso.cursoPropioDao.seleccionarCurso(curso);</span>
+<span class="fc" id="L93">		CursoPropio cursoEnBBDD = curso.cursoPropioDao.seleccionarCurso(curso);</span>
 		
 		//curso.materias y cursoEnBBDD.materias
 		
 		//comprobar los nuevos a añadir
-<span class="fc" id="L100">		System.out.println(curso.materias);</span>
-		
-<span class="fc" id="L102">		Iterator&lt;Materia&gt; recorrerMateriaCurso = curso.materias.iterator();</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		while(recorrerMateriaCurso.hasNext()) {</span>
-<span class="fc" id="L104">			boolean materiaYaEnBBDD = false;</span>
-<span class="fc" id="L105">			Materia materiaCurso = recorrerMateriaCurso.next();</span>
+<span class="fc" id="L98">		Iterator&lt;Materia&gt; recorrerMateriaCurso = curso.materias.iterator();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		while(recorrerMateriaCurso.hasNext()) {</span>
+<span class="fc" id="L100">			boolean materiaYaEnBBDD = false;</span>
+<span class="fc" id="L101">			Materia materiaCurso = recorrerMateriaCurso.next();</span>
 			
-<span class="fc" id="L107">			Iterator&lt;Materia&gt; recorrerMateriaCursoEnBBDD = cursoEnBBDD.materias.iterator();</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">			while(recorrerMateriaCursoEnBBDD.hasNext()) {</span>
-<span class="fc" id="L109">				Materia materiaCursoEnBBDD = recorrerMateriaCursoEnBBDD.next();</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">				if (materiaCurso.getNombre().equals(materiaCursoEnBBDD.getNombre())) {</span>
-<span class="fc" id="L111">					materiaYaEnBBDD = true;</span>
-<span class="fc" id="L112">					break;</span>
+<span class="fc" id="L103">			Iterator&lt;Materia&gt; recorrerMateriaCursoEnBBDD = cursoEnBBDD.materias.iterator();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			while(recorrerMateriaCursoEnBBDD.hasNext()) {</span>
+<span class="fc" id="L105">				Materia materiaCursoEnBBDD = recorrerMateriaCursoEnBBDD.next();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (materiaCurso.getNombre().equals(materiaCursoEnBBDD.getNombre())) {</span>
+<span class="fc" id="L107">					materiaYaEnBBDD = true;</span>
+<span class="fc" id="L108">					break;</span>
 				}
-<span class="fc" id="L114">			}</span>
-			
-<span class="fc bfc" id="L116" title="All 2 branches covered.">			if (!materiaYaEnBBDD) {</span>
-<span class="fc" id="L117">				materiasAModificar++;</span>
-<span class="fc" id="L118">				contador += materiaCurso.materiaDao.crearNuevaMateria(materiaCurso, curso.getId(), curso.getEdicion());</span>
 			}
-<span class="fc" id="L120">		}</span>
+			
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (!materiaYaEnBBDD) {</span>
+<span class="fc" id="L113">				materiasAModificar++;</span>
+<span class="fc" id="L114">				contador += materiaCurso.materiaDao.crearNuevaMateria(materiaCurso, curso.getId(), curso.getEdicion());</span>
+			}
+		}
 		
 		
 		//comprobar los antiguos a borrar	
-<span class="fc" id="L124">		Iterator&lt;Materia&gt; recorrerMateriaCursoEnBBDD = cursoEnBBDD.materias.iterator();</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		while(recorrerMateriaCursoEnBBDD.hasNext()) {</span>
-<span class="fc" id="L126">			boolean materiaSeMantiene = false;</span>
-<span class="fc" id="L127">			Materia materiaCursoEnBBDD = recorrerMateriaCursoEnBBDD.next();</span>
+<span class="fc" id="L120">		Iterator&lt;Materia&gt; recorrerMateriaCursoEnBBDD = cursoEnBBDD.materias.iterator();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		while(recorrerMateriaCursoEnBBDD.hasNext()) {</span>
+<span class="fc" id="L122">			boolean materiaSeMantiene = false;</span>
+<span class="fc" id="L123">			Materia materiaCursoEnBBDD = recorrerMateriaCursoEnBBDD.next();</span>
 			
-<span class="fc" id="L129">			Iterator&lt;Materia&gt; recorrerMateriaCurso2 = curso.materias.iterator();</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">			while(recorrerMateriaCurso2.hasNext()) {</span>
-<span class="fc" id="L131">				Materia materiaCurso = recorrerMateriaCurso2.next();</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">				if (materiaCursoEnBBDD.getNombre().equals(materiaCurso.getNombre())) {</span>
-<span class="fc" id="L133">					materiaSeMantiene = true;</span>
-<span class="fc" id="L134">					break;</span>
+<span class="fc" id="L125">			Iterator&lt;Materia&gt; recorrerMateriaCurso2 = curso.materias.iterator();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			while(recorrerMateriaCurso2.hasNext()) {</span>
+<span class="fc" id="L127">				Materia materiaCurso = recorrerMateriaCurso2.next();</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">				if (materiaCursoEnBBDD.getNombre().equals(materiaCurso.getNombre())) {</span>
+<span class="fc" id="L129">					materiaSeMantiene = true;</span>
+<span class="fc" id="L130">					break;</span>
 				}
-<span class="fc" id="L136">			}</span>
-			
-<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (!materiaSeMantiene) {</span>
-<span class="fc" id="L139">				materiasAModificar++;</span>
-<span class="fc" id="L140">				contador += materiaCursoEnBBDD.materiaDao.eliminarMateria(materiaCursoEnBBDD, curso.getId(), curso.getEdicion());</span>
 			}
-<span class="fc" id="L142">		}</span>
+			
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			if (!materiaSeMantiene) {</span>
+<span class="fc" id="L135">				materiasAModificar++;</span>
+<span class="fc" id="L136">				contador += materiaCursoEnBBDD.materiaDao.eliminarMateria(materiaCursoEnBBDD, curso.getId(), curso.getEdicion());</span>
+			}
+		}
 		
-<span class="fc" id="L144">		contador+= GestorBD.getInstancia().update(&quot;UPDATE cursoPropio SET &quot;</span>
-<span class="fc" id="L145">				+ &quot;nombre='&quot; + curso.getNombre() + &quot;', &quot;</span>
-<span class="fc" id="L146">				+ &quot;ECTS=&quot; + curso.getECTS() + &quot;, &quot;</span>
-<span class="fc" id="L147">				+ &quot;fechaInicio='&quot; + dateFormat.format(curso.getFechaInicio()) + &quot;', &quot;</span>
-<span class="fc" id="L148">				+ &quot;fechaFin='&quot; + dateFormat.format(curso.getFechaFin()) + &quot;', &quot;</span>
-<span class="fc" id="L149">				+ &quot;tasaMatricula=&quot; + curso.getTasaMatricula() + &quot;, &quot;</span>
-<span class="fc" id="L150">				+ &quot;estadoCurso='&quot; + curso.estado.toString() + &quot;', &quot;</span>
-<span class="fc" id="L151">				+ &quot;tipoCurso='&quot; + curso.tipo.toString() + &quot;', &quot;</span>
-<span class="fc" id="L152">				+ &quot;centro_nombre='&quot; + curso.centro.getNombre() + &quot;', &quot;</span>
-<span class="fc" id="L153">				+ &quot;secretario_Profesor_DNI='&quot; + curso.secretario.getDni() + &quot;', &quot;</span>
-<span class="fc" id="L154">				+ &quot;director_Profesor_DNI='&quot; + curso.director.getDni() + &quot;', &quot;</span>
-				+ &quot;requisitos='&quot; + curso.requisitos + &quot;', &quot;
-<span class="fc" id="L156">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
-<span class="fc" id="L157">				+ &quot;' WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
+<span class="fc" id="L140">		contador+= GestorBD.getInstancia().update(&quot;UPDATE cursoPropio SET &quot;</span>
+<span class="fc" id="L141">				+ &quot;nombre='&quot; + curso.getNombre() + &quot;', &quot;</span>
+<span class="fc" id="L142">				+ &quot;ECTS=&quot; + curso.getECTS() + &quot;, &quot;</span>
+<span class="fc" id="L143">				+ &quot;fechaInicio='&quot; + dateFormat.format(curso.getFechaInicio()) + &quot;', &quot;</span>
+<span class="fc" id="L144">				+ &quot;fechaFin='&quot; + dateFormat.format(curso.getFechaFin()) + &quot;', &quot;</span>
+<span class="fc" id="L145">				+ &quot;tasaMatricula=&quot; + curso.getTasaMatricula() + &quot;, &quot;</span>
+<span class="fc" id="L146">				+ &quot;estadoCurso='&quot; + curso.estado.toString() + &quot;', &quot;</span>
+<span class="fc" id="L147">				+ &quot;tipoCurso='&quot; + curso.tipo.toString() + &quot;', &quot;</span>
+<span class="fc" id="L148">				+ &quot;centro_nombre='&quot; + curso.centro.getNombre() + &quot;', &quot;</span>
+<span class="fc" id="L149">				+ &quot;secretario_Profesor_DNI='&quot; + curso.secretario.getDni() + &quot;', &quot;</span>
+<span class="fc" id="L150">				+ &quot;director_Profesor_DNI='&quot; + curso.director.getDni() + &quot;', &quot;</span>
+<span class="fc" id="L151">				+ &quot;requisitos='&quot; + curso.requisitos + &quot;', &quot;</span>
+<span class="fc" id="L152">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="fc" id="L153">				+ &quot;' WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
 		
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (contador == materiasAModificar + 1){</span>
-<span class="fc" id="L160">			return 1;	</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (contador == materiasAModificar + 1){</span>
+<span class="fc" id="L156">			return 1;	</span>
 		} else {
-<span class="nc" id="L162">			return 0;</span>
+<span class="nc" id="L158">			return 0;</span>
 		}
 	}
 	
 	public int eliminarCursoPropio(CursoPropio curso) throws SQLException {
-<span class="fc" id="L167">		int contador = 0;</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (curso.materias == null)</span>
-<span class="fc" id="L169">			return 0;</span>
-<span class="fc" id="L170">		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (int i=0; i&lt;materias.length; i++){</span>
-<span class="fc" id="L172">			contador += materias[i].materiaDao.eliminarMateria(materias[i], curso.getId(), curso.getEdicion());</span>
+<span class="fc" id="L163">		int contador = 0;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (curso.materias == null)</span>
+<span class="fc" id="L165">			return 0;</span>
+<span class="fc" id="L166">		Materia[] materias = curso.materias.toArray(new Materia[curso.materias.size()]);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (int i=0; i&lt;materias.length; i++){</span>
+<span class="fc" id="L168">			contador += materias[i].materiaDao.eliminarMateria(materias[i], curso.getId(), curso.getEdicion());</span>
 		}
 		
-<span class="fc" id="L175">		contador+= GestorBD.getInstancia().delete(&quot;DELETE FROM cursoPropio WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (contador == curso.materias.size() + 1){</span>
-<span class="fc" id="L177">			return 1;	</span>
+<span class="fc" id="L171">		contador+= GestorBD.getInstancia().delete(&quot;DELETE FROM cursoPropio WHERE id='&quot;+curso.getId()+&quot;' AND edicion=&quot;+curso.getEdicion());</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (contador == curso.materias.size() + 1){</span>
+<span class="fc" id="L173">			return 1;	</span>
 		} else {
-<span class="nc" id="L179">			return 0;</span>
+<span class="nc" id="L175">			return 0;</span>
 		}
 	}
 
 	public List&lt;CursoPropio&gt; listarCursos() throws SQLException {
-<span class="fc" id="L184">		Vector cursosDatos=  GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio&quot;);</span>
-<span class="fc" id="L185">		List &lt;CursoPropio&gt; listaCursos=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L180">		Vector cursosDatos=  GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio&quot;);</span>
+<span class="fc" id="L181">		List &lt;CursoPropio&gt; listaCursos=new ArrayList&lt;&gt;();</span>
 		
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		for(int i=0; i&lt;cursosDatos.size(); i++) {</span>
-<span class="fc" id="L188">			Vector curDatosTemp=(Vector) cursosDatos.get(i);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		for(int i=0; i&lt;cursosDatos.size(); i++) {</span>
+<span class="fc" id="L184">			Vector curDatosTemp=(Vector) cursosDatos.get(i);</span>
 			
-<span class="fc" id="L190">			String id = (String) curDatosTemp.get(0);</span>
-<span class="fc" id="L191">			String nombre = (String) curDatosTemp.get(1);</span>
-<span class="fc" id="L192">			int ECTS = (Integer)curDatosTemp.get(2);</span>
-<span class="fc" id="L193">			Date fechainicio = (Date) curDatosTemp.get(3);</span>
-<span class="fc" id="L194">			Date fechafin = (Date) curDatosTemp.get(4);</span>
-<span class="fc" id="L195">			double tasaMatricula = (Double) curDatosTemp.get(5);</span>
-<span class="fc" id="L196">			int edicion = (Integer) curDatosTemp.get(6);</span>
-<span class="fc" id="L197">			EstadoCurso estadoObtenido = EstadoCurso.valueOf((String) curDatosTemp.get(7));</span>
-<span class="fc" id="L198">			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));</span>
-<span class="fc" id="L199">			Centro centro = new Centro((String) curDatosTemp.get(9));</span>
-<span class="fc" id="L200">			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));</span>
-<span class="fc" id="L201">			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));</span>
-<span class="fc" id="L202">			String requisitos = (String) curDatosTemp.get(12);			</span>
+<span class="fc" id="L186">			String id = (String) curDatosTemp.get(0);</span>
+<span class="fc" id="L187">			String nombre = (String) curDatosTemp.get(1);</span>
+<span class="fc" id="L188">			int eCTS = (Integer)curDatosTemp.get(2);</span>
+<span class="fc" id="L189">			Date fechainicio = (Date) curDatosTemp.get(3);</span>
+<span class="fc" id="L190">			Date fechafin = (Date) curDatosTemp.get(4);</span>
+<span class="fc" id="L191">			double tasaMatricula = (Double) curDatosTemp.get(5);</span>
+<span class="fc" id="L192">			int edicion = (Integer) curDatosTemp.get(6);</span>
+<span class="fc" id="L193">			EstadoCurso estadoObtenido = EstadoCurso.valueOf((String) curDatosTemp.get(7));</span>
+<span class="fc" id="L194">			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));</span>
+<span class="fc" id="L195">			Centro centro = new Centro((String) curDatosTemp.get(9));</span>
+<span class="fc" id="L196">			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));</span>
+<span class="fc" id="L197">			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));</span>
+<span class="fc" id="L198">			String requisitos = (String) curDatosTemp.get(12);			</span>
 			
-<span class="fc" id="L204">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);</span>
+<span class="fc" id="L200">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);</span>
 			
-<span class="fc" id="L206">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L207">			cursoDevolver.matriculas = matriculasCurso;</span>
+<span class="fc" id="L202">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L203">			cursoDevolver.matriculas = matriculasCurso;</span>
 			
-<span class="fc" id="L209">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L210">			cursoDevolver.materias = materiasCurso;</span>
+<span class="fc" id="L205">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L206">			cursoDevolver.materias = materiasCurso;</span>
 			
-<span class="fc" id="L212">			listaCursos.add(cursoDevolver);</span>
+<span class="fc" id="L208">			listaCursos.add(cursoDevolver);</span>
 		}
 		
-<span class="fc" id="L215">		return listaCursos;</span>
+<span class="fc" id="L211">		return listaCursos;</span>
 
 	}
 
 	public List&lt;CursoPropio&gt; listarCursosPorEstado(EstadoCurso estado, Date fechaInicio, Date fechaFin) throws SQLException {
-<span class="fc" id="L220">		Vector cursosDatos=  GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE estadoCurso = '&quot;+estado.toString()+&quot;' AND fechaInicio &gt;= '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
-<span class="fc" id="L221">		List &lt;CursoPropio&gt; listaCursos=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L216">		Vector cursosDatos=  GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE estadoCurso = '&quot;+estado.toString()+&quot;' AND fechaInicio &gt;= '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
+<span class="fc" id="L217">		List &lt;CursoPropio&gt; listaCursos=new ArrayList&lt;&gt;();</span>
 		
-<span class="fc bfc" id="L223" title="All 2 branches covered.">		for(int i=0; i&lt;cursosDatos.size(); i++) {</span>
-<span class="fc" id="L224">			Vector curDatosTemp=(Vector) cursosDatos.get(i);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for(int i=0; i&lt;cursosDatos.size(); i++) {</span>
+<span class="fc" id="L220">			Vector curDatosTemp=(Vector) cursosDatos.get(i);</span>
 			
-<span class="fc" id="L226">			String id = (String) curDatosTemp.get(0);</span>
-<span class="fc" id="L227">			String nombre = (String) curDatosTemp.get(1);</span>
-<span class="fc" id="L228">			int ECTS = (Integer)curDatosTemp.get(2);</span>
-<span class="fc" id="L229">			Date fechainicio = (Date) curDatosTemp.get(3);</span>
-<span class="fc" id="L230">			Date fechafin = (Date) curDatosTemp.get(4);</span>
-<span class="fc" id="L231">			double tasaMatricula = (Double) curDatosTemp.get(5);</span>
-<span class="fc" id="L232">			int edicion = (Integer) curDatosTemp.get(6);</span>
-<span class="fc" id="L233">			EstadoCurso estadoObtenido = EstadoCurso.valueOf((String) curDatosTemp.get(7));</span>
-<span class="fc" id="L234">			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));</span>
-<span class="fc" id="L235">			Centro centro = new Centro((String) curDatosTemp.get(9));</span>
-<span class="fc" id="L236">			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));</span>
-<span class="fc" id="L237">			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));</span>
-<span class="fc" id="L238">			String requisitos = (String) curDatosTemp.get(12);</span>
+<span class="fc" id="L222">			String id = (String) curDatosTemp.get(0);</span>
+<span class="fc" id="L223">			String nombre = (String) curDatosTemp.get(1);</span>
+<span class="fc" id="L224">			int eCTS = (Integer)curDatosTemp.get(2);</span>
+<span class="fc" id="L225">			Date fechainicio = (Date) curDatosTemp.get(3);</span>
+<span class="fc" id="L226">			Date fechafin = (Date) curDatosTemp.get(4);</span>
+<span class="fc" id="L227">			double tasaMatricula = (Double) curDatosTemp.get(5);</span>
+<span class="fc" id="L228">			int edicion = (Integer) curDatosTemp.get(6);</span>
+<span class="fc" id="L229">			EstadoCurso estadoObtenido = EstadoCurso.valueOf((String) curDatosTemp.get(7));</span>
+<span class="fc" id="L230">			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));</span>
+<span class="fc" id="L231">			Centro centro = new Centro((String) curDatosTemp.get(9));</span>
+<span class="fc" id="L232">			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));</span>
+<span class="fc" id="L233">			ProfesorUCLM director = new ProfesorUCLM((String) curDatosTemp.get(11));</span>
+<span class="fc" id="L234">			String requisitos = (String) curDatosTemp.get(12);</span>
 			
-<span class="fc" id="L240">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);</span>
+<span class="fc" id="L236">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estadoObtenido, tipo, centro, secretario, director, requisitos);</span>
 			
-<span class="fc" id="L242">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L243">			cursoDevolver.materias = materiasCurso;</span>
+<span class="fc" id="L238">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L239">			cursoDevolver.materias = materiasCurso;</span>
 			
-<span class="fc" id="L245">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L246">			cursoDevolver.matriculas = matriculasCurso;</span>
+<span class="fc" id="L241">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L242">			cursoDevolver.matriculas = matriculasCurso;</span>
 			
-<span class="fc" id="L248">			listaCursos.add(cursoDevolver);</span>
+<span class="fc" id="L244">			listaCursos.add(cursoDevolver);</span>
 		}
 	
-<span class="fc" id="L251">		return listaCursos;	</span>
+<span class="fc" id="L247">		return listaCursos;	</span>
 	}
 	
 	public List&lt;CursoPropio&gt; listarCursosPorDirector(ProfesorUCLM director, Date fechaInicio, Date fechaFin) throws SQLException {
-<span class="fc" id="L255">		Vector cursosDatos=  GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '&quot;+director.getDni()+&quot;' AND fechaInicio &gt;= '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
-<span class="fc" id="L256">		List &lt;CursoPropio&gt; listaCursos=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L251">		Vector cursosDatos=  GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE director_Profesor_DNI = '&quot;+director.getDni()+&quot;' AND fechaInicio &gt;= '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
+<span class="fc" id="L252">		List &lt;CursoPropio&gt; listaCursos=new ArrayList&lt;&gt;();</span>
 		
-<span class="fc bfc" id="L258" title="All 2 branches covered.">		for(int i=0; i&lt;cursosDatos.size(); i++) {</span>
-<span class="fc" id="L259">			Vector curDatosTemp=(Vector) cursosDatos.get(i);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		for(int i=0; i&lt;cursosDatos.size(); i++) {</span>
+<span class="fc" id="L255">			Vector curDatosTemp=(Vector) cursosDatos.get(i);</span>
 			
-<span class="fc" id="L261">			String id = (String) curDatosTemp.get(0);</span>
-<span class="fc" id="L262">			String nombre = (String) curDatosTemp.get(1);</span>
-<span class="fc" id="L263">			int ECTS = (Integer) curDatosTemp.get(2);</span>
-<span class="fc" id="L264">			Date fechainicio = (Date) curDatosTemp.get(3);</span>
-<span class="fc" id="L265">			Date fechafin = (Date) curDatosTemp.get(4);</span>
-<span class="fc" id="L266">			double tasaMatricula = (Double) curDatosTemp.get(5);</span>
-<span class="fc" id="L267">			int edicion = (Integer) curDatosTemp.get(6);</span>
-<span class="fc" id="L268">			EstadoCurso estado = EstadoCurso.valueOf((String) curDatosTemp.get(7));</span>
-<span class="fc" id="L269">			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));</span>
-<span class="fc" id="L270">			Centro centro = new Centro((String) curDatosTemp.get(9));</span>
-<span class="fc" id="L271">			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));</span>
-<span class="fc" id="L272">			ProfesorUCLM directorObtenido = new ProfesorUCLM((String) curDatosTemp.get(11));</span>
-<span class="fc" id="L273">			String requisitos = (String) curDatosTemp.get(12);</span>
+<span class="fc" id="L257">			String id = (String) curDatosTemp.get(0);</span>
+<span class="fc" id="L258">			String nombre = (String) curDatosTemp.get(1);</span>
+<span class="fc" id="L259">			int eCTS = (Integer) curDatosTemp.get(2);</span>
+<span class="fc" id="L260">			Date fechainicio = (Date) curDatosTemp.get(3);</span>
+<span class="fc" id="L261">			Date fechafin = (Date) curDatosTemp.get(4);</span>
+<span class="fc" id="L262">			double tasaMatricula = (Double) curDatosTemp.get(5);</span>
+<span class="fc" id="L263">			int edicion = (Integer) curDatosTemp.get(6);</span>
+<span class="fc" id="L264">			EstadoCurso estado = EstadoCurso.valueOf((String) curDatosTemp.get(7));</span>
+<span class="fc" id="L265">			TipoCurso tipo = TipoCurso.valueOf((String) curDatosTemp.get(8));</span>
+<span class="fc" id="L266">			Centro centro = new Centro((String) curDatosTemp.get(9));</span>
+<span class="fc" id="L267">			ProfesorUCLM secretario = new ProfesorUCLM((String) curDatosTemp.get(10));</span>
+<span class="fc" id="L268">			ProfesorUCLM directorObtenido = new ProfesorUCLM((String) curDatosTemp.get(11));</span>
+<span class="fc" id="L269">			String requisitos = (String) curDatosTemp.get(12);</span>
 			
-<span class="fc" id="L275">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido, requisitos);</span>
+<span class="fc" id="L271">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, directorObtenido, requisitos);</span>
 			
-<span class="fc" id="L277">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L278">			cursoDevolver.materias = materiasCurso;</span>
+<span class="fc" id="L273">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L274">			cursoDevolver.materias = materiasCurso;</span>
 			
-<span class="fc" id="L280">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
-<span class="fc" id="L281">			cursoDevolver.matriculas = matriculasCurso;</span>
+<span class="fc" id="L276">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
+<span class="fc" id="L277">			cursoDevolver.matriculas = matriculasCurso;</span>
 			
-<span class="fc" id="L283">			listaCursos.add(cursoDevolver);</span>
+<span class="fc" id="L279">			listaCursos.add(cursoDevolver);</span>
 		}
 
-<span class="fc" id="L286">		return listaCursos;	</span>
+<span class="fc" id="L282">		return listaCursos;	</span>
 	}
 
 	public double listarIngresos(TipoCurso tipo, Date fechaInicio, Date fechaFin) throws SQLException {
-<span class="fc" id="L290">		Vector listaCursos = GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE tipoCurso = '&quot;+ tipo.toString() +&quot;' AND fechaInicio &gt;= '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
+<span class="fc" id="L286">		Vector listaCursos = GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE tipoCurso = '&quot;+ tipo.toString() +&quot;' AND fechaInicio &gt;= '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
 		
-<span class="fc" id="L292">		double ingresosTotales = 0;</span>
+<span class="fc" id="L288">		double ingresosTotales = 0;</span>
 		
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		for (int i=0; i&lt;listaCursos.size(); i++) {</span>
-<span class="nc" id="L295">			Vector datosCursoTemp = (Vector) listaCursos.get(i);</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		for (int i=0; i&lt;listaCursos.size(); i++) {</span>
+<span class="nc" id="L291">			Vector datosCursoTemp = (Vector) listaCursos.get(i);</span>
 			
-<span class="nc" id="L297">			String id = (String) datosCursoTemp.get(0);</span>
-<span class="nc" id="L298">			int edicion = (Integer) datosCursoTemp.get(6);</span>
-<span class="nc" id="L299">			double tasaMatricula = (Double) datosCursoTemp.get(5);</span>
+<span class="nc" id="L293">			String id = (String) datosCursoTemp.get(0);</span>
+<span class="nc" id="L294">			int edicion = (Integer) datosCursoTemp.get(6);</span>
+<span class="nc" id="L295">			double tasaMatricula = (Double) datosCursoTemp.get(5);</span>
 			
-<span class="nc" id="L301">			CursoPropio cursoTemp = new CursoPropio(id, edicion);</span>
+<span class="nc" id="L297">			CursoPropio cursoTemp = new CursoPropio(id, edicion);</span>
 			
-<span class="nc" id="L303">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoTemp);</span>
+<span class="nc" id="L299">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoTemp);</span>
 			
-<span class="nc bnc" id="L305" title="All 2 branches missed.">			for (int j = 0; j&lt;matriculasCurso.size();j++) {</span>
-<span class="nc bnc" id="L306" title="All 2 branches missed.">				if (matriculasCurso.get(j).isPagado())</span>
-<span class="nc" id="L307">					ingresosTotales+=tasaMatricula;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			for (int j = 0; j&lt;matriculasCurso.size();j++) {</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">				if (matriculasCurso.get(j).isPagado())</span>
+<span class="nc" id="L303">					ingresosTotales+=tasaMatricula;</span>
 			}
 		}		
 		
-<span class="fc" id="L311">		return ingresosTotales;</span>
+<span class="fc" id="L307">		return ingresosTotales;</span>
 	}
 
 	public List&lt;CursoPropio&gt; listarEdicionesCursos(Date fechaInicio, Date fechaFin) throws SQLException {
-<span class="nc" id="L315">		Vector listaEdicicionDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE fechaInicio = '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
+<span class="nc" id="L311">		Vector listaEdicicionDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM cursoPropio WHERE fechaInicio = '&quot; + dateFormat.format(fechaInicio) + &quot;' AND fechaFin &lt;= '&quot; + dateFormat.format(fechaFin) + &quot;'&quot;);</span>
 		
-<span class="nc" id="L317">		List&lt;CursoPropio&gt; listaEdiciones = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L313">		List&lt;CursoPropio&gt; listaEdiciones = new ArrayList&lt;&gt;();</span>
 		
-<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (int i=0; i&lt;listaEdicicionDatos.size(); i++) {</span>
-<span class="nc" id="L320">			Vector lEdicnDatosTemp = (Vector) listaEdicicionDatos.get(i);</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">		for (int i=0; i&lt;listaEdicicionDatos.size(); i++) {</span>
+<span class="nc" id="L316">			Vector lEdicnDatosTemp = (Vector) listaEdicicionDatos.get(i);</span>
 			
-<span class="nc" id="L322">			String id = (String) lEdicnDatosTemp.get(0);</span>
-<span class="nc" id="L323">			String nombre = (String) lEdicnDatosTemp.get(1);</span>
-<span class="nc" id="L324">			int ECTS = (Integer) lEdicnDatosTemp.get(2);</span>
-<span class="nc" id="L325">			Date fechainicio = (Date) lEdicnDatosTemp.get(3);</span>
-<span class="nc" id="L326">			Date fechafin = (Date) lEdicnDatosTemp.get(4);</span>
-<span class="nc" id="L327">			double tasaMatricula = (Double) lEdicnDatosTemp.get(5);</span>
-<span class="nc" id="L328">			int edicion = (Integer) lEdicnDatosTemp.get(6);</span>
-<span class="nc" id="L329">			EstadoCurso estado = EstadoCurso.valueOf((String) lEdicnDatosTemp.get(7));</span>
-<span class="nc" id="L330">			TipoCurso tipo = TipoCurso.valueOf((String) lEdicnDatosTemp.get(8));</span>
-<span class="nc" id="L331">			Centro centro = new Centro((String) lEdicnDatosTemp.get(9));</span>
-<span class="nc" id="L332">			ProfesorUCLM secretario = new ProfesorUCLM((String) lEdicnDatosTemp.get(10));</span>
-<span class="nc" id="L333">			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));</span>
-<span class="nc" id="L334">			String requisitos = (String) lEdicnDatosTemp.get(12);</span>
+<span class="nc" id="L318">			String id = (String) lEdicnDatosTemp.get(0);</span>
+<span class="nc" id="L319">			String nombre = (String) lEdicnDatosTemp.get(1);</span>
+<span class="nc" id="L320">			int eCTS = (Integer) lEdicnDatosTemp.get(2);</span>
+<span class="nc" id="L321">			Date fechainicio = (Date) lEdicnDatosTemp.get(3);</span>
+<span class="nc" id="L322">			Date fechafin = (Date) lEdicnDatosTemp.get(4);</span>
+<span class="nc" id="L323">			double tasaMatricula = (Double) lEdicnDatosTemp.get(5);</span>
+<span class="nc" id="L324">			int edicion = (Integer) lEdicnDatosTemp.get(6);</span>
+<span class="nc" id="L325">			EstadoCurso estado = EstadoCurso.valueOf((String) lEdicnDatosTemp.get(7));</span>
+<span class="nc" id="L326">			TipoCurso tipo = TipoCurso.valueOf((String) lEdicnDatosTemp.get(8));</span>
+<span class="nc" id="L327">			Centro centro = new Centro((String) lEdicnDatosTemp.get(9));</span>
+<span class="nc" id="L328">			ProfesorUCLM secretario = new ProfesorUCLM((String) lEdicnDatosTemp.get(10));</span>
+<span class="nc" id="L329">			ProfesorUCLM director = new ProfesorUCLM((String) lEdicnDatosTemp.get(11));</span>
+<span class="nc" id="L330">			String requisitos = (String) lEdicnDatosTemp.get(12);</span>
 			
-<span class="nc" id="L336">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, ECTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);</span>
+<span class="nc" id="L332">			CursoPropio cursoDevolver = new CursoPropio(id, nombre, eCTS, fechainicio, fechafin, tasaMatricula, edicion, estado, tipo, centro, secretario, director, requisitos);</span>
 			
-<span class="nc" id="L338">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
-<span class="nc" id="L339">			cursoDevolver.materias = materiasCurso;</span>
+<span class="nc" id="L334">			List&lt;Materia&gt; materiasCurso = new Materia().materiaDao.listarMateriasPorCurso(cursoDevolver);</span>
+<span class="nc" id="L335">			cursoDevolver.materias = materiasCurso;</span>
 			
-<span class="nc" id="L341">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
-<span class="nc" id="L342">			cursoDevolver.matriculas = matriculasCurso;</span>
+<span class="nc" id="L337">			List&lt;Matricula&gt; matriculasCurso = new Matricula().matriculaDAO.listarMatriculasPorCurso(cursoDevolver);</span>
+<span class="nc" id="L338">			cursoDevolver.matriculas = matriculasCurso;</span>
 					
-<span class="nc" id="L344">			listaEdiciones.add(cursoDevolver);</span>
+<span class="nc" id="L340">			listaEdiciones.add(cursoDevolver);</span>
 		}
 		
-<span class="nc" id="L347">		return listaEdiciones;</span>
+<span class="nc" id="L343">		return listaEdiciones;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -25,8 +25,8 @@ import negocio.entities.*;
 <span class="fc" id="L25">				+ materia.getHoras()+&quot;, '&quot;</span>
 <span class="fc" id="L26">				+ dateFormat.format(materia.getFechaInicio())+&quot;', '&quot;</span>
 <span class="fc" id="L27">				+ dateFormat.format(materia.getFechaFin())+&quot;', '&quot;</span>
-				+ cursoPropioID+&quot;', &quot;
-				+ cursoPropioEdicion+&quot;, '&quot;
+<span class="fc" id="L28">				+ cursoPropioID+&quot;', &quot;</span>
+<span class="fc" id="L29">				+ cursoPropioEdicion+&quot;, '&quot;</span>
 <span class="fc" id="L30">				+ materia.responsable.getDni()+&quot;', '&quot;</span>
 <span class="fc" id="L31">				+ dateFormat.format(fechaCreacion)+&quot;', '&quot;</span>
 <span class="fc" id="L32">				+ dateFormat.format(fechaActualizacion)+&quot;')&quot;);</span>
@@ -46,40 +46,39 @@ import negocio.entities.*;
 	}
 
 	public int editarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
-		//HABLAR CON RICARDO: el return type se ha cambiado a integer, originalmente era Materia
-<span class="nc" id="L50">		Date fechaActualizacion = new Date();</span>
+<span class="nc" id="L49">		Date fechaActualizacion = new Date();</span>
 
-<span class="nc" id="L52">		return GestorBD.getInstancia().update(&quot;UPDATE materia SET &quot;</span>
-<span class="nc" id="L53">				+ &quot;horas=&quot; + materia.getHoras() + &quot;, &quot;</span>
-<span class="nc" id="L54">				+ &quot;fechaInicio='&quot; + dateFormat.format(materia.getFechaInicio()) + &quot;', &quot;</span>
-<span class="nc" id="L55">				+ &quot;fechaFin='&quot; + dateFormat.format(materia.getFechaFin()) + &quot;', &quot;</span>
-<span class="nc" id="L56">				+ &quot;responsable_Profesor_DNI='&quot; + materia.responsable.getDni() + &quot;', '&quot;</span>
-<span class="nc" id="L57">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
-<span class="nc" id="L58">				+ &quot;' WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropio_edicion=&quot;+cursoPropioEdicion);</span>
+<span class="nc" id="L51">		return GestorBD.getInstancia().update(&quot;UPDATE materia SET &quot;</span>
+<span class="nc" id="L52">				+ &quot;horas=&quot; + materia.getHoras() + &quot;, &quot;</span>
+<span class="nc" id="L53">				+ &quot;fechaInicio='&quot; + dateFormat.format(materia.getFechaInicio()) + &quot;', &quot;</span>
+<span class="nc" id="L54">				+ &quot;fechaFin='&quot; + dateFormat.format(materia.getFechaFin()) + &quot;', &quot;</span>
+<span class="nc" id="L55">				+ &quot;responsable_Profesor_DNI='&quot; + materia.responsable.getDni() + &quot;', '&quot;</span>
+<span class="nc" id="L56">				+ &quot;fechaActualizacion='&quot; + dateFormat.format(fechaActualizacion)</span>
+<span class="nc" id="L57">				+ &quot;' WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropio_edicion=&quot;+cursoPropioEdicion);</span>
 	}
 
 	public int eliminarMateria(Materia materia, String cursoPropioID, int cursoPropioEdicion) throws SQLException {
-<span class="fc" id="L62">		return GestorBD.getInstancia().delete(&quot;DELETE FROM materia WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropio_edicion=&quot;+cursoPropioEdicion);</span>
+<span class="fc" id="L61">		return GestorBD.getInstancia().delete(&quot;DELETE FROM materia WHERE nombre='&quot;+materia.getNombre()+&quot;' AND cursoPropio_id='&quot;+cursoPropioID+&quot;' AND cursoPropio_edicion=&quot;+cursoPropioEdicion);</span>
 	}
 
 	public List&lt;Materia&gt; listarMateriasPorCurso(CursoPropio curso) throws SQLException {
-<span class="fc" id="L66">		Vector listaMateriaDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM materia WHERE cursoPropio_id = '&quot; + curso.getId() + &quot;' AND cursoPropio_edicion=&quot;+curso.getEdicion());</span>
+<span class="fc" id="L65">		Vector listaMateriaDatos = GestorBD.getInstancia().select(&quot;SELECT * FROM materia WHERE cursoPropio_id = '&quot; + curso.getId() + &quot;' AND cursoPropio_edicion=&quot;+curso.getEdicion());</span>
 		
-<span class="fc" id="L68">		List&lt;Materia&gt; listaMateria = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L67">		List&lt;Materia&gt; listaMateria = new ArrayList&lt;&gt;();</span>
 		
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (int i=0; i&lt;listaMateriaDatos.size(); i++) {</span>
-<span class="fc" id="L71">			Vector lMateriaDatosTemp = (Vector) listaMateriaDatos.get(i);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		for (int i=0; i&lt;listaMateriaDatos.size(); i++) {</span>
+<span class="fc" id="L70">			Vector lMateriaDatosTemp = (Vector) listaMateriaDatos.get(i);</span>
 			
-<span class="fc" id="L73">			String nombre = (String) lMateriaDatosTemp.get(0);</span>
-<span class="fc" id="L74">			double horas = (Double) lMateriaDatosTemp.get(1);</span>
-<span class="fc" id="L75">			Date fechaInicio = (Date) lMateriaDatosTemp.get(2);</span>
-<span class="fc" id="L76">			Date fechaFin = (Date) lMateriaDatosTemp.get(3);</span>
-<span class="fc" id="L77">			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(6));</span>
+<span class="fc" id="L72">			String nombre = (String) lMateriaDatosTemp.get(0);</span>
+<span class="fc" id="L73">			double horas = (Double) lMateriaDatosTemp.get(1);</span>
+<span class="fc" id="L74">			Date fechaInicio = (Date) lMateriaDatosTemp.get(2);</span>
+<span class="fc" id="L75">			Date fechaFin = (Date) lMateriaDatosTemp.get(3);</span>
+<span class="fc" id="L76">			Profesor responsable = new Profesor((String) lMateriaDatosTemp.get(6));</span>
 			
-<span class="fc" id="L79">			listaMateria.add(new Materia(nombre, horas, fechaInicio, fechaFin, responsable));</span>
+<span class="fc" id="L78">			listaMateria.add(new Materia(nombre, horas, fechaInicio, fechaFin, responsable));</span>
 		}
 		
-<span class="fc" id="L82">		return listaMateria;</span>
+<span class="fc" id="L81">		return listaMateria;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
